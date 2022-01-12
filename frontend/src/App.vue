@@ -5,7 +5,7 @@
         <el-row>
 
             <!--左侧部分（logo、二级菜单）-->
-            <el-col :span="4" id="left">
+            <el-col :span="3" id="left">
 
                 <!--logo-->
                 <div class="logo">
@@ -27,17 +27,10 @@
                             <span slot="title">导航一</span>
                         </template>
                         <el-menu-item-group>
-                            <span slot="title">分组一</span>
                             <el-menu-item index="1-1">选项1</el-menu-item>
                             <el-menu-item index="1-2">选项2</el-menu-item>
-                        </el-menu-item-group>
-                        <el-menu-item-group title="分组2">
                             <el-menu-item index="1-3">选项3</el-menu-item>
                         </el-menu-item-group>
-                        <el-submenu index="1-4">
-                            <span slot="title">选项4</span>
-                            <el-menu-item index="1-4-1">选项1</el-menu-item>
-                        </el-submenu>
                     </el-submenu>
                     <el-menu-item index="2">
                         <i class="el-icon-menu"></i>
@@ -55,7 +48,7 @@
             </el-col>
 
             <!--右侧部分（一级菜单、路由视图）-->
-            <el-col :span="20" id="right">
+            <el-col :span="21" id="right">
 
                 <!--展开收起左侧菜单-->
                 <el-radio-group v-if="0" v-model="isCollapse" style="margin-bottom: 20px;">
@@ -80,6 +73,10 @@
                 <router-view/>
             </el-col>
         </el-row>
+
+        <footer>
+            Design By <a target="_blank" href="https://www.easybhu.cn">Force</a>
+        </footer>
     </div>
 </template>
 
@@ -128,22 +125,73 @@ export default {
 
     #app {
 
-        #left {
+        > .el-row {
 
-            background: #545c64;
+            height: 100%;
 
-            > .logo {
-                width: 100%;
-                height: 60px;
-                background: #fff;
-                text-align: center;
-                font-weight: 600;
-                font-size: 1.4rem;
-                line-height: 60px;
+            #left {
+
+                height: 100%;
+                background: #545c64;
+
+                > .logo {
+                    width: 100%;
+                    height: 60px;
+                    background: #fff;
+                    text-align: center;
+                    font-weight: 600;
+                    font-size: 1.2rem;
+                    line-height: 60px;
+                }
+
+                > .menu-level-2 {
+
+                    .el-submenu {
+
+                        .el-menu-item-group {
+
+                            .el-menu-item-group__title {
+
+                            }
+                        }
+                    }
+
+                    .el-menu-item {
+                        min-width: 100%;
+                        width: 100%;
+                    }
+
+                    span {
+                        font-size: .6rem;
+                    }
+
+                    .el-submenu__title,
+                    .el-menu-item {
+                        text-align: left;
+                    }
+
+                    li.el-menu-item {
+                        font-size: .8rem;
+                    }
+                }
             }
+        }
 
-            > .menu-level-2 {
+        footer {
+            font-size: .6rem;
+            text-align: center;
+            color: #8D8D8D;
+            font-weight: 600;
+            display: block;
+            position: fixed;
+            bottom: 10px;
+            left: 0;
+            width: 100%;
 
+            a {
+                color: #8D8D8D;
+                text-decoration: none;
+                font-weight: 800;
             }
         }
     }
