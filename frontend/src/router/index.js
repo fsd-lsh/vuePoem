@@ -19,11 +19,11 @@ export default new Router({
         },
 
         {
-            path: '/',
+            path: '/dash',
             name: 'Sign In',
-            component: resolve => require(['@/views/signIn'], resolve),
+            component: resolve => require(['@/views/dash'], resolve),
             meta: {
-                title: '登录 - adminPoem2',
+                title: '面板统计 - 业务管理 - adminPoem2后台',
             },
         },
     ],
