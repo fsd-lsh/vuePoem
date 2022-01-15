@@ -17,9 +17,12 @@
 
 <script>
 
+import helper from '../mixins/helper';
 export default {
 
     name: 'signIn',
+
+    mixins: [helper],
 
     data() {
         return {
@@ -48,24 +51,22 @@ export default {
                 return false;
             }
 
-            this.$http.post(
-                '/admin?api=sign_in',
-                {
+            this.poemRequest({
+                type: 'post',
+                url: '/admin?api=sign_in',
+                data: {
                     username: this.form.name,
                     password: this.form.pwd,
                 },
-                {emulateJSON:true}
-            ).then(function(res){
-                if(res.body.code === 1) {
-                    this.$notify({ message:res.body.info, type:'success' });
-                    setTimeout(function () {
-                        window.location = res.body.data;
-                    }, 1500);
-                }else {
-                    this.$notify({ message:res.body.info, type:'warning'});
-                }
-            },function(){
-                this.$notify.error({message: '服务器发生异常'});
+                success: (res) => {
+                    if(res.data.code) {
+                        this.$store.isSignIn = true;
+                        this.$router.push('/dash');
+                        this.$notify({ message:res.data.info, type:'success' });
+                    }else {
+                        this.$notify({ message:res.data.info, type:'warning'});
+                    }
+                },
             });
         },
     }

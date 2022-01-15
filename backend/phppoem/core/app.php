@@ -7,12 +7,16 @@ class app {
      * @return null
      */
     static function start() {
+
         // 公共函数库，公共文件
         self::boot();
 
         // 注册自动加载
         require CORE_PATH . 'load.php';
         load::register();
+
+        //替换请求
+        fetch_request();
 
         // 错误和异常处理
         register_shutdown_function('\poem\app::app_fatal');
@@ -198,7 +202,7 @@ class app {
             _app_halt($e);
             exit;
         }
-        
+
         if (IS_CLI || IS_AJAX) {
             $log_id = log::get_instance()->get_log_id();
             $log_str = iconv('UTF-8', 'gbk', $e['message']) . PHP_EOL .

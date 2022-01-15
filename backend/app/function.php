@@ -150,18 +150,3 @@ if(!function_exists('func_comment')) {
         return $tmp;
     }
 }
-
-if(!function_exists('vue')) {
-
-    /**
-     * Func: vue
-     * User: Force
-     * Date: 2021/9/18
-     * Time: 11:31
-     * Desc: Vue视图渲染
-     */
-    function vue($tpl = '') {
-        \poem\load::instance('poem\view')->display($tpl, 'vue');
-        \poem\app::end();
-    }
-}

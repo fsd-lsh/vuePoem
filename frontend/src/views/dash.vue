@@ -1,10 +1,9 @@
 <!--业务管理 - 面板统计-->
 
 <template>
-    <div id="app">
 
+    <div id="dash">
         <el-card class="box-card">
-
             <el-row :gutter="20">
                 <el-col :span="8" class="dash-item">
                     <div>
@@ -105,10 +104,10 @@
 
             return {
 
-                adminTotal: {},
-                roleTotal: {},
-                menuTotal: {},
-                logTotal: {},
+                adminTotal: [1,2,3],
+                roleTotal: [1,2,3],
+                menuTotal: [1,2,3],
+                logTotal: [1,2,3],
             }
         },
 

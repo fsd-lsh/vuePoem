@@ -24,13 +24,13 @@ function i($key, $is_array = false) {
  * @param  string $param 参数
  * @param  bool $allow_null 是否允许空，默认不允许，不允许时空参数会抛出异常
  * @return mixed
- * 使用方法： gp('name,age') 或 gp('name|姓名,age|年龄') 
+ * 使用方法： gp('name,age') 或 gp('name|姓名,age|年龄')
  * 返回值为：
  * array(
  *     'name' => i('name'),
  *     'age' => i('age'),
  * )
- * 
+ *
  * “,” 分割多个字段
  * “|” 后面是提示内容，如果参数为name空,则会提示 "姓名, 不能为空."
  */
@@ -148,7 +148,7 @@ function json($arr) {
  */
 function ret($code, $info = '', $data = '') {
     return ['code' => $code, 'info' => $info, 'data' => $data];
-} 
+}
 
 function ajax_obj($ret){
     echo json_encode($ret);
@@ -527,4 +527,22 @@ function poem_url($uri) {
             break;
     }
     return POEM_URL . "/$module/$class/$func"; // html文件路径
+}
+
+if(!function_exists('fetch_request')) {
+
+    /**
+     * Func: fetch_request
+     * User: Force
+     * Date: 2022/1/15
+     * Time: 15:49
+     * Desc: 获取请求
+     */
+    function fetch_request() {
+
+        $request = file_get_contents('php://input');
+        $request = json_decode($request, true);
+        $_REQUEST = $request;
+        $_POST = $request;
+    }
 }

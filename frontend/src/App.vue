@@ -5,11 +5,11 @@
         <el-row>
 
             <!--左侧部分（logo、二级菜单）-->
-            <el-col :span="3" id="left">
+            <el-col :span="3" id="left" v-if="this.$store.isSignIn">
 
                 <!--logo-->
                 <div class="logo">
-                    adminPoem2
+                    AdminPoem2
                 </div>
 
                 <!--二级菜单-->
@@ -48,7 +48,7 @@
             </el-col>
 
             <!--右侧部分（一级菜单、路由视图）-->
-            <el-col :span="21" id="right">
+            <el-col :span="this.$store.isSignIn ? 21 : 24" id="right">
 
                 <!--展开收起左侧菜单-->
                 <el-radio-group v-if="0" v-model="isCollapse" style="margin-bottom: 20px;">
@@ -58,6 +58,7 @@
 
                 <!--一级菜单-->
                 <el-menu
+                    v-if="this.$store.isSignIn"
                     :default-active="activeIndex2"
                     class="el-menu-demo"
                     mode="horizontal"
@@ -134,6 +135,10 @@ export default {
                 height: 100%;
                 background: #545c64;
 
+                > .el-menu {
+                    border: none;
+                }
+
                 > .logo {
                     width: 100%;
                     height: 60px;
@@ -173,6 +178,13 @@ export default {
                     li.el-menu-item {
                         font-size: .8rem;
                     }
+                }
+            }
+
+            #right {
+
+                > .el-menu {
+                    border: none;
                 }
             }
         }
