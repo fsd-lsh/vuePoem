@@ -26,5 +26,17 @@ export default {
                 }
             });
         },
+
+        //加载菜单
+        loadMenu() {
+
+            this.poemRequest({
+                type: 'get',
+                url: '/admin/menu/load',
+                success: (res) => {
+                    this.$store.commit('setMenuTree', res.data.data);
+                },
+            });
+        },
     },
 }

@@ -276,15 +276,15 @@ class menu extends component\login {
     }
 
     /**
-     * Func: system_init
+     * Func: load
      * User: Force
-     * Date: 2021/4/4
-     * Time: 19:05
-     * Desc: 获取菜单初始化数据
+     * Date: 2022/1/15
+     * Time: 17:00
+     * Desc: 加载菜单
      */
-    public function system_init() {
+    public function load() {
 
-        $systemInit = [
+        $menu = [
             'homeInfo' => [
                 'title' => '面板统计',
                 'href'  => '/admin/dash/main',
@@ -296,8 +296,7 @@ class menu extends component\login {
             'menuInfo' => $this->get_menu_list(),
         ];
 
-        echo json_encode($systemInit);
-        exit;
+        ajax(1, '加载菜单成功', $menu);
     }
 
     /**
@@ -435,7 +434,7 @@ class menu extends component\login {
                         unset($method[$key]);
                         continue;
                     }
-                    if($controller == 'menu' && $func['name'] == 'system_init') {
+                    if($controller == 'menu' && $func['name'] == 'load') {
                         unset($method[$key]);
                         continue;
                     }

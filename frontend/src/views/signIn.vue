@@ -18,6 +18,7 @@
 <script>
 
 import helper from '../mixins/helper';
+
 export default {
 
     name: 'signIn',
@@ -32,10 +33,6 @@ export default {
 
     created() {
 
-        let sysBgCache = sessionStorage.getItem('layuiminiBgcolorId');
-        if(!sysBgCache) {
-            sessionStorage.setItem('layuiminiBgcolorId', 3);
-        }
     },
 
     methods: {
@@ -59,8 +56,9 @@ export default {
                     password: this.form.pwd,
                 },
                 success: (res) => {
-                    if(res.data.code) {
-                        this.$store.isSignIn = true;
+                    if(res.data.code === 1) {
+                        this.loadMenu();
+                        this.$store.commit('changeSignInState', true);
                         this.$router.push('/dash');
                         this.$notify({ message:res.data.info, type:'success' });
                     }else {

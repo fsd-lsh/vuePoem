@@ -5,7 +5,7 @@
         <el-row>
 
             <!--左侧部分（logo、二级菜单）-->
-            <el-col :span="3" id="left" v-if="this.$store.isSignIn">
+            <el-col :span="3" id="left" v-if="this.$store.state.isSignIn">
 
                 <!--logo-->
                 <div class="logo">
@@ -14,41 +14,55 @@
 
                 <!--二级菜单-->
                 <el-menu
-                    default-active="1-4-1"
+                    default-active="1-2-1"
                     class="menu-level-2"
                     @open="handleOpen"
                     @close="handleClose"
                     background-color="#545c64"
                     text-color="#fff"
                     :collapse="isCollapse">
-                    <el-submenu index="1">
-                        <template slot="title">
-                            <i class="el-icon-location"></i>
-                            <span slot="title">导航一</span>
-                        </template>
-                        <el-menu-item-group>
-                            <el-menu-item index="1-1">选项1</el-menu-item>
-                            <el-menu-item index="1-2">选项2</el-menu-item>
-                            <el-menu-item index="1-3">选项3</el-menu-item>
-                        </el-menu-item-group>
-                    </el-submenu>
-                    <el-menu-item index="2">
-                        <i class="el-icon-menu"></i>
-                        <span slot="title">导航二</span>
-                    </el-menu-item>
-                    <el-menu-item index="3" disabled>
-                        <i class="el-icon-document"></i>
-                        <span slot="title">导航三</span>
-                    </el-menu-item>
-                    <el-menu-item index="4">
-                        <i class="el-icon-setting"></i>
-                        <span slot="title">导航四</span>
-                    </el-menu-item>
+
+
+                    <div
+                        v-for="(item, key) in this.subMenuTree.child"
+                        :key="key">
+
+                        <!--多级-->
+                        <el-submenu
+                            v-if="item.child"
+                            :index="item.id">
+                            <template
+                                slot="title">
+                                <i :class="item.icon"></i>
+                                <span slot="title">&nbsp;&nbsp;&nbsp;{{item.title}}</span>
+                            </template>
+                            <el-menu-item-group>
+                                <el-menu-item
+                                    v-for="(s_item, s_key) in item.child"
+                                    :key="s_key"
+                                    :index="s_item.pid + '-' + s_item.id">
+                                    {{s_item.title}}
+                                </el-menu-item>
+                            </el-menu-item-group>
+                        </el-submenu>
+
+                        <!--单级-->
+                        <el-menu-item
+                            v-if="!item.child"
+                            :key="key"
+                            :index="item.id">
+                            <i :class="item.icon"></i>
+                            <span
+                                slot="title">
+                                &nbsp;&nbsp;&nbsp;{{item.title}}
+                            </span>
+                        </el-menu-item>
+                    </div>
                 </el-menu>
             </el-col>
 
             <!--右侧部分（一级菜单、路由视图）-->
-            <el-col :span="this.$store.isSignIn ? 21 : 24" id="right">
+            <el-col :span="this.$store.state.isSignIn ? 21 : 24" id="right">
 
                 <!--展开收起左侧菜单-->
                 <el-radio-group v-if="0" v-model="isCollapse" style="margin-bottom: 20px;">
@@ -58,16 +72,20 @@
 
                 <!--一级菜单-->
                 <el-menu
-                    v-if="this.$store.isSignIn"
-                    :default-active="activeIndex2"
+                    v-if="this.$store.state.isSignIn"
+                    :default-active="activeIndex"
                     class="el-menu-demo"
                     mode="horizontal"
-                    @select="handleSelect"
+                    @select="menuHandleSelect"
                     background-color="#545c64"
                     text-color="#fff"
                     active-text-color="#ffd04b">
-                    <el-menu-item index="1">业务管理</el-menu-item>
-                    <el-menu-item index="2">系统管理</el-menu-item>
+                    <el-menu-item
+                        v-for="(item, key) in this.$store.state.menuTree.menuInfo"
+                        :key="item.id"
+                        :index="item.id">
+                        {{item.title}}
+                    </el-menu-item>
                 </el-menu>
 
                 <!--路由视图-->
@@ -91,21 +109,67 @@ export default {
         return {
             isCollapse: false,
             activeIndex: '1',
-            activeIndex2: '1',
+            subMenuTree: {},
         }
     },
 
+    beforeCreate() {
+
+        //Vuex State 预定义
+        this.$store.replaceState(
+
+            Object.assign({},
+                this.$store.state,
+                {
+
+                    //登录状态
+                    isSignIn: false,
+
+                    //菜单树
+                    menuTree: {},
+                }
+            )
+        );
+    },
+
+    created() {
+
+        //页面每次刷新加载时候都会去读取sessionStorage里面的vuex状态
+        if (sessionStorage.getItem("store")) {
+            this.$store.replaceState(
+                Object.assign({},
+                    this.$store.state,
+                    JSON.parse(sessionStorage.getItem("store")) //这里存的是可能经过mutions处理过的state值，是最新的,所以放在最后
+                )
+            )
+        }
+
+        // 在页面刷新之前把vuex中的信息存到sessionStorage
+        window.addEventListener("pagehide", () => {
+            sessionStorage.setItem("store", JSON.stringify(this.$store.state));
+        });
+    },
+
     methods: {
+
+        //一级菜单点击回调
+        menuHandleSelect(tree_key) {
+
+            //刷新下级菜单
+            let menuTree = this.$store.state.menuTree.menuInfo;
+            for (let key = 0; key < menuTree.length; key++) {
+                if(menuTree[key].id === tree_key) {
+                    this.subMenuTree = menuTree[key];
+                    break;
+                }
+            }
+        },
 
         handleOpen(key, keyPath) {
             console.log(key, keyPath);
         },
 
         handleClose(key, keyPath) {
-            console.log(key, keyPath);
-        },
-
-        handleSelect(key, keyPath) {
             console.log(key, keyPath);
         },
     },

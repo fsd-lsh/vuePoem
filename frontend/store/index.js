@@ -7,11 +7,20 @@ Vue.use(Vuex)
 //创建VueX对象
 const store = new Vuex.Store({
 
-    state: {
+    state: {},
 
-        //登录状态
-        isSignIn: false,
-    }
+    mutations: {
+
+        //修改登录状态
+        changeSignInState(state, bool) {
+            state.isSignIn = bool;
+        },
+
+        //设置菜单树
+        setMenuTree(state, bool) {
+            state.menuTree = bool;
+        },
+    },
 })
 
 export default store;

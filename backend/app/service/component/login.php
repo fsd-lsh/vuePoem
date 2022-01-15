@@ -262,7 +262,7 @@ class login {
         $menu_path = array_merge($menu_path, [
             '/admin/dash',
             '/admin/dash/user_info',
-            '/admin/menu/system_init'
+            '/admin/menu/load',
         ]);
 
         //检查用户权限
