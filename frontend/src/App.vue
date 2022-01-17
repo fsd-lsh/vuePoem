@@ -21,8 +21,6 @@
                     background-color="#545c64"
                     text-color="#fff"
                     :collapse="isCollapse">
-
-
                     <div
                         v-for="(item, key) in this.subMenuTree.child"
                         :key="key">
@@ -38,6 +36,7 @@
                             </template>
                             <el-menu-item-group>
                                 <el-menu-item
+                                    @click="openMenu(s_item)"
                                     v-for="(s_item, s_key) in item.child"
                                     :key="s_key"
                                     :index="s_item.pid + '-' + s_item.id">
@@ -48,6 +47,7 @@
 
                         <!--单级-->
                         <el-menu-item
+                            @click="openMenu(item)"
                             v-if="!item.child"
                             :key="key"
                             :index="item.id">
@@ -62,7 +62,12 @@
             </el-col>
 
             <!--右侧部分（一级菜单、路由视图）-->
-            <el-col :span="this.$store.state.isSignIn ? 21 : 24" id="right">
+            <el-col
+                :span="this.$store.state.isSignIn ? 21 : 24"
+                :class="{
+                    'inner-view': this.$store.state.isSignIn,
+                }"
+                id="right">
 
                 <!--展开收起左侧菜单-->
                 <el-radio-group v-if="0" v-model="isCollapse" style="margin-bottom: 20px;">
@@ -86,6 +91,32 @@
                         :index="item.id">
                         {{item.title}}
                     </el-menu-item>
+                    <el-menu-item
+                        @click="openTools('themePanel')"
+                        class="pull-right">
+                        <i class="fa fa-ellipsis-v"></i>
+                    </el-menu-item>
+                    <el-submenu
+                        index="2"
+                        class="pull-right">
+                        <template slot="title">userName</template>
+                        <el-menu-item
+                            @click="openTools('modAccount')"
+                            index="2-1">修改账户</el-menu-item>
+                        <el-menu-item
+                            @click="openTools('signOut')"
+                            index="2-2">退出登录</el-menu-item>
+                    </el-submenu>
+                    <el-menu-item
+                        @click="openTools('fullScreen')"
+                        class="pull-right">
+                        <i class="fa fa-arrows-alt"></i>
+                    </el-menu-item>
+                    <el-menu-item
+                        @click="openTools('clean')"
+                        class="pull-right">
+                        <i class="fa fa-trash-o"></i>
+                    </el-menu-item>
                 </el-menu>
 
                 <!--路由视图-->
@@ -101,9 +132,13 @@
 
 <script>
 
+import helper from "./mixins/helper";
+
 export default {
 
     name: 'App',
+
+    mixins: [helper],
 
     data() {
         return {
@@ -141,7 +176,7 @@ export default {
                     this.$store.state,
                     JSON.parse(sessionStorage.getItem("store")) //这里存的是可能经过mutions处理过的state值，是最新的,所以放在最后
                 )
-            )
+            );
         }
 
         // 在页面刷新之前把vuex中的信息存到sessionStorage
@@ -151,6 +186,44 @@ export default {
     },
 
     methods: {
+
+        //切换页面
+        openMenu(item) {
+            this.$router.push(item.href);
+        },
+
+        //工具租
+        openTools(type) {
+
+            switch (type) {
+
+                case 'clean': { break; }
+
+                case 'fullScreen': { break; }
+
+                case 'modAccount': { break; }
+
+                //注销系统
+                case 'signOut': {
+                    this.poemRequest({
+                        type: 'post',
+                        url: '/admin?api=sign_out',
+                        success: (res) => {
+                            if(res.data.code === 1) {
+                                this.$store.commit('changeSignInState', false);
+                                this.$router.push(res.data.data);
+                                this.$notify({ message:res.data.info, type:'success' });
+                            }else {
+                                this.$notify({ message:res.data.info, type:'warning'});
+                            }
+                        },
+                    });
+                    break;
+                }
+
+                case 'themePanel': { break; }
+            }
+        },
 
         //一级菜单点击回调
         menuHandleSelect(tree_key) {
@@ -247,8 +320,17 @@ export default {
 
             #right {
 
+                &.inner-view {
+                    height: 100%;
+                    background: #fff;
+                }
+
                 > .el-menu {
                     border: none;
+                }
+
+                > div:nth-child(2) {
+                    padding: 1%;
                 }
             }
         }
@@ -275,5 +357,13 @@ export default {
     .menu-level-2:not(.el-menu--collapse) {
         min-height: 400px;
         width: 100%;
+    }
+
+    .el-menu-item-group__title {
+        padding: 0;
+    }
+
+    .pull-right {
+        float: right!important;
     }
 </style>

@@ -21,6 +21,14 @@ const store = new Vuex.Store({
             state.menuTree = bool;
         },
     },
+
+    getters:{
+
+        //获取菜单树
+        getMenuTree(state) {
+            return state.menuTree;
+        },
+    },
 })
 
 export default store;

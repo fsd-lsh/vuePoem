@@ -149,10 +149,10 @@ class login {
 
         switch ($this->user_type) {
             case 'user': { $url = '/'; break; }
-            case 'admin': { $url = '/admin'; break; }
+            case 'admin': { $url = '/'; break; }
         }
         session($this->user_type.'_info', NULL);
-        ok_jump('注销登录成功', $url, '', 2);
+        ajax(1, '注销登陆成功', $url);
     }
 
     /**
