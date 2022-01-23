@@ -260,9 +260,9 @@ class login {
         $menu_path = array_filter($menu_path);
         $menu_path = array_unique($menu_path);
         $menu_path = array_merge($menu_path, [
-            '/admin/dash',
-            '/admin/dash/user_info',
-            '/admin/menu/load',
+            '/dash',
+            '/dash/user_info',
+            '/menu/load',
         ]);
 
         //检查用户权限
@@ -274,6 +274,8 @@ class login {
                 err_jump('您的请求无效', '/admin', '', 0);
             }
         }
+
+        $url_path = str_replace('/admin', '', $url_path);
         if(!in_array($url_path, $menu_path)) {
             if($this->is_api) {
                 ajax(0, '您没有访问权限');

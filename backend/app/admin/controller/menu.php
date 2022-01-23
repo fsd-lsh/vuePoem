@@ -180,99 +180,102 @@ class menu extends component\login {
                     ajax(0, '加载菜单失败');
                 }
             },
-        ]);
 
-        //数据格式化
-        $menu_config = [];
-        function formatting(&$data, &$menu_config) {
+            //列表
+            'lists' => function() {
 
-            if(empty($data) || !is_array($data)) {
-                return false;
-            }
+                //数据格式化
+                $menu_config = [];
+                function formatting(&$data, &$menu_config) {
 
-            $temp = [];
-            foreach ($data as $key => $item) {
+                    if(empty($data) || !is_array($data)) {
+                        return false;
+                    }
 
-                $now_data = [
-                    'id' => $item['id'],
-                    'pid' => $item['pid'],
-                    'title' => $item['title'],
-                    'icon' => $item['icon'],
-                    'href' => $item['href'],
-                    'target' => $item['target'],
-                    'sort' => $item['sort'],
-                    'status' => $item['status'],
-                    'status_mean' => config('menu_status')[$item['status']],
-                    'lock' => ($item['lock'] == 1) ? '有锁' : '无锁',
-                    'show' => ($item['show'] == 1) ? '显示' : '隐藏',
-                    'remark' => $item['remark'],
-                    'ctime' => $item['ctime'] ? date('Y-m-d H:i:s', $item['ctime']) : '',
-                    'utime' => $item['utime'] ? date('Y-m-d H:i:s', $item['utime']) : '',
-                    'dtime' => $item['dtime'] ? date('Y-m-d H:i:s', $item['dtime']) : '',
-                ];
+                    $temp = [];
+                    foreach ($data as $key => $item) {
 
-                $temp[] = $now_data;
+                        $now_data = [
+                            'id' => $item['id'],
+                            'pid' => $item['pid'],
+                            'title' => $item['title'],
+                            'icon' => $item['icon'],
+                            'href' => $item['href'],
+                            'target' => $item['target'],
+                            'sort' => $item['sort'],
+                            'status' => $item['status'],
+                            'status_mean' => config('menu_status')[$item['status']],
+                            'lock' => ($item['lock'] == 1) ? '有锁' : '无锁',
+                            'show' => ($item['show'] == 1) ? '显示' : '隐藏',
+                            'remark' => $item['remark'],
+                            'ctime' => $item['ctime'] ? date('Y-m-d H:i:s', $item['ctime']) : '',
+                            'utime' => $item['utime'] ? date('Y-m-d H:i:s', $item['utime']) : '',
+                            'dtime' => $item['dtime'] ? date('Y-m-d H:i:s', $item['dtime']) : '',
+                        ];
 
-                array_push($menu_config, $now_data);
-            }
-            $data = $temp;
-        }
+                        $temp[] = $now_data;
 
-        //加载菜单
-        $menu = m('sys_menu')
-            ->field('*')
-            ->where([
-                'pid' => 0,
-            ])
-            ->where('status != 0')
-            ->select();
-        formatting($menu, $menu_config);
-        if(is_array($menu) && !empty($menu)) {
+                        array_push($menu_config, $now_data);
+                    }
+                    $data = $temp;
+                }
 
-            $pids = array_column($menu, 'id');
-            $sub_menu = m()
-                ->query("select * from poem_sys_menu where pid in (" . implode(',', $pids) . ") and status != 0");
-            formatting($sub_menu, $menu_config);
-            $sub_pids = array_column($sub_menu, 'id');
-            $sub_menu = array_group_by($sub_menu, 'pid');
-            $sub_menu2 = m()
-                ->query("select * from poem_sys_menu where pid in (" . implode(',', $sub_pids) . ") and status != 0");
-            formatting($sub_menu2, $menu_config);
-            $sub_menu2 = array_group_by($sub_menu2, 'pid');
+                //加载菜单
+                $menu = m('sys_menu')
+                    ->field('*')
+                    ->where([
+                        'pid' => 0,
+                    ])
+                    ->where('status != 0')
+                    ->select();
+                formatting($menu, $menu_config);
+                if(is_array($menu) && !empty($menu)) {
 
-            foreach($menu as $key => $item) {
-                if($sub_menu[$item['id']]) {
-                    $menu[$key]['children'] = $sub_menu[$item['id']];
-                    foreach ($menu[$key]['children'] as $s_key => $s_item) {
-                        if($sub_menu2[$s_item['id']]) {
-                            $menu[$key]['children'][$s_key]['children'] = $sub_menu2[$s_item['id']];
+                    $pids = array_column($menu, 'id');
+                    $sub_menu = m()
+                        ->query("select * from poem_sys_menu where pid in (" . implode(',', $pids) . ") and status != 0");
+                    formatting($sub_menu, $menu_config);
+                    $sub_pids = array_column($sub_menu, 'id');
+                    $sub_menu = array_group_by($sub_menu, 'pid');
+                    $sub_menu2 = m()
+                        ->query("select * from poem_sys_menu where pid in (" . implode(',', $sub_pids) . ") and status != 0");
+                    formatting($sub_menu2, $menu_config);
+                    $sub_menu2 = array_group_by($sub_menu2, 'pid');
+
+                    foreach($menu as $key => $item) {
+                        if($sub_menu[$item['id']]) {
+                            $menu[$key]['children'] = $sub_menu[$item['id']];
+                            foreach ($menu[$key]['children'] as $s_key => $s_item) {
+                                if($sub_menu2[$s_item['id']]) {
+                                    $menu[$key]['children'][$s_key]['children'] = $sub_menu2[$s_item['id']];
+                                }
+                            }
                         }
                     }
                 }
-            }
-        }
 
-        //加载字体图标
-        $fontawesome = file_get_contents(realpath(__DIR__.'/../../../public/static/other/fontawesome.json'));
-        $fontawesome = json_decode($fontawesome, true);
-        if(is_array($fontawesome) && !empty($fontawesome)) {
-            $fontawesome = array_keys($fontawesome);
-            foreach ($fontawesome as $key => $item) {
-                $fontawesome[$key] = 'fa ' . str_replace('_', '-', $item);
-            }
-        }
+                //加载字体图标
+                $fontawesome = file_get_contents(realpath(__DIR__.'/../../../public/static/other/fontawesome.json'));
+                $fontawesome = json_decode($fontawesome, true);
+                if(is_array($fontawesome) && !empty($fontawesome)) {
+                    $fontawesome = array_keys($fontawesome);
+                    foreach ($fontawesome as $key => $item) {
+                        $fontawesome[$key] = 'fa ' . str_replace('_', '-', $item);
+                    }
+                }
 
-        //构建后台菜单链接
-        $link_config = $this->build_menu_link();
+                //构建后台菜单链接
+                $link_config = $this->build_menu_link();
 
-        //渲染视图
-        assign([
-            'lists' => json_encode($menu),
-            'menu_config' => json_encode($menu_config),
-            'fontawesome_config' => json_encode($fontawesome),
-            'link_config' => json_encode($link_config),
+                //响应
+                ajax(1, '加载完成', [
+                    'lists' => $menu,
+                    'menu_config' => $menu_config,
+                    'fontawesome_config' => $fontawesome,
+                    'link_config' => $link_config,
+                ]);
+            },
         ]);
-        vue();
     }
 
     /**

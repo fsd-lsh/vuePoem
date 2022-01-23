@@ -183,6 +183,11 @@ export default {
         window.addEventListener("pagehide", () => {
             sessionStorage.setItem("store", JSON.stringify(this.$store.state));
         });
+
+        //加载菜单
+        if(this.$store.state.isSignIn) {
+            this.menuHandleSelect(1);
+        }
     },
 
     methods: {
@@ -231,7 +236,7 @@ export default {
             //刷新下级菜单
             let menuTree = this.$store.state.menuTree.menuInfo;
             for (let key = 0; key < menuTree.length; key++) {
-                if(menuTree[key].id === tree_key) {
+                if(parseInt(menuTree[key].id) === parseInt(tree_key)) {
                     this.subMenuTree = menuTree[key];
                     break;
                 }
@@ -251,7 +256,7 @@ export default {
 
 <style>
     #app {
-        font-family: 'Avenir', Helvetica, Arial, sans-serif;
+        font-family: "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
         text-align: center;
