@@ -59,7 +59,8 @@ export default {
                     if(res.data.code === 1) {
                         this.loadMenu();
                         this.$store.commit('changeSignInState', true);
-                        this.$router.push('/dash');
+                        this.$router.push(res.data.data.url);
+                        sessionStorage.setItem('username', res.data.data.name);
                         this.$notify({ message:res.data.info, type:'success' });
                     }else {
                         this.$notify({ message:res.data.info, type:'warning'});

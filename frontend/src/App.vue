@@ -99,7 +99,7 @@
                     <el-submenu
                         index="2"
                         class="pull-right">
-                        <template slot="title">userName</template>
+                        <template slot="title">{{username}}</template>
                         <el-menu-item
                             @click="openTools('modAccount')"
                             index="2-1">修改账户</el-menu-item>
@@ -110,7 +110,12 @@
                     <el-menu-item
                         @click="openTools('fullScreen')"
                         class="pull-right">
-                        <i class="fa fa-arrows-alt"></i>
+                        <el-tooltip class="item" effect="dark" content="全屏展开" placement="bottom">
+                            <i v-if="!iFullscreen" class="fa fa-arrows-alt"></i>
+                        </el-tooltip>
+                        <el-tooltip class="item" effect="dark" content="全屏收起" placement="bottom">
+                            <i v-if="iFullscreen" class="fa fa-compress"></i>
+                        </el-tooltip>
                     </el-menu-item>
                     <el-menu-item
                         @click="openTools('clean')"
@@ -145,6 +150,8 @@ export default {
             isCollapse: false,
             activeIndex: '1',
             subMenuTree: {},
+            username: '',
+            iFullscreen: false,
         }
     },
 
@@ -188,6 +195,9 @@ export default {
         if(this.$store.state.isSignIn) {
             this.menuHandleSelect(1);
         }
+
+        //写入用户信息
+        this.username = sessionStorage.getItem('username');
     },
 
     methods: {
@@ -202,11 +212,63 @@ export default {
 
             switch (type) {
 
-                case 'clean': { break; }
+                //清理缓存
+                case 'clean': {
+                    this.poemRequest({
+                        type: 'post',
+                        url: '/admin/dash?api=clear_cache',
+                        success: (res) => {
+                            if(res.data.code === 1) {
+                                this.$notify({ message:res.data.info, type:'success' });
+                            }else {
+                                this.$notify({ message:res.data.info, type:'warning'});
+                            }
+                        },
+                    });
+                    break;
+                }
 
-                case 'fullScreen': { break; }
+                //全屏
+                case 'fullScreen': {
 
-                case 'modAccount': { break; }
+                    let fullscreenEnabled = document.fullscreenEnabled ||
+                        document.mozFullScreenEnabled ||
+                        document.webkitFullscreenEnabled ||
+                        document.msFullscreenEnabled;
+
+                    if (fullscreenEnabled) {
+                        let de = document.documentElement;
+                        if (this.iFullscreen) {
+                            //关闭全屏
+                            if (document.exitFullscreen) {
+                                document.exitFullscreen();
+                            }else if (document.mozCancelFullScreen) {
+                                document.mozCancelFullScreen();
+                            }else if (document.webkitCancelFullScreen) {
+                                document.webkitCancelFullScreen();
+                            }
+                            this.iFullscreen = false;
+                        } else {
+                            //打开全屏
+                            if (de.requestFullscreen) {
+                                de.requestFullscreen();
+                            }else if (de.mozRequestFullScreen) {
+                                de.mozRequestFullScreen();
+                            }else if (de.webkitRequestFullScreen) {
+                                de.webkitRequestFullScreen();
+                            }
+                            this.iFullscreen = true;
+                        }
+                    }else {
+                        this.$notify({ message:'浏览器当前不能全屏', type:'warning'});
+                    }
+                    break;
+                }
+
+                //修改账号信息
+                case 'modAccount': {
+                    break;
+                }
 
                 //注销系统
                 case 'signOut': {
@@ -226,7 +288,10 @@ export default {
                     break;
                 }
 
-                case 'themePanel': { break; }
+                //主题面板
+                case 'themePanel': {
+                    break;
+                }
             }
         },
 

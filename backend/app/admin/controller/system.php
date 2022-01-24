@@ -54,8 +54,5 @@ class system extends component\login {
                 ajax(1, '加载成功', $data);
             }
         ]);
-
-        //渲染视图
-        vue();
     }
 }

@@ -8,9 +8,8 @@ namespace service\component;
  */
 class login {
 
-    private $user_info = NULL;
-    private $user_type = NULL;
-    private $is_api = NULL;
+    private $user_info;
+    private $user_type;
 
     /**
      * login constructor.
@@ -22,9 +21,6 @@ class login {
         $this->user_type = $user_type;
         $this->user_info = session($this->user_type.'_info');
 
-        //响应识别
-        $this->is_api = i('api') ? true : false;
-
         //登录检测
         if($check_login) {
 
@@ -34,12 +30,7 @@ class login {
             }
 
             if(!$this->check_login()) {
-
-                if($this->is_api) {
-                    ajax(0, '您未登录', $url);
-                }else {
-                    err_jump( '您未登录', $url, '', 3);
-                }
+                ajax(0, '您未登录', $url);
             }
 
             $this->authentication();
@@ -69,18 +60,10 @@ class login {
 
         //检查请求
         if(empty(i('username'))) {
-            if($this->is_api) {
-                ajax(0, '请输入账号');
-            }else {
-                err_jump( '请输入账号', '', '', 3);
-            }
+            ajax(0, '请输入账号');
         }
         if(empty(i('password'))) {
-            if($this->is_api) {
-                ajax(0, '请输入密码');
-            }else {
-                err_jump( '请输入密码', '', '', 3);
-            }
+            ajax(0, '请输入密码');
         }
 
         //获取账号信息
@@ -95,20 +78,12 @@ class login {
             ])
             ->find();
         if(empty($user_info)) {
-            if($this->is_api) {
-                ajax(0, '账号不存在或已被冻结');
-            }else {
-                err_jump( '账号不存在或已被冻结', '', '', 3);
-            }
+            ajax(0, '账号不存在或已被冻结');
         }
 
         //检查密码
         if(!password_verify(i('password'), $user_info['password'])) {
-            if($this->is_api) {
-                ajax(0, '密码错误');
-            }else {
-                err_jump( '密码错误', '', '', 3);
-            }
+            ajax(0, '密码错误');
         }
 
         //写入登录信息
@@ -117,14 +92,13 @@ class login {
         //登录跳转至后台
         switch ($this->user_type) {
             case 'user': { $url = '/'; break; }
-            case 'admin': { $url = '/admin/dash'; break; }
+            case 'admin': { $url = '/dash'; break; }
         }
         $this->log('用户'.$_SESSION['admin_info']['name'].', 登录成功');
-        if($this->is_api) {
-            ajax(1, '登录成功', $url);
-        }else {
-            ok_jump( '登录成功', $url, '', 3);
-        }
+        ajax(1, '登录成功', [
+            'url' => $url,
+            'name' => $_SESSION['admin_info']['name'],
+        ]);
     }
 
     /**
@@ -195,18 +169,10 @@ class login {
             ])
             ->find();
         if(!$user_info) {
-            if($this->is_api) {
-                ajax(0, '您的账号不存在或已被冻结');
-            }else {
-                err_jump('您的账号不存在或已被冻结', '/admin', '', 0);
-            }
+            ajax(0, '您的账号不存在或已被冻结');
         }
         if(!$user_info['roles']) {
-            if($this->is_api) {
-                ajax(0, '您的账号没有系统角色，请联系系统管理员分配后再试');
-            }else {
-                err_jump('您的账号没有系统角色，请联系系统管理员分配后再试', '/admin', '', 0);
-            }
+            ajax(0, '您的账号没有系统角色，请联系系统管理员分配后再试');
         }
 
         //获取用户角色
@@ -217,11 +183,7 @@ class login {
             ])
             ->select();
         if(!is_array($role_info) || empty($role_info)) {
-            if($this->is_api) {
-                ajax(0, '您的角色不存在');
-            }else {
-                err_jump('您的角色不存在', '/admin', '', 0);
-            }
+            ajax(0, '您的角色不存在');
         }
 
         //获取菜单权限
@@ -231,11 +193,7 @@ class login {
             $menu_ids = array_merge($menu_ids, $item['menu_ids']);
         }
         if(!is_array($menu_ids) || empty($menu_ids)) {
-            if($this->is_api) {
-                ajax(0, '角色没有配置菜单权限');
-            }else {
-                err_jump('角色没有配置菜单权限', '/admin', '', 0);
-            }
+            ajax(0, '角色没有配置菜单权限');
         }
         $menu_ids = array_filter($menu_ids);
         $menu_ids = array_unique($menu_ids);
@@ -248,11 +206,7 @@ class login {
             ])
             ->select();
         if(!is_array($menu_info) || empty($menu_info)) {
-            if($this->is_api) {
-                ajax(0, '您权限内菜单不存在或无效');
-            }else {
-                err_jump('您权限内菜单不存在或无效', '/admin', '', 0);
-            }
+            ajax(0, '您权限内菜单不存在或无效');
         }
 
         //组装访问白名单
@@ -268,20 +222,12 @@ class login {
         //检查用户权限
         $url_path = $_SERVER['PATH_INFO'];
         if(!$url_path) {
-            if($this->is_api) {
-                ajax(0, '您的请求无效');
-            }else {
-                err_jump('您的请求无效', '/admin', '', 0);
-            }
+            ajax(0, '您的请求无效');
         }
 
         $url_path = str_replace('/admin', '', $url_path);
         if(!in_array($url_path, $menu_path)) {
-            if($this->is_api) {
-                ajax(0, '您没有访问权限');
-            }else {
-                err_jump('您没有访问权限', '/admin', '', 'stop');
-            }
+            ajax(0, '您没有访问权限');
         }
     }
 

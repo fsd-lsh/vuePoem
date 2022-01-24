@@ -444,9 +444,9 @@ class menu extends component\login {
 
                     //link
                     if($func['name'] == 'index') {
-                        $link = '/admin/' . $controller;
+                        $link = '/' . $controller;
                     }else {
-                        $link = '/admin/' . $controller . '/' . $func['name'];
+                        $link = '/' . $controller . '/' . $func['name'];
                     }
 
                     //comment

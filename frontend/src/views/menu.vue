@@ -189,7 +189,7 @@
                 <el-form-item label="显性">
                     <el-switch
                         v-model="form.show"
-                        style="padding:6px 0 0 0;"
+                        style="padding:6px 0 0 0; float:left;"
                         active-value="1"
                         inactive-value="0"
                         active-color="#13ce66"
@@ -290,7 +290,7 @@
                 <el-form-item label="显性">
                     <el-switch
                         v-model="editForm.show"
-                        style="padding:6px 0 0 0;"
+                        style="padding:6px 0 0 0; float:left;"
                         active-value="1"
                         inactive-value="0"
                         active-color="#13ce66"

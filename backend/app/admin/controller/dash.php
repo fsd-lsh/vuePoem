@@ -37,13 +37,13 @@ class dash extends component\login {
 
                 $info = '执行清理缓存完成';
 
-                if(file_exists($cache_view)) {
-                    exec('rm -rf ' . $cache_view);
-                    unlink($cache_view);
-                    $info .= '，视图缓存清理成功';
-                }else {
-                    $info .= '，视图缓存清理失败';
-                }
+//                if(file_exists($cache_view)) {
+//                    exec('rm -rf ' . $cache_view);
+//                    unlink($cache_view);
+//                    $info .= '，视图缓存清理成功';
+//                }else {
+//                    $info .= '，视图缓存清理失败';
+//                }
 
                 if(file_exists($cache_log)) {
                     exec('rm -rf ' . $cache_log);
@@ -53,12 +53,9 @@ class dash extends component\login {
                     $info .= '，日志缓存清理失败';
                 }
 
-                echo json_encode(['code' => 1, 'msg' => $info]); exit;
+                ajax(1, $info);
             },
         ]);
-
-        //渲染视图
-        v();
     }
 
     /**
