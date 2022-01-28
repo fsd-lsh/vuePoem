@@ -14,7 +14,7 @@
 
                 <!--二级菜单-->
                 <el-menu
-                    default-active="1-2-1"
+                    :default-active="activeSubIndex"
                     class="menu-level-2"
                     @open="handleOpen"
                     @close="handleClose"
@@ -32,7 +32,7 @@
                             <template
                                 slot="title">
                                 <i :class="item.icon"></i>
-                                <span slot="title">&nbsp;&nbsp;&nbsp;{{item.title}}</span>
+                                <span slot="title">&nbsp;&nbsp;&nbsp;{{ item.title }}</span>
                             </template>
                             <el-menu-item-group>
                                 <el-menu-item
@@ -40,7 +40,7 @@
                                     v-for="(s_item, s_key) in item.child"
                                     :key="s_key"
                                     :index="s_item.pid + '-' + s_item.id">
-                                    {{s_item.title}}
+                                    {{ s_item.title }}
                                 </el-menu-item>
                             </el-menu-item-group>
                         </el-submenu>
@@ -54,7 +54,7 @@
                             <i :class="item.icon"></i>
                             <span
                                 slot="title">
-                                &nbsp;&nbsp;&nbsp;{{item.title}}
+                                &nbsp;&nbsp;&nbsp;{{ item.title }}
                             </span>
                         </el-menu-item>
                     </div>
@@ -89,7 +89,7 @@
                         v-for="(item, key) in this.$store.state.menuTree.menuInfo"
                         :key="item.id"
                         :index="item.id">
-                        {{item.title}}
+                        {{ item.title }}
                     </el-menu-item>
                     <el-menu-item
                         @click="openTools('themePanel')"
@@ -99,13 +99,15 @@
                     <el-submenu
                         index="2"
                         class="pull-right">
-                        <template slot="title">{{username}}</template>
+                        <template slot="title">{{ username }}</template>
                         <el-menu-item
                             @click="openTools('modAccount')"
-                            index="2-1">修改账户</el-menu-item>
+                            index="2-1">修改账户
+                        </el-menu-item>
                         <el-menu-item
                             @click="openTools('signOut')"
-                            index="2-2">退出登录</el-menu-item>
+                            index="2-2">退出登录
+                        </el-menu-item>
                     </el-submenu>
                     <el-menu-item
                         @click="openTools('fullScreen')"
@@ -149,6 +151,9 @@ export default {
         return {
             isCollapse: false,
             activeIndex: '1',
+            activeSubIndex: '0',
+            pid: 0,
+            id: 0,
             subMenuTree: {},
             username: '',
             iFullscreen: false,
@@ -159,7 +164,6 @@ export default {
 
         //Vuex State 预定义
         this.$store.replaceState(
-
             Object.assign({},
                 this.$store.state,
                 {
@@ -191,13 +195,21 @@ export default {
             sessionStorage.setItem("store", JSON.stringify(this.$store.state));
         });
 
-        //加载菜单
-        if(this.$store.state.isSignIn) {
-            this.menuHandleSelect(1);
+        //定位menu active
+        if (this.$store.state.isSignIn) {
+            this.positionMenu();
         }
 
         //写入用户信息
         this.username = sessionStorage.getItem('username');
+    },
+
+    updated() {
+
+        //定位menu active
+        if(this.pid !== this.activeIndex) {
+            this.positionMenu();
+        }
     },
 
     methods: {
@@ -207,7 +219,7 @@ export default {
             this.$router.push(item.href);
         },
 
-        //工具租
+        //工具组
         openTools(type) {
 
             switch (type) {
@@ -218,10 +230,10 @@ export default {
                         type: 'post',
                         url: '/admin/dash?api=clear_cache',
                         success: (res) => {
-                            if(res.data.code === 1) {
-                                this.$notify({ message:res.data.info, type:'success' });
-                            }else {
-                                this.$notify({ message:res.data.info, type:'warning'});
+                            if (res.data.code === 1) {
+                                this.$notify({message: res.data.info, type: 'success'});
+                            } else {
+                                this.$notify({message: res.data.info, type: 'warning'});
                             }
                         },
                     });
@@ -242,9 +254,9 @@ export default {
                             //关闭全屏
                             if (document.exitFullscreen) {
                                 document.exitFullscreen();
-                            }else if (document.mozCancelFullScreen) {
+                            } else if (document.mozCancelFullScreen) {
                                 document.mozCancelFullScreen();
-                            }else if (document.webkitCancelFullScreen) {
+                            } else if (document.webkitCancelFullScreen) {
                                 document.webkitCancelFullScreen();
                             }
                             this.iFullscreen = false;
@@ -252,15 +264,15 @@ export default {
                             //打开全屏
                             if (de.requestFullscreen) {
                                 de.requestFullscreen();
-                            }else if (de.mozRequestFullScreen) {
+                            } else if (de.mozRequestFullScreen) {
                                 de.mozRequestFullScreen();
-                            }else if (de.webkitRequestFullScreen) {
+                            } else if (de.webkitRequestFullScreen) {
                                 de.webkitRequestFullScreen();
                             }
                             this.iFullscreen = true;
                         }
-                    }else {
-                        this.$notify({ message:'浏览器当前不能全屏', type:'warning'});
+                    } else {
+                        this.$notify({message: '浏览器当前不能全屏', type: 'warning'});
                     }
                     break;
                 }
@@ -276,12 +288,12 @@ export default {
                         type: 'post',
                         url: '/admin?api=sign_out',
                         success: (res) => {
-                            if(res.data.code === 1) {
+                            if (res.data.code === 1) {
                                 this.$store.commit('changeSignInState', false);
                                 this.$router.push(res.data.data);
-                                this.$notify({ message:res.data.info, type:'success' });
-                            }else {
-                                this.$notify({ message:res.data.info, type:'warning'});
+                                this.$notify({message: res.data.info, type: 'success'});
+                            } else {
+                                this.$notify({message: res.data.info, type: 'warning'});
                             }
                         },
                     });
@@ -298,12 +310,34 @@ export default {
         //一级菜单点击回调
         menuHandleSelect(tree_key) {
 
+            //clear
+            this.activeSubIndex = '0';
+
             //刷新下级菜单
             let menuTree = this.$store.state.menuTree.menuInfo;
             for (let key = 0; key < menuTree.length; key++) {
-                if(parseInt(menuTree[key].id) === parseInt(tree_key)) {
+                if (parseInt(menuTree[key].id) === parseInt(tree_key)) {
                     this.subMenuTree = menuTree[key];
+                    console.log(this.subMenuTree);
                     break;
+                }
+            }
+        },
+
+        //定位menu active
+        positionMenu() {
+            let menuTree = this.$store.state.menuTree.menuInfo;
+            for (let key in menuTree) {
+                if (menuTree[key].child.length) {
+                    for (let s_key in menuTree[key].child) {
+                        if (menuTree[key].child[s_key].href === this.$route.path) {
+                            this.pid = menuTree[key].child[s_key].pid;
+                            this.id = menuTree[key].child[s_key].id;
+                            this.menuHandleSelect(this.pid);
+                            this.activeIndex = this.pid;
+                            this.activeSubIndex = this.id;
+                        }
+                    }
                 }
             }
         },
@@ -320,120 +354,120 @@ export default {
 </script>
 
 <style>
-    #app {
-        font-family: "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
-        text-align: center;
-        color: #2c3e50;
-    }
+#app {
+    font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-align: center;
+    color: #2c3e50;
+}
 </style>
 
 <style lang="less">
 
-    #app {
+#app {
 
-        > .el-row {
+    > .el-row {
+
+        height: 100%;
+
+        #left {
 
             height: 100%;
+            background: #545c64;
 
-            #left {
+            > .el-menu {
+                border: none;
+            }
 
-                height: 100%;
-                background: #545c64;
+            > .logo {
+                width: 100%;
+                height: 60px;
+                background: #fff;
+                text-align: center;
+                font-weight: 600;
+                font-size: 1.2rem;
+                line-height: 60px;
+            }
 
-                > .el-menu {
-                    border: none;
-                }
+            > .menu-level-2 {
 
-                > .logo {
-                    width: 100%;
-                    height: 60px;
-                    background: #fff;
-                    text-align: center;
-                    font-weight: 600;
-                    font-size: 1.2rem;
-                    line-height: 60px;
-                }
+                .el-submenu {
 
-                > .menu-level-2 {
+                    .el-menu-item-group {
 
-                    .el-submenu {
+                        .el-menu-item-group__title {
 
-                        .el-menu-item-group {
-
-                            .el-menu-item-group__title {
-
-                            }
                         }
                     }
-
-                    .el-menu-item {
-                        min-width: 100%;
-                        width: 100%;
-                    }
-
-                    span {
-                        font-size: .6rem;
-                    }
-
-                    .el-submenu__title,
-                    .el-menu-item {
-                        text-align: left;
-                    }
-
-                    li.el-menu-item {
-                        font-size: .8rem;
-                    }
-                }
-            }
-
-            #right {
-
-                &.inner-view {
-                    height: 100%;
-                    background: #fff;
                 }
 
-                > .el-menu {
-                    border: none;
+                .el-menu-item {
+                    min-width: 100%;
+                    width: 100%;
                 }
 
-                > div:nth-child(2) {
-                    padding: 1%;
+                span {
+                    font-size: .6rem;
+                }
+
+                .el-submenu__title,
+                .el-menu-item {
+                    text-align: left;
+                }
+
+                li.el-menu-item {
+                    font-size: .8rem;
                 }
             }
         }
 
-        footer {
-            font-size: .6rem;
-            text-align: center;
-            color: #8D8D8D;
-            font-weight: 600;
-            display: block;
-            position: fixed;
-            bottom: 10px;
-            left: 0;
-            width: 100%;
+        #right {
 
-            a {
-                color: #8D8D8D;
-                text-decoration: none;
-                font-weight: 800;
+            &.inner-view {
+                height: 100%;
+                background: #fff;
+            }
+
+            > .el-menu {
+                border: none;
+            }
+
+            > div:nth-child(2) {
+                padding: 1%;
             }
         }
     }
 
-    .menu-level-2:not(.el-menu--collapse) {
-        min-height: 400px;
+    footer {
+        font-size: .6rem;
+        text-align: center;
+        color: #8D8D8D;
+        font-weight: 600;
+        display: block;
+        position: fixed;
+        bottom: 10px;
+        left: 0;
         width: 100%;
-    }
 
-    .el-menu-item-group__title {
-        padding: 0;
+        a {
+            color: #8D8D8D;
+            text-decoration: none;
+            font-weight: 800;
+        }
     }
+}
 
-    .pull-right {
-        float: right!important;
-    }
+.menu-level-2:not(.el-menu--collapse) {
+    min-height: 400px;
+    width: 100%;
+}
+
+.el-menu-item-group__title {
+    padding: 0;
+}
+
+.pull-right {
+    float: right !important;
+}
 </style>
