@@ -154,93 +154,96 @@ class roles extends component\login {
                     ajax(0, '修改角色失败');
                 }
             },
-        ]);
 
-        //获取角色数据
-        $roles_lists = m('sys_roles')
-            ->where([
-                'status' => ['!=', 0],
-            ])
-            ->order('id asc');
-        $roles_lists = \poem\more\page::run($roles_lists, '/admin/roles', 15);
-        $lists = $roles_lists['list'];
-        $page_html = $roles_lists['html'];
+            //加载列表
+            'load' => function() {
 
-        //获取菜单
-        $pids = m('sys_menu')
-            ->field('pid')
-            ->where([
-                'status' => 1,
-            ])
-            ->select();
-        if(is_array($pids)) {
-            $pids = array_column($pids, 'pid');
-            $pids = array_unique($pids);
-        }
+                //获取角色数据
+                $roles_lists = m('sys_roles')
+                    ->where([
+                        'status' => ['!=', 0],
+                    ])
+                    ->order('id asc');
+                $roles_lists = \poem\more\page::run($roles_lists, '/#/roles', 15);
+                $lists = $roles_lists['list'];
+                $page_html = $roles_lists['html'];
 
-        //数据格式化
-        $data = [];
-        foreach ($lists as $key => $item) {
-
-            //过滤父级菜单ID
-            $menu_ids = explode(',', $item['menu_ids']);
-            if(is_array($menu_ids) && !empty($menu_ids)) {
-                foreach ($menu_ids as $s_key => $menu_id) {
-                    if(in_array($menu_id, $pids)) {
-                        unset($menu_ids[$s_key]);
-                    }
+                //获取菜单
+                $pids = m('sys_menu')
+                    ->field('pid')
+                    ->where([
+                        'status' => 1,
+                    ])
+                    ->select();
+                if(is_array($pids)) {
+                    $pids = array_column($pids, 'pid');
+                    $pids = array_unique($pids);
                 }
-                sort($menu_ids);
-            }
 
-            //组装数据
-            $data[] = [
-                'id' => $item['id'],
-                'name' => $item['name'],
-                'menu_ids' => $menu_ids,
-                'status' => $item['status'],
-                'status_mean' => config('role_status')[$item['status']],
-                'ctime' => date('Y-m-d H:i:s', $item['ctime']),
-                'utime' => date('Y-m-d H:i:s', $item['utime']),
-            ];
-        }
+                //数据格式化
+                $data = [];
+                foreach ($lists as $key => $item) {
 
-        //组装菜单配置
-        $menu = m('sys_menu')
-            ->field('id, pid, title as label')
-            ->where([
-                'pid' => 0,
-            ])
-            ->select();
-        if(is_array($menu) && !empty($menu)) {
+                    //过滤父级菜单ID
+                    $menu_ids = explode(',', $item['menu_ids']);
+                    if(is_array($menu_ids) && !empty($menu_ids)) {
+                        foreach ($menu_ids as $s_key => $menu_id) {
+                            if(in_array($menu_id, $pids)) {
+                                unset($menu_ids[$s_key]);
+                            }
+                        }
+                        sort($menu_ids);
+                    }
 
-            $pids = array_column($menu, 'id');
-            $sub_menu = m()
-                ->query("select id, pid, title as label from poem_sys_menu where pid in (" . implode(',', $pids) . ") and status = 1");
-            $sub_pids = array_column($sub_menu, 'id');
-            $sub_menu = array_group_by($sub_menu, 'pid');
-            $sub_menu2 = m()
-                ->query("select id, pid, title as label from poem_sys_menu where pid in (" . implode(',', $sub_pids) . ") and status = 1");
-            $sub_menu2 = array_group_by($sub_menu2, 'pid');
+                    //组装数据
+                    $data[] = [
+                        'id' => $item['id'],
+                        'name' => $item['name'],
+                        'menu_ids' => $menu_ids,
+                        'status' => $item['status'],
+                        'status_mean' => config('role_status')[$item['status']],
+                        'ctime' => date('Y-m-d H:i:s', $item['ctime']),
+                        'utime' => date('Y-m-d H:i:s', $item['utime']),
+                    ];
+                }
 
-            foreach($menu as $key => $item) {
-                if($sub_menu[$item['id']]) {
-                    $menu[$key]['children'] = $sub_menu[$item['id']];
-                    foreach ($menu[$key]['children'] as $s_key => $s_item) {
-                        if($sub_menu2[$s_item['id']]) {
-                            $menu[$key]['children'][$s_key]['children'] = $sub_menu2[$s_item['id']];
+                //组装菜单配置
+                $menu = m('sys_menu')
+                    ->field('id, pid, title as label')
+                    ->where([
+                        'pid' => 0,
+                    ])
+                    ->select();
+                if(is_array($menu) && !empty($menu)) {
+
+                    $pids = array_column($menu, 'id');
+                    $sub_menu = m()
+                        ->query("select id, pid, title as label from poem_sys_menu where pid in (" . implode(',', $pids) . ") and status = 1");
+                    $sub_pids = array_column($sub_menu, 'id');
+                    $sub_menu = array_group_by($sub_menu, 'pid');
+                    $sub_menu2 = m()
+                        ->query("select id, pid, title as label from poem_sys_menu where pid in (" . implode(',', $sub_pids) . ") and status = 1");
+                    $sub_menu2 = array_group_by($sub_menu2, 'pid');
+
+                    foreach($menu as $key => $item) {
+                        if($sub_menu[$item['id']]) {
+                            $menu[$key]['children'] = $sub_menu[$item['id']];
+                            foreach ($menu[$key]['children'] as $s_key => $s_item) {
+                                if($sub_menu2[$s_item['id']]) {
+                                    $menu[$key]['children'][$s_key]['children'] = $sub_menu2[$s_item['id']];
+                                }
+                            }
                         }
                     }
                 }
-            }
-        }
 
-        //渲染视图
-        assign([
-            'lists' => json_encode($data),
-            'page_html' => $page_html,
-            'menu_config' => json_encode($menu),
+                //响应
+                ajax(1, '加载列表完成', [
+                    'lists' => $data,
+                    'page_html' => $page_html,
+                    'menu_config' => $menu,
+                ]);
+            },
         ]);
-        vue();
     }
 }

@@ -318,7 +318,6 @@ export default {
             for (let key = 0; key < menuTree.length; key++) {
                 if (parseInt(menuTree[key].id) === parseInt(tree_key)) {
                     this.subMenuTree = menuTree[key];
-                    console.log(this.subMenuTree);
                     break;
                 }
             }

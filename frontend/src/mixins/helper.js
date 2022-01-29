@@ -38,5 +38,27 @@ export default {
                 },
             });
         },
+
+        //获取GET请求
+        parseGET() {
+
+            let url = window.document.location.href.toString();   //当前完整url
+            let u = url.split("?");                               //以？为分隔符把url转换成字符串数组
+
+            if(typeof(u[1]) == "string"){
+
+                u = u[1].split("&");
+                var get = {};
+                for(var i in u){
+                    var j = u[i].split("=");
+                    get[j[0]] = j[1];
+                }
+                return get;
+
+            } else {
+
+                return {};
+            }
+        }
     },
 }

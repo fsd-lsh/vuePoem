@@ -1,191 +1,188 @@
 <!--系统管理 - 角色设置-->
 
-<include "../public/vue"/>
+<template>
 
-<style>
-    .el-table__row .cell { color:unset; }
-</style>
+    <div id="roles">
+        <el-card class="box-card">
+            <el-button @click="newRoleFlag = !newRoleFlag" icon="fa fa-user-plus" type="primary" size="small">&nbsp;添加角色</el-button>
+            <el-button @click="roleChange(2)" icon="fa fa-toggle-on" type="warning" size="small">&nbsp;批量停用</el-button>
+            <el-button @click="roleChange(1)" icon="fa fa-toggle-off" type="success" size="small">&nbsp;批量启用</el-button>
+            <el-button @click="roleChange(0)" icon="fa fa-user-times" type="danger" size="small">&nbsp;批量删除</el-button>
+            <el-table
+                :data="tableData"
+                stripe
+                size="mini"
+                fit
+                :highlight-current-row="true"
+                :cell-style="tableStyle"
+                ref="multipleTable"
+                @selection-change="handleSelectionChange"
+                style="width:100%">
+                <el-table-column
+                    type="selection"
+                    fixed
+                    width="55">
+                </el-table-column>
+                <el-table-column
+                    width="200"
+                    fixed="left"
+                    label="操作">
+                    <template slot-scope="scope">
+                        <el-button
+                            size="mini"
+                            type="primary"
+                            title="编辑"
+                            @click="editRoleNow(scope)">
+                            <i class="fa fa-pencil">&nbsp;编辑</i>
+                        </el-button>
+                        <el-button
+                            size="mini"
+                            type="warning"
+                            title="停用"
+                            v-if="scope.row.status == 1"
+                            :disabled="scope.row.name == 'admin'"
+                            @click="roleChange(2, scope)">
+                            <i class="fa fa-toggle-on">&nbsp;停用</i>
+                        </el-button>
+                        <el-button
+                            size="mini"
+                            type="success"
+                            title="启用"
+                            v-if="scope.row.status == 2"
+                            :disabled="scope.row.name == 'admin'"
+                            @click="roleChange(1, scope)">
+                            <i class="fa fa-toggle-off">&nbsp;启用</i>
+                        </el-button>
+                        <el-button
+                            size="mini"
+                            type="danger"
+                            title="删除"
+                            :disabled="scope.row.name == 'admin'"
+                            @click="roleChange(0, scope)">
+                            <i class="fa fa-user-times">&nbsp;删除</i>
+                        </el-button>
+                    </template>
+                </el-table-column>
+                <el-table-column
+                    prop="id"
+                    sortable
+                    fixed
+                    width="100"
+                    label="角色ID">
+                </el-table-column>
+                <el-table-column
+                    prop="name"
+                    sortable
+                    width="150"
+                    label="角色名称">
+                </el-table-column>
+                <el-table-column
+                    prop="menu_ids"
+                    sortable
+                    label="权限">
+                    <template slot-scope="scope">
+                        <el-tag
+                            v-for="m_id in scope.row.menu_ids"
+                            :key="m_id"
+                            size="mini"
+                            :type="'info'"
+                            style="margin:2px 5px;"
+                            effect="dark">
+                            {{m_id}}
+                        </el-tag>
+                    </template>
+                </el-table-column>
+                <el-table-column
+                    prop="ctime"
+                    sortable
+                    width="160"
+                    label="创建时间">
+                </el-table-column>
+                <el-table-column
+                    prop="utime"
+                    sortable
+                    width="160"
+                    label="更新时间">
+                </el-table-column>
+                <el-table-column
+                    prop="status_mean"
+                    sortable
+                    width="80"
+                    label="状态">
+                </el-table-column>
+            </el-table>
+            <div class="pagination" v-html="page_html"></div>
+        </el-card>
 
-<div id="app">
-
-    <el-card class="box-card">
-        <el-button @click="newRoleFlag = !newRoleFlag" icon="fa fa-user-plus" type="primary" size="small">&nbsp;添加角色</el-button>
-        <el-button @click="roleChange(2)" icon="fa fa-toggle-on" type="warning" size="small">&nbsp;批量停用</el-button>
-        <el-button @click="roleChange(1)" icon="fa fa-toggle-off" type="success" size="small">&nbsp;批量启用</el-button>
-        <el-button @click="roleChange(0)" icon="fa fa-user-times" type="danger" size="small">&nbsp;批量删除</el-button>
-        <el-table
-            :data="tableData"
-            stripe
-            size="mini"
-            fit
-            :highlight-current-row="true"
-            :cell-style="tableStyle"
-            ref="multipleTable"
-            @selection-change="handleSelectionChange"
-            style="width:100%">
-            <el-table-column
-                type="selection"
-                fixed
-                width="55">
-            </el-table-column>
-            <el-table-column
-                width="200"
-                fixed="left"
-                fixed
-                label="操作">
-                <template slot-scope="scope">
-                    <el-button
-                        size="mini"
-                        type="primary"
-                        title="编辑"
-                        @click="editRoleNow(scope)">
-                        <i class="fa fa-pencil">&nbsp;编辑</i>
-                    </el-button>
-                    <el-button
-                        size="mini"
-                        type="warning"
-                        title="停用"
-                        v-if="scope.row.status == 1"
-                        :disabled="scope.row.name == 'admin'"
-                        @click="roleChange(2, scope)">
-                        <i class="fa fa-toggle-on">&nbsp;停用</i>
-                    </el-button>
-                    <el-button
-                        size="mini"
-                        type="success"
-                        title="启用"
-                        v-if="scope.row.status == 2"
-                        :disabled="scope.row.name == 'admin'"
-                        @click="roleChange(1, scope)">
-                        <i class="fa fa-toggle-off">&nbsp;启用</i>
-                    </el-button>
-                    <el-button
-                        size="mini"
-                        type="danger"
-                        title="删除"
-                        :disabled="scope.row.name == 'admin'"
-                        @click="roleChange(0, scope)">
-                        <i class="fa fa-user-times">&nbsp;删除</i>
-                    </el-button>
-                </template>
-            </el-table-column>
-            <el-table-column
-                prop="id"
-                sortable
-                fixed
-                width="100"
-                label="角色ID">
-            </el-table-column>
-            <el-table-column
-                prop="name"
-                sortable
-                width="150"
-                label="角色名称">
-            </el-table-column>
-            <el-table-column
-                prop="menu_ids"
-                sortable
-                label="权限">
-                <template slot-scope="scope">
-                    <el-tag
-                        v-for="m_id in scope.row.menu_ids"
-                        :key="m_id"
-                        size="mini"
-                        :type="'info'"
-                        style="margin:2px 5px;"
-                        effect="dark">
-                        {{m_id}}
-                    </el-tag>
-                </template>
-            </el-table-column>
-            <el-table-column
-                prop="ctime"
-                sortable
-                width="160"
-                label="创建时间">
-            </el-table-column>
-            <el-table-column
-                prop="utime"
-                sortable
-                width="160"
-                label="更新时间">
-            </el-table-column>
-            <el-table-column
-                prop="status_mean"
-                sortable
-                width="80"
-                label="状态">
-            </el-table-column>
-        </el-table>
-        <div class="pagination">
-            {$page_html}
-        </div>
-    </el-card>
-
-    <!--添加角色模态框-->
-    <el-dialog
-        title="添加角色"
-        :visible.sync="newRoleFlag"
-        width="50%">
-        <el-form ref="form" :model="form" label-width="100px" size="small">
-            <el-form-item label="角色名称">
-                <el-input v-model="form.name"></el-input>
-            </el-form-item>
-            <el-form-item label="菜单权限">
-                <el-tree
-                    :data="menu_config"
-                    show-checkbox
-                    :default-expand-all="true"
-                    ref="newTree"
-                    node-key="id">
-                </el-tree>
-            </el-form-item>
-        </el-form>
-        <span slot="footer" class="dialog-footer">
+        <!--添加角色模态框-->
+        <el-dialog
+            title="添加角色"
+            :visible.sync="newRoleFlag"
+            width="50%">
+            <el-form ref="form" :model="form" label-width="100px" size="small">
+                <el-form-item label="角色名称">
+                    <el-input v-model="form.name"></el-input>
+                </el-form-item>
+                <el-form-item label="菜单权限">
+                    <el-tree
+                        :data="menu_config"
+                        show-checkbox
+                        :default-expand-all="true"
+                        ref="newTree"
+                        node-key="id">
+                    </el-tree>
+                </el-form-item>
+            </el-form>
+            <span slot="footer" class="dialog-footer">
             <el-button size="mini" @click="newRoleFlag = false">取消</el-button>
             <el-button size="mini" type="primary" @click="createRoleNow">立即创建</el-button>
         </span>
-    </el-dialog>
+        </el-dialog>
 
-    <!--编辑角色模态框-->
-    <el-dialog
-        title="编辑角色"
-        :visible.sync="editRoleFlag"
-        width="50%">
-        <el-form ref="editForm" :model="editForm" label-width="100px" size="small">
-            <el-form-item label="角色名称">
-                <el-input v-model="editForm.name"></el-input>
-            </el-form-item>
-            <el-form-item label="菜单权限">
-                <el-tree
-                    :data="menu_config"
-                    show-checkbox
-                    :default-expand-all="true"
-                    :default-checked-keys="editForm.menu_ids"
-                    getCheckedKeys
-                    ref="editTree"
-                    node-key="id">
-                </el-tree>
-            </el-form-item>
-        </el-form>
-        <span slot="footer" class="dialog-footer">
+        <!--编辑角色模态框-->
+        <el-dialog
+            title="编辑角色"
+            :visible.sync="editRoleFlag"
+            width="50%">
+            <el-form ref="editForm" :model="editForm" label-width="100px" size="small">
+                <el-form-item label="角色名称">
+                    <el-input v-model="editForm.name"></el-input>
+                </el-form-item>
+                <el-form-item label="菜单权限">
+                    <el-tree
+                        :data="menu_config"
+                        show-checkbox
+                        :default-expand-all="true"
+                        :default-checked-keys="editForm.menu_ids"
+                        getCheckedKeys
+                        ref="editTree"
+                        node-key="id">
+                    </el-tree>
+                </el-form-item>
+            </el-form>
+            <span slot="footer" class="dialog-footer">
             <el-button size="mini" @click="editRoleFlag = false">取消</el-button>
             <el-button size="mini" type="primary" @click="saveRole">保存</el-button>
         </span>
-    </el-dialog>
-</div>
+        </el-dialog>
+    </div>
+</template>
 
 <script>
 
-    let app = new Vue({
+    import helper from "../mixins/helper";
 
-        el: '#app',
+    export default {
+
+        name: 'roles',
+
+        mixins: [helper],
 
         data() {
 
             return {
 
-                tableData: {$lists},
+                tableData: [],
                 tableSelection: [],
 
                 newRoleFlag: false,
@@ -201,7 +198,34 @@
                     menu_ids: '',
                 },
 
-                menu_config: {$menu_config},
+                menu_config: [],
+
+                page_html: '',
+            }
+        },
+
+        created() {
+
+            //加载列表
+            this.loadList(
+                this.parseGET()['p']
+            );
+        },
+
+        mounted() {
+
+        },
+
+        watch: {
+            $route: {
+                handler() {
+
+                    //加载列表
+                    this.loadList(
+                        this.parseGET()['p']
+                    );
+                },
+                deep: true,
             }
         },
 
@@ -243,25 +267,20 @@
                 this.form.menu_ids = this.$refs.newTree.getCheckedKeys();
                 if(this.form.menu_ids.length === 0) { this.$notify({title:'警告', message:'请选择角色菜单权限', type:'warning' }); return false; }
 
-                this.$http.post(
-                    '/admin/roles?api=add_role',
-                    {form:this.form},
-                    {emulateJSON:true}
-                ).then(function(res){
-                    if(res.body.code === 1) {
-                        this.$notify({
-                            title: '成功',
-                            message: res.body.info,
-                            type: 'success'
-                        });
-                        setTimeout(function () {
-                            window.location.reload();
-                        }, 2000);
-                    }else {
-                        this.$notify.error({message:res.body.info});
-                    }
-                },function(){
-                    this.$notify.error({message: '服务器发生异常'});
+                this.poemRequest({
+                    type: 'post',
+                    url: '/admin/roles?api=add_role',
+                    success: (res) => {
+                        if(res.data.code === 1) {
+                            this.$notify({
+                                title: '成功',
+                                message: res.data.info,
+                                type: 'success'
+                            });
+                        }else {
+                            this.$notify.error({message:res.data.info});
+                        }
+                    },
                 });
             },
 
@@ -278,27 +297,25 @@
                 }
                 this.editForm.menu_ids = temp_ids;
 
-                if(this.editForm.menu_ids.length === 0) { this.$notify({title:'警告', message:'请选择角色菜单权限', type:'warning' }); return false; }
+                if(this.editForm.menu_ids.length === 0) {
+                    this.$notify({title:'警告', message:'请选择角色菜单权限', type:'warning' });
+                    return false;
+                }
 
-                this.$http.post(
-                    '/admin/roles?api=edit_role',
-                    {form:this.editForm},
-                    {emulateJSON:true}
-                ).then(function(res){
-                    if(res.body.code === 1) {
-                        this.$notify({
-                            title: '成功',
-                            message: res.body.info,
-                            type: 'success'
-                        });
-                    }else {
-                        this.$notify.error({message:res.body.info});
-                    }
-                    setTimeout(function () {
-                        window.location.reload();
-                    }, 1500);
-                },function(){
-                    this.$notify.error({message: '服务器发生异常'});
+                this.poemRequest({
+                    type: 'post',
+                    url: '/admin/roles?api=edit_role',
+                    success: (res) => {
+                        if(res.data.code === 1) {
+                            this.$notify({
+                                title: '成功',
+                                message: res.data.info,
+                                type: 'success'
+                            });
+                        }else {
+                            this.$notify.error({message:res.data.info});
+                        }
+                    },
                 });
             },
 
@@ -325,27 +342,48 @@
                     return false;
                 }
 
-                this.$http.post(
-                    '/admin/roles?api=status_change',
-                    {ids:ids, status:status},
-                    {emulateJSON:true}
-                ).then(function(res){
-                    if(res.body.code === 1) {
-                        this.$notify({
-                            title: '成功',
-                            message: res.body.info,
-                            type: 'success'
-                        });
-                        setTimeout(function () {
-                            window.location.reload();
-                        }, 2000);
-                    }else {
-                        this.$notify.error({message:res.body.info});
-                    }
-                },function(){
-                    this.$notify.error({message: '服务器发生异常'});
+                this.poemRequest({
+                    type: 'post',
+                    url: '/admin/roles?api=status_change',
+                    success: (res) => {
+                        if(res.data.code === 1) {
+                            this.$notify({
+                                title: '成功',
+                                message: res.data.info,
+                                type: 'success'
+                            });
+                        }else {
+                            this.$notify.error({message:res.data.info});
+                        }
+                    },
+                });
+            },
+
+            //加载列表
+            loadList(page) {
+
+                page = (!page) ? (page = 1) : (page);
+
+                this.poemRequest({
+                    type: 'post',
+                    url: '/admin/roles?api=load&p=' + page,
+                    success: (res) => {
+                        if(res.data.code === 1) {
+                            this.tableData = res.data.data.lists;
+                            this.menu_config = res.data.data.menu_config;
+                            this.page_html = res.data.data.page_html;
+                        }else {
+                            this.$notify.error({message:res.data.info});
+                        }
+                    },
                 });
             },
         },
-    });
+    };
 </script>
+
+<style lang="less">
+
+    @import "../../static/css/public";
+    .el-table__row .cell { color:unset; }
+</style>

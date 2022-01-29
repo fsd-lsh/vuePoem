@@ -30,6 +30,15 @@ export default new Router({
         },
 
         {
+            path: '/cms',
+            name: 'cms',
+            component: resolve => require(['@/views/cms'], resolve),
+            meta: {
+                title: 'cms - 业务管理' + title,
+            },
+        },
+
+        {
             path: '/menu',
             name: 'menu',
             component: resolve => require(['@/views/menu'], resolve),

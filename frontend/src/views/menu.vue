@@ -4,7 +4,7 @@
 
     <div id="menu">
         <el-card class="box-card">
-            <el-button id="add-menu" @click="newMenuFlag = !newMenuFlag" icon="fa fa-bars" type="primary" size="small">&nbsp;添加菜单</el-button>
+            <el-button @click="newMenuFlag = !newMenuFlag" icon="fa fa-bars" type="primary" size="small">&nbsp;添加菜单</el-button>
             <el-table
                 :data="tableData"
                 style="width: 100%;margin-bottom: 20px;"
@@ -534,12 +534,7 @@
 
     #menu {
 
-        > .box-card {
-
-            #add-menu {
-                float: left;
-            }
-        }
+        > .box-card {}
     }
 
     .el-table__row .cell {
