@@ -66,30 +66,21 @@ export default new Router({
         },
 
         {
-            path: '/log',
-            name: 'log',
+            path: '/log/fw_log',
+            name: 'fw_log',
             component: resolve => require(['@/views/fwLog'], resolve),
-            redirect: '/log/fw_log',  //默认子路由加载首页
-            children: [
+            meta: {
+                title: '框架日志 - 系统管理' + title,
+            },
+        },
 
-                {
-                    path: '/log/fw_log',
-                    name: 'fw_log',
-                    component: resolve => require(['@/views/fwLog'], resolve),
-                    meta: {
-                        title: '框架日志 - 系统管理' + title,
-                    },
-                },
-
-                {
-                    path: '/log/sys_log',
-                    name: 'sys_log',
-                    component: resolve => require(['@/views/sysLog'], resolve),
-                    meta: {
-                        title: '运行日志 - 系统管理' + title,
-                    },
-                },
-            ],
+        {
+            path: '/log/sys_log',
+            name: 'sys_log',
+            component: resolve => require(['@/views/sysLog'], resolve),
+            meta: {
+                title: '运行日志 - 系统管理' + title,
+            },
         },
 
         {
