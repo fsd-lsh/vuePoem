@@ -21,6 +21,15 @@ export default new Router({
         },
 
         {
+            path: '/userInfo',
+            name: 'system',
+            component: resolve => require(['@/views/admin/userInfo'], resolve),
+            meta: {
+                title: '用户信息 - 系统管理' + title,
+            },
+        },
+
+        {
             path: '/dash',
             name: 'dash',
             component: resolve => require(['@/views/admin/dash'], resolve),

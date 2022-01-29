@@ -96,23 +96,30 @@
 </template>
 
 <script>
+
+    import helper from "../../mixins/helper";
+
     export default {
 
         name: 'dash',
+
+        mixins: [helper],
 
         data() {
 
             return {
 
-                adminTotal: [1,2,3],
-                roleTotal: [1,2,3],
-                menuTotal: [1,2,3],
-                logTotal: [1,2,3],
+                adminTotal: [],
+                roleTotal: [],
+                menuTotal: [],
+                logTotal: [],
             }
         },
 
         created() {
 
+            //加载面板数据
+            this.loadDash();
         },
 
         mounted() {
@@ -121,6 +128,23 @@
 
         methods: {
 
+            //加载面板数据
+            loadDash() {
+                this.poemRequest({
+                    type: 'post',
+                    url: '/admin/dash/main?api=load',
+                    success: (res) => {
+                        if(res.data.code === 1) {
+                            this.adminTotal = res.data.data.admin_total;
+                            this.roleTotal = res.data.data.role_total;
+                            this.menuTotal = res.data.data.menu_total;
+                            this.logTotal = res.data.data.log_total;
+                        }else {
+                            this.$notify.error({message:res.data.info});
+                        }
+                    },
+                });
+            },
         },
     }
 </script>

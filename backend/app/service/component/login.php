@@ -217,6 +217,7 @@ class login {
             '/dash',
             '/dash/user_info',
             '/menu/load',
+            '/dash/main',
         ]);
 
         //检查用户权限

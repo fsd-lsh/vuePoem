@@ -67,70 +67,77 @@ class dash extends component\login {
      */
     public function main() {
 
-        //后台用户统计
-        $admin_total = [];
-        $admin_config = config('user_status');
-        if(is_array($admin_config) && !empty($admin_config)) {
-            foreach ($admin_config as $status => $mean) {
-                $admin_total[$status] = m('sys_admin')
-                    ->field('count(1) as total')
-                    ->where([
-                        'status' => $status,
-                    ])
-                    ->find()['total'];
-            }
-        }
+        //API
+        sys_api([
 
-        //后台角色统计
-        $role_total = [];
-        $role_config = config('role_status');
-        if(is_array($role_config) && !empty($role_config)) {
-            foreach ($role_config as $status => $mean) {
-                $role_total[$status] = m('sys_roles')
-                    ->field('count(1) as total')
-                    ->where([
-                        'status' => $status,
-                    ])
-                    ->find()['total'];
-            }
-        }
+            //加载面板数据
+            'load' => function() {
 
-        //后台菜单统计
-        $menu_total = [];
-        $menu_config = config('menu_status');
-        if(is_array($menu_config) && !empty($menu_config)) {
-            foreach ($menu_config as $status => $mean) {
-                $menu_total[$status] = m('sys_menu')
-                    ->field('count(1) as total')
-                    ->where([
-                        'status' => $status,
-                    ])
-                    ->find()['total'];
-            }
-        }
+                //后台用户统计
+                $admin_total = [];
+                $admin_config = config('user_status');
+                if(is_array($admin_config) && !empty($admin_config)) {
+                    foreach ($admin_config as $status => $mean) {
+                        $admin_total[$status] = m('sys_admin')
+                            ->field('count(1) as total')
+                            ->where([
+                                'status' => $status,
+                            ])
+                            ->find()['total'];
+                    }
+                }
 
-        //后台运行日志统计
-        $log_total = [];
-        $log_config = config('log_level');
-        if(is_array($log_config) && !empty($log_config)) {
-            foreach ($log_config as $level => $mean) {
-                $log_total[$level] = m('sys_log')
-                    ->field('count(1) as total')
-                    ->where([
-                        'level' => $level,
-                    ])
-                    ->find()['total'];
-            }
-        }
+                //后台角色统计
+                $role_total = [];
+                $role_config = config('role_status');
+                if(is_array($role_config) && !empty($role_config)) {
+                    foreach ($role_config as $status => $mean) {
+                        $role_total[$status] = m('sys_roles')
+                            ->field('count(1) as total')
+                            ->where([
+                                'status' => $status,
+                            ])
+                            ->find()['total'];
+                    }
+                }
 
-        //渲染视图
-        assign([
-            'admin_total' => json_encode($admin_total),
-            'role_total' => json_encode($role_total),
-            'menu_total' => json_encode($menu_total),
-            'log_total' => json_encode($log_total),
+                //后台菜单统计
+                $menu_total = [];
+                $menu_config = config('menu_status');
+                if(is_array($menu_config) && !empty($menu_config)) {
+                    foreach ($menu_config as $status => $mean) {
+                        $menu_total[$status] = m('sys_menu')
+                            ->field('count(1) as total')
+                            ->where([
+                                'status' => $status,
+                            ])
+                            ->find()['total'];
+                    }
+                }
+
+                //后台运行日志您没有访问权限统计
+                $log_total = [];
+                $log_config = config('log_level');
+                if(is_array($log_config) && !empty($log_config)) {
+                    foreach ($log_config as $level => $mean) {
+                        $log_total[$level] = m('sys_log')
+                            ->field('count(1) as total')
+                            ->where([
+                                'level' => $level,
+                            ])
+                            ->find()['total'];
+                    }
+                }
+
+                //渲染视图
+                ajax(1, '加载面板数据完成', [
+                    'admin_total' => $admin_total,
+                    'role_total' => $role_total,
+                    'menu_total' => $menu_total,
+                    'log_total' => $log_total,
+                ]);
+            },
         ]);
-        vue();
     }
 
     /**
@@ -189,38 +196,41 @@ class dash extends component\login {
                     ajax(0, '用户信息修改失败');
                 }
             },
+
+            //加载用户信息
+            'load' => function() {
+
+                //获取账号信息
+                $user_info = m('sys_admin')
+                    ->where([
+                        'id' => $_SESSION['admin_info']['id'],
+                        'status' => 1,
+                    ])
+                    ->find();
+
+                //获取角色信息
+                $roles_info = m('sys_roles')
+                    ->where([
+                        'status' => 1,
+                    ])
+                    ->select();
+                if(is_array($roles_info) && !empty($roles_info)) {
+                    $roles_info = array_combine(array_column($roles_info, 'id'), $roles_info);
+                }
+
+                //数据格式化
+                $user_info['roles'] = explode(',', $user_info['roles']);
+                $user_info['status'] = config('user_status')[$user_info['status']];
+                $user_info['ctime'] = date('Y-m-d H:i:s', $user_info['ctime']);
+                $user_info['utime'] = date('Y-m-d H:i:s', $user_info['utime']);
+                unset($user_info['password']);
+
+                //渲染视图
+                ajax(1, '加载用户信息完成', [
+                    'roles_config' => $roles_info,
+                    'user_info' => $user_info,
+                ]);
+            },
         ]);
-
-        //获取账号信息
-        $user_info = m('sys_admin')
-            ->where([
-                'id' => $_SESSION['admin_info']['id'],
-                'status' => 1,
-            ])
-            ->find();
-
-        //获取角色信息
-        $roles_info = m('sys_roles')
-            ->where([
-                'status' => 1,
-            ])
-            ->select();
-        if(is_array($roles_info) && !empty($roles_info)) {
-            $roles_info = array_combine(array_column($roles_info, 'id'), $roles_info);
-        }
-
-        //数据格式化
-        $user_info['roles'] = explode(',', $user_info['roles']);
-        $user_info['status'] = config('user_status')[$user_info['status']];
-        $user_info['ctime'] = date('Y-m-d H:i:s', $user_info['ctime']);
-        $user_info['utime'] = date('Y-m-d H:i:s', $user_info['utime']);
-        unset($user_info['password']);
-
-        //渲染视图
-        assign([
-            'roles_config' => json_encode($roles_info),
-            'user_info' => json_encode($user_info),
-        ]);
-        vue();
     }
 }

@@ -279,6 +279,8 @@ export default {
 
                 //修改账号信息
                 case 'modAccount': {
+
+                    this.$router.push('/userInfo');
                     break;
                 }
 
