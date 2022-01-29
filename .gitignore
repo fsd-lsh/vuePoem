@@ -1,8 +1,6 @@
 .idea
 .DS_store
 runtime
-/phppoem
-/public/static
 .DS_Store
 node_modules/
 /dist/
