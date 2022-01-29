@@ -111,7 +111,7 @@
                     label="状态">
                 </el-table-column>
             </el-table>
-            <div class="pagination" v-html="page_html"></div>
+            <div class="pagination" v-html="pageHtml"></div>
         </el-card>
 
         <!--添加角色模态框-->
@@ -200,7 +200,7 @@
 
                 menu_config: [],
 
-                page_html: '',
+                pageHtml: '',
             }
         },
 
@@ -210,10 +210,6 @@
             this.loadList(
                 this.parseGET()['p']
             );
-        },
-
-        mounted() {
-
         },
 
         watch: {
@@ -371,7 +367,7 @@
                         if(res.data.code === 1) {
                             this.tableData = res.data.data.lists;
                             this.menu_config = res.data.data.menu_config;
-                            this.page_html = res.data.data.page_html;
+                            this.pageHtml = res.data.data.page_html;
                         }else {
                             this.$notify.error({message:res.data.info});
                         }

@@ -129,59 +129,62 @@ class user extends component\login {
                     ajax(0, '修改用户信息失败');
                 }
             },
-        ]);
 
-        //加载用户列表
-        $lists = m('sys_admin')
-            ->field('id, name, password, roles, status, ctime, utime')
-            ->where('status != 0')
-            ->order('id asc');
-        $page_info = \poem\more\page::run($lists, '/admin/log/sys_log', 15);
+            //加载列表
+            'load' => function() {
 
-        //获取角色信息
-        $roles_info = m('sys_roles')
-            ->select();
-        if(is_array($roles_info) && !empty($roles_info)) {
-            $roles_info = array_combine(array_column($roles_info, 'id'), $roles_info);
-        }
+                //加载用户列表
+                $lists = m('sys_admin')
+                    ->field('id, name, password, roles, status, ctime, utime')
+                    ->where('status != 0')
+                    ->order('id asc');
+                $page_info = \poem\more\page::run($lists, '/#/user', 15);
 
-        //数据格式化
-        $lists = $page_info['list'];
-        if(is_array($lists) && !empty($lists)) {
-
-            foreach ($lists as $key => $item) {
-
-                //角色
-                $item['roles'] = explode(',', $item['roles']);
-                if(is_array($item['roles']) && !empty($item['roles'])) {
-                    $temp = [];
-                    foreach ($item['roles'] as $s_key => $s_item) {
-                        if($roles_info[$s_item]['name']) {
-                            $temp[] = $roles_info[$s_item]['name'];
-                        }
-                    }
-                    $lists[$key]['roles_mean'] = $temp;
-                    unset($temp);
+                //获取角色信息
+                $roles_info = m('sys_roles')
+                    ->select();
+                if(is_array($roles_info) && !empty($roles_info)) {
+                    $roles_info = array_combine(array_column($roles_info, 'id'), $roles_info);
                 }
-                $lists[$key]['roles'] = $item['roles'];
 
-                //状态含义
-                $lists[$key]['status_mean'] = config('user_status')[$item['status']];
+                //数据格式化
+                $lists = $page_info['list'];
+                if(is_array($lists) && !empty($lists)) {
 
-                //创建时间
-                $lists[$key]['ctime'] = date('Y-m-d H:i:s', $item['ctime']);
+                    foreach ($lists as $key => $item) {
 
-                //更新时间
-                $lists[$key]['utime'] = date('Y-m-d H:i:s', $item['utime']);
-            }
-        }
+                        //角色
+                        $item['roles'] = explode(',', $item['roles']);
+                        if(is_array($item['roles']) && !empty($item['roles'])) {
+                            $temp = [];
+                            foreach ($item['roles'] as $s_key => $s_item) {
+                                if($roles_info[$s_item]['name']) {
+                                    $temp[] = $roles_info[$s_item]['name'];
+                                }
+                            }
+                            $lists[$key]['roles_mean'] = $temp;
+                            unset($temp);
+                        }
+                        $lists[$key]['roles'] = $item['roles'];
 
-        //渲染视图
-        assign([
-            'lists' => json_encode($lists),
-            'page_html' => $page_info['html'],
-            'roles_config' => json_encode($roles_info),
+                        //状态含义
+                        $lists[$key]['status_mean'] = config('user_status')[$item['status']];
+
+                        //创建时间
+                        $lists[$key]['ctime'] = date('Y-m-d H:i:s', $item['ctime']);
+
+                        //更新时间
+                        $lists[$key]['utime'] = date('Y-m-d H:i:s', $item['utime']);
+                    }
+                }
+
+                //渲染视图
+                ajax(1, '列表加载完成', [
+                    'lists' => $lists,
+                    'page_html' => $page_info['html'],
+                    'roles_config' => $roles_info,
+                ]);
+            },
         ]);
-        vue();
     }
 }
