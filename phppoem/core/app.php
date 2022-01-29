@@ -7,6 +7,13 @@ class app {
      * @return null
      */
     static function start() {
+
+        // 解析请求
+        $request = file_get_contents('php://input');
+        $request = json_decode($request, true);
+        $_POST = $request;
+        $_REQUEST = $request;
+
         // 公共函数库，公共文件
         self::boot();
 
@@ -198,7 +205,7 @@ class app {
             _app_halt($e);
             exit;
         }
-        
+
         if (IS_CLI || IS_AJAX) {
             $log_id = log::get_instance()->get_log_id();
             $log_str = iconv('UTF-8', 'gbk', $e['message']) . PHP_EOL .

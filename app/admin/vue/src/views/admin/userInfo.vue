@@ -88,7 +88,7 @@
 
             saveUserInfo() {
 
-                if(!this.user_info.name) {
+                if(!this.userInfo.name) {
                     this.$notify({ message:'账号不能为空', type:'warning'});
                     return false;
                 }
@@ -96,6 +96,7 @@
                 this.poemRequest({
                     type: 'post',
                     url: '/admin/dash/user_info?api=change_userinfo',
+                    data: this.userInfo,
                     success: (res) => {
                         if(res.data.code === 1) {
                             this.$notify({ message:res.data.info, type:'success' });

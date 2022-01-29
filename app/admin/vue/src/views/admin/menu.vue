@@ -386,7 +386,7 @@
                             that.fontawesomeConfig = res.data.data.fontawesome_config;
                             that.linkConfig = res.data.data.link_config;
                         }else {
-
+                            this.$notify.error({message:res.data.info});
                         }
                     },
                 });

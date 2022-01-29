@@ -164,6 +164,7 @@ class dash extends component\login {
                     ->where([
                         'status' => 1,
                         'name' => $name,
+                        'id' => ['!=', $_SESSION['admin_info']['id']],
                     ])
                     ->find();
                 if($check) {
