@@ -17,7 +17,7 @@
 
 <script>
 
-import helper from '../mixins/helper';
+import helper from '../../mixins/helper';
 
 export default {
 
@@ -74,7 +74,7 @@ export default {
 
 <style lang="less">
     body {
-        background: url('../../static/imgs/signin-bg.png') 0 0 / cover no-repeat;
+        background: url('../../../static/imgs/signin-bg.png') 0 0 / cover no-repeat;
         overflow: hidden;
     }
 </style>

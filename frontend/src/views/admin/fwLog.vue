@@ -85,7 +85,7 @@
 
 <script>
 
-    import helper from "../mixins/helper";
+    import helper from "../../mixins/helper";
 
     export default {
 
@@ -150,5 +150,5 @@
 </script>
 
 <style lang="less">
-    @import "../../static/css/public";
+    @import "../../../static/css/public";
 </style>

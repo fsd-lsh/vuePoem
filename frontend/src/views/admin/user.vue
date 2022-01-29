@@ -1,13 +1,13 @@
-<!--系统管理 - 角色设置-->
+<!--系统管理 - 用户管理-->
 
 <template>
 
-    <div id="roles">
+    <div id="user">
         <el-card class="box-card">
-            <el-button @click="newRoleFlag = !newRoleFlag" icon="fa fa-user-plus" type="primary" size="small">&nbsp;添加角色</el-button>
-            <el-button @click="roleChange(2)" icon="fa fa-toggle-on" type="warning" size="small">&nbsp;批量停用</el-button>
-            <el-button @click="roleChange(1)" icon="fa fa-toggle-off" type="success" size="small">&nbsp;批量启用</el-button>
-            <el-button @click="roleChange(0)" icon="fa fa-user-times" type="danger" size="small">&nbsp;批量删除</el-button>
+            <el-button @click="newUserFlag = !newUserFlag" icon="fa fa-user-plus" type="primary" size="small">&nbsp;创建用户</el-button>
+            <el-button @click="userChange(2)" change-type="0" icon="fa fa-toggle-on" type="warning" size="small">&nbsp;批量停用</el-button>
+            <el-button @click="userChange(1)" icon="fa fa-toggle-off" type="success" size="small">&nbsp;批量启用</el-button>
+            <el-button @click="userChange(0)" icon="fa fa-user-times" type="danger" size="small">&nbsp;批量删除</el-button>
             <el-table
                 :data="tableData"
                 stripe
@@ -32,7 +32,7 @@
                             size="mini"
                             type="primary"
                             title="编辑"
-                            @click="editRoleNow(scope)">
+                            @click="editUserNow(scope)">
                             <i class="fa fa-pencil">&nbsp;编辑</i>
                         </el-button>
                         <el-button
@@ -41,7 +41,7 @@
                             title="停用"
                             v-if="scope.row.status == 1"
                             :disabled="scope.row.name == 'admin'"
-                            @click="roleChange(2, scope)">
+                            @click="userChange(2, scope)">
                             <i class="fa fa-toggle-on">&nbsp;停用</i>
                         </el-button>
                         <el-button
@@ -50,7 +50,7 @@
                             title="启用"
                             v-if="scope.row.status == 2"
                             :disabled="scope.row.name == 'admin'"
-                            @click="roleChange(1, scope)">
+                            @click="userChange(1, scope)">
                             <i class="fa fa-toggle-off">&nbsp;启用</i>
                         </el-button>
                         <el-button
@@ -58,7 +58,7 @@
                             type="danger"
                             title="删除"
                             :disabled="scope.row.name == 'admin'"
-                            @click="roleChange(0, scope)">
+                            @click="userChange(0, scope)">
                             <i class="fa fa-user-times">&nbsp;删除</i>
                         </el-button>
                     </template>
@@ -68,27 +68,27 @@
                     sortable
                     fixed
                     width="100"
-                    label="角色ID">
+                    label="用户ID">
                 </el-table-column>
                 <el-table-column
                     prop="name"
                     sortable
-                    width="150"
-                    label="角色名称">
+                    width="130"
+                    label="姓名 / 账号">
                 </el-table-column>
                 <el-table-column
-                    prop="menu_ids"
+                    prop="roles"
                     sortable
-                    label="权限">
+                    label="角色">
                     <template slot-scope="scope">
                         <el-tag
-                            v-for="m_id in scope.row.menu_ids"
-                            :key="m_id"
+                            v-for="role in scope.row.roles_mean"
+                            :key="role"
                             size="mini"
                             :type="'info'"
                             style="margin:2px 5px;"
                             effect="dark">
-                            {{m_id}}
+                            {{role}}
                         </el-tag>
                     </template>
                 </el-table-column>
@@ -114,55 +114,76 @@
             <div class="pagination" v-html="pageHtml"></div>
         </el-card>
 
-        <!--添加角色模态框-->
+        <!--创建用户模态框-->
         <el-dialog
-            title="添加角色"
-            :visible.sync="newRoleFlag"
+            title="创建用户"
+            :visible.sync="newUserFlag"
             width="50%">
             <el-form ref="form" :model="form" label-width="100px" size="small">
-                <el-form-item label="角色名称">
+                <el-form-item label="姓名 / 账号">
                     <el-input v-model="form.name"></el-input>
                 </el-form-item>
-                <el-form-item label="菜单权限">
-                    <el-tree
-                        :data="menu_config"
-                        show-checkbox
-                        :default-expand-all="true"
-                        ref="newTree"
-                        node-key="id">
-                    </el-tree>
+                <el-form-item label="密码">
+                    <el-input v-model="form.password"></el-input>
+                </el-form-item>
+                <el-form-item label="确认密码">
+                    <el-input v-model="form.rePassword"></el-input>
+                </el-form-item>
+                <el-form-item label="角色">
+                    <el-select
+                        v-model="form.roles"
+                        multiple
+                        filterable
+                        style="width:100%"
+                        placeholder="请选择">
+                        <el-option
+                            v-for="item in rolesConfig"
+                            :key="item.id"
+                            :label="item.name"
+                            :value="item.id">
+                            {{item.name}}
+                        </el-option>
+                    </el-select>
                 </el-form-item>
             </el-form>
             <span slot="footer" class="dialog-footer">
-            <el-button size="mini" @click="newRoleFlag = false">取消</el-button>
-            <el-button size="mini" type="primary" @click="createRoleNow">立即创建</el-button>
+            <el-button size="mini" @click="newUserFlag = false">取消</el-button>
+            <el-button size="mini" type="primary" @click="createUserNow">立即创建</el-button>
         </span>
         </el-dialog>
 
-        <!--编辑角色模态框-->
+        <!--编辑用户模态框-->
         <el-dialog
-            title="编辑角色"
-            :visible.sync="editRoleFlag"
+            title="编辑用户"
+            :visible.sync="editUserFlag"
             width="50%">
             <el-form ref="editForm" :model="editForm" label-width="100px" size="small">
-                <el-form-item label="角色名称">
+                <el-form-item label="姓名 / 账号">
                     <el-input v-model="editForm.name"></el-input>
                 </el-form-item>
-                <el-form-item label="菜单权限">
-                    <el-tree
-                        :data="menu_config"
-                        show-checkbox
-                        :default-expand-all="true"
-                        :default-checked-keys="editForm.menu_ids"
-                        getCheckedKeys
-                        ref="editTree"
-                        node-key="id">
-                    </el-tree>
+                <el-form-item label="修改密码">
+                    <el-input v-model="editForm.password" placeholder="默认不修改"></el-input>
+                </el-form-item>
+                <el-form-item label="角色">
+                    <el-select
+                        v-model="editForm.roles"
+                        multiple
+                        filterable
+                        style="width:100%"
+                        placeholder="请选择">
+                        <el-option
+                            v-for="item in rolesConfig"
+                            :key="item.id"
+                            :label="item.name"
+                            :value="item.id">
+                            {{item.name}}
+                        </el-option>
+                    </el-select>
                 </el-form-item>
             </el-form>
             <span slot="footer" class="dialog-footer">
-            <el-button size="mini" @click="editRoleFlag = false">取消</el-button>
-            <el-button size="mini" type="primary" @click="saveRole">保存</el-button>
+            <el-button size="mini" @click="editUserFlag = false">取消</el-button>
+            <el-button size="mini" type="primary" @click="saveUser">保存</el-button>
         </span>
         </el-dialog>
     </div>
@@ -170,11 +191,11 @@
 
 <script>
 
-    import helper from "../mixins/helper";
+    import helper from "../../mixins/helper";
 
     export default {
 
-        name: 'roles',
+        name: 'user',
 
         mixins: [helper],
 
@@ -185,20 +206,23 @@
                 tableData: [],
                 tableSelection: [],
 
-                newRoleFlag: false,
-                editRoleFlag: false,
+                newUserFlag: false,
+                editUserFlag: false,
 
                 form: {
                     name: '',
-                    menu_ids: '',
+                    password: '',
+                    rePassword: '',
+                    roles: [],
                 },
 
                 editForm: {
                     name: '',
-                    menu_ids: '',
+                    password: '',
+                    roles: [],
                 },
 
-                menu_config: [],
+                rolesConfig: [],
 
                 pageHtml: '',
             }
@@ -227,45 +251,18 @@
 
         methods: {
 
-            //列表行颜色切换
-            tableStyle({row, column, rowIndex, columnIndex}) {
-
-                if(column.label === '状态') {
-
-                    switch (row.status) {
-                        case '0': { return 'background:#e4393c; color:#fff!important;'; }
-                        case '1': { return 'background:#009688; color:#fff!important;'; }
-                        case '2': { return 'background:#FFB800; color:#fff!important;'; }
-                    }
-                }
-            },
-
-            //表格多选
-            handleSelectionChange(val) {
-                this.tableSelection = val;
-            },
-
-            //打开编辑
-            editRoleNow(s) {
-
-                this.editForm = s.row;
-                this.$nextTick(() => {
-                    this.$refs.editTree.setCheckedKeys(s.row.menu_ids);
-                });
-                this.editRoleFlag = true;
-            },
-
             //创建用户
-            createRoleNow() {
+            createUserNow() {
 
                 if(!this.form.name) { this.$notify({title:'警告', message:'请输入姓名 / 账号', type:'warning' }); return false; }
-
-                this.form.menu_ids = this.$refs.newTree.getCheckedKeys();
-                if(this.form.menu_ids.length === 0) { this.$notify({title:'警告', message:'请选择角色菜单权限', type:'warning' }); return false; }
+                if(!this.form.password) { this.$notify({title:'警告', message:'请输入密码', type:'warning' }); return false; }
+                if(!this.form.rePassword) { this.$notify({title:'警告', message:'请重新输入密码', type:'warning' }); return false; }
+                if(this.form.password !== this.form.rePassword) { this.$notify({title:'警告', message:'两次密码输入不一致', type:'warning' }); return false; }
+                if(this.form.roles.length === 0) { this.$notify({title:'警告', message:'请选择角色', type:'warning' }); return false; }
 
                 this.poemRequest({
                     type: 'post',
-                    url: '/admin/roles?api=add_role',
+                    url: '/admin/user?api=create_user',
                     success: (res) => {
                         if(res.data.code === 1) {
                             this.$notify({
@@ -280,27 +277,22 @@
                 });
             },
 
-            //保存角色
-            saveRole() {
+            //打开编辑
+            editUserNow(s) {
+                this.editForm = s.row;
+                this.editForm.password = '';
+                this.editUserFlag = true;
+            },
+
+            //保存编辑用户
+            saveUser() {
 
                 if(!this.editForm.name) { this.$notify({title:'警告', message:'请输入姓名 / 账号', type:'warning' }); return false; }
-
-                this.editForm.menu_ids = this.$refs.editTree.getCheckedNodes(false, 2);
-
-                let temp_ids = [];
-                for (let key in this.editForm.menu_ids) {
-                    temp_ids.push(this.editForm.menu_ids[key].id);
-                }
-                this.editForm.menu_ids = temp_ids;
-
-                if(this.editForm.menu_ids.length === 0) {
-                    this.$notify({title:'警告', message:'请选择角色菜单权限', type:'warning' });
-                    return false;
-                }
+                if(this.editForm.roles.length === 0) { this.$notify({title:'警告', message:'请选择角色', type:'warning' }); return false; }
 
                 this.poemRequest({
                     type: 'post',
-                    url: '/admin/roles?api=edit_role',
+                    url: '/admin/user?api=info_change',
                     success: (res) => {
                         if(res.data.code === 1) {
                             this.$notify({
@@ -316,7 +308,7 @@
             },
 
             //变更状态
-            roleChange(status, s) {
+            userChange(status, s) {
 
                 let ids = [];
 
@@ -337,10 +329,9 @@
                     this.$message({ message:'操作前请先勾选记录', type:'warning' });
                     return false;
                 }
-
                 this.poemRequest({
                     type: 'post',
-                    url: '/admin/roles?api=status_change',
+                    url: '/admin/user?api=status_change',
                     success: (res) => {
                         if(res.data.code === 1) {
                             this.$notify({
@@ -355,6 +346,24 @@
                 });
             },
 
+            //列表行颜色切换
+            tableStyle({row, column, rowIndex, columnIndex}) {
+
+                if(column.label === '状态') {
+
+                    switch (row.status) {
+                        case '0': { return 'background:#e4393c; color:#fff!important;'; }
+                        case '1': { return 'background:#009688; color:#fff!important;'; }
+                        case '2': { return 'background:#FFB800; color:#fff!important;'; }
+                    }
+                }
+            },
+
+            //表格多选
+            handleSelectionChange(val) {
+                this.tableSelection = val;
+            },
+
             //加载列表
             loadList(page) {
 
@@ -362,11 +371,11 @@
 
                 this.poemRequest({
                     type: 'post',
-                    url: '/admin/roles?api=load&p=' + page,
+                    url: '/admin/user?api=load&p=' + page,
                     success: (res) => {
                         if(res.data.code === 1) {
                             this.tableData = res.data.data.lists;
-                            this.menu_config = res.data.data.menu_config;
+                            this.rolesConfig = res.data.data.roles_config;
                             this.pageHtml = res.data.data.page_html;
                         }else {
                             this.$notify.error({message:res.data.info});
@@ -380,6 +389,6 @@
 
 <style lang="less">
 
-    @import "../../static/css/public";
+    @import "../../../static/css/public";
     .el-table__row .cell { color:unset; }
 </style>

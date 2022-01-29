@@ -48,7 +48,7 @@
 
 <script>
 
-    import helper from "../mixins/helper";
+    import helper from "../../mixins/helper";
 
     export default {
 
@@ -124,6 +124,6 @@
 
 <style lang="less">
 
-    @import "../../static/css/public";
+    @import "../../../static/css/public";
     .el-table__row .cell { color:unset; }
 </style>
