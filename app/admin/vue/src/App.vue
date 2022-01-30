@@ -1,6 +1,6 @@
 <template>
 
-    <div id="app" class="sys-theme-admin-poem">
+    <div id="app" class="sys-theme-green">
 
         <el-row>
 
@@ -60,13 +60,13 @@
                     </div>
                 </el-menu>
 
-                <!--配置主题-->
+                <!--配置面板-->
                 <el-drawer
                     :visible.sync="drawer"
                     :show-close="true"
                     :with-header="false">
                     <div>
-                        Theme Choose
+                        Config Panel
                     </div>
                 </el-drawer>
             </el-col>
@@ -102,7 +102,7 @@
                         {{ item.title }}
                     </el-menu-item>
                     <el-menu-item
-                        @click="openTools('themePanel')"
+                        @click="openTools('configPanel')"
                         class="pull-right">
                         <i class="fa fa-ellipsis-v"></i>
                     </el-menu-item>
@@ -313,8 +313,8 @@ export default {
                     break;
                 }
 
-                //主题面板
-                case 'themePanel': {
+                //配置面板
+                case 'configPanel': {
                     this.drawer = true;
                     break;
                 }
@@ -430,8 +430,13 @@ export default {
                     }
 
                     .el-menu-item {
+
                         min-width: 100%;
                         width: 100%;
+
+                        &.is-active {
+                            color: var(--sys-main-ft-color)!important;
+                        }
                     }
 
                     .el-menu-item:hover {
