@@ -1,6 +1,6 @@
 <template>
 
-    <div id="app">
+    <div id="app" class="sys-theme-admin-poem">
 
         <el-row>
 
@@ -9,7 +9,7 @@
 
                 <!--logo-->
                 <div class="logo">
-                    AdminPoem2
+                    <i class="fa fa-chrome">&nbsp;&nbsp;</i><b>Admin<i>Poem2</i></b>
                 </div>
 
                 <!--二级菜单-->
@@ -18,7 +18,7 @@
                     class="menu-level-2"
                     @open="handleOpen"
                     @close="handleClose"
-                    background-color="#545c64"
+                    background-color="var(--sys-main-menu-color2)"
                     text-color="#fff"
                     :collapse="isCollapse">
                     <div
@@ -59,6 +59,16 @@
                         </el-menu-item>
                     </div>
                 </el-menu>
+
+                <!--配置主题-->
+                <el-drawer
+                    :visible.sync="drawer"
+                    :show-close="true"
+                    :with-header="false">
+                    <div>
+                        Theme Choose
+                    </div>
+                </el-drawer>
             </el-col>
 
             <!--右侧部分（一级菜单、路由视图）-->
@@ -79,12 +89,12 @@
                 <el-menu
                     v-if="this.$store.state.isSignIn"
                     :default-active="activeIndex"
-                    class="el-menu-demo"
+                    class="menu-level-1"
                     mode="horizontal"
                     @select="menuHandleSelect"
-                    background-color="#545c64"
+                    background-color="var(--sys-main-color)"
                     text-color="#fff"
-                    active-text-color="#ffd04b">
+                    active-text-color="var(--sys-main-ft-color2)">
                     <el-menu-item
                         v-for="(item, key) in this.$store.state.menuTree.menuInfo"
                         :key="item.id"
@@ -157,6 +167,7 @@ export default {
             subMenuTree: {},
             username: '',
             iFullscreen: false,
+            drawer: false,
         }
     },
 
@@ -304,6 +315,7 @@ export default {
 
                 //主题面板
                 case 'themePanel': {
+                    this.drawer = true;
                     break;
                 }
             }
@@ -343,6 +355,11 @@ export default {
             }
         },
 
+        //主题面板关闭
+        themeHandleClose(done) {
+
+        },
+
         handleOpen(key, keyPath) {
             //console.log(key, keyPath);
         },
@@ -354,121 +371,156 @@ export default {
 }
 </script>
 
-<style>
-#app {
-    font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    text-align: center;
-    color: #2c3e50;
-}
-</style>
-
 <style lang="less">
 
-#app {
+    @import "../static/css/theme";
 
-    > .el-row {
+    #app {
 
-        height: 100%;
+        font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        text-align: center;
+        color: #2c3e50;
 
-        #left {
+        > .el-row {
 
             height: 100%;
-            background: #545c64;
 
-            > .el-menu {
-                border: none;
-            }
+            #left {
 
-            > .logo {
-                width: 100%;
-                height: 60px;
-                background: #fff;
-                text-align: center;
-                font-weight: 600;
-                font-size: 1.2rem;
-                line-height: 60px;
-            }
+                height: 100%;
+                background: var(--sys-main-menu-color2);
 
-            > .menu-level-2 {
+                > .el-menu {
+                    border: none;
+                }
 
-                .el-submenu {
+                > .logo {
 
-                    .el-menu-item-group {
+                    width: 100%;
+                    height: 60px;
+                    background: var(--sys-main-menu-color);
+                    text-align: center;
+                    font-weight: 600;
+                    font-size: 1.4rem;
+                    line-height: 60px;
+                    color: #fff;
 
-                        .el-menu-item-group__title {
+                    i {
+                        font-size: 1.2rem;
+                        color: var(--sys-main-ft-color);
+                    }
 
-                        }
+                    > b {
+                        font-size: 1.2rem;
                     }
                 }
 
-                .el-menu-item {
-                    min-width: 100%;
-                    width: 100%;
+                > .menu-level-2 {
+
+                    .el-submenu {
+
+                        .el-menu-item-group {
+
+                            .el-menu-item-group__title {
+
+                            }
+                        }
+                    }
+
+                    .el-menu-item {
+                        min-width: 100%;
+                        width: 100%;
+                    }
+
+                    .el-menu-item:hover {
+
+                        background: var(--sys-main-color)!important;
+                        color: #fff!important;
+
+                        i {
+                            color: #fff!important;
+                        }
+                    }
+
+                    span {
+                        font-size: .6rem;
+                    }
+
+                    .el-submenu__title,
+                    .el-menu-item {
+                        text-align: left;
+                    }
+
+                    li.el-menu-item {
+                        font-size: .8rem;
+                    }
+                }
+            }
+
+            #right {
+
+                &.inner-view {
+                    height: 100%;
+                    background: #fff;
                 }
 
-                span {
-                    font-size: .6rem;
+                > .el-menu {
+                    border: none;
                 }
 
-                .el-submenu__title,
-                .el-menu-item {
-                    text-align: left;
+                > div:nth-child(2) {
+                    padding: 1%;
                 }
 
-                li.el-menu-item {
-                    font-size: .8rem;
+                .menu-level-1 {
+
+                    color: #fff!important;
+
+                    > .el-menu-item {
+
+                        > i {
+                            color: #fff!important;
+                        }
+                    }
+
+                    .el-menu-item:hover {
+                        background: var(--sys-main-color)!important;
+                    }
                 }
             }
         }
 
-        #right {
-
-            &.inner-view {
-                height: 100%;
-                background: #fff;
-            }
-
-            > .el-menu {
-                border: none;
-            }
-
-            > div:nth-child(2) {
-                padding: 1%;
-            }
-        }
-    }
-
-    footer {
-        font-size: .6rem;
-        text-align: center;
-        color: #8D8D8D;
-        font-weight: 600;
-        display: block;
-        position: fixed;
-        bottom: 10px;
-        left: 0;
-        width: 100%;
-
-        a {
+        footer {
+            font-size: .6rem;
+            text-align: center;
             color: #8D8D8D;
-            text-decoration: none;
-            font-weight: 800;
+            font-weight: 600;
+            display: block;
+            position: fixed;
+            bottom: 10px;
+            left: 0;
+            width: 100%;
+
+            a {
+                color: #8D8D8D;
+                text-decoration: none;
+                font-weight: 800;
+            }
         }
     }
-}
 
-.menu-level-2:not(.el-menu--collapse) {
-    min-height: 400px;
-    width: 100%;
-}
+    .menu-level-2:not(.el-menu--collapse) {
+        min-height: 400px;
+        width: 100%;
+    }
 
-.el-menu-item-group__title {
-    padding: 0;
-}
+    .el-menu-item-group__title {
+        padding: 0;
+    }
 
-.pull-right {
-    float: right !important;
-}
+    .pull-right {
+        float: right !important;
+    }
 </style>

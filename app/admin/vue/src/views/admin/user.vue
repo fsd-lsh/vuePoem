@@ -263,6 +263,7 @@
                 this.poemRequest({
                     type: 'post',
                     url: '/admin/user?api=create_user',
+                    data: this.form,
                     success: (res) => {
                         if(res.data.code === 1) {
                             this.$notify({
@@ -293,6 +294,7 @@
                 this.poemRequest({
                     type: 'post',
                     url: '/admin/user?api=info_change',
+                    data: {form:this.editForm},
                     success: (res) => {
                         if(res.data.code === 1) {
                             this.$notify({
@@ -332,6 +334,7 @@
                 this.poemRequest({
                     type: 'post',
                     url: '/admin/user?api=status_change',
+                    data: {ids:ids, status:status},
                     success: (res) => {
                         if(res.data.code === 1) {
                             this.$notify({

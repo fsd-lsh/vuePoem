@@ -94,7 +94,7 @@ export default new Router({
 
         {
             path: '/system',
-            name: 'system',
+            name: 'sys',
             component: resolve => require(['@/views/admin/system'], resolve),
             meta: {
                 title: '系统监控 - 系统管理' + title,

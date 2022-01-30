@@ -266,6 +266,7 @@
                 this.poemRequest({
                     type: 'post',
                     url: '/admin/roles?api=add_role',
+                    data: {form:this.form},
                     success: (res) => {
                         if(res.data.code === 1) {
                             this.$notify({
@@ -301,6 +302,7 @@
                 this.poemRequest({
                     type: 'post',
                     url: '/admin/roles?api=edit_role',
+                    data: {form:this.editForm},
                     success: (res) => {
                         if(res.data.code === 1) {
                             this.$notify({
@@ -341,6 +343,7 @@
                 this.poemRequest({
                     type: 'post',
                     url: '/admin/roles?api=status_change',
+                    data: {ids:ids, status:status},
                     success: (res) => {
                         if(res.data.code === 1) {
                             this.$notify({
