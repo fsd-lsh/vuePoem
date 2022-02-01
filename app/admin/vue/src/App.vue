@@ -493,6 +493,20 @@ export default {
                     .el-menu-item:hover {
                         background: var(--sys-main-color)!important;
                     }
+
+                    .el-submenu {
+
+                        .el-submenu__title {
+
+                            i {
+                                color: #fff!important;
+                            }
+
+                            &:hover {
+                                background: var(--sys-main-color)!important;
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -527,5 +541,9 @@ export default {
 
     .pull-right {
         float: right !important;
+    }
+
+    body > .el-menu--horizontal {
+        background: #23262e!important;
     }
 </style>
