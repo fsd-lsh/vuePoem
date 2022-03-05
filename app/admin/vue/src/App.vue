@@ -516,7 +516,7 @@ export default {
 
                         margin: 1rem 0 0 0;
                         padding: 1.2rem;
-                        height: 80px;
+                        height: 70px;
                         vertical-align:middle;
                         text-align: center;
                         transition: all linear .3s;

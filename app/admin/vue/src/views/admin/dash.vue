@@ -14,7 +14,7 @@
                                     <p>用户</p>
                                     <div class="total-group">
                                         <span class="total">{{parseInt(adminTotal[0]) + parseInt(adminTotal[1]) + parseInt(adminTotal[2])}}</span>
-                                        <span>（</span>
+                                        <span>(</span>
                                         <el-tooltip class="item" effect="dark" content="正常用户" placement="top">
                                             <span class="status_1">{{adminTotal[1]}}&nbsp;&nbsp;</span>
                                         </el-tooltip>
@@ -24,7 +24,7 @@
                                         <el-tooltip class="item" effect="dark" content="删除用户" placement="top">
                                             <span class="status_0">{{adminTotal[0]}}</span>
                                         </el-tooltip>
-                                        <span>）</span>
+                                        <span>)</span>
                                     </div>
                                 </div>
                             </el-col>
@@ -33,7 +33,7 @@
                                     <p>角色</p>
                                     <div class="total-group">
                                         <span class="total">{{parseInt(roleTotal[0]) + parseInt(roleTotal[1]) + parseInt(roleTotal[2])}}</span>
-                                        <span>（</span>
+                                        <span>(</span>
                                         <el-tooltip class="item" effect="dark" content="正常角色" placement="top">
                                             <span class="status_1">{{roleTotal[1]}}&nbsp;&nbsp;</span>
                                         </el-tooltip>
@@ -43,7 +43,7 @@
                                         <el-tooltip class="item" effect="dark" content="删除角色" placement="top">
                                             <span class="status_0">{{roleTotal[0]}}</span>
                                         </el-tooltip>
-                                        <span>）</span>
+                                        <span>)</span>
                                     </div>
                                 </div>
                             </el-col>
@@ -52,7 +52,7 @@
                                     <p>菜单</p>
                                     <div class="total-group">
                                         <span class="total">{{parseInt(menuTotal[0]) + parseInt(menuTotal[1]) + parseInt(menuTotal[2])}}</span>
-                                        <span>（</span>
+                                        <span>(</span>
                                         <el-tooltip class="item" effect="dark" content="启用菜单" placement="top">
                                             <span class="status_1">{{menuTotal[1]}}&nbsp;&nbsp;</span>
                                         </el-tooltip>
@@ -62,7 +62,7 @@
                                         <el-tooltip class="item" effect="dark" content="删除菜单" placement="top">
                                             <span class="status_0">{{menuTotal[0]}}</span>
                                         </el-tooltip>
-                                        <span>）</span>
+                                        <span>)</span>
                                     </div>
                                 </div>
                             </el-col>
@@ -71,7 +71,7 @@
                                     <p>日志</p>
                                     <div class="total-group">
                                         <span class="total">{{parseInt(logTotal[0]) + parseInt(logTotal[1]) + parseInt(logTotal[2])}}</span>
-                                        <span>（</span>
+                                        <span>(</span>
                                         <el-tooltip class="item" effect="dark" content="普通日志" placement="top">
                                             <span class="status_1">{{logTotal[0]}}&nbsp;&nbsp;</span>
                                         </el-tooltip>
@@ -81,7 +81,7 @@
                                         <el-tooltip class="item" effect="dark" content="高危日志" placement="top">
                                             <span class="status_0">{{logTotal[2]}}</span>
                                         </el-tooltip>
-                                        <span>）</span>
+                                        <span>)</span>
                                     </div>
                                 </div>
                             </el-col>
