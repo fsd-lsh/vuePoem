@@ -80,9 +80,11 @@
                             <div
                                 :class="{
                                     'grid-content': true,
-                                    'active': (nowTheme === item) ? true : false,
+                                    'active': (nowTheme === item),
                                 }">
-                                {{item}}
+                                <el-tooltip class="item" effect="dark" :content="item" placement="bottom">
+                                    <div class="text">{{item}}</div>
+                                </el-tooltip>
                             </div>
                         </el-col>
                     </el-row>
@@ -528,11 +530,21 @@ export default {
                             width: 100%;
                             border: 1px solid var(--sys-main-ft-color);
                             border-radius: 5px;
+                            font-weight: 600;
+                            font-size: .9rem;
 
                             &:hover {
                                 transition: all linear .3s;
                                 color: #fff;
                                 background: var(--sys-main-ft-color);
+                            }
+
+                            div.text {
+
+                                white-space: nowrap;
+                                overflow: hidden;
+                                text-overflow: ellipsis;
+                                padding: .8rem;
                             }
                         }
 
