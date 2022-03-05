@@ -294,7 +294,7 @@ class menu extends component\login {
             ],
             'logoInfo' => [
                 'title' => 'AdminPoem',
-                'image' => '/static/layuimini/images/logo.png',
+                'image' => '',
             ],
             'menuInfo' => $this->get_menu_list(),
         ];

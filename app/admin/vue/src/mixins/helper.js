@@ -59,6 +59,16 @@ export default {
 
                 return {};
             }
+        },
+
+        //js 版 in_array
+        in_array(search, array) {
+            for(var i in array) {
+                if(array[i] == search){
+                    return true;
+                }
+            }
+            return false;
         }
     },
 }

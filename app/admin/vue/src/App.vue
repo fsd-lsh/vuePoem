@@ -1,6 +1,6 @@
 <template>
 
-    <div id="app" class="sys-theme-green">
+    <div id="app" :class="nowTheme">
 
         <el-row>
 
@@ -65,9 +65,21 @@
                     :visible.sync="drawer"
                     :show-close="true"
                     :with-header="false">
-                    <div>
-                        Config Panel
-                    </div>
+                    <el-row
+                        id="config-panel"
+                        :gutter="20">
+                        <el-col
+                            class="config-panel-title"
+                            :span="24">设置主题</el-col>
+                        <el-col
+                            :span="8"
+                            :key="key"
+                            v-for="(item, key) in themeList"
+                            @click.native="themeHandleClose(item)"
+                            class="config-panel-item">
+                            <div class="grid-content">{{item}}</div>
+                        </el-col>
+                    </el-row>
                 </el-drawer>
             </el-col>
 
@@ -168,6 +180,12 @@ export default {
             username: '',
             iFullscreen: false,
             drawer: false,
+            themeList: [
+                'sys-theme-default',
+                'sys-theme-admin-poem',
+                'sys-theme-green',
+            ],
+            nowTheme: '',
         }
     },
 
@@ -209,6 +227,13 @@ export default {
         //定位menu active
         if (this.$store.state.isSignIn) {
             this.positionMenu();
+        }
+
+        //默认主题
+        if(this.in_array(window.localStorage.getItem('sys-theme'), this.themeList)) {
+            this.nowTheme = window.localStorage.getItem('sys-theme');
+        }else {
+            this.nowTheme = this.themeList[0];
         }
 
         //写入用户信息
@@ -356,8 +381,14 @@ export default {
         },
 
         //主题面板关闭
-        themeHandleClose(done) {
+        themeHandleClose(themeClassName) {
 
+            if(!this.in_array(themeClassName, this.themeList)) {
+                this.$notify({ message:'主题不存在', type:'error'});
+                return false;
+            }
+            window.localStorage.setItem('sys-theme', themeClassName);
+            this.nowTheme = themeClassName;
         },
 
         handleOpen(key, keyPath) {
@@ -460,6 +491,44 @@ export default {
 
                     li.el-menu-item {
                         font-size: .8rem;
+                    }
+                }
+
+                #config-panel {
+
+                    padding: 10px;
+
+                    .config-panel-title {
+                        color: var(--sys-main-ft-color);
+                        font-size: 1rem;
+                        font-weight: 600;
+                    }
+
+                    .config-panel-item {
+
+                        margin: 1rem 0 0 0;
+                        padding: 1.2rem;
+                        height: 80px;
+                        vertical-align:middle;
+                        text-align: center;
+                        transition: all linear .3s;
+                        cursor: pointer;
+
+                        .grid-content {
+
+                            display: block;
+                            height: 100%;
+                            line-height: 100%;
+                            width: 100%;
+                            border: 1px solid var(--sys-main-ft-color);
+                            border-radius: 5px;
+
+                            &:hover {
+                                transition: all linear .3s;
+                                color: #fff;
+                                background: var(--sys-main-ft-color);
+                            }
+                        }
                     }
                 }
             }
