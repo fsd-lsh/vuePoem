@@ -77,7 +77,13 @@
                             v-for="(item, key) in themeList"
                             @click.native="themeHandleClose(item)"
                             class="config-panel-item">
-                            <div class="grid-content">{{item}}</div>
+                            <div
+                                :class="{
+                                    'grid-content': true,
+                                    'active': (nowTheme === item) ? true : false,
+                                }">
+                                {{item}}
+                            </div>
                         </el-col>
                     </el-row>
                 </el-drawer>
@@ -528,6 +534,12 @@ export default {
                                 color: #fff;
                                 background: var(--sys-main-ft-color);
                             }
+                        }
+
+                        > .active {
+                            transition: all linear .3s;
+                            color: #fff;
+                            background: var(--sys-main-ft-color);
                         }
                     }
                 }
