@@ -217,6 +217,14 @@ export default {
 
     created() {
 
+        //sysInfo
+        console.log(
+            `%c Design By Force %c AdminPoem2 %c`,
+            'background:#35495e ; padding: 1px; border-radius: 3px 0 0 3px;  color: #fff',
+            'background:#1aa094 ; padding: 1px; border-radius: 0 3px 3px 0;  color: #fff',
+            'background:transparent'
+        )
+
         //页面每次刷新加载时候都会去读取sessionStorage里面的vuex状态
         if (sessionStorage.getItem("store")) {
             this.$store.replaceState(
