@@ -4,7 +4,7 @@ namespace service\component;
 
 /**
  * Class login
- * 登录服务套件（前后台通用）
+ * 登录服务
  */
 class login {
 
