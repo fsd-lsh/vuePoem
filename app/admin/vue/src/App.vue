@@ -363,7 +363,7 @@ export default {
         },
 
         //一级菜单点击回调
-        menuHandleSelect(tree_key) {
+        menuHandleSelect(tree_key, onSelect) {
 
             //clear
             this.activeSubIndex = '0';
@@ -373,6 +373,13 @@ export default {
             for (let key = 0; key < menuTree.length; key++) {
                 if (parseInt(menuTree[key].id) === parseInt(tree_key)) {
                     this.subMenuTree = menuTree[key];
+                    if(!onSelect) {
+                        //刷新
+
+                    }else {
+                        //点击
+                        this.$router.push(this.subMenuTree.child[0].href);
+                    }
                     break;
                 }
             }
@@ -387,7 +394,7 @@ export default {
                         if (menuTree[key].child[s_key].href === this.$route.path) {
                             this.pid = menuTree[key].child[s_key].pid;
                             this.id = menuTree[key].child[s_key].id;
-                            this.menuHandleSelect(this.pid);
+                            this.menuHandleSelect(this.pid, false);
                             this.activeIndex = this.pid;
                             this.activeSubIndex = this.id;
                         }
