@@ -7,7 +7,7 @@
             <el-row :gutter="20">
                 <el-col :span="8" class="dash-item">
                     <div>
-                        <p><i class="fa fa-area-chart"></i>&nbsp;&nbsp;数据统计</p>
+                        <p><i class="fa fa-area-chart"></i>&nbsp;&nbsp;{{$t('admin.dash.dataStatistics')}}</p>
                         <el-row :gutter="10" class="dash-item-cover">
                             <el-col :span="12" class="dash-item-card">
                                 <div>

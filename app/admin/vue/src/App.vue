@@ -4,9 +4,6 @@
 
         <el-row>
 
-            <!--i18n test-->
-            {{$t('sysName')}}
-
             <!--左侧部分（logo、二级菜单）-->
             <el-col :span="3" id="left" v-if="this.$store.state.isSignIn">
 
@@ -377,6 +374,19 @@ export default {
                 //语言切换
                 case 'language': {
 
+                    let lang = window.localStorage.getItem('sys-lang');
+                    switch (lang) {
+                        case 'en': {
+                            window.localStorage.setItem('sys-lang', 'zh');
+                            break;
+                        }
+                        case 'zh':
+                        default: {
+                            window.localStorage.setItem('sys-lang', 'en');
+                            break;
+                        }
+                    }
+                    window.location.reload();
                     break;
                 }
             }

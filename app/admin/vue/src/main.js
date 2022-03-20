@@ -18,9 +18,9 @@ Vue.use(less);
 Vue.use(VueI18n)
 
 //i18n
-let lang = window.sessionStorage.getItem('lang');
+let lang = window.localStorage.getItem('sys-lang');
 lang = lang ? lang : 'zh';
-window.sessionStorage.setItem('lang', lang);
+window.localStorage.setItem('sys-lang', lang);
 const i18n = new VueI18n({
     locale: lang,
     messages: {

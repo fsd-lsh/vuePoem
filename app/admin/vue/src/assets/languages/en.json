@@ -2,7 +2,9 @@
     "sysName": "adminPoem2",
     "admin": {
         "cms": "",
-        "dash": "",
+        "dash": {
+            "dataStatistics": "Data Statistics"
+        },
         "fwLog": "",
         "menu": "",
         "roles": "",
