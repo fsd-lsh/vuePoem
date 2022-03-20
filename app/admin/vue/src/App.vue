@@ -4,6 +4,9 @@
 
         <el-row>
 
+            <!--i18n test-->
+            {{$t('sysName')}}
+
             <!--左侧部分（logo、二级菜单）-->
             <el-col :span="3" id="left" v-if="this.$store.state.isSignIn">
 
@@ -124,7 +127,9 @@
                     <el-menu-item
                         @click="openTools('configPanel')"
                         class="pull-right">
-                        <i class="fa fa-ellipsis-v"></i>
+                        <el-tooltip class="item" effect="dark" content="配置面板" placement="bottom">
+                            <i class="fa fa-ellipsis-v"></i>
+                        </el-tooltip>
                     </el-menu-item>
                     <el-submenu
                         index="2"
@@ -152,7 +157,16 @@
                     <el-menu-item
                         @click="openTools('clean')"
                         class="pull-right">
-                        <i class="fa fa-trash-o"></i>
+                        <el-tooltip class="item" effect="dark" content="清理缓存" placement="bottom">
+                            <i class="fa fa-trash-o"></i>
+                        </el-tooltip>
+                    </el-menu-item>
+                    <el-menu-item
+                        @click="openTools('language')"
+                        class="pull-right">
+                        <el-tooltip class="item" effect="dark" content="切换语言" placement="bottom">
+                            <i class="fa fa-language"></i>
+                        </el-tooltip>
                     </el-menu-item>
                 </el-menu>
 
@@ -357,6 +371,12 @@ export default {
                 //配置面板
                 case 'configPanel': {
                     this.drawer = true;
+                    break;
+                }
+
+                //语言切换
+                case 'language': {
+
                     break;
                 }
             }
