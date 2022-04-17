@@ -149,6 +149,6 @@
     };
 </script>
 
-<style lang="less">
-    @import "../../../static/css/public";
+<style lang="less" scoped>
+
 </style>

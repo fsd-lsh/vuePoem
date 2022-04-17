@@ -222,6 +222,7 @@ class login {
 
         //检查用户权限
         $url_path = $_SERVER['PATH_INFO'];
+        $url_path = str_replace('//', '/', $url_path);
         if(!$url_path) {
             ajax(0, '您的请求无效');
         }

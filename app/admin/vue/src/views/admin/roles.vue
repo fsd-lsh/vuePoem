@@ -381,8 +381,6 @@
     };
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
 
-    @import "../../../static/css/public";
-    .el-table__row .cell { color:unset; }
 </style>

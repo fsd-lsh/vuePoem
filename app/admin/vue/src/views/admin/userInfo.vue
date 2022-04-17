@@ -110,6 +110,6 @@
     };
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
     .btn-group { text-align:center }
 </style>

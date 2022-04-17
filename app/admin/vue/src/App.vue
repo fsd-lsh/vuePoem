@@ -684,4 +684,8 @@ export default {
     body > .el-menu--horizontal {
         background: #23262e!important;
     }
+
+    .el-table__row .cell {
+        color: unset;
+    }
 </style>
