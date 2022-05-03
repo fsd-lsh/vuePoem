@@ -107,7 +107,7 @@
 
                 this.poemRequest({
                     type: 'post',
-                    url: '/admin/log/sys_log?api=load&p=' + page,
+                    url: '/admin/log/sysLog?api=load&p=' + page,
                     success: (res) => {
                         if(res.data.code === 1) {
                             this.tableData = res.data.data.lists;

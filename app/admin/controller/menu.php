@@ -378,7 +378,13 @@ class menu extends component\login {
 
                 if (!empty($child)) {
                     $node['child'] = $child;
+                }else {
+                    $node['child'] = [];
                 }
+                $node['rand_name'] = time() . '-' . rand(1234, 9999);
+                $node['name'] = explode('/', $node['href']);
+                $node['name'] = $node['name'][count($node['name']) - 1];
+
                 $treeList[] = $node;
             }
         }

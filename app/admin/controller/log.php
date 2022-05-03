@@ -27,7 +27,7 @@ class log extends component\login {
      * Time: 20:46
      * Desc: 框架日志
      */
-    public function fw_log() {
+    public function fwLog() {
 
         //API
         sys_api([
@@ -113,7 +113,7 @@ class log extends component\login {
      * Time: 20:53
      * Desc: 系统日志
      */
-    public function sys_log() {
+    public function sysLog() {
 
         //API
         sys_api([
@@ -124,7 +124,7 @@ class log extends component\login {
                 //获取日志
                 $log_data = m('sys_log')
                     ->order('id desc');
-                $log_data = \poem\more\page::run($log_data, '/#/log/sys_log', 15);
+                $log_data = \poem\more\page::run($log_data, '/#/log/sysLog', 15);
 
                 //数据格式化
                 if(is_array($log_data['list']) && !empty($log_data['list'])) {

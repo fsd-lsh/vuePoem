@@ -1,11 +1,12 @@
 import Vue from 'vue';
 import Router from 'vue-router';
+import axios from 'axios';
 
 Vue.use(Router);
 
 const title = ' - adminPoem2';
 
-export default new Router({
+let router = new Router({
 
     mode:'hash',
 
@@ -28,77 +29,37 @@ export default new Router({
                 title: '用户信息 - 系统管理' + title,
             },
         },
-
-        {
-            path: '/dash',
-            name: 'dash',
-            component: resolve => require(['@/views/admin/dash'], resolve),
-            meta: {
-                title: '面板统计 - 业务管理' + title,
-            },
-        },
-
-        {
-            path: '/cms',
-            name: 'cms',
-            component: resolve => require(['@/views/admin/cms'], resolve),
-            meta: {
-                title: 'cms - 业务管理' + title,
-            },
-        },
-
-        {
-            path: '/menu',
-            name: 'menu',
-            component: resolve => require(['@/views/admin/menu'], resolve),
-            meta: {
-                title: '菜单设置 - 系统管理' + title,
-            },
-        },
-
-        {
-            path: '/roles',
-            name: 'roles',
-            component: resolve => require(['@/views/admin/roles'], resolve),
-            meta: {
-                title: '角色设置 - 系统管理' + title,
-            },
-        },
-
-        {
-            path: '/user',
-            name: 'user',
-            component: resolve => require(['@/views/admin/user'], resolve),
-            meta: {
-                title: '用户管理 - 系统管理' + title,
-            },
-        },
-
-        {
-            path: '/log/fw_log',
-            name: 'fw_log',
-            component: resolve => require(['@/views/admin/fwLog'], resolve),
-            meta: {
-                title: '框架日志 - 系统管理' + title,
-            },
-        },
-
-        {
-            path: '/log/sys_log',
-            name: 'sys_log',
-            component: resolve => require(['@/views/admin/sysLog'], resolve),
-            meta: {
-                title: '运行日志 - 系统管理' + title,
-            },
-        },
-
-        {
-            path: '/system',
-            name: 'sys',
-            component: resolve => require(['@/views/admin/system'], resolve),
-            meta: {
-                title: '系统监控 - 系统管理' + title,
-            },
-        },
     ],
-})
+});
+
+axios.get('/admin/menu/load').then(res => {
+    let menu = res.data.data.menuInfo;
+    for (let index = 0; index < menu.length; index++) {
+        for (let sub_index = 0; sub_index < menu[index].child.length; sub_index++) {
+            if(menu[index].child[sub_index].child.length) {
+                for (let sub_index2 = 0; sub_index2 < menu[index].child[sub_index].child.length; sub_index2++) {
+                    router.addRoute({
+                        path: menu[index].child[sub_index].child[sub_index2].href,
+                        name: menu[index].child[sub_index].child[sub_index2].name,
+                        component: resolve => require(['@/views/admin/' + menu[index].child[sub_index].child[sub_index2].name], resolve),
+                        meta: {
+                            title: menu[index].child[sub_index].child[sub_index2].title + title,
+                        },
+                    });
+                    console.log(menu[index].child[sub_index].child[sub_index2]);
+                }
+            }else {
+                router.addRoute({
+                    path: menu[index].child[sub_index].href,
+                    name: menu[index].child[sub_index].name,
+                    component: resolve => require(['@/views/admin/' + menu[index].child[sub_index].name], resolve),
+                    meta: {
+                        title: menu[index].child[sub_index].title + title,
+                    },
+                });
+            }
+        }
+    }
+});
+
+export default router;

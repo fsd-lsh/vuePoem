@@ -114,7 +114,7 @@
 
                 this.poemRequest({
                     type: 'post',
-                    url: '/admin/log/fw_log?api=load',
+                    url: '/admin/log/fwLog?api=load',
                     success: (res) => {
                         if(res.data.code === 1) {
                             this.tableData = res.data.data.lists;

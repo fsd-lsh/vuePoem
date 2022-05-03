@@ -27,7 +27,7 @@
 
                         <!--多级-->
                         <el-submenu
-                            v-if="item.child"
+                            v-if="item.child.length"
                             :index="item.id">
                             <template
                                 slot="title">
@@ -48,7 +48,7 @@
                         <!--单级-->
                         <el-menu-item
                             @click="openMenu(item)"
-                            v-if="!item.child"
+                            v-if="!item.child.length"
                             :key="key"
                             :index="item.id">
                             <i :class="item.icon"></i>
