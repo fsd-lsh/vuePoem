@@ -94,7 +94,7 @@ export default {
 
 <style lang="less">
     body {
-        background: url('../../../static/imgs/signin-bg.png') 0 0 / cover no-repeat;
+        background: url('../../../static/imgs/signin-bg.png') 0 0 / cover no-repeat!important;
         overflow: hidden;
     }
 </style>
