@@ -4,7 +4,7 @@
 
     <div id="menu">
         <el-card class="box-card">
-            <el-button @click="newMenuFlag = !newMenuFlag" icon="fa fa-bars" type="primary" size="small">&nbsp;添加菜单</el-button>
+            <el-button @click="newMenuFlag = !newMenuFlag" icon="fa fa-bars" type="primary" size="small">&nbsp;{{$t('admin.menu.add')}}</el-button>
             <el-table
                 :data="tableData"
                 style="width: 100%;margin-bottom: 20px;"
@@ -19,21 +19,21 @@
                 <el-table-column
                     prop="title"
                     fixed
-                    label="菜单名称"
+                    :label="$t('admin.menu.name')"
                     sortable
                     width="180">
                 </el-table-column>
                 <el-table-column
-                    width="200"
+                    width="220"
                     fixed="left"
-                    label="操作">
+                    :label="$t('admin.menu.operation')">
                     <template slot-scope="scope">
                         <el-button
                             size="mini"
                             type="primary"
                             title="编辑"
                             @click="editMenuNow(scope)">
-                            <i class="fa fa-pencil">&nbsp;编辑</i>
+                            <i class="fa fa-pencil">&nbsp;{{$t('admin.menu.edit')}}</i>
                         </el-button>
                         <el-button
                             v-if="scope.row.status === '1'"
@@ -42,7 +42,7 @@
                             title="停用"
                             :disabled="scope.row.lock === '有锁'"
                             @click="menuChange(2, scope)">
-                            <i class="fa fa-toggle-on">&nbsp;停用</i>
+                            <i class="fa fa-toggle-on">&nbsp;{{$t('admin.menu.stop')}}</i>
                         </el-button>
                         <el-button
                             v-if="scope.row.status === '2'"
@@ -51,7 +51,7 @@
                             title="启用"
                             :disabled="scope.row.lock === '有锁'"
                             @click="menuChange(1, scope)">
-                            <i class="fa fa-user-times">&nbsp;启用</i>
+                            <i class="fa fa-user-times">&nbsp;{{$t('admin.menu.open')}}</i>
                         </el-button>
                         <el-button
                             size="mini"
@@ -59,7 +59,7 @@
                             title="删除"
                             :disabled="scope.row.lock === '有锁'"
                             @click="menuChange(0, scope)">
-                            <i class="fa fa-user-times">&nbsp;删除</i>
+                            <i class="fa fa-user-times">&nbsp;{{$t('admin.menu.del')}}</i>
                         </el-button>
                     </template>
                 </el-table-column>
@@ -77,7 +77,7 @@
                 </el-table-column>
                 <el-table-column
                     prop="icon"
-                    label="菜单图标"
+                    :label="$t('admin.menu.icon')"
                     sortable
                     width="100">
                     <template slot-scope="scope">
@@ -87,53 +87,53 @@
                 </el-table-column>
                 <el-table-column
                     prop="href"
-                    label="链接"
+                    :label="$t('admin.menu.href')"
                     sortable
                     width="180">
                 </el-table-column>
                 <el-table-column
                     prop="sort"
-                    label="排序">
+                    :label="$t('admin.menu.sort')">
                 </el-table-column>
                 <el-table-column
                     prop="show"
-                    label="显性">
+                    :label="$t('admin.menu.display')">
                 </el-table-column>
                 <el-table-column
                     prop="lock"
-                    label="锁">
+                    :label="$t('admin.menu.lock')">
                 </el-table-column>
                 <el-table-column
                     prop="status_mean"
-                    label="状态">
+                    :label="$t('admin.menu.status')">
                 </el-table-column>
                 <el-table-column
                     prop="target"
-                    label="打开方式">
+                    :label="$t('admin.menu.target')">
                 </el-table-column>
                 <el-table-column
                     prop="ctime"
                     width="180"
-                    label="创建时间">
+                    :label="$t('admin.menu.ctime')">
                 </el-table-column>
                 <el-table-column
                     prop="utime"
                     width="160"
-                    label="更新时间">
+                    :label="$t('admin.menu.utime')">
                 </el-table-column>
             </el-table>
         </el-card>
 
         <!--添加-->
         <el-dialog
-            title="添加菜单"
+            :title="$t('admin.menu.add')"
             :visible.sync="newMenuFlag"
             width="50%">
             <el-form ref="form" :model="form" label-width="100px" size="small">
-                <el-form-item label="菜单名称">
+                <el-form-item :label="$t('admin.menu.name')">
                     <el-input placeholder="请输入菜单名称" v-model="form.title"></el-input>
                 </el-form-item>
-                <el-form-item label="菜单链接">
+                <el-form-item :label="$t('admin.menu.href')">
                     <el-select
                         v-model="form.href"
                         style="width:100%"
@@ -152,7 +152,7 @@
                         </el-option-group>
                     </el-select>
                 </el-form-item>
-                <el-form-item label="父级菜单">
+                <el-form-item :label="$t('admin.menu.parent')">
                     <el-select
                         v-model="form.pid"
                         filterable
@@ -168,7 +168,7 @@
                         </el-option>
                     </el-select>
                 </el-form-item>
-                <el-form-item label="图标">
+                <el-form-item :label="$t('admin.menu.icon')">
                     <el-select
                         v-model="form.icon"
                         filterable
@@ -186,7 +186,7 @@
                         </el-option>
                     </el-select>
                 </el-form-item>
-                <el-form-item label="显性">
+                <el-form-item :label="$t('admin.menu.display')">
                     <el-switch
                         v-model="form.show"
                         style="padding:6px 0 0 0; float:left;"
@@ -196,7 +196,7 @@
                         inactive-color="#ff4949">
                     </el-switch>
                 </el-form-item>
-                <el-form-item label="打开方式">
+                <el-form-item :label="$t('admin.menu.target')">
                     <el-select
                         v-model="form.target"
                         filterable
@@ -210,7 +210,7 @@
                         </el-option>
                     </el-select>
                 </el-form-item>
-                <el-form-item label="排序">
+                <el-form-item :label="$t('admin.menu.sort')">
                     <el-input
                         placeholder="请输入排序号码"
                         type="number"
@@ -220,21 +220,21 @@
                 </el-form-item>
             </el-form>
             <span slot="footer" class="dialog-footer">
-            <el-button size="mini" @click="newMenuFlag = false">取消</el-button>
-            <el-button size="mini" type="primary" @click="addMenu">保存</el-button>
+            <el-button size="mini" @click="newMenuFlag = false">{{$t('admin.menu.cancel')}}</el-button>
+            <el-button size="mini" type="primary" @click="addMenu">{{$t('admin.menu.save')}}</el-button>
         </span>
         </el-dialog>
 
         <!--编辑-->
         <el-dialog
-            title="编辑菜单"
+            :title="$t('admin.menu.edit')"
             :visible.sync="editMenuFlag"
             width="50%">
             <el-form ref="editForm" :model="editForm" label-width="100px" size="small">
-                <el-form-item label="菜单名称">
+                <el-form-item :label="$t('admin.menu.name')">
                     <el-input placeholder="请输入菜单名称" v-model="editForm.title"></el-input>
                 </el-form-item>
-                <el-form-item label="菜单链接">
+                <el-form-item :label="$t('admin.menu.href')">
                     <el-select
                         v-model="editForm.href"
                         style="width:100%"
@@ -253,7 +253,7 @@
                         </el-option-group>
                     </el-select>
                 </el-form-item>
-                <el-form-item label="父级菜单">
+                <el-form-item :label="$t('admin.menu.parent')">
                     <el-select
                         v-model="editForm.pid"
                         filterable
@@ -269,7 +269,7 @@
                         </el-option>
                     </el-select>
                 </el-form-item>
-                <el-form-item label="图标">
+                <el-form-item :label="$t('admin.menu.icon')">
                     <el-select
                         v-model="editForm.icon"
                         filterable
@@ -287,7 +287,7 @@
                         </el-option>
                     </el-select>
                 </el-form-item>
-                <el-form-item label="显性">
+                <el-form-item :label="$t('admin.menu.display')">
                     <el-switch
                         v-model="editForm.show"
                         style="padding:6px 0 0 0; float:left;"
@@ -297,7 +297,7 @@
                         inactive-color="#ff4949">
                     </el-switch>
                 </el-form-item>
-                <el-form-item label="打开方式">
+                <el-form-item :label="$t('admin.menu.target')">
                     <el-select
                         v-model="editForm.target"
                         filterable
@@ -311,7 +311,7 @@
                         </el-option>
                     </el-select>
                 </el-form-item>
-                <el-form-item label="排序">
+                <el-form-item :label="$t('admin.menu.sort')">
                     <el-input
                         placeholder="请输入排序号码"
                         type="number"
@@ -321,8 +321,8 @@
                 </el-form-item>
             </el-form>
             <span slot="footer" class="dialog-footer">
-            <el-button size="mini" @click="editMenuFlag = false">取消</el-button>
-            <el-button size="mini" type="primary" @click="saveMenu">保存</el-button>
+            <el-button size="mini" @click="editMenuFlag = false">{{$t('admin.menu.cancel')}}</el-button>
+            <el-button size="mini" type="primary" @click="saveMenu">{{$t('admin.menu.save')}}</el-button>
         </span>
         </el-dialog>
     </div>

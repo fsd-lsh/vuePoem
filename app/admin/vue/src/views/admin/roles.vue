@@ -4,10 +4,10 @@
 
     <div id="roles">
         <el-card class="box-card">
-            <el-button @click="newRoleFlag = !newRoleFlag" icon="fa fa-user-plus" type="primary" size="small">&nbsp;添加角色</el-button>
-            <el-button @click="roleChange(2)" icon="fa fa-toggle-on" type="warning" size="small">&nbsp;批量停用</el-button>
-            <el-button @click="roleChange(1)" icon="fa fa-toggle-off" type="success" size="small">&nbsp;批量启用</el-button>
-            <el-button @click="roleChange(0)" icon="fa fa-user-times" type="danger" size="small">&nbsp;批量删除</el-button>
+            <el-button @click="newRoleFlag = !newRoleFlag" icon="fa fa-user-plus" type="primary" size="small">&nbsp;{{$t('admin.roles.add')}}</el-button>
+            <el-button @click="roleChange(2)" icon="fa fa-toggle-on" type="warning" size="small">&nbsp;{{$t('admin.roles.batch')}}{{$t('admin.roles.stop')}}</el-button>
+            <el-button @click="roleChange(1)" icon="fa fa-toggle-off" type="success" size="small">&nbsp;{{$t('admin.roles.batch')}}{{$t('admin.roles.open')}}</el-button>
+            <el-button @click="roleChange(0)" icon="fa fa-user-times" type="danger" size="small">&nbsp;{{$t('admin.roles.batch')}}{{$t('admin.roles.del')}}</el-button>
             <el-table
                 :data="tableData"
                 stripe
@@ -24,42 +24,42 @@
                     width="55">
                 </el-table-column>
                 <el-table-column
-                    width="200"
+                    width="220"
                     fixed="left"
-                    label="操作">
+                    :label="$t('admin.roles.operation')">
                     <template slot-scope="scope">
                         <el-button
                             size="mini"
                             type="primary"
-                            title="编辑"
+                            :title="$t('admin.roles.edit')"
                             @click="editRoleNow(scope)">
-                            <i class="fa fa-pencil">&nbsp;编辑</i>
+                            <i class="fa fa-pencil">&nbsp;{{$t('admin.roles.edit')}}</i>
                         </el-button>
                         <el-button
                             size="mini"
                             type="warning"
-                            title="停用"
+                            :title="$t('admin.roles.stop')"
                             v-if="scope.row.status == 1"
                             :disabled="scope.row.name == 'admin'"
                             @click="roleChange(2, scope)">
-                            <i class="fa fa-toggle-on">&nbsp;停用</i>
+                            <i class="fa fa-toggle-on">&nbsp;{{$t('admin.roles.stop')}}</i>
                         </el-button>
                         <el-button
                             size="mini"
                             type="success"
-                            title="启用"
+                            :title="$t('admin.roles.open')"
                             v-if="scope.row.status == 2"
                             :disabled="scope.row.name == 'admin'"
                             @click="roleChange(1, scope)">
-                            <i class="fa fa-toggle-off">&nbsp;启用</i>
+                            <i class="fa fa-toggle-off">&nbsp;{{$t('admin.roles.open')}}</i>
                         </el-button>
                         <el-button
                             size="mini"
                             type="danger"
-                            title="删除"
+                            :title="$t('admin.roles.del')"
                             :disabled="scope.row.name == 'admin'"
                             @click="roleChange(0, scope)">
-                            <i class="fa fa-user-times">&nbsp;删除</i>
+                            <i class="fa fa-user-times">&nbsp;{{$t('admin.roles.del')}}</i>
                         </el-button>
                     </template>
                 </el-table-column>
@@ -68,18 +68,18 @@
                     sortable
                     fixed
                     width="100"
-                    label="角色ID">
+                    label="ID">
                 </el-table-column>
                 <el-table-column
                     prop="name"
                     sortable
                     width="150"
-                    label="角色名称">
+                    :label="$t('admin.roles.name')">
                 </el-table-column>
                 <el-table-column
                     prop="menu_ids"
                     sortable
-                    label="权限">
+                    :label="$t('admin.roles.power')">
                     <template slot-scope="scope">
                         <el-tag
                             v-for="m_id in scope.row.menu_ids"
@@ -96,19 +96,19 @@
                     prop="ctime"
                     sortable
                     width="160"
-                    label="创建时间">
+                    :label="$t('admin.roles.ctime')">
                 </el-table-column>
                 <el-table-column
                     prop="utime"
                     sortable
                     width="160"
-                    label="更新时间">
+                    :label="$t('admin.roles.utime')">
                 </el-table-column>
                 <el-table-column
                     prop="status_mean"
                     sortable
-                    width="80"
-                    label="状态">
+                    width="90"
+                    :label="$t('admin.roles.status')">
                 </el-table-column>
             </el-table>
             <div class="pagination" v-html="pageHtml"></div>
@@ -116,14 +116,14 @@
 
         <!--添加角色模态框-->
         <el-dialog
-            title="添加角色"
+            :title="$t('admin.roles.add')"
             :visible.sync="newRoleFlag"
             width="50%">
             <el-form ref="form" :model="form" label-width="100px" size="small">
-                <el-form-item label="角色名称">
+                <el-form-item :label="$t('admin.roles.name')">
                     <el-input v-model="form.name"></el-input>
                 </el-form-item>
-                <el-form-item label="菜单权限">
+                <el-form-item :label="$t('admin.roles.power')">
                     <el-tree
                         :data="menu_config"
                         show-checkbox
@@ -134,21 +134,21 @@
                 </el-form-item>
             </el-form>
             <span slot="footer" class="dialog-footer">
-            <el-button size="mini" @click="newRoleFlag = false">取消</el-button>
-            <el-button size="mini" type="primary" @click="createRoleNow">立即创建</el-button>
+            <el-button size="mini" @click="newRoleFlag = false">{{$t('admin.roles.cancel')}}</el-button>
+            <el-button size="mini" type="primary" @click="createRoleNow">{{$t('admin.roles.save')}}</el-button>
         </span>
         </el-dialog>
 
         <!--编辑角色模态框-->
         <el-dialog
-            title="编辑角色"
+            :title="$t('admin.roles.edit')"
             :visible.sync="editRoleFlag"
             width="50%">
             <el-form ref="editForm" :model="editForm" label-width="100px" size="small">
-                <el-form-item label="角色名称">
+                <el-form-item :label="$t('admin.roles.name')">
                     <el-input v-model="editForm.name"></el-input>
                 </el-form-item>
-                <el-form-item label="菜单权限">
+                <el-form-item :label="$t('admin.roles.power')">
                     <el-tree
                         :data="menu_config"
                         show-checkbox
@@ -161,8 +161,8 @@
                 </el-form-item>
             </el-form>
             <span slot="footer" class="dialog-footer">
-            <el-button size="mini" @click="editRoleFlag = false">取消</el-button>
-            <el-button size="mini" type="primary" @click="saveRole">保存</el-button>
+            <el-button size="mini" @click="editRoleFlag = false">{{$t('admin.roles.cancel')}}</el-button>
+            <el-button size="mini" type="primary" @click="saveRole">{{$t('admin.roles.save')}}</el-button>
         </span>
         </el-dialog>
     </div>

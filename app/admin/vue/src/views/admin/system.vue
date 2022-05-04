@@ -8,7 +8,7 @@
 
             <el-col :span="12" class="sta-item">
                 <el-card class="box-card">
-                    <p>系统信息</p>
+                    <p>{{$t('admin.system.info')}}</p>
                     <ul>
                         <li v-for="(item, key) in systemInfo.sys">
                             {{key}}: {{item}}
@@ -30,7 +30,7 @@
 
             <el-col :span="12" class="sta-item">
                 <el-card class="box-card">
-                    <p>内存</p>
+                    <p>{{$t('admin.system.memory')}}</p>
                     <ul>
                         <li v-for="(item, key) in systemInfo.ram">
                             {{item}}
@@ -41,7 +41,7 @@
 
             <el-col :span="12" class="sta-item">
                 <el-card class="box-card">
-                    <p>磁盘</p>
+                    <p>{{$t('admin.system.disk')}}</p>
                     <ul>
                         <li v-for="(item, key) in systemInfo.hdd">
                             {{item}}

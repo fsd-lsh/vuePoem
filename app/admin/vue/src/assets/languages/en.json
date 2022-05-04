@@ -1,17 +1,131 @@
 {
     "sysName": "adminPoem2",
     "admin": {
+        "public": {
+            "setTheme": "Set the theme",
+            "open": "Open",
+            "close": "Close",
+            "config": "Configuration panel",
+            "modAccount": "Modify the account",
+            "signOut": "Sign out",
+            "fullScreen": "Full screen",
+            "exitFullScreen": "Exit full screen",
+            "clear": "Clear cache",
+            "switchLanguage": "Switch language"
+        },
         "cms": "",
         "dash": {
-            "dataStatistics": "Data Statistics"
+            "dataStatistics": "Data Statistics",
+            "user": "User",
+            "role": "Role",
+            "menu": "Menu",
+            "log": "Log",
+            "userNormal": "Normal",
+            "userStop": "Stop",
+            "userDel": "Delete",
+            "roleNormal": "Normal",
+            "roleStop": "Stop",
+            "roleDel": "Delete",
+            "menuNormal": "Normal",
+            "menuStop": "Stop",
+            "menuDel": "Delete",
+            "logNormal": "Normal",
+            "logWarning": "Warning",
+            "logDanger": "Danger"
         },
-        "fwLog": "",
-        "menu": "",
-        "roles": "",
-        "signIn": "",
-        "sysLog": "",
-        "system": "",
-        "user": "",
-        "userInfo": ""
+        "fwLog": {
+            "operation": "Operation",
+            "show": "Show",
+            "module": "Module",
+            "log": "Log",
+            "date": "Date",
+            "hour": "Hour",
+            "logDetail": "Log detail",
+            "num": "Num",
+            "detail": "Detail",
+            "close": "Close"
+        },
+        "menu": {
+            "add": "Add",
+            "name": "Name",
+            "operation": "Operation",
+            "edit": "Edit",
+            "stop": "Stop",
+            "open": "Open",
+            "del": "Delete",
+            "icon": "Icon",
+            "href": "Href",
+            "sort": "Sort",
+            "display": "Display",
+            "lock": "Lock",
+            "status": "Status",
+            "target": "Target",
+            "ctime": "Create time",
+            "utime": "Update time",
+            "parent": "Parent menu",
+            "cancel": "Cancel",
+            "save": "Save"
+        },
+        "roles": {
+            "add": "Add",
+            "stop": "Stop",
+            "open": "Open",
+            "del": "Delete",
+            "batch": "Batch",
+            "operation": "Operation",
+            "edit": "Edit",
+            "name": "Roles name",
+            "power": "Power",
+            "ctime": "Create time",
+            "utime": "Update time",
+            "status": "Status",
+            "cancel": "Cancel",
+            "save": "Save"
+        },
+        "signIn": {
+            "title": "AdminPoem Background login",
+            "signName": "Switch the language",
+            "account": "Account",
+            "password": "Password",
+            "signIn": "SignIn"
+        },
+        "sysLog": {
+            "user": "User",
+            "path": "Path",
+            "ctime": "Create time",
+            "level": "Level"
+        },
+        "system": {
+            "info": "System info",
+            "memory": "Memory",
+            "disk": "Disk"
+        },
+        "user": {
+            "add": "Add",
+            "stop": "Stop",
+            "open": "Open",
+            "del": "Delete",
+            "batch": "Batch",
+            "operation": "Operation",
+            "edit": "Edit",
+            "account": "Account",
+            "role": "Role",
+            "ctime": "Create time",
+            "utime": "Update time",
+            "status": "Status",
+            "password": "Password",
+            "confirm": "Confirm",
+            "cancel": "Cancel",
+            "save": "Save"
+        },
+        "userInfo": {
+            "account": "Account",
+            "password": "Password",
+            "roles": "Roles",
+            "accountStatus": "Account status",
+            "stime": "SignUp time",
+            "utime": "Update time",
+            "save": "Save"
+        }
     }
 }

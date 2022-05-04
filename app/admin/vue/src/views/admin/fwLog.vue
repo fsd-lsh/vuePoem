@@ -14,13 +14,13 @@
                 <el-table-column
                     width="100"
                     fixed="left"
-                    label="操作">
+                    :label="$t('admin.fwLog.operation')">
                     <template slot-scope="scope">
                         <el-button
                             size="mini"
                             type="primary"
                             @click="showLogDetail(scope)">
-                            <i class="fa fa-eye">&nbsp;查看</i>
+                            <i class="fa fa-eye">&nbsp;{{$t('admin.fwLog.show')}}</i>
                         </el-button>
                     </template>
                 </el-table-column>
@@ -28,17 +28,17 @@
                     prop="module_path"
                     width="400"
                     sortable
-                    label="模块">
+                    :label="$t('admin.fwLog.module')">
                 </el-table-column>
                 <el-table-column
                     prop="log_name"
                     sortable
-                    label="日志">
+                    :label="$t('admin.fwLog.log')">
                 </el-table-column>
                 <el-table-column
                     prop="log_date"
                     sortable
-                    label="日期">
+                    :label="$t('admin.fwLog.date')">
                     <template slot-scope="scope">
                         <i class="el-icon-time"></i>
                         <span style="margin-left: 10px">{{ scope.row.log_date }}</span>
@@ -47,13 +47,13 @@
                 <el-table-column
                     prop="log_hour"
                     sortable
-                    label="小时">
+                    :label="$t('admin.fwLog.hour')">
                 </el-table-column>
             </el-table>
         </el-card>
 
         <el-dialog
-            title="日志详情"
+            :title="$t('admin.fwLog.logDetail')"
             :visible.sync="showLog"
             top="5vh"
             width="90%">
@@ -68,16 +68,16 @@
                     prop="key"
                     width="60"
                     fixed="left"
-                    label="序号">
+                    :label="$t('admin.fwLog.num')">
                 </el-table-column>
                 <el-table-column
                     prop="info"
                     width="3000"
-                    label="详情">
+                    :label="$t('admin.fwLog.detail')">
                 </el-table-column>
             </el-table>
             <span slot="footer" class="dialog-footer">
-        <el-button size="mini" @click="showLog = !showLog">关闭</el-button>
+        <el-button size="mini" @click="showLog = !showLog">{{$t('admin.fwLog.close')}}</el-button>
       </span>
         </el-dialog>
     </div>

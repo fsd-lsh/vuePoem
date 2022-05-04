@@ -3,14 +3,14 @@
 <template>
     <div id="user-info">
         <el-card class="box-card">
-            <el-form ref="form" :model="userInfo" label-width="80px">
-                <el-form-item label="账号">
+            <el-form ref="form" :model="userInfo" label-width="180px">
+                <el-form-item :label="$t('admin.userInfo.account')">
                     <el-input v-model="userInfo.name"></el-input>
                 </el-form-item>
-                <el-form-item label="密码">
+                <el-form-item :label="$t('admin.userInfo.password')">
                     <el-input v-model="userInfo.password" placeholder="密码为空不修改"></el-input>
                 </el-form-item>
-                <el-form-item label="角色">
+                <el-form-item :label="$t('admin.userInfo.roles')">
                     <el-select
                         disabled
                         v-model="userInfo.roles"
@@ -27,17 +27,17 @@
                         </el-option>
                     </el-select>
                 </el-form-item>
-                <el-form-item label="账号状态">
+                <el-form-item :label="$t('admin.userInfo.accountStatus')">
                     <el-input v-model="userInfo.status" disabled></el-input>
                 </el-form-item>
-                <el-form-item label="注册时间">
+                <el-form-item :label="$t('admin.userInfo.stime')">
                     <el-input v-model="userInfo.ctime" disabled></el-input>
                 </el-form-item>
-                <el-form-item label="更新时间">
+                <el-form-item :label="$t('admin.userInfo.utime')">
                     <el-input v-model="userInfo.utime" disabled></el-input>
                 </el-form-item>
                 <div class="btn-group">
-                    <el-button @click="saveUserInfo" type="primary">保存修改</el-button>
+                    <el-button @click="saveUserInfo" type="primary">{{$t('admin.userInfo.save')}}</el-button>
                 </div>
             </el-form>
         </el-card>
@@ -74,7 +74,7 @@
 
                 this.poemRequest({
                     type: 'post',
-                    url: '/admin/dash/user_info?api=load',
+                    url: '/admin/dash/userInfo?api=load',
                     success: (res) => {
                         if(res.data.code === 1) {
                             this.userInfo = res.data.data.user_info;
@@ -95,7 +95,7 @@
 
                 this.poemRequest({
                     type: 'post',
-                    url: '/admin/dash/user_info?api=change_userinfo',
+                    url: '/admin/dash/userInfo?api=change_userinfo',
                     data: this.userInfo,
                     success: (res) => {
                         if(res.data.code === 1) {

@@ -23,10 +23,10 @@ let router = new Router({
 
         {
             path: '/userInfo',
-            name: 'system',
+            name: 'userInfo',
             component: resolve => require(['@/views/admin/userInfo'], resolve),
             meta: {
-                title: '用户信息 - 系统管理' + title,
+                title: '用户信息' + title,
             },
         },
     ],
@@ -34,29 +34,30 @@ let router = new Router({
 
 axios.get('/admin/menu/load').then(res => {
     let menu = res.data.data.menuInfo;
-    for (let index = 0; index < menu.length; index++) {
-        for (let sub_index = 0; sub_index < menu[index].child.length; sub_index++) {
-            if(menu[index].child[sub_index].child.length) {
-                for (let sub_index2 = 0; sub_index2 < menu[index].child[sub_index].child.length; sub_index2++) {
+    if(res.data.code === 1) {
+        for (let index = 0; index < menu.length; index++) {
+            for (let sub_index = 0; sub_index < menu[index].child.length; sub_index++) {
+                if(menu[index].child[sub_index].child.length) {
+                    for (let sub_index2 = 0; sub_index2 < menu[index].child[sub_index].child.length; sub_index2++) {
+                        router.addRoute({
+                            path: menu[index].child[sub_index].child[sub_index2].href,
+                            name: menu[index].child[sub_index].child[sub_index2].name,
+                            component: resolve => require(['@/views/admin/' + menu[index].child[sub_index].child[sub_index2].name], resolve),
+                            meta: {
+                                title: menu[index].child[sub_index].child[sub_index2].title + title,
+                            },
+                        });
+                    }
+                }else {
                     router.addRoute({
-                        path: menu[index].child[sub_index].child[sub_index2].href,
-                        name: menu[index].child[sub_index].child[sub_index2].name,
-                        component: resolve => require(['@/views/admin/' + menu[index].child[sub_index].child[sub_index2].name], resolve),
+                        path: menu[index].child[sub_index].href,
+                        name: menu[index].child[sub_index].name,
+                        component: resolve => require(['@/views/admin/' + menu[index].child[sub_index].name], resolve),
                         meta: {
-                            title: menu[index].child[sub_index].child[sub_index2].title + title,
+                            title: menu[index].child[sub_index].title + title,
                         },
                     });
-                    console.log(menu[index].child[sub_index].child[sub_index2]);
                 }
-            }else {
-                router.addRoute({
-                    path: menu[index].child[sub_index].href,
-                    name: menu[index].child[sub_index].name,
-                    component: resolve => require(['@/views/admin/' + menu[index].child[sub_index].name], resolve),
-                    meta: {
-                        title: menu[index].child[sub_index].title + title,
-                    },
-                });
             }
         }
     }

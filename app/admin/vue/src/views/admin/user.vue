@@ -4,10 +4,10 @@
 
     <div id="user">
         <el-card class="box-card">
-            <el-button @click="newUserFlag = !newUserFlag" icon="fa fa-user-plus" type="primary" size="small">&nbsp;创建用户</el-button>
-            <el-button @click="userChange(2)" change-type="0" icon="fa fa-toggle-on" type="warning" size="small">&nbsp;批量停用</el-button>
-            <el-button @click="userChange(1)" icon="fa fa-toggle-off" type="success" size="small">&nbsp;批量启用</el-button>
-            <el-button @click="userChange(0)" icon="fa fa-user-times" type="danger" size="small">&nbsp;批量删除</el-button>
+            <el-button @click="newUserFlag = !newUserFlag" icon="fa fa-user-plus" type="primary" size="small">&nbsp;{{$t('admin.user.add')}}</el-button>
+            <el-button @click="userChange(2)" change-type="0" icon="fa fa-toggle-on" type="warning" size="small">&nbsp;{{$t('admin.user.batch')}}{{$t('admin.user.stop')}}</el-button>
+            <el-button @click="userChange(1)" icon="fa fa-toggle-off" type="success" size="small">&nbsp;{{$t('admin.user.batch')}}{{$t('admin.user.open')}}</el-button>
+            <el-button @click="userChange(0)" icon="fa fa-user-times" type="danger" size="small">&nbsp;{{$t('admin.user.batch')}}{{$t('admin.user.del')}}</el-button>
             <el-table
                 :data="tableData"
                 stripe
@@ -24,42 +24,42 @@
                     width="55">
                 </el-table-column>
                 <el-table-column
-                    width="200"
+                    width="220"
                     fixed="left"
-                    label="操作">
+                    :label="$t('admin.user.operation')">
                     <template slot-scope="scope">
                         <el-button
                             size="mini"
                             type="primary"
-                            title="编辑"
+                            :title="$t('admin.user.edit')"
                             @click="editUserNow(scope)">
-                            <i class="fa fa-pencil">&nbsp;编辑</i>
+                            <i class="fa fa-pencil">&nbsp;{{$t('admin.user.edit')}}</i>
                         </el-button>
                         <el-button
                             size="mini"
                             type="warning"
-                            title="停用"
+                            :title="$t('admin.user.stop')"
                             v-if="scope.row.status == 1"
                             :disabled="scope.row.name == 'admin'"
                             @click="userChange(2, scope)">
-                            <i class="fa fa-toggle-on">&nbsp;停用</i>
+                            <i class="fa fa-toggle-on">&nbsp;{{$t('admin.user.stop')}}</i>
                         </el-button>
                         <el-button
                             size="mini"
                             type="success"
-                            title="启用"
+                            :title="$t('admin.user.open')"
                             v-if="scope.row.status == 2"
                             :disabled="scope.row.name == 'admin'"
                             @click="userChange(1, scope)">
-                            <i class="fa fa-toggle-off">&nbsp;启用</i>
+                            <i class="fa fa-toggle-off">&nbsp;{{$t('admin.user.open')}}</i>
                         </el-button>
                         <el-button
                             size="mini"
                             type="danger"
-                            title="删除"
+                            :title="$t('admin.user.del')"
                             :disabled="scope.row.name == 'admin'"
                             @click="userChange(0, scope)">
-                            <i class="fa fa-user-times">&nbsp;删除</i>
+                            <i class="fa fa-user-times">&nbsp;{{$t('admin.user.del')}}</i>
                         </el-button>
                     </template>
                 </el-table-column>
@@ -68,18 +68,18 @@
                     sortable
                     fixed
                     width="100"
-                    label="用户ID">
+                    label="ID">
                 </el-table-column>
                 <el-table-column
                     prop="name"
                     sortable
                     width="130"
-                    label="姓名 / 账号">
+                    :label="$t('admin.user.account')">
                 </el-table-column>
                 <el-table-column
                     prop="roles"
                     sortable
-                    label="角色">
+                    :label="$t('admin.user.role')">
                     <template slot-scope="scope">
                         <el-tag
                             v-for="role in scope.row.roles_mean"
@@ -96,19 +96,19 @@
                     prop="ctime"
                     sortable
                     width="160"
-                    label="创建时间">
+                    :label="$t('admin.user.ctime')">
                 </el-table-column>
                 <el-table-column
                     prop="utime"
                     sortable
                     width="160"
-                    label="更新时间">
+                    :label="$t('admin.user.utime')">
                 </el-table-column>
                 <el-table-column
                     prop="status_mean"
                     sortable
-                    width="80"
-                    label="状态">
+                    width="90"
+                    :label="$t('admin.user.status')">
                 </el-table-column>
             </el-table>
             <div class="pagination" v-html="pageHtml"></div>
@@ -116,20 +116,20 @@
 
         <!--创建用户模态框-->
         <el-dialog
-            title="创建用户"
+            :title="$t('admin.user.add')"
             :visible.sync="newUserFlag"
             width="50%">
-            <el-form ref="form" :model="form" label-width="100px" size="small">
-                <el-form-item label="姓名 / 账号">
+            <el-form ref="form" :model="form" label-width="130px" size="small">
+                <el-form-item :label="$t('admin.user.account')">
                     <el-input v-model="form.name"></el-input>
                 </el-form-item>
-                <el-form-item label="密码">
+                <el-form-item :label="$t('admin.user.password')">
                     <el-input v-model="form.password"></el-input>
                 </el-form-item>
-                <el-form-item label="确认密码">
+                <el-form-item :label="$t('admin.user.confirm')+$t('admin.user.password')">
                     <el-input v-model="form.rePassword"></el-input>
                 </el-form-item>
-                <el-form-item label="角色">
+                <el-form-item :label="$t('admin.user.role')">
                     <el-select
                         v-model="form.roles"
                         multiple
@@ -147,24 +147,24 @@
                 </el-form-item>
             </el-form>
             <span slot="footer" class="dialog-footer">
-            <el-button size="mini" @click="newUserFlag = false">取消</el-button>
-            <el-button size="mini" type="primary" @click="createUserNow">立即创建</el-button>
+            <el-button size="mini" @click="newUserFlag = false">{{$t('admin.user.cancel')}}</el-button>
+            <el-button size="mini" type="primary" @click="createUserNow">{{$t('admin.user.save')}}</el-button>
         </span>
         </el-dialog>
 
         <!--编辑用户模态框-->
         <el-dialog
-            title="编辑用户"
+            :title="$t('admin.user.edit')"
             :visible.sync="editUserFlag"
             width="50%">
             <el-form ref="editForm" :model="editForm" label-width="100px" size="small">
-                <el-form-item label="姓名 / 账号">
+                <el-form-item :label="$t('admin.user.account')">
                     <el-input v-model="editForm.name"></el-input>
                 </el-form-item>
-                <el-form-item label="修改密码">
+                <el-form-item :label="$t('admin.user.password')">
                     <el-input v-model="editForm.password" placeholder="默认不修改"></el-input>
                 </el-form-item>
-                <el-form-item label="角色">
+                <el-form-item :label="$t('admin.user.role')">
                     <el-select
                         v-model="editForm.roles"
                         multiple
@@ -182,8 +182,8 @@
                 </el-form-item>
             </el-form>
             <span slot="footer" class="dialog-footer">
-            <el-button size="mini" @click="editUserFlag = false">取消</el-button>
-            <el-button size="mini" type="primary" @click="saveUser">保存</el-button>
+            <el-button size="mini" @click="editUserFlag = false">{{$t('admin.user.cancel')}}</el-button>
+            <el-button size="mini" type="primary" @click="saveUser">{{$t('admin.user.save')}}</el-button>
         </span>
         </el-dialog>
     </div>

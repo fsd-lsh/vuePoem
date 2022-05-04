@@ -147,7 +147,7 @@ class dash extends component\login {
      * Time: 16:58
      * Desc: 修改用户信息
      */
-    public function user_info() {
+    public function userInfo() {
 
         //API
         sys_api([

@@ -11,17 +11,17 @@
                         <el-row :gutter="10" class="dash-item-cover">
                             <el-col :span="12" class="dash-item-card">
                                 <div>
-                                    <p>用户</p>
+                                    <p>{{$t('admin.dash.user')}}</p>
                                     <div class="total-group">
                                         <span class="total">{{parseInt(adminTotal[0]) + parseInt(adminTotal[1]) + parseInt(adminTotal[2])}}</span>
                                         <span>(</span>
-                                        <el-tooltip class="item" effect="dark" content="正常用户" placement="top">
+                                        <el-tooltip class="item" effect="dark" :content="$t('admin.dash.userNormal')" placement="top">
                                             <span class="status_1">{{adminTotal[1]}}&nbsp;&nbsp;</span>
                                         </el-tooltip>
-                                        <el-tooltip class="item" effect="dark" content="冻结用户" placement="top">
+                                        <el-tooltip class="item" effect="dark" :content="$t('admin.dash.userStop')" placement="top">
                                             <span class="status_2">{{adminTotal[2]}}&nbsp;&nbsp;</span>
                                         </el-tooltip>
-                                        <el-tooltip class="item" effect="dark" content="删除用户" placement="top">
+                                        <el-tooltip class="item" effect="dark" :content="$t('admin.dash.userDel')" placement="top">
                                             <span class="status_0">{{adminTotal[0]}}</span>
                                         </el-tooltip>
                                         <span>)</span>
@@ -30,17 +30,17 @@
                             </el-col>
                             <el-col :span="12" class="dash-item-card">
                                 <div>
-                                    <p>角色</p>
+                                    <p>{{$t('admin.dash.role')}}</p>
                                     <div class="total-group">
                                         <span class="total">{{parseInt(roleTotal[0]) + parseInt(roleTotal[1]) + parseInt(roleTotal[2])}}</span>
                                         <span>(</span>
-                                        <el-tooltip class="item" effect="dark" content="正常角色" placement="top">
+                                        <el-tooltip class="item" effect="dark" :content="$t('admin.dash.roleNormal')" placement="top">
                                             <span class="status_1">{{roleTotal[1]}}&nbsp;&nbsp;</span>
                                         </el-tooltip>
-                                        <el-tooltip class="item" effect="dark" content="暂停角色" placement="top">
+                                        <el-tooltip class="item" effect="dark" :content="$t('admin.dash.roleStop')" placement="top">
                                             <span class="status_2">{{roleTotal[2]}}&nbsp;&nbsp;</span>
                                         </el-tooltip>
-                                        <el-tooltip class="item" effect="dark" content="删除角色" placement="top">
+                                        <el-tooltip class="item" effect="dark" :content="$t('admin.dash.roleDel')" placement="top">
                                             <span class="status_0">{{roleTotal[0]}}</span>
                                         </el-tooltip>
                                         <span>)</span>
@@ -49,17 +49,17 @@
                             </el-col>
                             <el-col :span="12" class="dash-item-card">
                                 <div>
-                                    <p>菜单</p>
+                                    <p>{{$t('admin.dash.menu')}}</p>
                                     <div class="total-group">
                                         <span class="total">{{parseInt(menuTotal[0]) + parseInt(menuTotal[1]) + parseInt(menuTotal[2])}}</span>
                                         <span>(</span>
-                                        <el-tooltip class="item" effect="dark" content="启用菜单" placement="top">
+                                        <el-tooltip class="item" effect="dark" :content="$t('admin.dash.menuNormal')" placement="top">
                                             <span class="status_1">{{menuTotal[1]}}&nbsp;&nbsp;</span>
                                         </el-tooltip>
-                                        <el-tooltip class="item" effect="dark" content="停用菜单" placement="top">
+                                        <el-tooltip class="item" effect="dark" :content="$t('admin.dash.menuStop')" placement="top">
                                             <span class="status_2">{{menuTotal[2]}}&nbsp;&nbsp;</span>
                                         </el-tooltip>
-                                        <el-tooltip class="item" effect="dark" content="删除菜单" placement="top">
+                                        <el-tooltip class="item" effect="dark" :content="$t('admin.dash.menuDel')" placement="top">
                                             <span class="status_0">{{menuTotal[0]}}</span>
                                         </el-tooltip>
                                         <span>)</span>
@@ -68,17 +68,17 @@
                             </el-col>
                             <el-col :span="12" class="dash-item-card">
                                 <div>
-                                    <p>日志</p>
+                                    <p>{{$t('admin.dash.log')}}</p>
                                     <div class="total-group">
                                         <span class="total">{{parseInt(logTotal[0]) + parseInt(logTotal[1]) + parseInt(logTotal[2])}}</span>
                                         <span>(</span>
-                                        <el-tooltip class="item" effect="dark" content="普通日志" placement="top">
+                                        <el-tooltip class="item" effect="dark" :content="$t('admin.dash.logNormal')" placement="top">
                                             <span class="status_1">{{logTotal[0]}}&nbsp;&nbsp;</span>
                                         </el-tooltip>
-                                        <el-tooltip class="item" effect="dark" content="警告日志" placement="top">
+                                        <el-tooltip class="item" effect="dark" :content="$t('admin.dash.logWarning')" placement="top">
                                             <span class="status_2">{{logTotal[1]}}&nbsp;&nbsp;</span>
                                         </el-tooltip>
-                                        <el-tooltip class="item" effect="dark" content="高危日志" placement="top">
+                                        <el-tooltip class="item" effect="dark" :content="$t('admin.dash.logDanger')" placement="top">
                                             <span class="status_0">{{logTotal[2]}}</span>
                                         </el-tooltip>
                                         <span>)</span>

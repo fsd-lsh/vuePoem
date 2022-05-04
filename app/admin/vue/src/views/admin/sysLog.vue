@@ -22,23 +22,23 @@
                 <el-table-column
                     prop="admin"
                     sortable
-                    label="记录用户">
+                    :label="$t('admin.sysLog.user')">
                 </el-table-column>
                 <el-table-column
                     prop="path"
                     sortable
-                    label="路径">
+                    :label="$t('admin.sysLog.path')">
                 </el-table-column>
                 <el-table-column
                     prop="ctime"
                     sortable
-                    label="创建时间">
+                    :label="$t('admin.sysLog.ctime')">
                 </el-table-column>
                 <el-table-column
                     prop="level_mean"
                     sortable
                     width="80"
-                    label="等级">
+                    :label="$t('admin.sysLog.level')">
                 </el-table-column>
             </el-table>
             <div class="pagination" v-html="pageHtml"></div>

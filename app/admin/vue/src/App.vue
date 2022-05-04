@@ -70,7 +70,7 @@
                         :gutter="20">
                         <el-col
                             class="config-panel-title"
-                            :span="24">设置主题</el-col>
+                            :span="24">{{$t('admin.public.setTheme')}}</el-col>
                         <el-col
                             :span="8"
                             :key="key"
@@ -101,8 +101,8 @@
 
                 <!--展开收起左侧菜单-->
                 <el-radio-group v-if="0" v-model="isCollapse" style="margin-bottom: 20px;">
-                    <el-radio-button :label="false">展开</el-radio-button>
-                    <el-radio-button :label="true">收起</el-radio-button>
+                    <el-radio-button :label="false">{{$t('admin.public.open')}}</el-radio-button>
+                    <el-radio-button :label="true">{{$t('admin.public.close')}}</el-radio-button>
                 </el-radio-group>
 
                 <!--一级菜单-->
@@ -124,7 +124,7 @@
                     <el-menu-item
                         @click="openTools('configPanel')"
                         class="pull-right">
-                        <el-tooltip class="item" effect="dark" content="配置面板" placement="bottom">
+                        <el-tooltip class="item" effect="dark" :content="$t('admin.public.config')" placement="bottom">
                             <i class="fa fa-ellipsis-v"></i>
                         </el-tooltip>
                     </el-menu-item>
@@ -134,34 +134,34 @@
                         <template slot="title">{{ username }}</template>
                         <el-menu-item
                             @click="openTools('modAccount')"
-                            index="2-1">修改账户
+                            index="2-1">{{$t('admin.public.modAccount')}}
                         </el-menu-item>
                         <el-menu-item
                             @click="openTools('signOut')"
-                            index="2-2">退出登录
+                            index="2-2">{{$t('admin.public.signOut')}}
                         </el-menu-item>
                     </el-submenu>
                     <el-menu-item
                         @click="openTools('fullScreen')"
                         class="pull-right">
-                        <el-tooltip class="item" effect="dark" content="全屏展开" placement="bottom">
+                        <el-tooltip class="item" effect="dark" :content="$t('admin.public.fullScreen')" placement="bottom">
                             <i v-if="!iFullscreen" class="fa fa-arrows-alt"></i>
                         </el-tooltip>
-                        <el-tooltip class="item" effect="dark" content="全屏收起" placement="bottom">
+                        <el-tooltip class="item" effect="dark" :content="$t('admin.public.exitFullScreen')" placement="bottom">
                             <i v-if="iFullscreen" class="fa fa-compress"></i>
                         </el-tooltip>
                     </el-menu-item>
                     <el-menu-item
                         @click="openTools('clean')"
                         class="pull-right">
-                        <el-tooltip class="item" effect="dark" content="清理缓存" placement="bottom">
+                        <el-tooltip class="item" effect="dark" :content="$t('admin.public.clear')" placement="bottom">
                             <i class="fa fa-trash-o"></i>
                         </el-tooltip>
                     </el-menu-item>
                     <el-menu-item
                         @click="openTools('language')"
                         class="pull-right">
-                        <el-tooltip class="item" effect="dark" content="切换语言" placement="bottom">
+                        <el-tooltip class="item" effect="dark" :content="$t('admin.public.switchLanguage')" placement="bottom">
                             <i class="fa fa-language"></i>
                         </el-tooltip>
                     </el-menu-item>
@@ -534,7 +534,7 @@ export default {
                     }
 
                     span {
-                        font-size: .6rem;
+                        font-size: .8rem;
                     }
 
                     .el-submenu__title,

@@ -1,17 +1,131 @@
 {
     "sysName": "adminPoem2",
     "admin": {
+        "public": {
+            "setTheme": "设置主题",
+            "open": "展开",
+            "close": "收起",
+            "config": "配置面板",
+            "modAccount": "修改账户",
+            "signOut": "退出登录",
+            "fullScreen": "全屏展开",
+            "exitFullScreen": "全屏收起",
+            "clear": "清理缓存",
+            "switchLanguage": "切换语言"
+        },
         "cms": "",
         "dash": {
-            "dataStatistics": "数据统计"
+            "dataStatistics": "数据统计",
+            "user": "用户",
+            "role": "角色",
+            "menu": "菜单",
+            "log": "日志",
+            "userNormal": "正常用户",
+            "userStop": "冻结用户",
+            "userDel": "删除用户",
+            "roleNormal": "正常角色",
+            "roleStop": "暂停角色",
+            "roleDel": "删除角色",
+            "menuNormal": "启用菜单",
+            "menuStop": "停用菜单",
+            "menuDel": "删除菜单",
+            "logNormal": "普通日志",
+            "logWarning": "警告日志",
+            "logDanger": "高危日志"
         },
-        "fwLog": "",
-        "menu": "",
-        "roles": "",
-        "signIn": "",
-        "sysLog": "",
-        "system": "",
-        "user": "",
-        "userInfo": ""
+        "fwLog": {
+            "operation": "操作",
+            "show": "查看",
+            "module": "模块",
+            "log": "日志",
+            "date": "日期",
+            "hour": "小时",
+            "logDetail": "日志详情",
+            "num": "序号",
+            "detail": "详情",
+            "close": "关闭"
+        },
+        "menu": {
+            "add": "添加菜单",
+            "name": "菜单名称",
+            "operation": "操作",
+            "edit": "编辑",
+            "stop": "停用",
+            "open": "启用",
+            "del": "删除",
+            "icon": "菜单图标",
+            "href": "菜单链接",
+            "sort": "排序",
+            "display": "显性",
+            "lock": "锁",
+            "status": "状态",
+            "target": "打开方式",
+            "ctime": "创建时间",
+            "utime": "更新时间",
+            "parent": "父级菜单",
+            "cancel": "取消",
+            "save": "保存"
+        },
+        "roles": {
+            "add": "添加",
+            "stop": "停用",
+            "open": "启用",
+            "del": "删除",
+            "batch": "批量",
+            "operation": "操作",
+            "edit": "编辑",
+            "name": "角色名称",
+            "power": "权限",
+            "ctime": "创建时间",
+            "utime": "更新时间",
+            "status": "状态",
+            "cancel": "取消",
+            "save": "保存"
+        },
+        "signIn": {
+            "title": "AdminPoem 后台登录",
+            "signName": "切换语言",
+            "account": "账号",
+            "password": "密码",
+            "signIn": "登录"
+        },
+        "sysLog": {
+            "user": "用户",
+            "path": "路径",
+            "ctime": "创建时间",
+            "level": "等级"
+        },
+        "system": {
+            "info": "系统信息",
+            "memory": "内存",
+            "disk": "磁盘"
+        },
+        "user": {
+            "add": "添加",
+            "stop": "停用",
+            "open": "启用",
+            "del": "删除",
+            "batch": "批量",
+            "operation": "操作",
+            "edit": "编辑",
+            "account": "账号",
+            "role": "角色",
+            "ctime": "创建时间",
+            "utime": "更新时间",
+            "status": "状态",
+            "password": "密码",
+            "confirm": "确认",
+            "cancel": "取消",
+            "save": "保存"
+        },
+        "userInfo": {
+            "account": "账号",
+            "password": "密码",
+            "roles": "角色",
+            "accountStatus": "账号状态",
+            "stime": "注册时间",
+            "utime": "更新时间",
+            "save": "保存"
+        }
     }
 }

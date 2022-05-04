@@ -1,17 +1,18 @@
 <template>
     <div id="sign-in">
-        <div class="head">AdminPoem 后台登录</div>
-        <el-form ref="form" :model="form" label-width="40px">
-            <el-form-item label="账号">
+        <div class="head">{{$t('admin.signIn.title')}}</div>
+        <el-form ref="form" :model="form" label-width="65px">
+            <el-form-item :label="$t('admin.signIn.account')">
                 <el-input size="small" v-model="form.name"></el-input>
             </el-form-item>
-            <el-form-item label="密码">
+            <el-form-item :label="$t('admin.signIn.password')">
                 <el-input size="small" v-model="form.pwd" show-password></el-input>
             </el-form-item>
             <div class="button-group">
-                <el-button @click="signIn" type="success" size="small">登录</el-button>
+                <el-button @click="signIn" type="success" size="small">{{$t('admin.signIn.signIn')}}</el-button>
             </div>
         </el-form>
+        <el-button id="switch-lang" @click="switchLang" type="success" size="mini"><i class="fa fa-language"/>&nbsp;{{$t('admin.signIn.signName')}}</el-button>
     </div>
 </template>
 
@@ -62,11 +63,30 @@ export default {
                         this.$router.push(res.data.data.url);
                         sessionStorage.setItem('username', res.data.data.name);
                         this.$notify({ message:res.data.info, type:'success' });
+                        setTimeout(() => {
+                            window.location.reload();
+                        }, 100);
                     }else {
                         this.$notify({ message:res.data.info, type:'warning'});
                     }
                 },
             });
+        },
+
+        switchLang() {
+            let lang = window.localStorage.getItem('sys-lang');
+            switch (lang) {
+                case 'en': {
+                    window.localStorage.setItem('sys-lang', 'zh');
+                    break;
+                }
+                case 'zh':
+                default: {
+                    window.localStorage.setItem('sys-lang', 'en');
+                    break;
+                }
+            }
+            window.location.reload();
         },
     }
 }
@@ -88,6 +108,7 @@ export default {
         width: 420px;
         height: 266px;
         border-radius: 12px;
+        position: relative;
 
         .head {
             background-color: #48bfa4;
@@ -102,6 +123,13 @@ export default {
         #app {
             height: 100%;
             overflow: hidden;
+        }
+
+        #switch-lang {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            display: inline-block;
         }
     }
 
