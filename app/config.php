@@ -29,4 +29,12 @@ return [
         1 => '警告日志',
         2 => '高危日志',
     ],
+
+    //restful支持方法
+    'restful_method' => [
+        'get',
+        'post',
+        'put',
+        'delete',
+    ],
 ];

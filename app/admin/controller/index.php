@@ -4,7 +4,7 @@ namespace admin\controller;
 
 use service\component;
 
-class index extends component\login{
+class index extends component\login {
 
     /**
      * Func: index

@@ -5,7 +5,7 @@ return array(
 
     // 数据库配置
     'db_type'         => 'mysql',
-    'db_host'         => 'mysql5',
+    'db_host'         => '127.0.0.1',
     'db_name'         => 'adminPoem',
     'db_user'         => 'root',
     'db_pass'         => '123456',

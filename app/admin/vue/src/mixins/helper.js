@@ -10,6 +10,8 @@ export default {
             switch (options.type) {
                 case 'get': { request = axios.get; break; }
                 case 'post': { request = axios.post; break; }
+                case 'put': { request = axios.put; break; }
+                case 'delete': { request = axios.delete; break; }
             }
 
             request(

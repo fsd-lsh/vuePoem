@@ -1,5 +1,7 @@
 <?php
 
+use \service\component\restful;
+
 if(!function_exists('sys_api')) {
 
     /**
@@ -7,7 +9,7 @@ if(!function_exists('sys_api')) {
      * User: Force
      * Date: 2021/4/4
      * Time: 15:33
-     * Desc: 系统API辅助
+     * Desc: 常规接口助手
      */
     function sys_api($table = NULL) {
 
@@ -32,6 +34,41 @@ if(!function_exists('sys_api')) {
             $table[$api]();
             exit;
         }
+    }
+}
+
+if(!function_exists('restful')) {
+
+    /**
+     * Func: restful
+     * User: Force
+     * Date: 2022/5/5
+     * Time: 18:24
+     * Desc: restful助手
+     */
+    function restful($table = NULL) {
+
+        $restful = new restful();
+        $allow_method = config('restful_method');
+        $request_method = strtolower($_SERVER['REQUEST_METHOD']);
+
+        if(empty($table) && !is_array($table)) {
+            $restful->response(0, '控制器没有开发API');
+        }
+
+        foreach ($table as $method => $func) {
+
+            if(!in_array($method, $allow_method)) {
+                $restful->response(0, '不支持'.$method.'方法');
+            }
+        }
+
+        if(empty($table[$request_method])) {
+            $restful->response(0, '请求方法不存在');
+        }
+
+        $table[$request_method]($restful);
+        exit;
     }
 }
 
@@ -102,7 +139,7 @@ if(!function_exists('res_safe')) {
 
             //防止被挂马，跨站攻击
             $data = trim(htmlspecialchars($data));
-            if(($ignore_magic_quotes==true)||(!@get_magic_quotes_gpc())) {
+            if($ignore_magic_quotes) {
 
                 //防止sql注入
                 $data = addslashes($data);

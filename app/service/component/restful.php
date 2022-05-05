@@ -57,10 +57,10 @@ class restful {
     private $METHOD_CONFIG = ['POST', 'DELETE', 'PUT', 'GET',];
 
     //客户端请求http方法
-    protected $REQUEST_METHOD = '';
+    public $REQUEST_METHOD = '';
 
     //客户端请求data
-    protected $REQUEST_DATA = [];
+    public $REQUEST_DATA = [];
 
     /**
      * restful constructor.
@@ -89,10 +89,29 @@ class restful {
      * Time: 20:50
      * Desc: 请求
      */
-    protected function request() {
-        $_REQUEST = file_get_contents('php://input');
-        $_REQUEST = json_decode($_REQUEST, true);
-        return $this->REQUEST_DATA = $_REQUEST;
+    public function request($merge = 0) {
+
+        $request = file_get_contents('php://input');
+        $request = json_decode($request, true);
+
+        switch ($merge) {
+
+            //全部混合
+            case 1: {
+                $request = array_merge($request, $_GET, $_POST);
+                break;
+            }
+
+            //仅GET混合
+            case 2: {
+                $request = array_merge($request, $_GET);
+                break;
+            }
+        }
+
+        $request = res_safe($request);
+
+        return $request;
     }
 
     /**
@@ -102,7 +121,7 @@ class restful {
      * Time: 19:30
      * Desc: 响应
      */
-    protected function response($http_code = 200, $http_message = '', $rsp_data = [], $content_type = 'application/json') {
+    public function response($http_code = 200, $http_message = '', $rsp_data = [], $content_type = 'application/json') {
 
         if($http_code == 1) { $http_code = 200; }
         if($http_code == 0 || $http_code < 200) { $http_code = 500; }

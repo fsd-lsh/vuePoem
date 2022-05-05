@@ -8,12 +8,6 @@ class app {
      */
     static function start() {
 
-        // 解析请求
-        $request = file_get_contents('php://input');
-        $request = json_decode($request, true);
-        $_POST = $request;
-        $_REQUEST = $request;
-
         // 公共函数库，公共文件
         self::boot();
 
@@ -32,6 +26,13 @@ class app {
         if (!is_dir(APP_PATH . $module)) {
             \poem\more\build::checkModule($module);
         }
+
+        // 解析请求
+        $request = file_get_contents('php://input');
+        $request = json_decode($request, true);
+        $request = res_safe($request, true);
+        $_POST = $request;
+        $_REQUEST = $request;
 
         route::run(); // 路由管理
 

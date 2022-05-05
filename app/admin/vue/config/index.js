@@ -13,7 +13,8 @@ module.exports = {
         assetsPublicPath: '/',
         proxyTable: {
             '/admin': {
-                target: 'http://dev.adminpoem2.force:8082',
+                //target: 'http://dev.adminpoem2.force:8082',
+                target: 'http://127.0.0.1:8899',
                 changeOrigin: true,
                 pathRewrite: {
                     '^/admin': '/admin'
