@@ -2,7 +2,12 @@
 // Template version: 1.3.1
 // see http://vuejs-templates.github.io/webpack for documentation.
 
-const path = require('path')
+const path = require('path');
+const ini = require('ini');
+const fs = require('fs');
+
+let str = fs.readFileSync(path.resolve(__dirname, '../../../../global.cnf')).toString();
+let globalConfig = ini.parse(str);
 
 module.exports = {
 
@@ -13,8 +18,7 @@ module.exports = {
         assetsPublicPath: '/',
         proxyTable: {
             '/admin': {
-                //target: 'http://dev.adminpoem2.force:8082',
-                target: 'http://127.0.0.1:8899',
+                target: 'http://' + globalConfig.PHP_HOST + ':' + globalConfig.PHP_PORT,
                 changeOrigin: true,
                 pathRewrite: {
                     '^/admin': '/admin'
@@ -23,8 +27,8 @@ module.exports = {
         },
 
         // Various Dev Server settings
-        host: 'localhost', // can be overwritten by process.env.HOST
-        port: 7777, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
+        host: globalConfig.VUE_HOST, // can be overwritten by process.env.HOST
+        port: globalConfig.VUE_PORT, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
         autoOpenBrowser: false,
         errorOverlay: true,
         notifyOnErrors: true,
@@ -48,10 +52,10 @@ module.exports = {
 
     build: {
         // Template for index.html
-        index: path.resolve(__dirname, '../dist/index.html'),
+        index: path.resolve(__dirname, '../../../../public/index.html'),
 
         // Paths
-        assetsRoot: path.resolve(__dirname, '../dist'),
+        assetsRoot: path.resolve(__dirname, '../../../../public'),
         assetsSubDirectory: 'static',
         assetsPublicPath: '/',
 

@@ -13,6 +13,8 @@
         "axios": "^0.24.0",
         "element-ui": "^2.15.6",
         "font-awesome": "^4.7.0",
+        "fs": "^0.0.1-security",
+        "ini": "^3.0.0",
         "vue": "^2.5.2",
         "vue-router": "^3.0.1",
         "vuex": "^3.6.2"

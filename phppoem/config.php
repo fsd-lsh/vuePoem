@@ -1,16 +1,19 @@
 <?php
-return array(
+
+$global_config = parse_ini_file('../global.cnf', true);
+
+$config = [
     'layout_on'       => true,
     'layout'          => false,
 
     // 数据库配置
     'db_type'         => 'mysql',
-    'db_host'         => '127.0.0.1',
+    'db_host'         => $global_config['MYSQL_HOST'] ? : '127.0.0.1',
     'db_name'         => 'adminPoem',
-    'db_user'         => 'root',
-    'db_pass'         => '123456',
+    'db_user'         => $global_config['MYSQL_USER'] ? : 'root',
+    'db_pass'         => $global_config['MYSQL_PASS'] ? : '123456',
     'db_prefix'       => 'poem_',
-    'db_port'         => '3306',
+    'db_port'         => $global_config['MYSQL_PORT'] ? : '3306',
     'db_charset'      => 'utf8',
     'db_dsn'          => '',
     'db_deploy'       => false, // 部署方式: false 集中式(单一服务器),true 分布式(主从服务器)
@@ -35,4 +38,5 @@ return array(
     'log_remain_days'  => 1, // 日志保留天数
 
     'debug_trace'  => false, // 页面右下角展示调试信息
-);
+];
+return $config;

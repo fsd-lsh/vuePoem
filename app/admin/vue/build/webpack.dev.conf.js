@@ -1,16 +1,23 @@
 'use strict'
-const utils = require('./utils')
-const webpack = require('webpack')
-const config = require('../config')
-const merge = require('webpack-merge')
-const path = require('path')
-const baseWebpackConfig = require('./webpack.base.conf')
-const CopyWebpackPlugin = require('copy-webpack-plugin')
-const HtmlWebpackPlugin = require('html-webpack-plugin')
-const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
-const portfinder = require('portfinder')
-const HOST = process.env.HOST
-const PORT = process.env.PORT && Number(process.env.PORT)
+const utils = require('./utils');
+const webpack = require('webpack');
+const config = require('../config');
+const merge = require('webpack-merge');
+const path = require('path');
+const baseWebpackConfig = require('./webpack.base.conf');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin');
+const portfinder = require('portfinder');
+const ini = require('ini');
+const fs = require('fs');
+
+let str = fs.readFileSync(path.resolve(__dirname, '../../../../global.cnf')).toString();
+let globalConfig = ini.parse(str);
+const VUE_HOST = process.env.HOST;
+const VUE_PORT = process.env.PORT && Number(process.env.PORT);
+const PHP_HOST = globalConfig.PHP_HOST;
+const PHP_PORT = globalConfig.PHP_PORT && Number(globalConfig.PHP_PORT);
 
 const devWebpackConfig = merge(baseWebpackConfig, {
     module: {
@@ -30,8 +37,8 @@ const devWebpackConfig = merge(baseWebpackConfig, {
         hot: true,
         contentBase: false, // since we use CopyWebpackPlugin.
         compress: true,
-        host: HOST || config.dev.host,
-        port: PORT || config.dev.port,
+        host: VUE_HOST || config.dev.host,
+        port: VUE_PORT || config.dev.port,
         open: config.dev.autoOpenBrowser,
         overlay: config.dev.errorOverlay
             ? {warnings: false, errors: true}
@@ -84,8 +91,8 @@ module.exports = new Promise((resolve, reject) => {
             devWebpackConfig.plugins.push(new FriendlyErrorsPlugin({
                 compilationSuccessInfo: {
                     messages: [
-                        `Vue is running here: http://${devWebpackConfig.devServer.host}:${port}`,
-                        `Phppoem is running here: http://${devWebpackConfig.devServer.host}`
+                        `Vue is running here: http://${VUE_HOST}:${VUE_PORT}`,
+                        `PHP Development Server is running here: http://${PHP_HOST}:${PHP_PORT}`
                     ],
                 },
                 onErrors: config.dev.notifyOnErrors

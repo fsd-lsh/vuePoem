@@ -1,0 +1,53 @@
+#!/usr/bin/env php
+
+<?php
+
+class vuePoem {
+
+    private $argv;
+
+    public function __construct() {
+        $this->argv = $_SERVER['argv'];
+        if(empty($this->argv)) {
+
+        }
+    }
+
+    public function run() {
+
+        switch ($this->argv[1]) {
+
+            case 'dev': {
+                $this->dev();
+                break;
+            }
+
+            case 'prod': {
+                $this->prod();
+                break;
+            }
+
+            case 'clean': {
+                break;
+            }
+
+            default: {
+                break;
+            }
+        }
+        exit;
+    }
+
+    private function dev() {
+        $global_config = parse_ini_file('global.cnf', true);
+        exec("cd public && php -S {$global_config['PHP_HOST']}:{$global_config['PHP_PORT']} index.php & cd app/admin/vue && npm run dev");
+    }
+
+    private function prod() {
+        exec("cd app/admin/vue && npm run build");
+    }
+}
+
+(new vuePoem())->run();
+
+
