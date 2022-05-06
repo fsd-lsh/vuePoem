@@ -5,7 +5,7 @@
  Source Server Type    : MySQL
  Source Server Version : 50728
  Source Host           : localhost:3305
- Source Schema         : adminPoem
+ Source Schema         : vuePoem
 
  Target Server Type    : MySQL
  Target Server Version : 50728

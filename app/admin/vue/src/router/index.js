@@ -4,7 +4,7 @@ import axios from 'axios';
 
 Vue.use(Router);
 
-const title = ' - adminPoem2';
+const title = ' - VuePoem';
 
 let router = new Router({
 

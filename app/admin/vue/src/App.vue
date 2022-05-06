@@ -9,7 +9,7 @@
 
                 <!--logo-->
                 <div class="logo">
-                    <i class="fa fa-chrome">&nbsp;&nbsp;</i><b>Admin<i>Poem2</i></b>
+                    <i class="fa fa-chrome">&nbsp;&nbsp;</i><b>Vue<i>Poem</i></b>
                 </div>
 
                 <!--二级菜单-->
@@ -230,7 +230,7 @@ export default {
 
         //sysInfo
         console.log(
-            `%c Design By Force %c AdminPoem2 %c`,
+            `%c Design By Force %c VuePoem %c`,
             'background:#35495e ; padding: 1px; border-radius: 3px 0 0 3px;  color: #fff',
             'background:#1aa094 ; padding: 1px; border-radius: 0 3px 3px 0;  color: #fff',
             'background:transparent'

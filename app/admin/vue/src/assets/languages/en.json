@@ -1,5 +1,5 @@
 {
-    "sysName": "adminPoem2",
+    "sysName": "VuePoem",
     "admin": {
         "public": {
             "setTheme": "Set the theme",
@@ -83,7 +83,7 @@
             "save": "Save"
         },
         "signIn": {
-            "title": "AdminPoem Background login",
+            "title": "VuePoem Background login",
             "signName": "Switch the language",
             "account": "Account",
             "password": "Password",

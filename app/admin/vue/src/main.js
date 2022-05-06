@@ -15,7 +15,7 @@ Vue.config.productionTip = false;
 
 Vue.use(ElementUI);
 Vue.use(less);
-Vue.use(VueI18n)
+Vue.use(VueI18n);
 
 //i18n
 let lang = window.localStorage.getItem('sys-lang');
