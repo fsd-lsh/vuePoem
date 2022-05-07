@@ -38,35 +38,47 @@
 - Node v17.7.2 (npm v8.5.2) +
 - MariaDB / Mysql
 
-## 快速了解
-前端依赖安装
-```shell
-cd vuePoem/app/admin/vue && npm i
-```
+## 开发运行（以vuePoem项目目录为基准）
 
-填写配置
-编辑全剧配置文件，填写或修改vue、php、mysql相关项
+自动模式
 ```shell
-cd vuePoem/global.cnf && vim global.cnf
-```
-
-开发模式（webpack开发服务器+php内建服务器一键启动）
-```shell
-cd vuePoem && chmod 777 vuePoem
+# 1. 填写配置 `global.cnf`（根据你的实际情况修改vue、php、mysql配置）
+vim global.cnf
+# 2. 查看vuePoem命令行工具帮助，以 `vuePoem [option]` 格式执行选项功能
+./vuePoem
+# 3. 检查当前环境版本，推荐Php7.4+、Node17+、Mysql/MariaDB新版即可
+./vuePoem check
+# 4. 自动部署数据库，请确保您 `global.cnf` 文件mysql已配置，程序会自动创建所需数据库、数据表
+./vuePoem mysql
+# 5. 开发模式，程序自动帮您安装vue依赖、运行vue runtime server与php内建server联通
 ./vuePoem dev
-#运行完成后进入`http://127.0.0.1:7777` 用户`admin`密码`123456`
+# 6. 打包部署所需资源，vuePoem/public下会有打包后的静态资源
+./vuePoem prod
+# 7. 清理打包资源
+./vuePoem clean
 ```
 
-生产模式（假设您当前在本地开发完成需要部署在生产环境服务器）
+手动模式
 ```shell
-# 1.打包
-cd vuePoem
-./vuePoem prod
+# 1. 填写配置 `global.cnf`（根据你的实际情况修改vue、php、mysql配置）
+vim global.cnf
+# 2. 创建你在`global.cnf`填写的`MYSQL_DBNM`对应数据库，将vuePoem.sql导入你的mysql，然后看一下有没有导入成功
+mysql -uroot -pxxxxxx
+show databases;
+use {你的MYSQL_DBNM};
+desc tables;
+# 3. 安装vue 所需要的依赖
+cd app/admin/vue && npm i
+# 4. 启动PHP内建server，将下方命令`PHP_HOST`、`PHP_PORT`替换成`global.cnf`对应值
+cd public && php -R {PHP_HOST}:{PHP_PORT} index.php
+# 5. 启动vue开发server
+cd app/admin/vue/ && npm run dev
+```
 
-# 2.vuePoem/public下会有打包后的静态资源
-ls vuePoem/public
-
-# 3.配置web服务器（例如Nginx）根目录为vuePoem/public，以下是配置参考
+## 部署运行(Nginx示范)
+```shell
+# 1.将vuePoem文件上传（部署工具、版本控制工具等）至服务器
+# 2.配置web服务器（例如Nginx）根目录为vuePoem/public，以下是配置参考
 server {
     listen       80;
     server_name  dev.vuePoem.force;

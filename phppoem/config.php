@@ -9,7 +9,7 @@ $config = [
     // 数据库配置
     'db_type'         => 'mysql',
     'db_host'         => $global_config['MYSQL_HOST'] ? : '127.0.0.1',
-    'db_name'         => 'vuePoem',
+    'db_name'         => $global_config['MYSQL_DBNM'] ? : 'vuePoem',
     'db_user'         => $global_config['MYSQL_USER'] ? : 'root',
     'db_pass'         => $global_config['MYSQL_PASS'] ? : '123456',
     'db_prefix'       => 'poem_',

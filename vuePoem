@@ -5,46 +5,192 @@
 class vuePoem {
 
     private $argv;
+    private $help_info = <<<EOF
+\nvuePoem cli help (vuePoem [option])
+--------------------------------------
+check  :Checking the Operating Environment
+dev    :Automatic loading of Vue and PHP development servers
+prod   :Vue projects are packaged as static resources in public/
+clean  :Clean up build front-end resources
+mysql  :Automatic Database deployment\n\n
+EOF;
+    private $check_template = <<<EOF
+path  : {status_path}
+php   : {status_php}
+node  : {status_node}
+npm   : {status_npm}
+mysql : {status_mysql}\n\n
+EOF;
 
     public function __construct() {
-        $this->argv = $_SERVER['argv'];
-        if(empty($this->argv)) {
 
+        date_default_timezone_set('PRC');
+
+        if(PHP_SAPI != 'cli') {
+            $this->log('only support cli request');
+            exit;
+        }
+
+        $this->argv = $_SERVER['argv'];
+        if(empty($this->argv) || empty($this->argv[1]) || $this->argv[1] == 'help') {
+            echo $this->help_info;
+            exit;
+        }else {
+            unset($this->help);
         }
     }
 
     public function run() {
 
-        switch ($this->argv[1]) {
-
-            case 'dev': {
-                $this->dev();
-                break;
-            }
-
-            case 'prod': {
-                $this->prod();
-                break;
-            }
-
-            case 'clean': {
-                break;
-            }
-
-            default: {
-                break;
-            }
-        }
-        exit;
+        $argv = strtolower($this->argv[1]);
+        $this->$argv();
     }
 
     private function dev() {
+
+        if(!file_exists('app/admin/vue/node_modules')) {
+            $this->log('cd app/admin/vue/ && npm i', true);
+        }
+
         $global_config = parse_ini_file('global.cnf', true);
-        exec("cd public && php -S {$global_config['PHP_HOST']}:{$global_config['PHP_PORT']} index.php & cd app/admin/vue && npm run dev");
+        $this->log(__FUNCTION__ . ' running...');
+        $this->log('press ctrl+c to quit');
+        $this->log("cd public && php -S {$global_config['PHP_HOST']}:{$global_config['PHP_PORT']} index.php & cd app/admin/vue && npm run dev", true);
     }
 
     private function prod() {
-        exec("cd app/admin/vue && npm run build");
+
+        $this->log(__FUNCTION__ . ' running...');
+        $this->log("cd app/admin/vue && npm run build", true);
+        $this->log(__FUNCTION__ . ' finished');
+    }
+
+    private function clean() {
+
+        if(file_exists('public/index.html')) {
+            $this->log('rm -rf public/index.html', true);
+        }
+        if(file_exists('public/static/css')) {
+            $this->log('rm -rf public/static/css', true);
+        }
+        if(file_exists('public/static/fonts')) {
+            $this->log('rm -rf public/static/fonts', true);
+        }
+        if(file_exists('public/static/img')) {
+            $this->log('rm -rf public/static/img', true);
+        }
+        if(file_exists('public/static/imgs')) {
+            $this->log('rm -rf public/static/imgs', true);
+        }
+        if(file_exists('public/static/js')) {
+            $this->log('rm -rf public/static/js', true);
+        }
+        $this->log('clean success');
+    }
+
+    private function mysql() {
+
+        try {
+
+            $global_config = parse_ini_file('global.cnf', true);
+            $tables = file_get_contents('vuePoem.sql');
+            if(empty($tables)) {
+                $this->log('vuePoem.sql not found');
+                exit;
+            }
+
+            $mysql = new PDO("mysql:host={$global_config['MYSQL_HOST']}", $global_config['MYSQL_USER'], $global_config['MYSQL_PASS']);
+            $mysql->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+            $mysql->exec('CREATE DATABASE IF NOT EXISTS ' . $global_config['MYSQL_DBNM']);
+            $mysql->exec('USE ' . $global_config['MYSQL_DBNM']);
+            $mysql->exec($tables);
+
+            $this->log('mysql db & tables init success');
+
+        }catch (PDOException $e) {
+            $this->log('auto create database' . $global_config['MYSQL_DBNM']);
+        }
+    }
+
+    private function check() {
+
+        $status = [];
+        $path_check = [
+            'app/admin/vue',
+            'app/admin/controller',
+            'app/service/component',
+            'phppoem/core',
+            'public/index.php',
+            'global.cnf'
+        ];
+
+        $status['status_path'] = '';
+        foreach ($path_check as $key => $path) {
+            if(!file_exists($path)) {
+                $status['status_path'] .= "[no:{$path}] ";
+            }else {
+                $status['status_path'] .= "[ok:{$path}] ";
+            }
+        }
+        exec("php -v", $status['status_php']);
+        exec("node -v", $status['status_node']);
+        exec("npm -v", $status['status_npm']);
+        exec("mysql -V", $status['status_mysql']);
+
+        if(!empty($status['status_php']) && is_array($status['status_php'])) {
+            $status['status_php'] = implode(' - ', array_filter($status['status_php']));
+        }else {
+            $status['status_php'] = 'Environment and global variables need to be checked';
+        }
+        if(!empty($status['status_node']) && is_array($status['status_node'])) {
+            $status['status_node'] = implode(' - ', array_filter($status['status_node']));
+        }else {
+            $status['status_node'] = 'Environment and global variables need to be checked';
+        }
+        if(!empty($status['status_npm']) && is_array($status['status_npm'])) {
+            $status['status_npm'] = implode(' - ', array_filter($status['status_npm']));
+        }else {
+            $status['status_npm'] = 'Environment and global variables need to be checked';
+        }
+        if(!empty($status['status_mysql']) && is_array($status['status_mysql'])) {
+            $status['status_mysql'] = implode(' - ', array_filter($status['status_mysql']));
+        }else {
+            $status['status_mysql'] = 'Environment and global variables need to be checked';
+        }
+
+        foreach ($status as $key => $item) {
+            $this->check_template = str_replace("{{$key}}", $item, $this->check_template);
+        }
+
+        echo $this->check_template;
+        exit;
+    }
+
+    private function log($info = '', $command = false) {
+
+        if(empty($info)) {
+            return false;
+        }
+
+        echo 'vuePoem: ' . date('Y-m-d H:i:s') . " - {$info} \n";
+
+        if($command) {
+            system($info);
+        }
+    }
+
+    public function __call($name, $arguments) {
+        $this->log($name . ' is not a support option');
+    }
+
+    public function __destruct() {
+
+        if(count($this->argv) > 1) {
+            if(!in_array($this->argv[1], ['check', 'help']) && !empty($this->argv[1])) {
+                $this->log('bye!');
+            }
+        }
     }
 }
 

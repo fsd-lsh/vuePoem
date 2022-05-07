@@ -14,8 +14,8 @@ const fs = require('fs');
 
 let str = fs.readFileSync(path.resolve(__dirname, '../../../../global.cnf')).toString();
 let globalConfig = ini.parse(str);
-const VUE_HOST = process.env.HOST;
-const VUE_PORT = process.env.PORT && Number(process.env.PORT);
+const VUE_HOST = globalConfig.VUE_HOST;
+const VUE_PORT = globalConfig.VUE_PORT && Number(globalConfig.VUE_PORT);
 const PHP_HOST = globalConfig.PHP_HOST;
 const PHP_PORT = globalConfig.PHP_PORT && Number(globalConfig.PHP_PORT);
 
@@ -91,8 +91,8 @@ module.exports = new Promise((resolve, reject) => {
             devWebpackConfig.plugins.push(new FriendlyErrorsPlugin({
                 compilationSuccessInfo: {
                     messages: [
-                        `Vue is running here: http://${VUE_HOST}:${VUE_PORT}`,
-                        `PHP Development Server is running here: http://${PHP_HOST}:${PHP_PORT}`
+                        `View: http://${VUE_HOST}:${VUE_PORT}`,
+                        `API: http://${PHP_HOST}:${PHP_PORT}`
                     ],
                 },
                 onErrors: config.dev.notifyOnErrors
