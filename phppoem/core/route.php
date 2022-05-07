@@ -25,8 +25,8 @@ class route {
                 $_GET[$k]    = $v;
             }
         }
-        if (defined('NEW_MODULE')) {
-            $_SERVER['PATH_INFO'] = "/" . NEW_MODULE;
+        if (config('default_module')) {
+            $_SERVER['PATH_INFO'] = "/" . config('default_module');
         }
 
         if (isset($_SERVER['PATH_INFO'])) {
@@ -108,7 +108,7 @@ class route {
 
     /**
      * 参数解析
-     * @param  string $param 
+     * @param  string $param
      * @return void 写入$GET
      */
     private static function parse_param($param) {

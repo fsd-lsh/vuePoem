@@ -32,7 +32,7 @@ class [CTRL]{
     	v();
     }
 }';
-    
+
     /**
      * 检查模块 如果不存在则创建
      * @param  string $module 模块名
@@ -41,7 +41,7 @@ class [CTRL]{
     public static function checkModule($module) {
         if (!is_dir(APP_PATH . $module)) {
             $ctrls  = defined('NEW_CTRL') ? explode(',', NEW_CTRL) : array('index');
-            $models = defined('NEW_MODEL') ? explode(',', NEW_MODEL) : array();
+            $models = config('default_module') ? explode(',', config('default_module')) : array();
             self::initApp(strtolower($module), $ctrls, $models);
         }
     }
