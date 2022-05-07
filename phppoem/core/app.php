@@ -22,7 +22,7 @@ class app {
 
         t('POEM_TIME'); // 计时
 
-        $module = config('default_module') ? config('default_module') : 'home';
+        $module = defined('NEW_MODULE') ? NEW_MODULE : 'home';
         if (!is_dir(APP_PATH . $module)) {
             \poem\more\build::checkModule($module);
         }

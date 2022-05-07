@@ -41,7 +41,7 @@ class [CTRL]{
     public static function checkModule($module) {
         if (!is_dir(APP_PATH . $module)) {
             $ctrls  = defined('NEW_CTRL') ? explode(',', NEW_CTRL) : array('index');
-            $models = config('default_module') ? explode(',', config('default_module')) : array();
+            $models = defined('NEW_MODEL') ? explode(',', NEW_MODEL) : array();
             self::initApp(strtolower($module), $ctrls, $models);
         }
     }

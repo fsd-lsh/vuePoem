@@ -25,8 +25,8 @@ class route {
                 $_GET[$k]    = $v;
             }
         }
-        if (config('default_module')) {
-            $_SERVER['PATH_INFO'] = "/" . config('default_module');
+        if (defined('NEW_MODULE')) {
+            $_SERVER['PATH_INFO'] = "/" . NEW_MODULE;
         }
 
         if (isset($_SERVER['PATH_INFO'])) {
