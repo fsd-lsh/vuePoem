@@ -5,7 +5,7 @@
         <el-row>
 
             <!--左侧部分（logo、二级菜单）-->
-            <el-col :span="this.leftViewSpan" id="left" v-if="this.$store.state.isSignIn">
+            <el-col :span="3" id="left" v-if="this.$store.state.isSignIn">
 
                 <!--logo-->
                 <div class="logo">
@@ -93,14 +93,14 @@
 
             <!--右侧部分（一级菜单、路由视图）-->
             <el-col
-                :span="this.rightViewSpan"
+                :span="this.$store.state.isSignIn ? 21 : 24"
                 :class="{
                     'inner-view': this.$store.state.isSignIn,
                 }"
                 id="right">
 
                 <!--展开收起左侧菜单-->
-                <el-radio-group v-if="1" v-model="isCollapse" style="margin-bottom: 20px;">
+                <el-radio-group v-if="0" v-model="isCollapse" style="margin-bottom: 20px;">
                     <el-radio-button :label="false">{{$t('admin.public.open')}}</el-radio-button>
                     <el-radio-button :label="true">{{$t('admin.public.close')}}</el-radio-button>
                 </el-radio-group>
