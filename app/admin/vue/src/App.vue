@@ -5,7 +5,7 @@
         <el-row>
 
             <!--左侧部分（logo、二级菜单）-->
-            <el-col :span="3" id="left" v-if="this.$store.state.isSignIn">
+            <el-col :span="this.leftViewSpan" id="left" v-if="this.$store.state.isSignIn">
 
                 <!--logo-->
                 <div class="logo">
@@ -93,14 +93,14 @@
 
             <!--右侧部分（一级菜单、路由视图）-->
             <el-col
-                :span="this.$store.state.isSignIn ? 21 : 24"
+                :span="this.rightViewSpan"
                 :class="{
                     'inner-view': this.$store.state.isSignIn,
                 }"
                 id="right">
 
                 <!--展开收起左侧菜单-->
-                <el-radio-group v-if="0" v-model="isCollapse" style="margin-bottom: 20px;">
+                <el-radio-group v-if="1" v-model="isCollapse" style="margin-bottom: 20px;">
                     <el-radio-button :label="false">{{$t('admin.public.open')}}</el-radio-button>
                     <el-radio-button :label="true">{{$t('admin.public.close')}}</el-radio-button>
                 </el-radio-group>
@@ -168,7 +168,7 @@
                 </el-menu>
 
                 <!--路由视图-->
-                <router-view/>
+                <router-view :key="key"/>
             </el-col>
         </el-row>
 
@@ -190,7 +190,6 @@ export default {
 
     data() {
         return {
-            isCollapse: false,
             activeIndex: '1',
             activeSubIndex: '0',
             pid: 0,
@@ -205,6 +204,9 @@ export default {
                 'sys-theme-green',
             ],
             nowTheme: '',
+            isCollapse: false,
+            leftViewSpan: 3,
+            rightViewSpan: 21,
         }
     },
 
@@ -235,21 +237,6 @@ export default {
             'background:#1aa094 ; padding: 1px; border-radius: 0 3px 3px 0;  color: #fff',
             'background:transparent'
         )
-
-        //页面每次刷新加载时候都会去读取sessionStorage里面的vuex状态
-        if (sessionStorage.getItem("store")) {
-            this.$store.replaceState(
-                Object.assign({},
-                    this.$store.state,
-                    JSON.parse(sessionStorage.getItem("store")) //这里存的是可能经过mutions处理过的state值，是最新的,所以放在最后
-                )
-            );
-        }
-
-        // 在页面刷新之前把vuex中的信息存到sessionStorage
-        window.addEventListener("pagehide", () => {
-            sessionStorage.setItem("store", JSON.stringify(this.$store.state));
-        });
 
         //定位menu active
         if (this.$store.state.isSignIn) {
@@ -355,6 +342,7 @@ export default {
                         success: (res) => {
                             if (res.data.code === 1) {
                                 this.$store.commit('changeSignInState', false);
+                                sessionStorage.setItem('store', JSON.stringify({isSignIn:false,menuTree:{}}));
                                 this.$router.push(res.data.data);
                                 this.$notify({message: res.data.info, type: 'success'});
                             } else {
@@ -452,6 +440,36 @@ export default {
             //console.log(key, keyPath);
         },
     },
+
+    watch: {
+
+        '$store.state.menuTree.menuInfo'() {
+            this.positionMenu();
+        },
+
+        isCollapse() {
+
+            if(this.$store.state.isSignIn) {
+
+                if(isCollapse) {
+                    this.leftViewSpan = 1;
+                    this.rightViewSpan = 23;
+                }else {
+                    this.leftViewSpan = 3;
+                    this.rightViewSpan = 21;
+                }
+            }else {
+                this.leftViewSpan = 3;
+                this.rightViewSpan = 24;
+            }
+        },
+    },
+
+    computed: {
+        key() {
+            return this.$route.name !== undefined? this.$route.name + +new Date(): this.$route + +new Date()
+        }
+    }
 }
 </script>
 

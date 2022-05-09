@@ -13,7 +13,6 @@
             "clear": "清理缓存",
             "switchLanguage": "切换语言"
         },
-        "cms": "",
         "dash": {
             "dataStatistics": "数据统计",
             "user": "用户",
@@ -126,6 +125,18 @@
             "stime": "注册时间",
             "utime": "更新时间",
             "save": "保存"
+        },
+        "userMenu": {
+            "menu_id_1": "业务管理",
+            "menu_id_2": "面板统计",
+            "menu_id_3": "系统管理",
+            "menu_id_4": "菜单设置",
+            "menu_id_5": "角色设置",
+            "menu_id_6": "用户管理",
+            "menu_id_7": "系统日志",
+            "menu_id_8": "框架日志",
+            "menu_id_9": "运行日志",
+            "menu_id_11": "系统监控"
         }
     }
 }

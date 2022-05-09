@@ -1,12 +1,32 @@
 import axios from "axios";
 export default {
 
+    created() {
+
+        //页面每次刷新加载时候都会去读取sessionStorage里面的vuex状态
+        if (sessionStorage.getItem("store")) {
+            this.$store.replaceState(
+                Object.assign({},
+                    this.$store.state,
+                    JSON.parse(sessionStorage.getItem("store")) //这里存的是可能经过mutions处理过的state值，是最新的,所以放在最后
+                )
+            );
+        }
+
+        // 在页面刷新之前把vuex中的信息存到sessionStorage
+        window.addEventListener("pagehide", () => {
+            sessionStorage.setItem("store", JSON.stringify(this.$store.state));
+        });
+    },
+
     methods: {
 
         //ajax请求封装
         poemRequest(options) {
 
             let request;
+            let lang = window.localStorage.getItem('sys-lang');
+
             switch (options.type) {
                 case 'get': { request = axios.get; break; }
                 case 'post': { request = axios.post; break; }
@@ -14,11 +34,27 @@ export default {
                 case 'delete': { request = axios.delete; break; }
             }
 
+            if(options.url.indexOf('?') === -1) {
+                options.url = options.url + '?lang=' + lang;
+            }else {
+                options.url = options.url + '&lang=' + lang;
+            }
+
             request(
                 options.url,
                 options.data
             )
-            .then(options.success)
+            .then((res) => {
+                if(res.data.code === 955) {
+                    this.$store.commit('changeSignInState', false);
+                    let store = JSON.parse(sessionStorage.getItem('store'));
+                    store.isSignIn = false;
+                    store.menuTree = {};
+                    sessionStorage.setItem('store', JSON.stringify(store));
+                    this.$router.push('/');
+                }
+                options.success(res);
+            })
             .catch(() => {
 
                 if(options.error) {

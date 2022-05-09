@@ -5,6 +5,7 @@ import axios from 'axios';
 Vue.use(Router);
 
 const title = ' - VuePoem';
+const lang = localStorage.getItem('sys-lang');
 
 let router = new Router({
 
@@ -32,8 +33,21 @@ let router = new Router({
     ],
 });
 
-axios.get('/admin/menu/load').then(res => {
+axios.get('/admin/menu/load?lang='+lang).then(res => {
+
+    if(res.data.code === 955) {
+        sessionStorage.setItem('store', JSON.stringify({isSignIn:false,menuTree:{}}));
+        if(window.location.hash !== '#/') {
+            window.location.href = '/';
+        }
+        return false;
+    }
+
     let menu = res.data.data.menuInfo;
+    let store = JSON.parse(window.sessionStorage.getItem('store'));
+    store.menuTree.menuInfo = menu;
+    window.sessionStorage.setItem('store', JSON.stringify(store));
+
     if(res.data.code === 1) {
         for (let index = 0; index < menu.length; index++) {
             for (let sub_index = 0; sub_index < menu[index].child.length; sub_index++) {

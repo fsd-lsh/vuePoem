@@ -30,7 +30,7 @@ class login {
             }
 
             if(!$this->check_login()) {
-                ajax(0, '您未登录', $url);
+                ajax(955, '您未登录', $url);
             }
 
             $this->authentication();

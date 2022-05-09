@@ -10,7 +10,7 @@ class vuePoem {
 --------------------------------------
 check  :Checking the Operating Environment
 dev    :Automatic loading of Vue and PHP development servers
-prod   :Vue projects are packaged as static resources in public/
+build   :Vue projects are packaged as static resources in public/
 clean  :Clean up build front-end resources
 mysql  :Automatic Database deployment\n\n
 EOF;
@@ -32,7 +32,7 @@ EOF;
         }
 
         $this->argv = $_SERVER['argv'];
-        if(empty($this->argv) || empty($this->argv[1]) || $this->argv[1] == 'help') {
+        if(empty($this->argv) || empty($this->argv[1]) || $this->argv[1] == 'help' || $this->argv[1] == 'run') {
             echo $this->help_info;
             exit;
         }else {
@@ -58,7 +58,7 @@ EOF;
         $this->log("cd public && php -S {$global_config['PHP_HOST']}:{$global_config['PHP_PORT']} index.php & cd app/admin/vue && npm run dev", true);
     }
 
-    private function prod() {
+    private function build() {
 
         $this->log(__FUNCTION__ . ' running...');
         $this->log("cd app/admin/vue && npm run build", true);

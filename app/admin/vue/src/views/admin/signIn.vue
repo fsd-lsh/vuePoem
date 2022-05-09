@@ -58,12 +58,21 @@ export default {
                     password: this.form.pwd,
                 },
                 success: (res) => {
+
                     if(res.data.code === 1) {
+
                         this.loadMenu();
+
                         this.$store.commit('changeSignInState', true);
+                        let store = JSON.parse(window.sessionStorage.getItem('store'));
+                        store.isSignIn = true;
+                        sessionStorage.setItem('store', store);
+
                         this.$router.push(res.data.data.url);
                         sessionStorage.setItem('username', res.data.data.name);
+
                         this.$notify({ message:res.data.info, type:'success' });
+
                         setTimeout(() => {
                             window.location.reload();
                         }, 100);
@@ -89,7 +98,7 @@ export default {
             }
             window.location.reload();
         },
-    }
+    },
 }
 </script>
 

@@ -53,7 +53,7 @@ vim global.cnf
 # 5. 开发模式，程序自动帮您安装vue依赖、运行vue runtime server与php内建server联通
 ./vuePoem dev
 # 6. 打包部署所需资源，vuePoem/public下会有打包后的静态资源
-./vuePoem prod
+./vuePoem build
 # 7. 清理打包资源
 ./vuePoem clean
 ```

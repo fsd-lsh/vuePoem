@@ -187,3 +187,28 @@ if(!function_exists('func_comment')) {
         return $tmp;
     }
 }
+
+if(!function_exists('fetch_lang')) {
+
+    /**
+     * Func: fetch_lang
+     * User: Force
+     * Date: 2022/5/9
+     * Time: 13:50
+     * Desc: 获取语言包
+     */
+    function fetch_lang() {
+
+        $path = __DIR__ . '/../app/admin/vue/src/assets/languages';
+        $path = realpath($path);
+        $lang_json = file_get_contents($path . '/' . $_GET['lang'] . '.json');
+
+        if(empty($lang_json)) {
+            ajax(0, '语言不支持');
+        }
+
+        $lang_json = json_decode($lang_json, true);
+
+        return $lang_json;
+    }
+}
