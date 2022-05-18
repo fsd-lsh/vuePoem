@@ -30,7 +30,17 @@
             "menuDel": "删除菜单",
             "logNormal": "普通日志",
             "logWarning": "警告日志",
-            "logDanger": "高危日志"
+            "logDanger": "高危日志",
+            "cleanOk": "执行清理缓存完成",
+            "cleanViewOK": "视图缓存清理成功",
+            "cleanViewFail": "视图缓存清理失败",
+            "cleanLogOK": "日志缓存清理成功",
+            "cleanLogFail": "日志缓存清理失败",
+            "loadPanelOk": "加载面板数据完成",
+            "hasAccFail": "账号已存在，请更换再试",
+            "userInfoModOk": "用户信息修改成功",
+            "userInfoModFail": "用户信息修改失败",
+            "loadUserInfoOk": "加载用户信息完成"
         },
         "fwLog": {
             "operation": "操作",
@@ -79,20 +89,46 @@
             "utime": "更新时间",
             "status": "状态",
             "cancel": "取消",
-            "save": "保存"
+            "save": "保存",
+            "enterName": "请输入角色名称",
+            "selectMenu": "请选择角色菜单",
+            "nameExists": "同名角色已经存在",
+            "createOk": "创建角色完成",
+            "createErr": "创建角色失败",
+            "checkRec": "请先勾选记录",
+            "changeOk": "成功变更状态",
+            "changeErr": "失败变更状态",
+            "updateOk": "修改角色完成",
+            "updateErr": "修改角色失败",
+            "loadOk": "加载列表完成"
         },
         "signIn": {
             "title": "VuePoem 后台登录",
             "signName": "切换语言",
             "account": "账号",
             "password": "密码",
-            "signIn": "登录"
+            "signIn": "登录",
+            "noSignIn": "您未登录",
+            "enterAcc": "请输入账号",
+            "enterPwd": "请输入密码",
+            "accNoFound": "账号不存在或已被冻结",
+            "pwdErr": "密码错误",
+            "signInOk": "登录成功",
+            "user": "用户",
+            "signOutOk": "注销登录成功",
+            "noRoles": "您的账号没有系统角色，请联系系统管理员分配后再试",
+            "noFoundRoles": "您的角色不存在",
+            "roleNotConfigMenu": "角色没有配置菜单权限",
+            "menuInvalid": "您权限内菜单不存在或无效",
+            "requestInvalid": "您的请求无效",
+            "AccessPermissions": "您没有访问权限"
         },
         "sysLog": {
             "user": "用户",
             "path": "路径",
             "ctime": "创建时间",
-            "level": "等级"
+            "level": "等级",
+            "loadListOk": "加载列表完成"
         },
         "system": {
             "info": "系统信息",
@@ -115,7 +151,19 @@
             "password": "密码",
             "confirm": "确认",
             "cancel": "取消",
-            "save": "保存"
+            "save": "保存",
+            "pwdErr": "两次密码输入不一致",
+            "accAlr": "账号已存在",
+            "createOk": "创建用户成功",
+            "createErr": "创建用户失败",
+            "notNull": "不能为空",
+            "noRec": "没有可用记录用于变更状态",
+            "changeOk": "状态变更成功",
+            "changeErr": "状态变更失败",
+            "selRoles": "请选择角色",
+            "modUserOk": "修改用户信息成功",
+            "modUserErr": "修改用户信息失败",
+            "loadOk": "列表加载完成"
         },
         "userInfo": {
             "account": "账号",

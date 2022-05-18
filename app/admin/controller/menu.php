@@ -10,15 +10,12 @@ use service\component;
  */
 class menu extends component\login {
 
-    private $lang_config;
-
     /**
      * menu constructor.
      * @throws \Exception
      */
     public function __construct() {
         parent::__construct(1, 'admin');
-        $this->lang_config = fetch_lang()['admin']['userMenu'];
     }
 
     /**
@@ -178,7 +175,7 @@ class menu extends component\login {
                     ->find();
 
                 if($result) {
-                    $result['title'] = $this->lang_config['menu_id_'.$result['id']];
+                    $result['title'] = trans('admin.userMenu.menu_id_2.menu_id_'.$result['id']);
                     ajax(1, '加载菜单完成', $result);
                 }else {
                     ajax(0, '加载菜单失败');
@@ -232,18 +229,18 @@ class menu extends component\login {
                     ])
                     ->where('status != 0')
                     ->select();
-                formatting($menu, $menu_config, $this->lang_config);
+                formatting($menu, $menu_config, trans('admin.userMenu'));
                 if(is_array($menu) && !empty($menu)) {
 
                     $pids = array_column($menu, 'id');
                     $sub_menu = m()
                         ->query("select * from poem_sys_menu where pid in (" . implode(',', $pids) . ") and status != 0");
-                    formatting($sub_menu, $menu_config, $this->lang_config);
+                    formatting($sub_menu, $menu_config, trans('admin.userMenu'));
                     $sub_pids = array_column($sub_menu, 'id');
                     $sub_menu = array_group_by($sub_menu, 'pid');
                     $sub_menu2 = m()
                         ->query("select * from poem_sys_menu where pid in (" . implode(',', $sub_pids) . ") and status != 0");
-                    formatting($sub_menu2, $menu_config, $this->lang_config);
+                    formatting($sub_menu2, $menu_config, trans('admin.userMenu'));
                     $sub_menu2 = array_group_by($sub_menu2, 'pid');
 
                     foreach($menu as $key => $item) {
@@ -293,7 +290,7 @@ class menu extends component\login {
 
         $menu = [
             'homeInfo' => [
-                'title' => $this->lang_config['menu_id_2'],
+                'title' => trans('admin.userMenu.menu_id_2'),
                 'href'  => '/menu',
             ],
             'logoInfo' => [
@@ -327,7 +324,7 @@ class menu extends component\login {
 
         //语言处理
         foreach ($menuList as $key => $item) {
-            $menuList[$key]['title'] = $this->lang_config['menu_id_'.$item['id']];
+            $menuList[$key]['title'] = trans('admin.userMenu.menu_id_'.$item['id']);
         }
 
         //权限分配

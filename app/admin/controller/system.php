@@ -51,7 +51,7 @@ class system extends component\login {
                 exec('df -h', $data['hdd']);
 
                 //响应
-                ajax(1, '加载成功', $data);
+                ajax(1, trans('admin.sysLog.loadListOk'), $data);
             }
         ]);
     }

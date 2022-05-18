@@ -193,11 +193,24 @@ if(!function_exists('fetch_lang')) {
     /**
      * Func: fetch_lang
      * User: Force
-     * Date: 2022/5/9
-     * Time: 13:50
-     * Desc: 获取语言包
+     * Date: 2022/5/13
+     * Time: 19:50
+     * Desc: 获取语言
      */
-    function fetch_lang() {
+    function trans($str = NULL) {
+
+        if(!empty(SYS_LANG) && is_array(SYS_LANG)) {
+
+            if(strpos($str, '.')) {
+                $keys = explode('.', $str);
+                switch (count($keys)) {
+                    case 2: { return SYS_LANG[$keys[0]][$keys[1]]; }
+                    case 3: { return SYS_LANG[$keys[0]][$keys[1]][$keys[2]]; }
+                }
+            }else {
+                return SYS_LANG;
+            }
+        }
 
         $path = __DIR__ . '/../app/admin/vue/src/assets/languages';
         $path = realpath($path);

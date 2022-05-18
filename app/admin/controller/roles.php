@@ -35,10 +35,10 @@ class roles extends component\login {
 
                 $form = $_POST['form'];
                 if(!$form['name']) {
-                    ajax(0, '请输入角色名称');
+                    ajax(0, trans('admin.roles.enterName'));
                 }
                 if(empty($form['menu_ids']) || !is_array($form['menu_ids'])) {
-                    ajax(0, '请选择角色菜单');
+                    ajax(0, trans('admin.roles.selectMenu'));
                 }
 
                 $check = m('sys_roles')
@@ -48,7 +48,7 @@ class roles extends component\login {
                     ])
                     ->find();
                 if($check) {
-                    ajax(0, '同名角色已经存在');
+                    ajax(0, trans('admin.roles.nameExists'));
                 }
 
                 $menu_ids = m()
@@ -56,7 +56,7 @@ class roles extends component\login {
                         select * from poem_sys_menu where status = 1 and id in('.implode(',', $form['menu_ids']).')
                     ');
                 if(!$menu_ids) {
-                    ajax(0, '菜单不存在或已被删除 B2');
+                    ajax(0, trans('admin.roles.nameExists') . ' B2');
                 }
 
                 $pids = array_column($menu_ids, 'pid');
@@ -76,9 +76,9 @@ class roles extends component\login {
                     ]);
 
                 if($result) {
-                    ajax(1, '创建角色完成');
+                    ajax(1, trans('admin.roles.createOk'));
                 }else {
-                    ajax(0, '创建角色失败');
+                    ajax(0, trans('admin.roles.createErr'));
                 }
             },
 
@@ -88,7 +88,7 @@ class roles extends component\login {
                 $status = i('status');
                 $ids = $_POST['ids'];
                 if(!is_array($ids) || empty($ids)) {
-                    ajax(0, '请先勾选记录');
+                    ajax(0, trans('admin.roles.checkRec'));
                 }
 
                 $success = 0;
@@ -109,7 +109,7 @@ class roles extends component\login {
                     }
                 }
 
-                ajax(1, "成功变更状态{$success}个, 失败{$error}个。");
+                ajax(1, trans('admin.roles.changeOk') . ":{$success}个, " . trans('admin.roles.changeErr') . ":{$error}个。");
             },
 
             //更新角色信息
@@ -117,10 +117,10 @@ class roles extends component\login {
 
                 $form = $_POST['form'];
                 if(!$form['name']) {
-                    ajax(0, '请输入角色名称');
+                    ajax(0, trans('admin.roles.enterName'));
                 }
                 if(empty($form['menu_ids']) || !is_array($form['menu_ids'])) {
-                    ajax(0, '请选择角色菜单');
+                    ajax(0, trans('admin.roles.selectMenu'));
                 }
 
                 $menu_ids = m()
@@ -128,7 +128,7 @@ class roles extends component\login {
                         select * from poem_sys_menu where status = 1 and id in('.implode(',', $form['menu_ids']).')
                     ');
                 if(!$menu_ids) {
-                    ajax(0, '菜单不存在或已被删除 B2');
+                    ajax(0, trans('admin.roles.nameExists') . ' B2');
                 }
 
                 $pids = array_column($menu_ids, 'pid');
@@ -149,9 +149,9 @@ class roles extends component\login {
                     ]);
 
                 if($result) {
-                    ajax(1, '修改角色完成');
+                    ajax(1, trans('admin.roles.updateOk'));
                 }else {
-                    ajax(0, '修改角色失败');
+                    ajax(0, trans('admin.roles.updateErr'));
                 }
             },
 
@@ -238,7 +238,7 @@ class roles extends component\login {
                 }
 
                 //响应
-                ajax(1, '加载列表完成', [
+                ajax(1, trans('admin.roles.loadOk'), [
                     'lists' => $data,
                     'page_html' => $page_html,
                     'menu_config' => $menu,

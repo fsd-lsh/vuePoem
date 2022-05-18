@@ -99,7 +99,7 @@ class log extends component\login {
                 $lists = array_order_by($lists, 'log_name', SORT_DESC);
 
                 //视图及变量写入
-                ajax(1, '加载列表完成', [
+                ajax(1, trans('admin.sysLog.loadListOk'), [
                     'lists' => $lists,
                 ]);
             },
@@ -148,7 +148,7 @@ class log extends component\login {
                 }
 
                 //视图及变量写入
-                ajax(1, '加载列表完成', [
+                ajax(1, trans('admin.sysLog.loadListOk'), [
                     'lists' => $log_data['list'],
                     'page_html' => $log_data['html'],
                 ]);

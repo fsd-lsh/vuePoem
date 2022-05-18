@@ -30,7 +30,17 @@
             "menuDel": "Delete",
             "logNormal": "Normal",
             "logWarning": "Warning",
-            "logDanger": "Danger"
+            "logDanger": "Danger",
+            "cleanOk": "Clearing the cache is complete",
+            "cleanViewOK": "Clearing the view cache succeeded",
+            "cleanViewFail": "Failed to clear view cache",
+            "cleanLogOK": "Clearing the log cache succeeded",
+            "cleanLogFail": "Failed to clear the log cache",
+            "loadPanelOk": "Loading panel data is complete",
+            "hasAccFail": "The account already exists. Please try again",
+            "userInfoModOk": "The user information is modified successfully",
+            "userInfoModFail": "Description Failed to modify user information",
+            "loadUserInfoOk": "The user information is loaded"
         },
         "fwLog": {
             "operation": "Operation",
@@ -79,20 +89,46 @@
             "utime": "Update time",
             "status": "Status",
             "cancel": "Cancel",
-            "save": "Save"
+            "save": "Save",
+            "enterName": "Enter a role name",
+            "selectMenu": "Please select the Roles menu",
+            "nameExists": "The character already exists",
+            "createOk": "Creating a role Completed",
+            "createErr": "Failed to create a role",
+            "checkRec": "Please check record first",
+            "changeOk": "Successful state change",
+            "changeErr": "Failed change status",
+            "updateOk": "Role Modification completed",
+            "updateErr": "Failed to Modify a role",
+            "loadOk": "Loading list completed"
         },
         "signIn": {
             "title": "VuePoem Background login",
             "signName": "Switch the language",
             "account": "Account",
             "password": "Password",
-            "signIn": "SignIn"
+            "signIn": "SignIn",
+            "noSignIn": "You are not logged in",
+            "enterAcc": "Please enter your account number",
+            "enterPwd": "Please enter your password",
+            "accNoFound": "The account does not exist or has been frozen",
+            "pwdErr": "Password mistake",
+            "signInOk": "Login successful",
+            "user": "User",
+            "signOutOk": "Logout successful",
+            "noRoles": "Your account does not have a system role. Please contact your system administrator to assign the role and try again",
+            "noFoundRoles": "Your role does not exist",
+            "roleNotConfigMenu": "The role does not have the configuration menu permission",
+            "menuInvalid": "The menu is invalid",
+            "requestInvalid": "The request is invalid",
+            "AccessPermissions": "You don't have access"
         },
         "sysLog": {
             "user": "User",
             "path": "Path",
             "ctime": "Create time",
-            "level": "Level"
+            "level": "Level",
+            "loadListOk": "Loading list completed"
         },
         "system": {
             "info": "System info",
@@ -115,7 +151,19 @@
             "password": "Password",
             "confirm": "Confirm",
             "cancel": "Cancel",
-            "save": "Save"
+            "save": "Save",
+            "pwdErr": "The two passwords are inconsistent",
+            "accAlr": "The account already exists",
+            "createOk": "Succeeded in creating a user",
+            "createErr": "Failed to create a user",
+            "notNull": "Can't be empty",
+            "noRec": "No records are available for changing the state",
+            "changeOk": "Status change successful",
+            "changeErr": "Status change failed",
+            "selRoles": "Please select a role",
+            "modUserOk": "The user information is modified successfully",
+            "modUserErr": "Failed to modify user information",
+            "loadOk": "List loaded"
         },
         "userInfo": {
             "account": "Account",

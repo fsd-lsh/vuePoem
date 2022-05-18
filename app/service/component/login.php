@@ -30,7 +30,7 @@ class login {
             }
 
             if(!$this->check_login()) {
-                ajax(955, '您未登录', $url);
+                ajax(955, trans('admin.signIn.noSignIn'), $url);
             }
 
             $this->authentication();
@@ -60,10 +60,10 @@ class login {
 
         //检查请求
         if(empty(i('username'))) {
-            ajax(0, '请输入账号');
+            ajax(0, trans('admin.signIn.enterAcc'));
         }
         if(empty(i('password'))) {
-            ajax(0, '请输入密码');
+            ajax(0, trans('admin.signIn.enterPwd'));
         }
 
         //获取账号信息
@@ -78,12 +78,12 @@ class login {
             ])
             ->find();
         if(empty($user_info)) {
-            ajax(0, '账号不存在或已被冻结');
+            ajax(0, trans('admin.signIn.accNoFound'));
         }
 
         //检查密码
         if(!password_verify(i('password'), $user_info['password'])) {
-            ajax(0, '密码错误');
+            ajax(0, trans('admin.signIn.pwdErr'));
         }
 
         //写入登录信息
@@ -94,8 +94,8 @@ class login {
             case 'user': { $url = '/'; break; }
             case 'admin': { $url = '/dash'; break; }
         }
-        $this->log('用户'.$_SESSION['admin_info']['name'].', 登录成功');
-        ajax(1, '登录成功', [
+        $this->log(trans('admin.signIn.user').$_SESSION['admin_info']['name'].', '.trans('admin.signIn.signInOk'));
+        ajax(1, trans('admin.signIn.signInOk'), [
             'url' => $url,
             'name' => $_SESSION['admin_info']['name'],
         ]);
@@ -126,7 +126,7 @@ class login {
             case 'admin': { $url = '/'; break; }
         }
         session($this->user_type.'_info', NULL);
-        ajax(1, '注销登陆成功', $url);
+        ajax(1, trans('admin.signIn.signOutOk'), $url);
     }
 
     /**
@@ -169,10 +169,10 @@ class login {
             ])
             ->find();
         if(!$user_info) {
-            ajax(0, '您的账号不存在或已被冻结');
+            ajax(0, trans('admin.signIn.accNoFound'));
         }
         if(!$user_info['roles']) {
-            ajax(0, '您的账号没有系统角色，请联系系统管理员分配后再试');
+            ajax(0, trans('admin.signIn.noRoles'));
         }
 
         //获取用户角色
@@ -183,7 +183,7 @@ class login {
             ])
             ->select();
         if(!is_array($role_info) || empty($role_info)) {
-            ajax(0, '您的角色不存在');
+            ajax(0, trans('admin.signIn.noFoundRoles'));
         }
 
         //获取菜单权限
@@ -193,7 +193,7 @@ class login {
             $menu_ids = array_merge($menu_ids, $item['menu_ids']);
         }
         if(!is_array($menu_ids) || empty($menu_ids)) {
-            ajax(0, '角色没有配置菜单权限');
+            ajax(0, trans('admin.signIn.roleNotConfigMenu'));
         }
         $menu_ids = array_filter($menu_ids);
         $menu_ids = array_unique($menu_ids);
@@ -206,7 +206,7 @@ class login {
             ])
             ->select();
         if(!is_array($menu_info) || empty($menu_info)) {
-            ajax(0, '您权限内菜单不存在或无效');
+            ajax(0, trans('admin.signIn.menuInvalid'));
         }
 
         //组装访问白名单
@@ -224,12 +224,12 @@ class login {
         $url_path = $_SERVER['PATH_INFO'];
         $url_path = str_replace('//', '/', $url_path);
         if(!$url_path) {
-            ajax(0, '您的请求无效');
+            ajax(0, trans('admin.signIn.requestInvalid'));
         }
 
         $url_path = str_replace('/admin', '', $url_path);
         if(!in_array($url_path, $menu_path)) {
-            ajax(0, '您没有访问权限');
+            ajax(0, trans('admin.signIn.AccessPermissions'));
         }
     }
 

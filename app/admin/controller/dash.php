@@ -35,22 +35,22 @@ class dash extends component\login {
                 $cache_view = APP_RUNTIME_PATH . 'admin';
                 $cache_log = APP_RUNTIME_PATH . 'log/admin';
 
-                $info = '执行清理缓存完成';
+                $info = trans('admin.dash.cleanOk');
 
-//                if(file_exists($cache_view)) {
-//                    exec('rm -rf ' . $cache_view);
-//                    unlink($cache_view);
-//                    $info .= '，视图缓存清理成功';
-//                }else {
-//                    $info .= '，视图缓存清理失败';
-//                }
+                if(file_exists($cache_view) && 0) {
+                    exec('rm -rf ' . $cache_view);
+                    unlink($cache_view);
+                    $info .= ', ' . trans('admin.dash.cleanViewOK');
+                }else {
+                    $info .= ', ' . trans('admin.dash.cleanViewFail');
+                }
 
                 if(file_exists($cache_log)) {
                     exec('rm -rf ' . $cache_log);
                     unlink($cache_log);
-                    $info .= '，日志缓存清理成功';
+                    $info .= ', ' . trans('admin.dash.cleanLogOK');
                 }else {
-                    $info .= '，日志缓存清理失败';
+                    $info .= ', ' . trans('admin.dash.cleanLogFail');
                 }
 
                 ajax(1, $info);
@@ -130,7 +130,7 @@ class dash extends component\login {
                 }
 
                 //渲染视图
-                ajax(1, '加载面板数据完成', [
+                ajax(1, trans('admin.dash.loadPanelOk'), [
                     'admin_total' => $admin_total,
                     'role_total' => $role_total,
                     'menu_total' => $menu_total,
@@ -168,7 +168,7 @@ class dash extends component\login {
                     ])
                     ->find();
                 if($check) {
-                    ajax(0, '账号已存在，请更换再试');
+                    ajax(0, trans('admin.dash.hasAccFail'));
                 }
 
                 //组装数据
@@ -190,11 +190,11 @@ class dash extends component\login {
 
                 //响应
                 if($result) {
-                    $this->log($_SESSION['admin_info']['name'].', 用户信息修改完成');
-                    ajax(1, '用户信息修改完成');
+                    $this->log($_SESSION['admin_info']['name'].', '.trans('admin.dash.userInfoModOk'));
+                    ajax(1, trans('admin.dash.userInfoModOk'));
                 }else {
-                    $this->log($_SESSION['admin_info']['name'].', 用户信息修改失败');
-                    ajax(0, '用户信息修改失败');
+                    $this->log($_SESSION['admin_info']['name'].', '.trans('admin.dash.userInfoModFail'));
+                    ajax(0, trans('admin.dash.userInfoModFail'));
                 }
             },
 
@@ -227,7 +227,7 @@ class dash extends component\login {
                 unset($user_info['password']);
 
                 //渲染视图
-                ajax(1, '加载用户信息完成', [
+                ajax(1, trans('admin.dash.loadUserInfoOk'), [
                     'roles_config' => $roles_info,
                     'user_info' => $user_info,
                 ]);

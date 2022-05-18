@@ -34,7 +34,7 @@ class user extends component\login {
             'create_user' => function() {
 
                 if(gp('password') != gp('rePassword')) {
-                    ajax(0, '两次密码输入不一致');
+                    ajax(0, trans('admin.user.pwdErr'));
                 }
 
                 $check = m('sys_admin')
@@ -44,7 +44,7 @@ class user extends component\login {
                     ])
                     ->find();
                 if($check) {
-                    ajax(0, '账号已存在');
+                    ajax(0, trans('admin.user.accAlr'));
                 }
 
                 $result = m('sys_admin')
@@ -58,9 +58,9 @@ class user extends component\login {
                     ]);
 
                 if($result) {
-                    ajax(1, '创建用户成功');
+                    ajax(1, trans('admin.user.createOk'));
                 }else {
-                    ajax(0, '创建用户失败');
+                    ajax(0, trans('admin.user.createErr'));
                 }
             },
 
@@ -71,13 +71,13 @@ class user extends component\login {
 
                 $ids = $_POST['ids'];
                 if(empty($ids)) {
-                    ajax(0, 'ids，不能为空');
+                    ajax(0, 'ids,' . trans('admin.user.notNull'));
                 }
 
                 $ids = array_filter($ids);
                 $ids = implode(',', $ids);
                 if(empty($ids)) {
-                    ajax(0, '没有可用记录用于变更状态');
+                    ajax(0, trans('admin.user.noRec'));
                 }
 
                 $result = m('sys_admin')
@@ -88,9 +88,9 @@ class user extends component\login {
                     ]);
 
                 if($result) {
-                    ajax(1, '状态变更成功');
+                    ajax(1, trans('admin.user.changeOk'));
                 }else {
-                    ajax(0, '状态变更失败');
+                    ajax(0, trans('admin.user.changeErr'));
                 }
             },
 
@@ -99,13 +99,13 @@ class user extends component\login {
 
                 $form = $_REQUEST['form'];
                 if(empty($form) || !is_array($form)) {
-                    ajax(0, '表单不能为空');
+                    ajax(0, 'form,' . trans('admin.user.notNull'));
                 }
                 if(empty($form['name'])) {
-                    ajax(0, '用户名不能为空');
+                    ajax(0, 'username,' . trans('admin.user.notNull'));
                 }
                 if(empty($form['roles']) || !is_array($form['roles'])) {
-                    ajax(0, '请选择角色');
+                    ajax(0, trans('admin.user.selRoles'));
                 }
 
                 $data = [
@@ -124,9 +124,9 @@ class user extends component\login {
                     ->update($data);
 
                 if($result) {
-                    ajax(1, '修改用户信息成功');
+                    ajax(1, trans('admin.user.modUserOk'));
                 }else {
-                    ajax(0, '修改用户信息失败');
+                    ajax(0, trans('admin.user.modUserErr'));
                 }
             },
 
@@ -179,7 +179,7 @@ class user extends component\login {
                 }
 
                 //渲染视图
-                ajax(1, '列表加载完成', [
+                ajax(1, trans('admin.user.loadOk'), [
                     'lists' => $lists,
                     'page_html' => $page_info['html'],
                     'roles_config' => $roles_info,

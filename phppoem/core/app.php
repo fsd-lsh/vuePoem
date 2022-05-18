@@ -27,6 +27,9 @@ class app {
             \poem\more\build::checkModule($module);
         }
 
+        // 挂载语言
+        define('SYS_LANG', trans());
+
         // 解析请求
         $request = file_get_contents('php://input');
         $request = json_decode($request, true);
