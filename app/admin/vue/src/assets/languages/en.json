@@ -5,13 +5,15 @@
             "setTheme": "Set the theme",
             "open": "Open",
             "close": "Close",
-            "config": "Configuration panel",
+            "config": "Configuration Panel",
             "modAccount": "Modify the account",
             "signOut": "Sign out",
             "fullScreen": "Full screen",
             "exitFullScreen": "Exit full screen",
             "clear": "Clear cache",
-            "switchLanguage": "Switch language"
+            "switchLanguage": "Switch language",
+            "add": "Add",
+            "edit": "Edit"
         },
         "dash": {
             "dataStatistics": "Data Statistics",
@@ -185,6 +187,14 @@
             "menu_id_8": "Framework log",
             "menu_id_9": "Run log",
             "menu_id_11": "System monitoring"
+        },
+        "field": {
+            "ctime": "Create Time",
+            "utime": "Update Time",
+            "status": "Status",
+            "id": "ID",
+            "word": "Words",
+            "from": "From"
         }
     }
 }

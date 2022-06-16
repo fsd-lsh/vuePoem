@@ -6,7 +6,7 @@ import router from './router';
 import less from 'less';
 import store from '../store';
 import ElementUI from 'element-ui';
-import VueI18n from 'vue-i18n'
+import VueI18n from 'vue-i18n';
 
 import 'element-ui/lib/theme-chalk/index.css';
 import 'font-awesome/css/font-awesome.min.css';

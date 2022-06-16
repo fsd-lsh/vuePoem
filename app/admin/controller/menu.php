@@ -57,7 +57,7 @@ class menu extends component\login {
                 }
 
                 if(empty($data['title'])) { ajax(0, 'title不能为空'); }
-                if(empty($data['href']) && $data['pid'] != 0) { ajax(0, 'href不能为空'); }
+                //if(empty($data['href']) && $data['pid'] != 0) { ajax(0, 'href不能为空'); }
                 if(empty($data['target'])) { ajax(0, 'target不能为空'); }
                 if(!is_numeric($data['sort'])) { ajax(0, 'sort不是一个数值'); }
                 if(empty($data)) { ajax(0, '请检查表单是否填写完整'); }
@@ -69,10 +69,19 @@ class menu extends component\login {
                 $data['ctime'] = time();
                 $data['utime'] = time();
 
-                $result = m('sys_menu')
+                $menu_id = m('sys_menu')
                     ->insert($data);
 
-                if($result) {
+                if($menu_id) {
+
+                    $path = __DIR__ . '/../../../app/admin/vue/src/assets/languages';
+                    $path = realpath($path);
+                    $lang_json = file_get_contents($path . '/' . $_GET['lang'] . '.json');
+                    $lang_json = json_decode($lang_json, true);
+                    $lang_json['admin']['userMenu']['menu_id_'.$menu_id] = $data['title'];
+                    $lang_json = json_encode($lang_json);
+                    file_put_contents($path . '/' . $_GET['lang'] . '.json', $lang_json);
+
                     ajax(1, '添加菜单成功');
                 }else {
                     ajax(0, '添加菜单失败');

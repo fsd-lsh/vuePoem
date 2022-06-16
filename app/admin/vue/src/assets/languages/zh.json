@@ -11,7 +11,9 @@
             "fullScreen": "全屏展开",
             "exitFullScreen": "全屏收起",
             "clear": "清理缓存",
-            "switchLanguage": "切换语言"
+            "switchLanguage": "切换语言",
+            "add": "添加",
+            "edit": "编辑"
         },
         "dash": {
             "dataStatistics": "数据统计",
@@ -185,6 +187,12 @@
             "menu_id_8": "框架日志",
             "menu_id_9": "运行日志",
             "menu_id_11": "系统监控"
+        },
+        "field": {
+            "ctime": "创建时间",
+            "utime": "更新时间",
+            "status": "状态",
+            "id": "序号ID"
         }
     }
 }

@@ -216,7 +216,7 @@ if(!function_exists('fetch_lang')) {
         $path = realpath($path);
         $lang_json = file_get_contents($path . '/' . $_GET['lang'] . '.json');
 
-        if(empty($lang_json)) {
+        if(empty($lang_json) && !IS_CLI) {
             ajax(0, '语言不支持');
         }
 
