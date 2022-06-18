@@ -4,7 +4,7 @@
 
         <!--table-->
         <el-card class="box-card">
-            <el-button @click="openDiaLog('new')" icon="fa fa-user-plus" type="primary" size="small">&nbsp;{{$t('admin.user.add')}}</el-button>
+            <el-button @click="openSaveDiaLog('new')" icon="fa fa-user-plus" type="primary" size="small" v-if="this.dialog.length > 0">&nbsp;{{$t('admin.user.add')}}</el-button>
             <el-button @click="statusChange(2)" change-type="0" icon="fa fa-toggle-on" type="warning" size="small">&nbsp;{{$t('admin.user.batch')}}{{$t('admin.user.stop')}}</el-button>
             <el-button @click="statusChange(1)" icon="fa fa-toggle-off" type="success" size="small">&nbsp;{{$t('admin.user.batch')}}{{$t('admin.user.open')}}</el-button>
             <el-button @click="statusChange(0)" icon="fa fa-user-times" type="danger" size="small">&nbsp;{{$t('admin.user.batch')}}{{$t('admin.user.del')}}</el-button>
@@ -24,15 +24,24 @@
                     width="55">
                 </el-table-column>
                 <el-table-column
-                    width="220"
+                    min-width="220"
                     fixed="left"
                     :label="$t('admin.user.operation')">
                     <template slot-scope="scope">
                         <el-button
+                            v-if="scope.row.viewShow === 1"
+                            size="mini"
+                            type="info"
+                            :title="$t('admin.public.view')"
+                            @click="openViewDialog(scope)">
+                            <i class="fa fa-eye">{{$t('admin.public.view')}}</i>
+                        </el-button>
+                        <el-button
+                            v-if="scope.row.editShow === 1"
                             size="mini"
                             type="primary"
                             :title="$t('admin.user.edit')"
-                            @click="openDiaLog(scope)">
+                            @click="openSaveDiaLog(scope)">
                             <i class="fa fa-pencil">&nbsp;{{$t('admin.user.edit')}}</i>
                         </el-button>
                         <el-button
@@ -65,10 +74,11 @@
                 </el-table-column>
 
                 <el-table-column
+                    :width="(item === 'id' || item === 'status' ) ? 90 : 180"
+                    :fixed="(item === 'id')"
                     v-for="(item, key) in column"
                     :prop="item"
                     sortable
-                    fixed
                     :key="key"
                     :label="$t('admin.field.'+item)">
                 </el-table-column>
@@ -76,11 +86,11 @@
             <div class="pagination" v-html="pageHtml"></div>
         </el-card>
 
-        <!--模态框-->
+        <!--模态框（添加、编辑）-->
         <el-dialog
             v-if="dialogConfig.length !== 0"
             :title="diaLogTitle"
-            :visible.sync="diaLogFlag"
+            :visible.sync="diaLogSaveFlag"
             width="40%">
             <el-form ref="form" label-width="90px" size="small">
 
@@ -115,9 +125,37 @@
                 </div>
             </el-form>
             <span slot="footer" class="dialog-footer">
-            <el-button size="mini" @click="diaLogFlag = false">{{$t('admin.user.cancel')}}</el-button>
-            <el-button size="mini" type="primary" @click="saveDiaLog">{{$t('admin.user.save')}}</el-button>
-        </span>
+                <el-button size="mini" @click="diaLogSaveFlag = false">{{$t('admin.user.cancel')}}</el-button>
+                <el-button size="mini" type="primary" @click="saveDiaLog">{{$t('admin.user.save')}}</el-button>
+            </span>
+        </el-dialog>
+
+        <!--模态框（查看）-->
+        <el-dialog
+            v-if="rowView.viewEnable"
+            :visible.sync="diaLogViewFlag"
+            width="70%">
+            <template>
+                <el-descriptions class="margin-top" :title="$t('admin.public.view')" :column="2" size="small" border>
+                    <el-descriptions-item
+                        :key="key"
+                        v-for="(item, key) in this.column">
+                        <template slot="label">
+                            <i :class="{
+                                'fa fa-spinner': (item === 'status'),
+                                'fa fa-clock-o': (item === 'ctime' || item === 'utime'),
+                                'fa fa-circle-o': (item !== 'status' && item !== 'ctime' && item !== 'utime'),
+                            }"/>
+                            <span>{{$t('admin.field.'+item)}}</span>
+                        </template>
+                        {{diaLogViewForm[item]}}
+                    </el-descriptions-item>
+                </el-descriptions>
+                <slot name="diaLogViewSlot"></slot>
+            </template>
+            <span slot="footer" class="dialog-footer">
+                <el-button size="mini" @click="diaLogViewFlag = false">{{$t('admin.user.cancel')}}</el-button>
+            </span>
         </el-dialog>
     </div>
 </template>
@@ -133,8 +171,23 @@ export default {
     ],
 
     props: {
-        url: { type:String, default:'', },
-        dialog: { type:Array, default:[], },
+        url: {
+            type: String,
+            default: '',
+        },
+        dialog: {
+            type: Array,
+            default: [],
+        },
+        rowView: {
+            type: Object,
+            default: () => {
+                return {
+                    viewEnable: false,
+                    viewCustom: false,
+                }
+            },
+        },
     },
 
     data() {
@@ -146,7 +199,9 @@ export default {
             tableData: [],
             pageHtml: '',
             column: [],
-            diaLogFlag: false,
+            diaLogSaveFlag: false,
+            diaLogViewFlag: false,
+            diaLogViewForm: {},
             diaLogTitle: '',
             dialogConfig: [],
         }
@@ -177,9 +232,17 @@ export default {
                 data: [],
                 success: (res) => {
                     if(res.data.code === 1) {
-                        this.tableData = res.data.data.lists;
+
                         this.pageHtml = res.data.data.page_html;
                         this.column = res.data.data.column;
+                        this.tableData = res.data.data.lists;
+
+                        if(this.tableData.length) {
+                            for (let key = 0; key < this.tableData.length; key++) {
+                                this.tableData[key].editShow = (this.dialog.length > 0) ? 1 : 0;    //行编辑按钮显性
+                                this.tableData[key].viewShow = (this.rowView.viewEnable) ? 1 : 0;   //行查看按钮显性
+                            }
+                        }
                     }else {
                         this.$notify.error({message:res.data.info});
                     }
@@ -254,10 +317,10 @@ export default {
             this.tableSelection = val;
         },
 
-        //模态框打开
-        openDiaLog(scope) {
+        //保存模态框打开
+        openSaveDiaLog(scope) {
 
-            this.diaLogFlag = true;
+            this.diaLogSaveFlag = true;
 
             //Init
             this.initDialog();
@@ -281,6 +344,14 @@ export default {
             }
         },
 
+        //查看模态框打开
+        openViewDialog(scope) {
+
+            this.diaLogViewForm = scope.row;
+            this.diaLogViewFlag = true;
+            this.$emit('openViewDialog', scope.row);
+        },
+
         //模态框保存
         saveDiaLog() {
 
@@ -302,7 +373,7 @@ export default {
                             message: res.data.info,
                             type: 'success'
                         });
-                        this.diaLogFlag = false;
+                        this.diaLogSaveFlag = false;
                         if(!form['id']) {
                             this.loadList(1);
                         }else {

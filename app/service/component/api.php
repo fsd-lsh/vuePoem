@@ -57,22 +57,31 @@ class api
      * Time: 16:35
      * Desc: 列表加载
      */
-    public function lists($url = '', $page_size = 15, $data_callback) {
+    public function lists($url = '', $page_size = 15, $data_callback = NULL) {
 
-        $word_lists = m($this->table)
+        $load = m($this->table)
             ->where([
                 'status' => 1,
             ])
             ->order('id desc');
 
-        $page_info = \poem\more\page::run($word_lists, $url, $page_size);
+        $page_info = \poem\more\page::run($load, $url, $page_size);
         $lists = $page_info['list'];
+
+        foreach ($lists as $key => $item) {
+            if($item['ctime']) {
+                $lists[$key]['ctime'] = date('Y-m-d H:i:s', $item['ctime']);
+            }
+            if($item['utime']) {
+                $lists[$key]['utime'] = date('Y-m-d H:i:s', $item['utime']);
+            }
+        }
 
         if($data_callback) {
             $lists = $data_callback($lists);
         }
 
-        if($word_lists) {
+        if($load) {
             ajax(1, '加载完成', [
                 'lists' => $lists,
                 'page_html' => $page_info['html'],

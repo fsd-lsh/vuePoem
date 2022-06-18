@@ -13,7 +13,8 @@
             "clear": "Clear cache",
             "switchLanguage": "Switch language",
             "add": "Add",
-            "edit": "Edit"
+            "edit": "Edit",
+            "view": "View"
         },
         "dash": {
             "dataStatistics": "Data Statistics",

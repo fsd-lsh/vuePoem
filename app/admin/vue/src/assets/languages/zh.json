@@ -13,7 +13,8 @@
             "clear": "清理缓存",
             "switchLanguage": "切换语言",
             "add": "添加",
-            "edit": "编辑"
+            "edit": "编辑",
+            "view": "查看"
         },
         "dash": {
             "dataStatistics": "数据统计",
