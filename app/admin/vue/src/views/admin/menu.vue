@@ -497,29 +497,32 @@
             //列表行颜色切换
             tableStyle({row, column, rowIndex, columnIndex}) {
 
-                if(column.label === '状态') {
-                    if(row.status_mean === '启用') {
+                //状态
+                if(column.label === this.$t('admin.menu.status')) {
+                    if(row.status_mean === this.$t('admin.menu.open')) {
                         return 'background:#009688; color:#fff!important;';
                     }
-                    if(row.status_mean === '停用') {
+                    if(row.status_mean === this.$t('admin.menu.stop')) {
                         return 'background:#FFB800; color:#fff!important;';
                     }
                 }
 
-                if(column.label === '锁') {
-                    if(row.lock === '无锁') {
+                //锁
+                if(column.label === this.$t('admin.menu.lock')) {
+                    if(row.lock === this.$t('admin.menu.unlock')) {
                         return 'background:#009688; color:#fff!important;';
                     }
-                    if(row.lock === '有锁') {
+                    if(row.lock === this.$t('admin.menu.locked')) {
                         return 'background:#666; color:#fff!important;';
                     }
                 }
 
-                if(column.label === '显性') {
-                    if(row.show === '显示') {
+                //显性
+                if(column.label === this.$t('admin.menu.display')) {
+                    if(row.show === this.$t('admin.menu.show')) {
                         return 'background:#009688; color:#fff!important;';
                     }
-                    if(row.show === '隐藏') {
+                    if(row.show === this.$t('admin.menu.hide')) {
                         return 'background:#666; color:#fff!important;';
                     }
                 }

@@ -352,7 +352,8 @@
             //列表行颜色切换
             tableStyle({row, column, rowIndex, columnIndex}) {
 
-                if(column.label === '状态') {
+                //状态
+                if(column.label === this.$t('admin.user.status')) {
 
                     switch (row.status) {
                         case '0': { return 'background:#e4393c; color:#fff!important;'; }

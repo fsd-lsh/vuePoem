@@ -90,7 +90,8 @@
             //列表行颜色切换
             tableStyle({row, column, rowIndex, columnIndex}) {
 
-                if(column.label === '等级') {
+                //等级
+                if(column.label === this.$t('admin.sysLog.level')) {
 
                     switch (row.level) {
                         case '0': { return 'background:#009688; color:#fff!important;'; }

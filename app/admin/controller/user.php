@@ -21,7 +21,7 @@ class user extends component\login {
     /**
      * Func: index
      * User: Force
-     * Date: 2021/4/7
+     * Date: 2021/4/7, Update:2022/8/11
      * Time: 20:42
      * Desc: 用户管理
      */
@@ -168,7 +168,7 @@ class user extends component\login {
                         $lists[$key]['roles'] = $item['roles'];
 
                         //状态含义
-                        $lists[$key]['status_mean'] = config('user_status')[$item['status']];
+                        $lists[$key]['status_mean'] = trans('admin.user.status');
 
                         //创建时间
                         $lists[$key]['ctime'] = date('Y-m-d H:i:s', $item['ctime']);

@@ -21,7 +21,7 @@ class roles extends component\login {
     /**
      * Func: index
      * User: Force
-     * Date: 2021/4/7
+     * Date: 2021/4/7, Update:2022/8/11
      * Time: 20:47
      * Desc: 角色设置
      */
@@ -201,7 +201,7 @@ class roles extends component\login {
                         'name' => $item['name'],
                         'menu_ids' => $menu_ids,
                         'status' => $item['status'],
-                        'status_mean' => config('role_status')[$item['status']],
+                        'status_mean' => trans('admin.roles.status'),
                         'ctime' => date('Y-m-d H:i:s', $item['ctime']),
                         'utime' => date('Y-m-d H:i:s', $item['utime']),
                     ];

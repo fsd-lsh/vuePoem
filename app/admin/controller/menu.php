@@ -21,7 +21,7 @@ class menu extends component\login {
     /**
      * Func: index
      * User: Force
-     * Date: 2021/4/4
+     * Date: 2021/4/4, Update:2022/8/11
      * Time: 20:30
      * Desc: 菜单设置
      */
@@ -214,9 +214,9 @@ class menu extends component\login {
                             'target' => $item['target'],
                             'sort' => $item['sort'],
                             'status' => $item['status'],
-                            'status_mean' => config('menu_status')[$item['status']],
-                            'lock' => ($item['lock'] == 1) ? '有锁' : '无锁',
-                            'show' => ($item['show'] == 1) ? '显示' : '隐藏',
+                            'status_mean' => ($item['status'] == 1) ? trans('admin.menu.open') : trans('admin.menu.stop'),
+                            'lock' => ($item['lock'] == 1) ? trans('admin.menu.locked') : trans('admin.menu.unlock'),
+                            'show' => ($item['show'] == 1) ? trans('admin.menu.show') : trans('admin.menu.hide'),
                             'remark' => $item['remark'],
                             'ctime' => $item['ctime'] ? date('Y-m-d H:i:s', $item['ctime']) : '',
                             'utime' => $item['utime'] ? date('Y-m-d H:i:s', $item['utime']) : '',

@@ -61,7 +61,7 @@ class api
 
         $load = m($this->table)
             ->where([
-                'status' => 1,
+                'status' => ['!=', 0],
             ])
             ->order('id desc');
 
