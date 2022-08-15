@@ -21,7 +21,7 @@ class log extends component\login {
     }
 
     /**
-     * Func: index
+     * Func: fwLog
      * User: Force
      * Date: 2021/9/1
      * Time: 20:46
@@ -107,7 +107,7 @@ class log extends component\login {
     }
 
     /**
-     * Func: sys_log
+     * Func: sysLog
      * User: Force
      * Date: 2021/9/1
      * Time: 20:53

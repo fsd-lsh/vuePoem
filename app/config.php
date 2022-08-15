@@ -2,6 +2,9 @@
 
 return [
 
+    //语言包路径
+    'lang_path' => realpath('./../app/admin/vue/src/assets/languages'),
+
     //状态
     'status' => [
         0 => '删除',

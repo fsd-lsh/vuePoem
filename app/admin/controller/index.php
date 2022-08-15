@@ -30,9 +30,5 @@ class index extends component\login {
                 parent::sign_out();
             },
         ]);
-
-        //def
-        echo 'API running.....';
-        exit;
     }
 }

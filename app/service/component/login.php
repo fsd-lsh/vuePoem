@@ -30,7 +30,8 @@ class login {
             }
 
             if(!$this->check_login()) {
-                ajax(955, trans('admin.signIn.noSignIn'), $url);
+                $info = trans('admin.signIn.noSignIn');
+                ajax(955, $info ? : 'Not logged in', $url);
             }
 
             $this->authentication();

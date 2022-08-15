@@ -439,8 +439,6 @@ class menu extends component\login {
             //反射
             $controller = str_replace('.php', '', $controller);
             $reflection = new \ReflectionClass("admin\\controller\\{$controller}");
-
-            //方法
             $method = $reflection->getMethods(\ReflectionMethod::IS_PUBLIC);
             $method = json_decode(json_encode($method),true);
 

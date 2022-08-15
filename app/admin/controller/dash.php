@@ -141,7 +141,7 @@ class dash extends component\login {
     }
 
     /**
-     * Func: user_info
+     * Func: userInfo
      * User: Force
      * Date: 2021/9/20
      * Time: 16:58

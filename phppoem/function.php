@@ -117,8 +117,8 @@ function co() {
  * @return void echo json
  */
 function ajax($code, $info = '', $data = '') {
+    header('Content-Type: application/json');
     $re = ['code' => $code, 'info' => $info];
-
     if ($data !== '') {
         $re['data'] = $data;
     }
