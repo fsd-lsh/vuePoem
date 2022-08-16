@@ -301,7 +301,7 @@ class menu extends component\login {
             ],
             'logoInfo' => [
                 'title' => 'VuePoem',
-                'image' => '',
+                //'image' => '',
             ],
             'menuInfo' => $this->get_menu_list(),
         ];

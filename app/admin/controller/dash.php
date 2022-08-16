@@ -77,7 +77,7 @@ class dash extends component\login {
                 $admin_total = [];
                 $admin_config = config('user_status');
                 if(is_array($admin_config) && !empty($admin_config)) {
-                    foreach ($admin_config as $status => $mean) {
+                    foreach ($admin_config as $status) {
                         $admin_total[$status] = m('sys_admin')
                             ->field('count(1) as total')
                             ->where([
@@ -91,7 +91,7 @@ class dash extends component\login {
                 $role_total = [];
                 $role_config = config('role_status');
                 if(is_array($role_config) && !empty($role_config)) {
-                    foreach ($role_config as $status => $mean) {
+                    foreach ($role_config as $status) {
                         $role_total[$status] = m('sys_roles')
                             ->field('count(1) as total')
                             ->where([
@@ -105,7 +105,7 @@ class dash extends component\login {
                 $menu_total = [];
                 $menu_config = config('menu_status');
                 if(is_array($menu_config) && !empty($menu_config)) {
-                    foreach ($menu_config as $status => $mean) {
+                    foreach ($menu_config as $status) {
                         $menu_total[$status] = m('sys_menu')
                             ->field('count(1) as total')
                             ->where([
@@ -119,7 +119,7 @@ class dash extends component\login {
                 $log_total = [];
                 $log_config = config('log_level');
                 if(is_array($log_config) && !empty($log_config)) {
-                    foreach ($log_config as $level => $mean) {
+                    foreach ($log_config as $level) {
                         $log_total[$level] = m('sys_log')
                             ->field('count(1) as total')
                             ->where([

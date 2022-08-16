@@ -44,6 +44,7 @@ axios.get('/admin/menu/load?lang='+lang).then(res => {
     }
 
     let menu = res.data.data.menuInfo;
+    let logoInfo = res.data.data.logoInfo;
     let store = JSON.parse(window.sessionStorage.getItem('store'));
     store.menuTree.menuInfo = menu;
     window.sessionStorage.setItem('store', JSON.stringify(store));
@@ -58,7 +59,7 @@ axios.get('/admin/menu/load?lang='+lang).then(res => {
                             name: menu[index].child[sub_index].child[sub_index2].name,
                             component: resolve => require(['@/views/admin/' + menu[index].child[sub_index].child[sub_index2].name], resolve),
                             meta: {
-                                title: menu[index].child[sub_index].child[sub_index2].title + title,
+                                title: menu[index].child[sub_index].child[sub_index2].title + ' - ' + logoInfo.title,
                             },
                         });
                     }
@@ -68,7 +69,7 @@ axios.get('/admin/menu/load?lang='+lang).then(res => {
                         name: menu[index].child[sub_index].name,
                         component: resolve => require(['@/views/admin/' + menu[index].child[sub_index].name], resolve),
                         meta: {
-                            title: menu[index].child[sub_index].title + title,
+                            title: menu[index].child[sub_index].title + ' - ' + logoInfo.title,
                         },
                     });
                 }
