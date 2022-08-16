@@ -17,7 +17,7 @@
                         multiple
                         filterable
                         style="width:100%"
-                        placeholder="请选择">
+                        :placeholder="$t('admin.public.selectMenu')">
                         <el-option
                             v-for="item in rolesConfig"
                             :key="item.id"

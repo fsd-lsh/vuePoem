@@ -5,6 +5,9 @@ return [
     //语言包路径
     'lang_path' => realpath('./../app/admin/vue/src/assets/languages'),
 
+    //fontawesome字体图标库路径
+    'fontawesome_path' => realpath('./../public/static/other/fontawesome.json'),
+
     //状态
     'status' => [
         0 => '删除',

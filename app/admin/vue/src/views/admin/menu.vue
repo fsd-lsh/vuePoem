@@ -31,7 +31,7 @@
                         <el-button
                             size="mini"
                             type="primary"
-                            title="编辑"
+                            :title="$t('admin.menu.edit')"
                             @click="editMenuNow(scope)">
                             <i class="fa fa-pencil">&nbsp;{{$t('admin.menu.edit')}}</i>
                         </el-button>
@@ -39,8 +39,8 @@
                             v-if="scope.row.status === '1'"
                             size="mini"
                             type="warning"
-                            title="停用"
-                            :disabled="scope.row.lock === '有锁'"
+                            :title="$t('admin.menu.stop')"
+                            :disabled="scope.row.lock === $t('admin.menu.locked')"
                             @click="menuChange(2, scope)">
                             <i class="fa fa-toggle-on">&nbsp;{{$t('admin.menu.stop')}}</i>
                         </el-button>
@@ -48,16 +48,16 @@
                             v-if="scope.row.status === '2'"
                             size="mini"
                             type="success"
-                            title="启用"
-                            :disabled="scope.row.lock === '有锁'"
+                            :title="$t('admin.menu.open')"
+                            :disabled="scope.row.lock === $t('admin.menu.locked')"
                             @click="menuChange(1, scope)">
                             <i class="fa fa-user-times">&nbsp;{{$t('admin.menu.open')}}</i>
                         </el-button>
                         <el-button
                             size="mini"
                             type="danger"
-                            title="删除"
-                            :disabled="scope.row.lock === '有锁'"
+                            :title="$t('admin.menu.del')"
+                            :disabled="scope.row.lock === $t('admin.menu.locked')"
                             @click="menuChange(0, scope)">
                             <i class="fa fa-user-times">&nbsp;{{$t('admin.menu.del')}}</i>
                         </el-button>
@@ -138,7 +138,7 @@
                         v-model="form.href"
                         style="width:100%"
                         filterable
-                        placeholder="请选择菜单链接">
+                        :placeholder="$t('admin.public.selectMenu')">
                         <el-option-group
                             v-for="(methods, func) in linkConfig"
                             :key="func"
@@ -157,7 +157,7 @@
                         v-model="form.pid"
                         filterable
                         style="width:100%"
-                        placeholder="请选择父级菜单，为空是一级菜单">
+                        :placeholder="$t('admin.public.selectMenu')">
                         <el-option
                             v-for="(item, key) in menuConfig"
                             :key="key"
@@ -174,7 +174,7 @@
                         filterable
                         clearable
                         style="width:100%"
-                        placeholder="请选择菜单图标，仅二级菜单有效">
+                        :placeholder="$t('admin.public.selectMenu')">
                         <el-option
                             v-for="(item, key) in fontawesomeConfig"
                             :key="key"
@@ -201,7 +201,7 @@
                         v-model="form.target"
                         filterable
                         style="width:100%"
-                        placeholder="请选择打开方式">
+                        :placeholder="$t('admin.public.selectMenu')">
                         <el-option
                             v-for="(item, key) in openWayConfig"
                             :key="item"
@@ -239,7 +239,7 @@
                         v-model="editForm.href"
                         style="width:100%"
                         filterable
-                        placeholder="请选择菜单链接">
+                        :placeholder="$t('admin.public.selectMenu')">
                         <el-option-group
                             v-for="(methods, func) in linkConfig"
                             :key="func"
@@ -258,7 +258,7 @@
                         v-model="editForm.pid"
                         filterable
                         style="width:100%"
-                        placeholder="请选择父级菜单，为空是一级菜单">
+                        :placeholder="$t('admin.public.selectMenu')">
                         <el-option
                             v-for="(item, key) in menuConfig"
                             :key="key"
@@ -275,7 +275,7 @@
                         filterable
                         clearable
                         style="width:100%"
-                        placeholder="请选择菜单图标，仅二级菜单有效">
+                        :placeholder="$t('admin.public.selectMenu')">
                         <el-option
                             v-for="(item, key) in fontawesomeConfig"
                             :key="key"
@@ -302,7 +302,7 @@
                         v-model="editForm.target"
                         filterable
                         style="width:100%"
-                        placeholder="请选择打开方式">
+                        :placeholder="$t('admin.public.selectMenu')">
                         <el-option
                             v-for="(item, key) in openWayConfig"
                             :key="item"
@@ -421,7 +421,7 @@
                     success: (res) => {
                         if(res.data.code === 1) {
                             this.$notify({
-                                title: '成功',
+                                title: this.$t('admin.public.success'),
                                 message: res.data.info,
                                 type: 'success'
                             });
@@ -442,7 +442,7 @@
                     success: (res) => {
                         if(res.data.code === 1) {
                             this.$notify({
-                                title: '成功',
+                                title: this.$t('admin.public.success'),
                                 message: res.data.info,
                                 type: 'success'
                             });
@@ -460,7 +460,7 @@
 
                 if(s === undefined) {
                     if(this.tableSelection.length === 0) {
-                        this.$notify({message:'批量操作前请先勾选记录', type:'warning'});
+                        this.$notify({message:this.$t('admin.public.checkRec'), type:'warning'});
                         return false;
                     }else {
                         for (let key in this.tableSelection) {
@@ -472,7 +472,7 @@
                 }
 
                 if(ids.length === 0) {
-                    this.$message({ message:'操作前请先勾选记录', type:'warning' });
+                    this.$message({ message:this.$t('admin.public.checkRec'), type:'warning' });
                     return false;
                 }
 
@@ -483,7 +483,7 @@
                     success: (res) => {
                         if(res.data.code === 1) {
                             this.$notify({
-                                title: '成功',
+                                title: this.$t('admin.public.success'),
                                 message: res.data.info,
                                 type: 'success'
                             });

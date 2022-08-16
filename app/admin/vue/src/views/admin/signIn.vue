@@ -42,11 +42,11 @@ export default {
         signIn() {
 
             if(!this.form.name) {
-                this.$notify({ message:'账号不能为空', type:'warning'});
+                this.$notify({ message:this.$t('admin.user.enterAcc'), type:'warning'});
                 return false;
             }
             if(!this.form.pwd) {
-                this.$notify({ message:'密码不能为空', type:'warning'});
+                this.$notify({ message:this.$t('admin.user.enterPwd'), type:'warning'});
                 return false;
             }
 

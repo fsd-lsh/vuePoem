@@ -74,13 +74,7 @@ class menu extends component\login {
 
                 if($menu_id) {
 
-                    $path = __DIR__ . '/../../../app/admin/vue/src/assets/languages';
-                    $path = realpath($path);
-                    $lang_json = file_get_contents($path . '/' . $_GET['lang'] . '.json');
-                    $lang_json = json_decode($lang_json, true);
-                    $lang_json['admin']['userMenu']['menu_id_'.$menu_id] = $data['title'];
-                    $lang_json = json_encode($lang_json);
-                    file_put_contents($path . '/' . $_GET['lang'] . '.json', $lang_json);
+                    lang_edit('add', $menu_id, [$_GET['lang'] => $data['title']]);
 
                     ajax(1, '添加菜单成功');
                 }else {
@@ -166,6 +160,9 @@ class menu extends component\login {
                     ->update($data);
 
                 if($result) {
+
+                    lang_edit('add', $id, [$_GET['lang'] => $data['title']]);
+
                     ajax(1, '修改菜单成功');
                 }else {
                     ajax(0, '修改菜单失败');
@@ -184,7 +181,7 @@ class menu extends component\login {
                     ->find();
 
                 if($result) {
-                    $result['title'] = trans('admin.userMenu.menu_id_2.menu_id_'.$result['id']);
+                    $result['title'] = trans('admin.userMenu.menu_id_'.$result['id']);
                     ajax(1, '加载菜单完成', $result);
                 }else {
                     ajax(0, '加载菜单失败');
@@ -265,7 +262,7 @@ class menu extends component\login {
                 }
 
                 //加载字体图标
-                $fontawesome = file_get_contents(realpath(__DIR__.'/../../../public/static/other/fontawesome.json'));
+                $fontawesome = file_get_contents(config('fontawesome_path'));
                 $fontawesome = json_decode($fontawesome, true);
                 if(is_array($fontawesome) && !empty($fontawesome)) {
                     $fontawesome = array_keys($fontawesome);
@@ -420,8 +417,6 @@ class menu extends component\login {
 
         //扫描控制器
         $controllers = scandir($admin_path);
-
-        //过滤
         unset(
             $controllers[array_search('.', $controllers)],
             $controllers[array_search('..', $controllers)],

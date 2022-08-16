@@ -9,12 +9,19 @@
             "modAccount": "修改账户",
             "signOut": "退出登录",
             "fullScreen": "全屏展开",
+            "fullScreenErr": "全屏展开失败",
             "exitFullScreen": "全屏收起",
             "clear": "清理缓存",
             "switchLanguage": "切换语言",
             "add": "添加",
             "edit": "编辑",
-            "view": "查看"
+            "view": "查看",
+            "success": "成功",
+            "error": "失败",
+            "warning": "警告",
+            "checkRec": "操作前请先勾选记录",
+            "selectMenu": "请选择",
+            "themeNotFound": "主题不存在"
         },
         "dash": {
             "dataStatistics": "数据统计",
@@ -170,7 +177,10 @@
             "selRoles": "请选择角色",
             "modUserOk": "修改用户信息成功",
             "modUserErr": "修改用户信息失败",
-            "loadOk": "列表加载完成"
+            "loadOk": "列表加载完成",
+            "enterAcc": "请输入姓名 / 账号",
+            "enterPwd": "请输入密码",
+            "reEnterPwd": "请重新输入密码"
         },
         "userInfo": {
             "account": "账号",

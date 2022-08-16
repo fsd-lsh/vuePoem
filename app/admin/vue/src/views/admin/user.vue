@@ -135,7 +135,7 @@
                         multiple
                         filterable
                         style="width:100%"
-                        placeholder="请选择">
+                        :placeholder="$t('admin.public.selectMenu')">
                         <el-option
                             v-for="item in rolesConfig"
                             :key="item.id"
@@ -170,7 +170,7 @@
                         multiple
                         filterable
                         style="width:100%"
-                        placeholder="请选择">
+                        :placeholder="$t('admin.public.selectMenu')">
                         <el-option
                             v-for="item in rolesConfig"
                             :key="item.id"
@@ -254,11 +254,11 @@
             //创建用户
             createUserNow() {
 
-                if(!this.form.name) { this.$notify({title:'警告', message:'请输入姓名 / 账号', type:'warning' }); return false; }
-                if(!this.form.password) { this.$notify({title:'警告', message:'请输入密码', type:'warning' }); return false; }
-                if(!this.form.rePassword) { this.$notify({title:'警告', message:'请重新输入密码', type:'warning' }); return false; }
-                if(this.form.password !== this.form.rePassword) { this.$notify({title:'警告', message:'两次密码输入不一致', type:'warning' }); return false; }
-                if(this.form.roles.length === 0) { this.$notify({title:'警告', message:'请选择角色', type:'warning' }); return false; }
+                if(!this.form.name) { this.$notify({title:this.$t('admin.public.warning'), message:this.$t('admin.user.enterAcc'), type:'warning' }); return false; }
+                if(!this.form.password) { this.$notify({title:this.$t('admin.public.warning'), message:this.$t('admin.user.enterPwd'), type:'warning' }); return false; }
+                if(!this.form.rePassword) { this.$notify({title:this.$t('admin.public.warning'), message:this.$t('admin.user.reEnterPwd'), type:'warning' }); return false; }
+                if(this.form.password !== this.form.rePassword) { this.$notify({title:this.$t('admin.public.warning'), message:this.$t('admin.user.pwdErr'), type:'warning' }); return false; }
+                if(this.form.roles.length === 0) { this.$notify({title:this.$t('admin.public.warning'), message:this.$t('admin.user.selRoles'), type:'warning' }); return false; }
 
                 this.poemRequest({
                     type: 'post',
@@ -267,7 +267,7 @@
                     success: (res) => {
                         if(res.data.code === 1) {
                             this.$notify({
-                                title: '成功',
+                                title: this.$t('admin.public.success'),
                                 message: res.data.info,
                                 type: 'success'
                             });
@@ -288,8 +288,8 @@
             //保存编辑用户
             saveUser() {
 
-                if(!this.editForm.name) { this.$notify({title:'警告', message:'请输入姓名 / 账号', type:'warning' }); return false; }
-                if(this.editForm.roles.length === 0) { this.$notify({title:'警告', message:'请选择角色', type:'warning' }); return false; }
+                if(!this.editForm.name) { this.$notify({title:this.$t('admin.public.warning'), message:this.$t('admin.user.enterAcc'), type:'warning' }); return false; }
+                if(this.editForm.roles.length === 0) { this.$notify({title:this.$t('admin.public.warning'), message:this.$t('admin.user.selRoles'), type:'warning' }); return false; }
 
                 this.poemRequest({
                     type: 'post',
@@ -298,7 +298,7 @@
                     success: (res) => {
                         if(res.data.code === 1) {
                             this.$notify({
-                                title: '成功',
+                                title: $t('admin.public.success'),
                                 message: res.data.info,
                                 type: 'success'
                             });
@@ -316,7 +316,7 @@
 
                 if(s === undefined) {
                     if(this.tableSelection.length === 0) {
-                        this.$notify({message:'批量操作前请先勾选记录', type:'warning'});
+                        this.$notify({message:$t('admin.public.checkRec'), type:'warning'});
                         return false;
                     }else {
                         for (let key in this.tableSelection) {
@@ -328,7 +328,7 @@
                 }
 
                 if(ids.length === 0) {
-                    this.$message({ message:'操作前请先勾选记录', type:'warning' });
+                    this.$message({ message:$t('admin.public.checkRec'), type:'warning' });
                     return false;
                 }
                 this.poemRequest({
@@ -338,7 +338,7 @@
                     success: (res) => {
                         if(res.data.code === 1) {
                             this.$notify({
-                                title: '成功',
+                                title: $t('admin.public.success'),
                                 message: res.data.info,
                                 type: 'success'
                             });

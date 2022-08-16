@@ -322,7 +322,7 @@ export default {
                             this.iFullscreen = true;
                         }
                     } else {
-                        this.$notify({message: '浏览器当前不能全屏', type: 'warning'});
+                        this.$notify({message:this.$t('admin.public.fullScreenErr'), type:'warning'});
                     }
                     break;
                 }
@@ -425,7 +425,7 @@ export default {
         themeHandleClose(themeClassName) {
 
             if(!this.in_array(themeClassName, this.themeList)) {
-                this.$notify({ message:'主题不存在', type:'error'});
+                this.$notify({ message:this.$t('admin.public.themeNotFound'), type:'error'});
                 return false;
             }
             window.localStorage.setItem('sys-theme', themeClassName);

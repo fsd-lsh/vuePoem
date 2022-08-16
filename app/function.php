@@ -9,7 +9,7 @@ if(!function_exists('sys_api')) {
      * User: Force
      * Date: 2021/4/4
      * Time: 15:33
-     * Desc: 常规接口助手
+     * Desc: RPC接口助手
      */
     function sys_api($table = NULL) {
 
@@ -33,6 +33,11 @@ if(!function_exists('sys_api')) {
             //执行
             $table[$api]();
             exit;
+        }else {
+
+            //def
+            echo 'API running.....';
+            exit;
         }
     }
 }
@@ -44,7 +49,7 @@ if(!function_exists('restful')) {
      * User: Force
      * Date: 2022/5/5
      * Time: 18:24
-     * Desc: restful助手
+     * Desc: restful接口助手
      */
     function restful($table = NULL) {
 
@@ -182,7 +187,7 @@ if(!function_exists('func_comment')) {
         preg_match_all('/' . $line_name . ':(.*?)\n/',$tmp,$tmp);
 
         $tmp = trim($tmp[1][0]);
-        $tmp = $tmp != '' ? $tmp : '无';
+        $tmp = $tmp != '' ? $tmp : 'null';
 
         return $tmp;
     }
@@ -198,6 +203,10 @@ if(!function_exists('fetch_lang')) {
      * Desc: 获取语言
      */
     function trans($str = NULL) {
+
+        if(!$_GET['lang']) {
+            $_GET['lang'] = 'en';
+        }
 
         if(!empty(SYS_LANG) && is_array(SYS_LANG)) {
 
@@ -217,11 +226,78 @@ if(!function_exists('fetch_lang')) {
         $lang_json = file_get_contents($path . '/' . $_GET['lang'] . '.json');
 
         if(empty($lang_json) && !IS_CLI) {
-            ajax(0, '语言不支持');
+            ajax(0, 'language not support');
         }
 
         $lang_json = json_decode($lang_json, true);
 
         return $lang_json;
+    }
+}
+
+if(!function_exists('lang_edit')) {
+
+    /**
+     * Func: lang_edit
+     * User: Force
+     * Date: 2022/8/15
+     * Time: 17:11
+     * Desc: 语言包编辑
+     */
+    function lang_edit($mode = NULL, $id = NULL, $menu_name = []) {
+
+        if($mode != 'add' && $mode != 'del' && empty($id)) {
+            return false;
+        }
+        if($mode == 'add') {
+            if(empty($menu_name)) {
+                return false;
+            }
+        }
+        if(in_array($id, [1,2,3,4,5,6,7,8,9,11])) {
+            return false;
+        }
+
+        $lang_path = config('lang_path');
+        $file_list = scandir($lang_path);
+        unset(
+            $file_list[array_search('.', $file_list)],
+            $file_list[array_search('..', $file_list)],
+        );
+        if(!is_array($file_list) || empty($file_list)) {
+            return false;
+        }
+
+        $lang = array_keys($menu_name);
+
+        foreach ($file_list as $item) {
+
+            $item = str_replace('.json', '', $item);
+
+            if(!in_array($item, $lang)) {
+                continue;
+            }
+
+            $menu = file_get_contents($lang_path.'/'.$item.'.json');
+            $menu = json_decode($menu, true);
+
+            switch ($mode) {
+                case 'add': {
+                    if($menu_name[$item]) {
+                        $menu['admin']['userMenu']['menu_id_'.$id] = $menu_name[$item];
+                    }
+                    break;
+                }
+                case 'del': {
+                    unset($menu['admin']['userMenu']['menu_id_'.$id]);
+                    break;
+                }
+            }
+
+            $menu = json_encode($menu, JSON_UNESCAPED_UNICODE + JSON_PRETTY_PRINT);
+            file_put_contents($lang_path.'/'.$item.'.json', $menu);
+        }
+
+        return true;
     }
 }

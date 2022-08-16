@@ -81,7 +81,7 @@ export default {
         parseGET() {
 
             let url = window.document.location.href.toString();   //当前完整url
-            let u = url.split("?");                               //以？为分隔符把url转换成字符串数组
+            let u = url.split("?");                      //以？为分隔符把url转换成字符串数组
 
             if(typeof(u[1]) == "string"){
 

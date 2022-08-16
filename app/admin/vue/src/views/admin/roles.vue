@@ -259,10 +259,16 @@
             //创建用户
             createRoleNow() {
 
-                if(!this.form.name) { this.$notify({title:'警告', message:'请输入姓名 / 账号', type:'warning' }); return false; }
+                if(!this.form.name) {
+                    this.$notify({title:this.$t('admin.public.warning'), message:this.$t('admin.roles.enterName'), type:'warning' });
+                    return false;
+                }
 
                 this.form.menu_ids = this.$refs.newTree.getCheckedKeys();
-                if(this.form.menu_ids.length === 0) { this.$notify({title:'警告', message:'请选择角色菜单权限', type:'warning' }); return false; }
+                if(this.form.menu_ids.length === 0) {
+                    this.$notify({title:this.$t('admin.public.warning'), message:this.$t('admin.roles.selectMenu'), type:'warning' });
+                    return false;
+                }
 
                 this.poemRequest({
                     type: 'post',
@@ -271,7 +277,7 @@
                     success: (res) => {
                         if(res.data.code === 1) {
                             this.$notify({
-                                title: '成功',
+                                title: this.$t('admin.public.success'),
                                 message: res.data.info,
                                 type: 'success'
                             });
@@ -285,7 +291,10 @@
             //保存角色
             saveRole() {
 
-                if(!this.editForm.name) { this.$notify({title:'警告', message:'请输入姓名 / 账号', type:'warning' }); return false; }
+                if(!this.editForm.name) {
+                    this.$notify({title:this.$t('admin.public.warning'), message:this.$t('admin.roles.enterName'), type:'warning' });
+                    return false;
+                }
 
                 this.editForm.menu_ids = this.$refs.editTree.getCheckedNodes(false, 2);
 
@@ -296,7 +305,7 @@
                 this.editForm.menu_ids = temp_ids;
 
                 if(this.editForm.menu_ids.length === 0) {
-                    this.$notify({title:'警告', message:'请选择角色菜单权限', type:'warning' });
+                    this.$notify({title:this.$t('admin.public.warning'), message:$t('admin.roles.selectMenu'), type:'warning' });
                     return false;
                 }
 
@@ -307,7 +316,7 @@
                     success: (res) => {
                         if(res.data.code === 1) {
                             this.$notify({
-                                title: '成功',
+                                title: this.$t('admin.public.success'),
                                 message: res.data.info,
                                 type: 'success'
                             });
@@ -325,7 +334,7 @@
 
                 if(s === undefined) {
                     if(this.tableSelection.length === 0) {
-                        this.$notify({message:'批量操作前请先勾选记录', type:'warning'});
+                        this.$notify({message:this.$t('admin.public.checkRec'), type:'warning'});
                         return false;
                     }else {
                         for (let key in this.tableSelection) {
@@ -337,7 +346,7 @@
                 }
 
                 if(ids.length === 0) {
-                    this.$message({ message:'操作前请先勾选记录', type:'warning' });
+                    this.$message({ message:this.$t('admin.public.checkRec'), type:'warning' });
                     return false;
                 }
 
@@ -348,7 +357,7 @@
                     success: (res) => {
                         if(res.data.code === 1) {
                             this.$notify({
-                                title: '成功',
+                                title: this.$t('admin.public.success'),
                                 message: res.data.info,
                                 type: 'success'
                             });

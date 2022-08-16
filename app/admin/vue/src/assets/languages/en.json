@@ -9,12 +9,19 @@
             "modAccount": "Modify the account",
             "signOut": "Sign out",
             "fullScreen": "Full screen",
+            "fullScreenErr": "Full screen err",
             "exitFullScreen": "Exit full screen",
             "clear": "Clear cache",
             "switchLanguage": "Switch language",
             "add": "Add",
             "edit": "Edit",
-            "view": "View"
+            "view": "View",
+            "success": "Success",
+            "error": "Error",
+            "warning": "Warning",
+            "checkRec": "Select Record before you perform this operation",
+            "selectMenu": "Please select",
+            "themeNotFound": "Theme not found"
         },
         "dash": {
             "dataStatistics": "Data Statistics",
@@ -170,7 +177,10 @@
             "selRoles": "Please select a role",
             "modUserOk": "The user information is modified successfully",
             "modUserErr": "Failed to modify user information",
-            "loadOk": "List loaded"
+            "loadOk": "List loaded",
+            "enterAcc": "Enter account",
+            "enterPwd": "Enter password",
+            "reEnterPwd": "Re-enter password"
         },
         "userInfo": {
             "account": "Account",
