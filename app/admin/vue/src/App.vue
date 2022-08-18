@@ -21,9 +21,7 @@ export default {
     mixins: [helper],
 
     data() {
-        return {
-
-        }
+        return {}
     },
 
     beforeCreate() {
@@ -55,9 +53,7 @@ export default {
         )
     },
 
-    methods: {
-
-    },
+    methods: {},
 }
 </script>
 

@@ -76,10 +76,7 @@ export default {
                         this.$notify({message:res.data.info, type:'success'});
 
                         this.$router.push(res.data.data.url);
-
-                        setTimeout(() => {
-                            window.location.reload();
-                        }, 100);
+                        this.$router.go(0);
                     }else {
                         this.$notify({ message:res.data.info, type:'warning'});
                     }

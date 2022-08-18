@@ -117,7 +117,7 @@
             "loadOk": "Loading list completed"
         },
         "signIn": {
-            "title": "VuePoem Background login",
+            "title": "VuePoem Background Login",
             "signName": "Switch the language",
             "account": "Account",
             "password": "Password",
