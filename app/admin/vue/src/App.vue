@@ -5,7 +5,10 @@
         <el-row>
 
             <!--左侧部分（logo、二级菜单）-->
-            <el-col :span="3" id="left" v-if="this.$store.state.isSignIn">
+            <el-col
+                :span="this.$store.state.isSignIn ? 3 : 0"
+                v-if="this.$store.state.isSignIn"
+                id="left">
 
                 <!--logo-->
                 <div class="logo">
@@ -107,7 +110,7 @@
 
                 <!--一级菜单-->
                 <el-menu
-                    v-if="this.$store.state.isSignIn"
+                    v-show="this.$store.state.isSignIn"
                     :default-active="activeIndex"
                     class="menu-level-1"
                     mode="horizontal"
@@ -632,7 +635,7 @@ export default {
                 }
 
                 > div:nth-child(2) {
-                    padding: 1%;
+
                 }
 
                 .menu-level-1 {

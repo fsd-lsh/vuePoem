@@ -2,13 +2,13 @@
 
 namespace admin\controller;
 
-use service\component;
+use service\middleware;
 
 /**
  * Class system
  * @package admin\controller
  */
-class system extends component\login {
+class system extends middleware\login {
 
     /**
      * system constructor.

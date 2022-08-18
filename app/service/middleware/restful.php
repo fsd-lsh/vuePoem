@@ -1,6 +1,6 @@
 <?php
 
-namespace service\component;
+namespace service\middleware;
 
 /**
  * Class restful

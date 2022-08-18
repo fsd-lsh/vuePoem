@@ -1,8 +1,8 @@
 <?php
 
-namespace service\component;
+namespace service\middleware;
 
-class api
+class table
 {
     private $table;
 

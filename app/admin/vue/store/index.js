@@ -2,7 +2,7 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 
 //挂载Vuex
-Vue.use(Vuex)
+Vue.use(Vuex);
 
 //创建VueX对象
 const store = new Vuex.Store({
@@ -29,6 +29,6 @@ const store = new Vuex.Store({
             return state.menuTree;
         },
     },
-})
+});
 
 export default store;

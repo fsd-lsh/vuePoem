@@ -2,13 +2,13 @@
 
 namespace admin\controller;
 
-use service\component;
+use service\middleware;
 
 /**
  * Class roles
  * @package admin\controller
  */
-class roles extends component\login {
+class roles extends middleware\login {
 
     /**
      * roles constructor.
@@ -109,7 +109,7 @@ class roles extends component\login {
                     }
                 }
 
-                ajax(1, trans('admin.roles.changeOk') . ":{$success}个, " . trans('admin.roles.changeErr') . ":{$error}个。");
+                ajax(1, trans('admin.roles.changeOk') . ":{$success}, " . trans('admin.roles.changeErr') . ":{$error}");
             },
 
             //更新角色信息

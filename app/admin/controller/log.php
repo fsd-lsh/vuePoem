@@ -2,13 +2,13 @@
 
 namespace admin\controller;
 
-use service\component;
+use service\middleware;
 
 /**
  * Class log
  * @package admin\controller
  */
-class log extends component\login {
+class log extends middleware\login {
 
     private $log_path = APP_RUNTIME_PATH . 'log';
 

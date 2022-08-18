@@ -2,9 +2,9 @@
 
 namespace admin\controller;
 
-use service\component;
+use service\middleware;
 
-class index extends component\login {
+class index extends middleware\login {
 
     /**
      * Func: index

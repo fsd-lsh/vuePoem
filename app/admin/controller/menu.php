@@ -2,13 +2,13 @@
 
 namespace admin\controller;
 
-use service\component;
+use service\middleware;
 
 /**
  * Class menu
  * @package admin\controller
  */
-class menu extends component\login {
+class menu extends middleware\login {
 
     /**
      * menu constructor.

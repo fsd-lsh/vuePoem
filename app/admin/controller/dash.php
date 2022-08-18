@@ -2,13 +2,13 @@
 
 namespace admin\controller;
 
-use \service\component;
+use \service\middleware;
 
 /**
  * Class dash
  * @package admin\controller
  */
-class dash extends component\login {
+class dash extends middleware\login {
 
     /**
      * dash constructor.
