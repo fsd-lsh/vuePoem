@@ -3,17 +3,10 @@ export default {
 
     created() {
 
-        //页面每次刷新加载时候都会去读取sessionStorage里面的vuex状态
-        if (sessionStorage.getItem("store")) {
-            this.$store.replaceState(
-                Object.assign({},
-                    this.$store.state,
-                    JSON.parse(sessionStorage.getItem("store")) //这里存的是可能经过mutions处理过的state值，是最新的,所以放在最后
-                )
-            );
-        }
+        //加载store
+        this.loadStore();
 
-        // 在页面刷新之前把vuex中的信息存到sessionStorage
+        //在页面刷新之前把vuex中的信息存到sessionStorage
         window.addEventListener("pagehide", () => {
             sessionStorage.setItem("store", JSON.stringify(this.$store.state));
         });
@@ -73,8 +66,26 @@ export default {
                 url: '/admin/menu/load',
                 success: (res) => {
                     this.$store.commit('setMenuTree', res.data.data);
+                    let store = window.sessionStorage.getItem('store');
+                    if(store) {
+                        store = JSON.parse(store);
+                        store.menuTree = res.data.data;
+                        window.sessionStorage.setItem('store', JSON.stringify(store));
+                    }
                 },
             });
+        },
+
+        //页面每次刷新加载时候都会去读取sessionStorage里面的vuex状态
+        loadStore() {
+            if (sessionStorage.getItem("store")) {
+                this.$store.replaceState(
+                    Object.assign({},
+                        this.$store.state,
+                        JSON.parse(sessionStorage.getItem("store")) //这里存的是可能经过mutions处理过的state值，是最新的,所以放在最后
+                    )
+                );
+            }
         },
 
         //获取GET请求

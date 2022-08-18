@@ -15,7 +15,7 @@ let router = new Router({
 
         {
             path: '/',
-            name: 'Sign In',
+            name: 'signIn',
             component: resolve => require(['@/views/admin/signIn'], resolve),
             meta: {
                 title: '登录' + title,

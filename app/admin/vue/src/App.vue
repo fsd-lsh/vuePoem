@@ -117,6 +117,7 @@
                     @select="menuHandleSelect"
                     background-color="var(--sys-main-color)"
                     text-color="#fff"
+                    style="width:100%!important;"
                     active-text-color="var(--sys-main-ft-color2)">
                     <el-menu-item
                         v-for="(item, key) in this.$store.state.menuTree.menuInfo"

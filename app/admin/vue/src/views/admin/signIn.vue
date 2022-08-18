@@ -29,7 +29,10 @@ export default {
 
     data() {
         return {
-            form: {},
+            form: {
+                name: 'admin',
+                pwd: '123456',
+            },
         }
     },
 
@@ -66,12 +69,13 @@ export default {
                         this.$store.commit('changeSignInState', true);
                         let store = JSON.parse(window.sessionStorage.getItem('store'));
                         store.isSignIn = true;
-                        sessionStorage.setItem('store', store);
 
-                        this.$router.push(res.data.data.url);
+                        sessionStorage.setItem('store', JSON.stringify(store));
                         sessionStorage.setItem('username', res.data.data.name);
 
-                        this.$notify({ message:res.data.info, type:'success' });
+                        this.$notify({message:res.data.info, type:'success'});
+
+                        this.$router.push(res.data.data.url);
 
                         setTimeout(() => {
                             window.location.reload();
