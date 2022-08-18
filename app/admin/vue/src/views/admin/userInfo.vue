@@ -2,45 +2,48 @@
 
 <template>
     <div id="user-info">
-        <el-card class="box-card">
-            <el-form ref="form" :model="userInfo" label-width="180px">
-                <el-form-item :label="$t('admin.userInfo.account')">
-                    <el-input v-model="userInfo.name"></el-input>
-                </el-form-item>
-                <el-form-item :label="$t('admin.userInfo.password')">
-                    <el-input v-model="userInfo.password" placeholder="密码为空不修改"></el-input>
-                </el-form-item>
-                <el-form-item :label="$t('admin.userInfo.roles')">
-                    <el-select
-                        disabled
-                        v-model="userInfo.roles"
-                        multiple
-                        filterable
-                        style="width:100%"
-                        :placeholder="$t('admin.public.selectMenu')">
-                        <el-option
-                            v-for="item in rolesConfig"
-                            :key="item.id"
-                            :label="item.name"
-                            :value="item.id">
-                            {{item.name}}
-                        </el-option>
-                    </el-select>
-                </el-form-item>
-                <el-form-item :label="$t('admin.userInfo.accountStatus')">
-                    <el-input v-model="userInfo.status" disabled></el-input>
-                </el-form-item>
-                <el-form-item :label="$t('admin.userInfo.stime')">
-                    <el-input v-model="userInfo.ctime" disabled></el-input>
-                </el-form-item>
-                <el-form-item :label="$t('admin.userInfo.utime')">
-                    <el-input v-model="userInfo.utime" disabled></el-input>
-                </el-form-item>
-                <div class="btn-group">
-                    <el-button @click="saveUserInfo" type="primary">{{$t('admin.userInfo.save')}}</el-button>
-                </div>
-            </el-form>
-        </el-card>
+
+        <poemAdmin>
+            <el-card class="box-card">
+                <el-form ref="form" :model="userInfo" label-width="180px">
+                    <el-form-item :label="$t('admin.userInfo.account')">
+                        <el-input v-model="userInfo.name"></el-input>
+                    </el-form-item>
+                    <el-form-item :label="$t('admin.userInfo.password')">
+                        <el-input v-model="userInfo.password" placeholder="密码为空不修改"></el-input>
+                    </el-form-item>
+                    <el-form-item :label="$t('admin.userInfo.roles')">
+                        <el-select
+                            disabled
+                            v-model="userInfo.roles"
+                            multiple
+                            filterable
+                            style="width:100%"
+                            :placeholder="$t('admin.public.selectMenu')">
+                            <el-option
+                                v-for="item in rolesConfig"
+                                :key="item.id"
+                                :label="item.name"
+                                :value="item.id">
+                                {{item.name}}
+                            </el-option>
+                        </el-select>
+                    </el-form-item>
+                    <el-form-item :label="$t('admin.userInfo.accountStatus')">
+                        <el-input v-model="userInfo.status" disabled></el-input>
+                    </el-form-item>
+                    <el-form-item :label="$t('admin.userInfo.stime')">
+                        <el-input v-model="userInfo.ctime" disabled></el-input>
+                    </el-form-item>
+                    <el-form-item :label="$t('admin.userInfo.utime')">
+                        <el-input v-model="userInfo.utime" disabled></el-input>
+                    </el-form-item>
+                    <div class="btn-group">
+                        <el-button @click="saveUserInfo" type="primary">{{$t('admin.userInfo.save')}}</el-button>
+                    </div>
+                </el-form>
+            </el-card>
+        </poemAdmin>
     </div>
 </template>
 

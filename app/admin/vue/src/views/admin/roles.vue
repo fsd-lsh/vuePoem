@@ -3,168 +3,172 @@
 <template>
 
     <div id="roles">
-        <el-card class="box-card">
-            <el-button @click="newRoleFlag = !newRoleFlag" icon="fa fa-user-plus" type="primary" size="small">&nbsp;{{$t('admin.roles.add')}}</el-button>
-            <el-button @click="roleChange(2)" icon="fa fa-toggle-on" type="warning" size="small">&nbsp;{{$t('admin.roles.batch')}}{{$t('admin.roles.stop')}}</el-button>
-            <el-button @click="roleChange(1)" icon="fa fa-toggle-off" type="success" size="small">&nbsp;{{$t('admin.roles.batch')}}{{$t('admin.roles.open')}}</el-button>
-            <el-button @click="roleChange(0)" icon="fa fa-user-times" type="danger" size="small">&nbsp;{{$t('admin.roles.batch')}}{{$t('admin.roles.del')}}</el-button>
-            <el-table
-                :data="tableData"
-                stripe
-                size="mini"
-                fit
-                :highlight-current-row="true"
-                :cell-style="tableStyle"
-                ref="multipleTable"
-                @selection-change="handleSelectionChange"
-                style="width:100%">
-                <el-table-column
-                    type="selection"
-                    fixed
-                    width="55">
-                </el-table-column>
-                <el-table-column
-                    width="220"
-                    fixed="left"
-                    :label="$t('admin.roles.operation')">
-                    <template slot-scope="scope">
-                        <el-button
-                            size="mini"
-                            type="primary"
-                            :title="$t('admin.roles.edit')"
-                            @click="editRoleNow(scope)">
-                            <i class="fa fa-pencil">&nbsp;{{$t('admin.roles.edit')}}</i>
-                        </el-button>
-                        <el-button
-                            size="mini"
-                            type="warning"
-                            :title="$t('admin.roles.stop')"
-                            v-if="scope.row.status == 1"
-                            :disabled="scope.row.name == 'admin'"
-                            @click="roleChange(2, scope)">
-                            <i class="fa fa-toggle-on">&nbsp;{{$t('admin.roles.stop')}}</i>
-                        </el-button>
-                        <el-button
-                            size="mini"
-                            type="success"
-                            :title="$t('admin.roles.open')"
-                            v-if="scope.row.status == 2"
-                            :disabled="scope.row.name == 'admin'"
-                            @click="roleChange(1, scope)">
-                            <i class="fa fa-toggle-off">&nbsp;{{$t('admin.roles.open')}}</i>
-                        </el-button>
-                        <el-button
-                            size="mini"
-                            type="danger"
-                            :title="$t('admin.roles.del')"
-                            :disabled="scope.row.name == 'admin'"
-                            @click="roleChange(0, scope)">
-                            <i class="fa fa-user-times">&nbsp;{{$t('admin.roles.del')}}</i>
-                        </el-button>
-                    </template>
-                </el-table-column>
-                <el-table-column
-                    prop="id"
-                    sortable
-                    fixed
-                    width="100"
-                    label="ID">
-                </el-table-column>
-                <el-table-column
-                    prop="name"
-                    sortable
-                    width="150"
-                    :label="$t('admin.roles.name')">
-                </el-table-column>
-                <el-table-column
-                    prop="menu_ids"
-                    sortable
-                    :label="$t('admin.roles.power')">
-                    <template slot-scope="scope">
-                        <el-tag
-                            v-for="m_id in scope.row.menu_ids"
-                            :key="m_id"
-                            size="mini"
-                            :type="'info'"
-                            style="margin:2px 5px;"
-                            effect="dark">
-                            {{m_id}}
-                        </el-tag>
-                    </template>
-                </el-table-column>
-                <el-table-column
-                    prop="ctime"
-                    sortable
-                    width="160"
-                    :label="$t('admin.roles.ctime')">
-                </el-table-column>
-                <el-table-column
-                    prop="utime"
-                    sortable
-                    width="160"
-                    :label="$t('admin.roles.utime')">
-                </el-table-column>
-                <el-table-column
-                    prop="status_mean"
-                    sortable
-                    width="90"
-                    :label="$t('admin.roles.status')">
-                </el-table-column>
-            </el-table>
-            <div class="pagination" v-html="pageHtml"></div>
-        </el-card>
 
-        <!--添加角色模态框-->
-        <el-dialog
-            :title="$t('admin.roles.add')"
-            :visible.sync="newRoleFlag"
-            width="50%">
-            <el-form ref="form" :model="form" label-width="100px" size="small">
-                <el-form-item :label="$t('admin.roles.name')">
-                    <el-input v-model="form.name"></el-input>
-                </el-form-item>
-                <el-form-item :label="$t('admin.roles.power')">
-                    <el-tree
-                        :data="menu_config"
-                        show-checkbox
-                        :default-expand-all="true"
-                        ref="newTree"
-                        node-key="id">
-                    </el-tree>
-                </el-form-item>
-            </el-form>
-            <span slot="footer" class="dialog-footer">
+        <poemAdmin>
+
+            <el-card class="box-card">
+                <el-button @click="newRoleFlag = !newRoleFlag" icon="fa fa-user-plus" type="primary" size="small">&nbsp;{{$t('admin.roles.add')}}</el-button>
+                <el-button @click="roleChange(2)" icon="fa fa-toggle-on" type="warning" size="small">&nbsp;{{$t('admin.roles.batch')}}{{$t('admin.roles.stop')}}</el-button>
+                <el-button @click="roleChange(1)" icon="fa fa-toggle-off" type="success" size="small">&nbsp;{{$t('admin.roles.batch')}}{{$t('admin.roles.open')}}</el-button>
+                <el-button @click="roleChange(0)" icon="fa fa-user-times" type="danger" size="small">&nbsp;{{$t('admin.roles.batch')}}{{$t('admin.roles.del')}}</el-button>
+                <el-table
+                    :data="tableData"
+                    stripe
+                    size="mini"
+                    fit
+                    :highlight-current-row="true"
+                    :cell-style="tableStyle"
+                    ref="multipleTable"
+                    @selection-change="handleSelectionChange"
+                    style="width:100%">
+                    <el-table-column
+                        type="selection"
+                        fixed
+                        width="55">
+                    </el-table-column>
+                    <el-table-column
+                        width="220"
+                        fixed="left"
+                        :label="$t('admin.roles.operation')">
+                        <template slot-scope="scope">
+                            <el-button
+                                size="mini"
+                                type="primary"
+                                :title="$t('admin.roles.edit')"
+                                @click="editRoleNow(scope)">
+                                <i class="fa fa-pencil">&nbsp;{{$t('admin.roles.edit')}}</i>
+                            </el-button>
+                            <el-button
+                                size="mini"
+                                type="warning"
+                                :title="$t('admin.roles.stop')"
+                                v-if="scope.row.status == 1"
+                                :disabled="scope.row.name == 'admin'"
+                                @click="roleChange(2, scope)">
+                                <i class="fa fa-toggle-on">&nbsp;{{$t('admin.roles.stop')}}</i>
+                            </el-button>
+                            <el-button
+                                size="mini"
+                                type="success"
+                                :title="$t('admin.roles.open')"
+                                v-if="scope.row.status == 2"
+                                :disabled="scope.row.name == 'admin'"
+                                @click="roleChange(1, scope)">
+                                <i class="fa fa-toggle-off">&nbsp;{{$t('admin.roles.open')}}</i>
+                            </el-button>
+                            <el-button
+                                size="mini"
+                                type="danger"
+                                :title="$t('admin.roles.del')"
+                                :disabled="scope.row.name == 'admin'"
+                                @click="roleChange(0, scope)">
+                                <i class="fa fa-user-times">&nbsp;{{$t('admin.roles.del')}}</i>
+                            </el-button>
+                        </template>
+                    </el-table-column>
+                    <el-table-column
+                        prop="id"
+                        sortable
+                        fixed
+                        width="100"
+                        label="ID">
+                    </el-table-column>
+                    <el-table-column
+                        prop="name"
+                        sortable
+                        width="150"
+                        :label="$t('admin.roles.name')">
+                    </el-table-column>
+                    <el-table-column
+                        prop="menu_ids"
+                        sortable
+                        :label="$t('admin.roles.power')">
+                        <template slot-scope="scope">
+                            <el-tag
+                                v-for="m_id in scope.row.menu_ids"
+                                :key="m_id"
+                                size="mini"
+                                :type="'info'"
+                                style="margin:2px 5px;"
+                                effect="dark">
+                                {{m_id}}
+                            </el-tag>
+                        </template>
+                    </el-table-column>
+                    <el-table-column
+                        prop="ctime"
+                        sortable
+                        width="160"
+                        :label="$t('admin.roles.ctime')">
+                    </el-table-column>
+                    <el-table-column
+                        prop="utime"
+                        sortable
+                        width="160"
+                        :label="$t('admin.roles.utime')">
+                    </el-table-column>
+                    <el-table-column
+                        prop="status_mean"
+                        sortable
+                        width="90"
+                        :label="$t('admin.roles.status')">
+                    </el-table-column>
+                </el-table>
+                <div class="pagination" v-html="pageHtml"></div>
+            </el-card>
+
+            <!--添加角色模态框-->
+            <el-dialog
+                :title="$t('admin.roles.add')"
+                :visible.sync="newRoleFlag"
+                width="50%">
+                <el-form ref="form" :model="form" label-width="100px" size="small">
+                    <el-form-item :label="$t('admin.roles.name')">
+                        <el-input v-model="form.name"></el-input>
+                    </el-form-item>
+                    <el-form-item :label="$t('admin.roles.power')">
+                        <el-tree
+                            :data="menu_config"
+                            show-checkbox
+                            :default-expand-all="true"
+                            ref="newTree"
+                            node-key="id">
+                        </el-tree>
+                    </el-form-item>
+                </el-form>
+                <span slot="footer" class="dialog-footer">
             <el-button size="mini" @click="newRoleFlag = false">{{$t('admin.roles.cancel')}}</el-button>
             <el-button size="mini" type="primary" @click="createRoleNow">{{$t('admin.roles.save')}}</el-button>
         </span>
-        </el-dialog>
+            </el-dialog>
 
-        <!--编辑角色模态框-->
-        <el-dialog
-            :title="$t('admin.roles.edit')"
-            :visible.sync="editRoleFlag"
-            width="50%">
-            <el-form ref="editForm" :model="editForm" label-width="100px" size="small">
-                <el-form-item :label="$t('admin.roles.name')">
-                    <el-input v-model="editForm.name"></el-input>
-                </el-form-item>
-                <el-form-item :label="$t('admin.roles.power')">
-                    <el-tree
-                        :data="menu_config"
-                        show-checkbox
-                        :default-expand-all="true"
-                        :default-checked-keys="editForm.menu_ids"
-                        getCheckedKeys
-                        ref="editTree"
-                        node-key="id">
-                    </el-tree>
-                </el-form-item>
-            </el-form>
-            <span slot="footer" class="dialog-footer">
+            <!--编辑角色模态框-->
+            <el-dialog
+                :title="$t('admin.roles.edit')"
+                :visible.sync="editRoleFlag"
+                width="50%">
+                <el-form ref="editForm" :model="editForm" label-width="100px" size="small">
+                    <el-form-item :label="$t('admin.roles.name')">
+                        <el-input v-model="editForm.name"></el-input>
+                    </el-form-item>
+                    <el-form-item :label="$t('admin.roles.power')">
+                        <el-tree
+                            :data="menu_config"
+                            show-checkbox
+                            :default-expand-all="true"
+                            :default-checked-keys="editForm.menu_ids"
+                            getCheckedKeys
+                            ref="editTree"
+                            node-key="id">
+                        </el-tree>
+                    </el-form-item>
+                </el-form>
+                <span slot="footer" class="dialog-footer">
             <el-button size="mini" @click="editRoleFlag = false">{{$t('admin.roles.cancel')}}</el-button>
             <el-button size="mini" type="primary" @click="saveRole">{{$t('admin.roles.save')}}</el-button>
         </span>
-        </el-dialog>
+            </el-dialog>
+        </poemAdmin>
     </div>
 </template>
 

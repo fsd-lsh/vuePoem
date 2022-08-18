@@ -11,6 +11,8 @@ import VueI18n from 'vue-i18n';
 import 'element-ui/lib/theme-chalk/index.css';
 import 'font-awesome/css/font-awesome.min.css';
 
+import './components/index';
+
 Vue.config.productionTip = false;
 
 Vue.use(ElementUI);

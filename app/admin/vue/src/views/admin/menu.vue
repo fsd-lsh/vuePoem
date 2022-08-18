@@ -3,328 +3,332 @@
 <template>
 
     <div id="menu">
-        <el-card class="box-card">
-            <el-button @click="newMenuFlag = !newMenuFlag" icon="fa fa-bars" type="primary" size="small">&nbsp;{{$t('admin.menu.add')}}</el-button>
-            <el-table
-                :data="tableData"
-                style="width: 100%;margin-bottom: 20px;"
-                row-key="id"
-                fit
-                :highlight-current-row="true"
-                stripe
-                :cell-style="tableStyle"
-                size="mini"
-                default-expand-all
-                :tree-props="{children: 'children', hasChildren: 'hasChildren'}">
-                <el-table-column
-                    prop="title"
-                    fixed
-                    :label="$t('admin.menu.name')"
-                    sortable
-                    width="180">
-                </el-table-column>
-                <el-table-column
-                    width="220"
-                    fixed="left"
-                    :label="$t('admin.menu.operation')">
-                    <template slot-scope="scope">
-                        <el-button
-                            size="mini"
-                            type="primary"
-                            :title="$t('admin.menu.edit')"
-                            @click="editMenuNow(scope)">
-                            <i class="fa fa-pencil">&nbsp;{{$t('admin.menu.edit')}}</i>
-                        </el-button>
-                        <el-button
-                            v-if="scope.row.status === '1'"
-                            size="mini"
-                            type="warning"
-                            :title="$t('admin.menu.stop')"
-                            :disabled="scope.row.lock === $t('admin.menu.locked')"
-                            @click="menuChange(2, scope)">
-                            <i class="fa fa-toggle-on">&nbsp;{{$t('admin.menu.stop')}}</i>
-                        </el-button>
-                        <el-button
-                            v-if="scope.row.status === '2'"
-                            size="mini"
-                            type="success"
-                            :title="$t('admin.menu.open')"
-                            :disabled="scope.row.lock === $t('admin.menu.locked')"
-                            @click="menuChange(1, scope)">
-                            <i class="fa fa-user-times">&nbsp;{{$t('admin.menu.open')}}</i>
-                        </el-button>
-                        <el-button
-                            size="mini"
-                            type="danger"
-                            :title="$t('admin.menu.del')"
-                            :disabled="scope.row.lock === $t('admin.menu.locked')"
-                            @click="menuChange(0, scope)">
-                            <i class="fa fa-user-times">&nbsp;{{$t('admin.menu.del')}}</i>
-                        </el-button>
-                    </template>
-                </el-table-column>
-                <el-table-column
-                    prop="id"
-                    label="ID"
-                    sortable
-                    width="80">
-                </el-table-column>
-                <el-table-column
-                    prop="pid"
-                    label="PID"
-                    sortable
-                    width="80">
-                </el-table-column>
-                <el-table-column
-                    prop="icon"
-                    :label="$t('admin.menu.icon')"
-                    sortable
-                    width="100">
-                    <template slot-scope="scope">
-                        <i v-if="scope.row.icon" :class="scope.row.icon"></i>
-                        <i v-if="!scope.row.icon">-</i>
-                    </template>
-                </el-table-column>
-                <el-table-column
-                    prop="href"
-                    :label="$t('admin.menu.href')"
-                    sortable
-                    width="180">
-                </el-table-column>
-                <el-table-column
-                    prop="sort"
-                    :label="$t('admin.menu.sort')">
-                </el-table-column>
-                <el-table-column
-                    prop="show"
-                    :label="$t('admin.menu.display')">
-                </el-table-column>
-                <el-table-column
-                    prop="lock"
-                    :label="$t('admin.menu.lock')">
-                </el-table-column>
-                <el-table-column
-                    prop="status_mean"
-                    :label="$t('admin.menu.status')">
-                </el-table-column>
-                <el-table-column
-                    prop="target"
-                    :label="$t('admin.menu.target')">
-                </el-table-column>
-                <el-table-column
-                    prop="ctime"
-                    width="180"
-                    :label="$t('admin.menu.ctime')">
-                </el-table-column>
-                <el-table-column
-                    prop="utime"
-                    width="160"
-                    :label="$t('admin.menu.utime')">
-                </el-table-column>
-            </el-table>
-        </el-card>
 
-        <!--添加-->
-        <el-dialog
-            :title="$t('admin.menu.add')"
-            :visible.sync="newMenuFlag"
-            width="50%">
-            <el-form ref="form" :model="form" label-width="100px" size="small">
-                <el-form-item :label="$t('admin.menu.name')">
-                    <el-input placeholder="请输入菜单名称" v-model="form.title"></el-input>
-                </el-form-item>
-                <el-form-item :label="$t('admin.menu.href')">
-                    <el-select
-                        v-model="form.href"
-                        style="width:100%"
-                        filterable
-                        :placeholder="$t('admin.public.selectMenu')">
-                        <el-option-group
-                            v-for="(methods, func) in linkConfig"
-                            :key="func"
-                            :label="func + '控制器'">
+        <poemAdmin>
+
+            <el-card class="box-card">
+                <el-button @click="newMenuFlag = !newMenuFlag" icon="fa fa-bars" type="primary" size="small">&nbsp;{{$t('admin.menu.add')}}</el-button>
+                <el-table
+                    :data="tableData"
+                    style="width: 100%;margin-bottom: 20px;"
+                    row-key="id"
+                    fit
+                    :highlight-current-row="true"
+                    stripe
+                    :cell-style="tableStyle"
+                    size="mini"
+                    default-expand-all
+                    :tree-props="{children: 'children', hasChildren: 'hasChildren'}">
+                    <el-table-column
+                        prop="title"
+                        fixed
+                        :label="$t('admin.menu.name')"
+                        sortable
+                        width="180">
+                    </el-table-column>
+                    <el-table-column
+                        width="220"
+                        fixed="left"
+                        :label="$t('admin.menu.operation')">
+                        <template slot-scope="scope">
+                            <el-button
+                                size="mini"
+                                type="primary"
+                                :title="$t('admin.menu.edit')"
+                                @click="editMenuNow(scope)">
+                                <i class="fa fa-pencil">&nbsp;{{$t('admin.menu.edit')}}</i>
+                            </el-button>
+                            <el-button
+                                v-if="scope.row.status === '1'"
+                                size="mini"
+                                type="warning"
+                                :title="$t('admin.menu.stop')"
+                                :disabled="scope.row.lock === $t('admin.menu.locked')"
+                                @click="menuChange(2, scope)">
+                                <i class="fa fa-toggle-on">&nbsp;{{$t('admin.menu.stop')}}</i>
+                            </el-button>
+                            <el-button
+                                v-if="scope.row.status === '2'"
+                                size="mini"
+                                type="success"
+                                :title="$t('admin.menu.open')"
+                                :disabled="scope.row.lock === $t('admin.menu.locked')"
+                                @click="menuChange(1, scope)">
+                                <i class="fa fa-user-times">&nbsp;{{$t('admin.menu.open')}}</i>
+                            </el-button>
+                            <el-button
+                                size="mini"
+                                type="danger"
+                                :title="$t('admin.menu.del')"
+                                :disabled="scope.row.lock === $t('admin.menu.locked')"
+                                @click="menuChange(0, scope)">
+                                <i class="fa fa-user-times">&nbsp;{{$t('admin.menu.del')}}</i>
+                            </el-button>
+                        </template>
+                    </el-table-column>
+                    <el-table-column
+                        prop="id"
+                        label="ID"
+                        sortable
+                        width="80">
+                    </el-table-column>
+                    <el-table-column
+                        prop="pid"
+                        label="PID"
+                        sortable
+                        width="80">
+                    </el-table-column>
+                    <el-table-column
+                        prop="icon"
+                        :label="$t('admin.menu.icon')"
+                        sortable
+                        width="100">
+                        <template slot-scope="scope">
+                            <i v-if="scope.row.icon" :class="scope.row.icon"></i>
+                            <i v-if="!scope.row.icon">-</i>
+                        </template>
+                    </el-table-column>
+                    <el-table-column
+                        prop="href"
+                        :label="$t('admin.menu.href')"
+                        sortable
+                        width="180">
+                    </el-table-column>
+                    <el-table-column
+                        prop="sort"
+                        :label="$t('admin.menu.sort')">
+                    </el-table-column>
+                    <el-table-column
+                        prop="show"
+                        :label="$t('admin.menu.display')">
+                    </el-table-column>
+                    <el-table-column
+                        prop="lock"
+                        :label="$t('admin.menu.lock')">
+                    </el-table-column>
+                    <el-table-column
+                        prop="status_mean"
+                        :label="$t('admin.menu.status')">
+                    </el-table-column>
+                    <el-table-column
+                        prop="target"
+                        :label="$t('admin.menu.target')">
+                    </el-table-column>
+                    <el-table-column
+                        prop="ctime"
+                        width="180"
+                        :label="$t('admin.menu.ctime')">
+                    </el-table-column>
+                    <el-table-column
+                        prop="utime"
+                        width="160"
+                        :label="$t('admin.menu.utime')">
+                    </el-table-column>
+                </el-table>
+            </el-card>
+
+            <!--添加-->
+            <el-dialog
+                :title="$t('admin.menu.add')"
+                :visible.sync="newMenuFlag"
+                width="50%">
+                <el-form ref="form" :model="form" label-width="100px" size="small">
+                    <el-form-item :label="$t('admin.menu.name')">
+                        <el-input placeholder="请输入菜单名称" v-model="form.title"></el-input>
+                    </el-form-item>
+                    <el-form-item :label="$t('admin.menu.href')">
+                        <el-select
+                            v-model="form.href"
+                            style="width:100%"
+                            filterable
+                            :placeholder="$t('admin.public.selectMenu')">
+                            <el-option-group
+                                v-for="(methods, func) in linkConfig"
+                                :key="func"
+                                :label="func + '控制器'">
+                                <el-option
+                                    v-for="(item, key) in methods"
+                                    :key="key"
+                                    :label="'【' + item.comment + '】  ' + item.link"
+                                    :value="item.link">
+                                </el-option>
+                            </el-option-group>
+                        </el-select>
+                    </el-form-item>
+                    <el-form-item :label="$t('admin.menu.parent')">
+                        <el-select
+                            v-model="form.pid"
+                            filterable
+                            style="width:100%"
+                            :placeholder="$t('admin.public.selectMenu')">
                             <el-option
-                                v-for="(item, key) in methods"
+                                v-for="(item, key) in menuConfig"
                                 :key="key"
-                                :label="'【' + item.comment + '】  ' + item.link"
-                                :value="item.link">
+                                :label="item.title"
+                                :disabled="form.id === item.id"
+                                :value="item.id">
+                                ID:{{item.id}} - PID:{{item.pid}} - {{item.title}}
                             </el-option>
-                        </el-option-group>
-                    </el-select>
-                </el-form-item>
-                <el-form-item :label="$t('admin.menu.parent')">
-                    <el-select
-                        v-model="form.pid"
-                        filterable
-                        style="width:100%"
-                        :placeholder="$t('admin.public.selectMenu')">
-                        <el-option
-                            v-for="(item, key) in menuConfig"
-                            :key="key"
-                            :label="item.title"
-                            :disabled="form.id === item.id"
-                            :value="item.id">
-                            ID:{{item.id}} - PID:{{item.pid}} - {{item.title}}
-                        </el-option>
-                    </el-select>
-                </el-form-item>
-                <el-form-item :label="$t('admin.menu.icon')">
-                    <el-select
-                        v-model="form.icon"
-                        filterable
-                        clearable
-                        style="width:100%"
-                        :placeholder="$t('admin.public.selectMenu')">
-                        <el-option
-                            v-for="(item, key) in fontawesomeConfig"
-                            :key="key"
-                            :label="item"
-                            :value="item">
-                            <template>
-                                <i :class="item"></i>&nbsp;&nbsp;{{item}}
-                            </template>
-                        </el-option>
-                    </el-select>
-                </el-form-item>
-                <el-form-item :label="$t('admin.menu.display')">
-                    <el-switch
-                        v-model="form.show"
-                        style="padding:6px 0 0 0; float:left;"
-                        active-value="1"
-                        inactive-value="0"
-                        active-color="#13ce66"
-                        inactive-color="#ff4949">
-                    </el-switch>
-                </el-form-item>
-                <el-form-item :label="$t('admin.menu.target')">
-                    <el-select
-                        v-model="form.target"
-                        filterable
-                        style="width:100%"
-                        :placeholder="$t('admin.public.selectMenu')">
-                        <el-option
-                            v-for="(item, key) in openWayConfig"
-                            :key="item"
-                            :label="item"
-                            :value="item">
-                        </el-option>
-                    </el-select>
-                </el-form-item>
-                <el-form-item :label="$t('admin.menu.sort')">
-                    <el-input
-                        placeholder="请输入排序号码"
-                        type="number"
-                        minlength="0"
-                        v-model="form.sort">
-                    </el-input>
-                </el-form-item>
-            </el-form>
-            <span slot="footer" class="dialog-footer">
+                        </el-select>
+                    </el-form-item>
+                    <el-form-item :label="$t('admin.menu.icon')">
+                        <el-select
+                            v-model="form.icon"
+                            filterable
+                            clearable
+                            style="width:100%"
+                            :placeholder="$t('admin.public.selectMenu')">
+                            <el-option
+                                v-for="(item, key) in fontawesomeConfig"
+                                :key="key"
+                                :label="item"
+                                :value="item">
+                                <template>
+                                    <i :class="item"></i>&nbsp;&nbsp;{{item}}
+                                </template>
+                            </el-option>
+                        </el-select>
+                    </el-form-item>
+                    <el-form-item :label="$t('admin.menu.display')">
+                        <el-switch
+                            v-model="form.show"
+                            style="padding:6px 0 0 0; float:left;"
+                            active-value="1"
+                            inactive-value="0"
+                            active-color="#13ce66"
+                            inactive-color="#ff4949">
+                        </el-switch>
+                    </el-form-item>
+                    <el-form-item :label="$t('admin.menu.target')">
+                        <el-select
+                            v-model="form.target"
+                            filterable
+                            style="width:100%"
+                            :placeholder="$t('admin.public.selectMenu')">
+                            <el-option
+                                v-for="(item, key) in openWayConfig"
+                                :key="item"
+                                :label="item"
+                                :value="item">
+                            </el-option>
+                        </el-select>
+                    </el-form-item>
+                    <el-form-item :label="$t('admin.menu.sort')">
+                        <el-input
+                            placeholder="请输入排序号码"
+                            type="number"
+                            minlength="0"
+                            v-model="form.sort">
+                        </el-input>
+                    </el-form-item>
+                </el-form>
+                <span slot="footer" class="dialog-footer">
             <el-button size="mini" @click="newMenuFlag = false">{{$t('admin.menu.cancel')}}</el-button>
             <el-button size="mini" type="primary" @click="addMenu">{{$t('admin.menu.save')}}</el-button>
         </span>
-        </el-dialog>
+            </el-dialog>
 
-        <!--编辑-->
-        <el-dialog
-            :title="$t('admin.menu.edit')"
-            :visible.sync="editMenuFlag"
-            width="50%">
-            <el-form ref="editForm" :model="editForm" label-width="100px" size="small">
-                <el-form-item :label="$t('admin.menu.name')">
-                    <el-input placeholder="请输入菜单名称" v-model="editForm.title"></el-input>
-                </el-form-item>
-                <el-form-item :label="$t('admin.menu.href')">
-                    <el-select
-                        v-model="editForm.href"
-                        style="width:100%"
-                        filterable
-                        :placeholder="$t('admin.public.selectMenu')">
-                        <el-option-group
-                            v-for="(methods, func) in linkConfig"
-                            :key="func"
-                            :label="func + '控制器'">
+            <!--编辑-->
+            <el-dialog
+                :title="$t('admin.menu.edit')"
+                :visible.sync="editMenuFlag"
+                width="50%">
+                <el-form ref="editForm" :model="editForm" label-width="100px" size="small">
+                    <el-form-item :label="$t('admin.menu.name')">
+                        <el-input placeholder="请输入菜单名称" v-model="editForm.title"></el-input>
+                    </el-form-item>
+                    <el-form-item :label="$t('admin.menu.href')">
+                        <el-select
+                            v-model="editForm.href"
+                            style="width:100%"
+                            filterable
+                            :placeholder="$t('admin.public.selectMenu')">
+                            <el-option-group
+                                v-for="(methods, func) in linkConfig"
+                                :key="func"
+                                :label="func + '控制器'">
+                                <el-option
+                                    v-for="(item, key) in methods"
+                                    :key="key"
+                                    :label="'【' + item.comment + '】  ' + item.link"
+                                    :value="item.link">
+                                </el-option>
+                            </el-option-group>
+                        </el-select>
+                    </el-form-item>
+                    <el-form-item :label="$t('admin.menu.parent')">
+                        <el-select
+                            v-model="editForm.pid"
+                            filterable
+                            style="width:100%"
+                            :placeholder="$t('admin.public.selectMenu')">
                             <el-option
-                                v-for="(item, key) in methods"
+                                v-for="(item, key) in menuConfig"
                                 :key="key"
-                                :label="'【' + item.comment + '】  ' + item.link"
-                                :value="item.link">
+                                :label="item.title"
+                                :disabled="editForm.id === item.id"
+                                :value="item.id">
+                                ID:{{item.id}} - PID:{{item.pid}} - {{item.title}}
                             </el-option>
-                        </el-option-group>
-                    </el-select>
-                </el-form-item>
-                <el-form-item :label="$t('admin.menu.parent')">
-                    <el-select
-                        v-model="editForm.pid"
-                        filterable
-                        style="width:100%"
-                        :placeholder="$t('admin.public.selectMenu')">
-                        <el-option
-                            v-for="(item, key) in menuConfig"
-                            :key="key"
-                            :label="item.title"
-                            :disabled="editForm.id === item.id"
-                            :value="item.id">
-                            ID:{{item.id}} - PID:{{item.pid}} - {{item.title}}
-                        </el-option>
-                    </el-select>
-                </el-form-item>
-                <el-form-item :label="$t('admin.menu.icon')">
-                    <el-select
-                        v-model="editForm.icon"
-                        filterable
-                        clearable
-                        style="width:100%"
-                        :placeholder="$t('admin.public.selectMenu')">
-                        <el-option
-                            v-for="(item, key) in fontawesomeConfig"
-                            :key="key"
-                            :label="item"
-                            :value="item">
-                            <template>
-                                <i :class="item"></i>&nbsp;&nbsp;{{item}}
-                            </template>
-                        </el-option>
-                    </el-select>
-                </el-form-item>
-                <el-form-item :label="$t('admin.menu.display')">
-                    <el-switch
-                        v-model="editForm.show"
-                        style="padding:6px 0 0 0; float:left;"
-                        active-value="1"
-                        inactive-value="0"
-                        active-color="#13ce66"
-                        inactive-color="#ff4949">
-                    </el-switch>
-                </el-form-item>
-                <el-form-item :label="$t('admin.menu.target')">
-                    <el-select
-                        v-model="editForm.target"
-                        filterable
-                        style="width:100%"
-                        :placeholder="$t('admin.public.selectMenu')">
-                        <el-option
-                            v-for="(item, key) in openWayConfig"
-                            :key="item"
-                            :label="item"
-                            :value="item">
-                        </el-option>
-                    </el-select>
-                </el-form-item>
-                <el-form-item :label="$t('admin.menu.sort')">
-                    <el-input
-                        placeholder="请输入排序号码"
-                        type="number"
-                        minlength="0"
-                        v-model="editForm.sort">
-                    </el-input>
-                </el-form-item>
-            </el-form>
-            <span slot="footer" class="dialog-footer">
+                        </el-select>
+                    </el-form-item>
+                    <el-form-item :label="$t('admin.menu.icon')">
+                        <el-select
+                            v-model="editForm.icon"
+                            filterable
+                            clearable
+                            style="width:100%"
+                            :placeholder="$t('admin.public.selectMenu')">
+                            <el-option
+                                v-for="(item, key) in fontawesomeConfig"
+                                :key="key"
+                                :label="item"
+                                :value="item">
+                                <template>
+                                    <i :class="item"></i>&nbsp;&nbsp;{{item}}
+                                </template>
+                            </el-option>
+                        </el-select>
+                    </el-form-item>
+                    <el-form-item :label="$t('admin.menu.display')">
+                        <el-switch
+                            v-model="editForm.show"
+                            style="padding:6px 0 0 0; float:left;"
+                            active-value="1"
+                            inactive-value="0"
+                            active-color="#13ce66"
+                            inactive-color="#ff4949">
+                        </el-switch>
+                    </el-form-item>
+                    <el-form-item :label="$t('admin.menu.target')">
+                        <el-select
+                            v-model="editForm.target"
+                            filterable
+                            style="width:100%"
+                            :placeholder="$t('admin.public.selectMenu')">
+                            <el-option
+                                v-for="(item, key) in openWayConfig"
+                                :key="item"
+                                :label="item"
+                                :value="item">
+                            </el-option>
+                        </el-select>
+                    </el-form-item>
+                    <el-form-item :label="$t('admin.menu.sort')">
+                        <el-input
+                            placeholder="请输入排序号码"
+                            type="number"
+                            minlength="0"
+                            v-model="editForm.sort">
+                        </el-input>
+                    </el-form-item>
+                </el-form>
+                <span slot="footer" class="dialog-footer">
             <el-button size="mini" @click="editMenuFlag = false">{{$t('admin.menu.cancel')}}</el-button>
             <el-button size="mini" type="primary" @click="saveMenu">{{$t('admin.menu.save')}}</el-button>
         </span>
-        </el-dialog>
+            </el-dialog>
+        </poemAdmin>
     </div>
 </template>
 

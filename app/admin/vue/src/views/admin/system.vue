@@ -4,52 +4,54 @@
 
     <div id="system">
 
-        <el-row :gutter="20" class="sta">
+        <poemAdmin>
+            <el-row :gutter="20" class="sta">
 
-            <el-col :span="12" class="sta-item">
-                <el-card class="box-card">
-                    <p>{{$t('admin.system.info')}}</p>
-                    <ul>
-                        <li v-for="(item, key) in systemInfo.sys">
-                            {{key}}: {{item}}
-                        </li>
-                    </ul>
-                </el-card>
-            </el-col>
+                <el-col :span="12" class="sta-item">
+                    <el-card class="box-card">
+                        <p>{{$t('admin.system.info')}}</p>
+                        <ul>
+                            <li v-for="(item, key) in systemInfo.sys">
+                                {{key}}: {{item}}
+                            </li>
+                        </ul>
+                    </el-card>
+                </el-col>
 
-            <el-col :span="12" class="sta-item">
-                <el-card class="box-card">
-                    <p>CPU</p>
-                    <ul>
-                        <li v-for="(item, key) in systemInfo.cpu">
-                            {{item}}
-                        </li>
-                    </ul>
-                </el-card>
-            </el-col>
+                <el-col :span="12" class="sta-item">
+                    <el-card class="box-card">
+                        <p>CPU</p>
+                        <ul>
+                            <li v-for="(item, key) in systemInfo.cpu">
+                                {{item}}
+                            </li>
+                        </ul>
+                    </el-card>
+                </el-col>
 
-            <el-col :span="12" class="sta-item">
-                <el-card class="box-card">
-                    <p>{{$t('admin.system.memory')}}</p>
-                    <ul>
-                        <li v-for="(item, key) in systemInfo.ram">
-                            {{item}}
-                        </li>
-                    </ul>
-                </el-card>
-            </el-col>
+                <el-col :span="12" class="sta-item">
+                    <el-card class="box-card">
+                        <p>{{$t('admin.system.memory')}}</p>
+                        <ul>
+                            <li v-for="(item, key) in systemInfo.ram">
+                                {{item}}
+                            </li>
+                        </ul>
+                    </el-card>
+                </el-col>
 
-            <el-col :span="12" class="sta-item">
-                <el-card class="box-card">
-                    <p>{{$t('admin.system.disk')}}</p>
-                    <ul>
-                        <li v-for="(item, key) in systemInfo.hdd">
-                            {{item}}
-                        </li>
-                    </ul>
-                </el-card>
-            </el-col>
-        </el-row>
+                <el-col :span="12" class="sta-item">
+                    <el-card class="box-card">
+                        <p>{{$t('admin.system.disk')}}</p>
+                        <ul>
+                            <li v-for="(item, key) in systemInfo.hdd">
+                                {{item}}
+                            </li>
+                        </ul>
+                    </el-card>
+                </el-col>
+            </el-row>
+        </poemAdmin>
     </div>
 </template>
 

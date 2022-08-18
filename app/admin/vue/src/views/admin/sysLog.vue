@@ -4,45 +4,47 @@
 
     <div id="sys-log">
 
-        <el-card class="box-card">
-            <el-table
-                :data="tableData"
-                stripe
-                size="mini"
-                fit
-                :highlight-current-row="true"
-                :cell-style="tableStyle"
-                style="width:100%">
-                <el-table-column
-                    prop="id"
-                    width="100"
-                    sortable
-                    label="LOG ID">
-                </el-table-column>
-                <el-table-column
-                    prop="admin"
-                    sortable
-                    :label="$t('admin.sysLog.user')">
-                </el-table-column>
-                <el-table-column
-                    prop="path"
-                    sortable
-                    :label="$t('admin.sysLog.path')">
-                </el-table-column>
-                <el-table-column
-                    prop="ctime"
-                    sortable
-                    :label="$t('admin.sysLog.ctime')">
-                </el-table-column>
-                <el-table-column
-                    prop="level_mean"
-                    sortable
-                    width="80"
-                    :label="$t('admin.sysLog.level')">
-                </el-table-column>
-            </el-table>
-            <div class="pagination" v-html="pageHtml"></div>
-        </el-card>
+        <poemAdmin>
+            <el-card class="box-card">
+                <el-table
+                    :data="tableData"
+                    stripe
+                    size="mini"
+                    fit
+                    :highlight-current-row="true"
+                    :cell-style="tableStyle"
+                    style="width:100%">
+                    <el-table-column
+                        prop="id"
+                        width="100"
+                        sortable
+                        label="LOG ID">
+                    </el-table-column>
+                    <el-table-column
+                        prop="admin"
+                        sortable
+                        :label="$t('admin.sysLog.user')">
+                    </el-table-column>
+                    <el-table-column
+                        prop="path"
+                        sortable
+                        :label="$t('admin.sysLog.path')">
+                    </el-table-column>
+                    <el-table-column
+                        prop="ctime"
+                        sortable
+                        :label="$t('admin.sysLog.ctime')">
+                    </el-table-column>
+                    <el-table-column
+                        prop="level_mean"
+                        sortable
+                        width="80"
+                        :label="$t('admin.sysLog.level')">
+                    </el-table-column>
+                </el-table>
+                <div class="pagination" v-html="pageHtml"></div>
+            </el-card>
+        </poemAdmin>
     </div>
 </template>
 

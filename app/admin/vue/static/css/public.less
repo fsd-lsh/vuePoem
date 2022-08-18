@@ -1,0 +1,234 @@
+#app {
+
+    font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-align: center;
+    color: #2c3e50;
+
+    > div {
+
+        height: 100%;
+
+        > .el-row {
+
+            height: 100%;
+
+            #left {
+
+                height: 100%;
+                background: var(--sys-main-menu-color2);
+
+                > .el-menu {
+                    border: none;
+                }
+
+                > .logo {
+
+                    width: 100%;
+                    height: 60px;
+                    background: var(--sys-main-menu-color);
+                    text-align: center;
+                    font-weight: 600;
+                    font-size: 1.4rem;
+                    line-height: 60px;
+                    color: #fff;
+
+                    i {
+                        font-size: 1.2rem;
+                        color: var(--sys-main-ft-color);
+                    }
+
+                    > b {
+                        font-size: 1.2rem;
+                    }
+                }
+
+                > .menu-level-2 {
+
+                    .el-submenu {
+
+                        .el-menu-item-group {
+
+                            .el-menu-item-group__title {
+
+                            }
+                        }
+                    }
+
+                    .el-menu-item {
+
+                        min-width: 100%;
+                        width: 100%;
+
+                        &.is-active {
+                            color: var(--sys-main-ft-color)!important;
+                        }
+                    }
+
+                    .el-menu-item:hover {
+
+                        background: var(--sys-main-color)!important;
+                        color: #fff!important;
+
+                        i {
+                            color: #fff!important;
+                        }
+                    }
+
+                    span {
+                        font-size: .8rem;
+                    }
+
+                    .el-submenu__title,
+                    .el-menu-item {
+                        text-align: left;
+                    }
+
+                    li.el-menu-item {
+                        font-size: .8rem;
+                    }
+                }
+
+                #config-panel {
+
+                    padding: 10px;
+
+                    .config-panel-title {
+                        color: var(--sys-main-ft-color);
+                        font-size: 1rem;
+                        font-weight: 600;
+                    }
+
+                    .config-panel-item {
+
+                        margin: 1rem 0 0 0;
+                        padding: 1.2rem;
+                        height: 70px;
+                        vertical-align:middle;
+                        text-align: center;
+                        transition: all linear .3s;
+                        cursor: pointer;
+
+                        .grid-content {
+
+                            display: block;
+                            height: 100%;
+                            line-height: 100%;
+                            width: 100%;
+                            border: 1px solid var(--sys-main-ft-color);
+                            border-radius: 5px;
+                            font-weight: 600;
+                            font-size: .9rem;
+
+                            &:hover {
+                                transition: all linear .3s;
+                                color: #fff;
+                                background: var(--sys-main-ft-color);
+                            }
+
+                            div.text {
+
+                                white-space: nowrap;
+                                overflow: hidden;
+                                text-overflow: ellipsis;
+                                padding: .8rem;
+                            }
+                        }
+
+                        > .active {
+                            transition: all linear .3s;
+                            color: #fff;
+                            background: var(--sys-main-ft-color);
+                        }
+                    }
+                }
+            }
+
+            #right {
+
+                &.inner-view {
+                    height: 100%;
+                    background: #fff;
+                }
+
+                > .el-menu {
+                    border: none;
+                }
+
+                > div:nth-child(2) {
+
+                }
+
+                .menu-level-1 {
+
+                    color: #fff!important;
+
+                    > .el-menu-item {
+
+                        > i {
+                            color: #fff!important;
+                        }
+                    }
+
+                    .el-menu-item:hover {
+                        background: var(--sys-main-color)!important;
+                    }
+
+                    .el-submenu {
+
+                        .el-submenu__title {
+
+                            i {
+                                color: #fff!important;
+                            }
+
+                            &:hover {
+                                background: var(--sys-main-color)!important;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    footer {
+        font-size: .6rem;
+        text-align: center;
+        color: #8D8D8D;
+        font-weight: 600;
+        display: block;
+        position: fixed;
+        bottom: 10px;
+        left: 0;
+        width: 100%;
+
+        a {
+            color: #8D8D8D;
+            text-decoration: none;
+            font-weight: 800;
+        }
+    }
+}
+
+.menu-level-2:not(.el-menu--collapse) {
+    min-height: 400px;
+    width: 100%;
+}
+
+.el-menu-item-group__title {
+    padding: 0;
+}
+
+.pull-right {
+    float: right !important;
+}
+
+body > .el-menu--horizontal {
+    background: #23262e!important;
+}
+
+.el-table__row .cell {
+    color: unset;
+}
