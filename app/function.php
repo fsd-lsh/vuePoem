@@ -1,6 +1,6 @@
 <?php
 
-use \service\component\restful;
+use \service\middleware\restful;
 
 if(!function_exists('sys_api')) {
 
@@ -58,18 +58,18 @@ if(!function_exists('restful')) {
         $request_method = strtolower($_SERVER['REQUEST_METHOD']);
 
         if(empty($table) && !is_array($table)) {
-            $restful->response(0, '控制器没有开发API');
+            $restful->response(0, trans('admin.restful.noSupportMethod'));
         }
 
         foreach ($table as $method => $func) {
 
             if(!in_array($method, $allow_method)) {
-                $restful->response(0, '不支持'.$method.'方法');
+                $restful->response(0, trans('admin.restful.noSupportMethod').':'.$method);
             }
         }
 
         if(empty($table[$request_method])) {
-            $restful->response(0, '请求方法不存在');
+            $restful->response(0, trans('admin.restful.methodNotFound'));
         }
 
         $table[$request_method]($restful);
@@ -221,7 +221,7 @@ if(!function_exists('fetch_lang')) {
             }
         }
 
-        $path = __DIR__ . '/../app/admin/vue/src/assets/languages';
+        $path = config('vue_project').config('lang_path');
         $path = realpath($path);
         $lang_json = file_get_contents($path . '/' . $_GET['lang'] . '.json');
 
@@ -254,11 +254,11 @@ if(!function_exists('lang_edit')) {
                 return false;
             }
         }
-        if(in_array($id, [1,2,3,4,5,6,7,8,9,11])) {
+        if(in_array($id, [1,2,3,4,5,6,7,8,9,11])) { //排除系统预设菜单
             return false;
         }
 
-        $lang_path = config('lang_path');
+        $lang_path = config('vue_project').config('lang_path');
         $file_list = scandir($lang_path);
         unset(
             $file_list[array_search('.', $file_list)],

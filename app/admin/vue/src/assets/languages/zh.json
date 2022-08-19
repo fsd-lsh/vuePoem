@@ -23,6 +23,10 @@
             "selectMenu": "请选择",
             "themeNotFound": "主题不存在"
         },
+        "restful": {
+            "noSupportMethod": "不支持的方法",
+            "methodNotFound": "找不带该方法"
+        },
         "dash": {
             "dataStatistics": "数据统计",
             "user": "用户",

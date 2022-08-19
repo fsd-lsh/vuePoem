@@ -76,7 +76,7 @@
                         :span="8"
                         :key="key"
                         v-for="(item, key) in themeList"
-                        @click.native="themeHandleClose(item)"
+                        @click.native="themeHandleChange(item)"
                         class="config-panel-item">
                         <div
                             :class="{
@@ -197,12 +197,6 @@ export default {
             isCollapse: false,
             leftViewSpan: 3,
             rightViewSpan: 21,
-            themeList: [
-                'sys-theme-default',
-                'sys-theme-admin-poem',
-                'sys-theme-green',
-            ],
-            nowTheme: '',
         }
     },
 
@@ -211,13 +205,6 @@ export default {
         //定位menu active
         if (this.$store.state.isSignIn) {
             this.positionMenu();
-        }
-
-        //默认主题
-        if(this.in_array(window.localStorage.getItem('sys-theme'), this.themeList)) {
-            this.nowTheme = window.localStorage.getItem('sys-theme');
-        }else {
-            this.nowTheme = this.themeList[0];
         }
 
         //写入用户信息
@@ -391,8 +378,8 @@ export default {
             this.$router.push(item.href);
         },
 
-        //主题面板关闭
-        themeHandleClose(themeClassName) {
+        //主题面板切换
+        themeHandleChange(themeClassName) {
 
             if(!this.in_array(themeClassName, this.themeList)) {
                 this.$notify({ message:this.$t('admin.public.themeNotFound'), type:'error'});

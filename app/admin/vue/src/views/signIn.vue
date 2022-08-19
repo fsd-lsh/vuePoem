@@ -57,8 +57,8 @@ export default {
                 type: 'post',
                 url: '/admin?api=sign_in',
                 data: {
-                    username: this.form.name,
-                    password: this.form.pwd,
+                    username: window.btoa(this.form.name),
+                    password: window.btoa(this.form.pwd),
                 },
                 success: (res) => {
 
@@ -97,7 +97,7 @@ export default {
                     break;
                 }
             }
-            window.location.reload();
+            this.$router.go(0);
         },
     },
 }

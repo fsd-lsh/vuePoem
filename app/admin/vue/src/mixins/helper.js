@@ -1,6 +1,17 @@
 import axios from "axios";
 export default {
 
+    data() {
+        return {
+
+            //主题列表
+            themeList: [],
+
+            //当前主题
+            nowTheme: '',
+        }
+    },
+
     created() {
 
         //加载store
@@ -10,6 +21,9 @@ export default {
         window.addEventListener("pagehide", () => {
             sessionStorage.setItem("store", JSON.stringify(this.$store.state));
         });
+
+        //加载主题
+        this.loadTheme();
     },
 
     methods: {
@@ -71,6 +85,28 @@ export default {
                         store = JSON.parse(store);
                         store.menuTree = res.data.data;
                         window.sessionStorage.setItem('store', JSON.stringify(store));
+                    }
+                },
+            });
+        },
+
+        //加载主题
+        loadTheme() {
+
+            this.poemRequest({
+                type: 'get',
+                url: '/admin/index/theme?api=load',
+                success: (res) => {
+                    if(res.data.code === 1) {
+                        this.themeList = res.data.data;
+
+                        if(this.in_array(window.localStorage.getItem('sys-theme'), this.themeList)) {
+                            this.nowTheme = window.localStorage.getItem('sys-theme');
+                        }else {
+                            this.nowTheme = this.themeList[0];
+                        }
+                    }else {
+                        this.$notify({message: res.data.info, type: 'warning'});
                     }
                 },
             });

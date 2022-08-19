@@ -66,6 +66,8 @@ class login {
         if(empty(i('password'))) {
             ajax(0, trans('admin.signIn.enterPwd'));
         }
+        $username = base64_decode(i('username'));
+        $password = base64_decode(i('password'));
 
         //获取账号信息
         switch ($this->user_type) {
@@ -74,7 +76,7 @@ class login {
         }
         $user_info = m($table)
             ->where([
-                'name' => i('username'),
+                'name' => $username,
                 'status' => 1
             ])
             ->find();
@@ -83,7 +85,7 @@ class login {
         }
 
         //检查密码
-        if(!password_verify(i('password'), $user_info['password'])) {
+        if(!password_verify($password, $user_info['password'])) {
             ajax(0, trans('admin.signIn.pwdErr'));
         }
 

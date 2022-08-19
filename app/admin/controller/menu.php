@@ -306,7 +306,7 @@ class menu extends middleware\login {
             'menuInfo' => $this->get_menu_list(),
         ];
 
-        ajax(1, '加载菜单成功', $menu);
+        ajax(1, trans('admin.public.success'), $menu);
     }
 
     /**

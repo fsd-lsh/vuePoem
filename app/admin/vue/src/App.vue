@@ -4,9 +4,7 @@
 
         <router-view/>
 
-        <footer>
-            Design By <a target="_blank" href="https://www.easybhu.cn">Force</a>
-        </footer>
+        <footer>Design By <a target="_blank" href="https://www.easybhu.cn">Force</a></footer>
     </div>
 </template>
 
@@ -19,10 +17,6 @@ export default {
     name: 'App',
 
     mixins: [helper],
-
-    data() {
-        return {}
-    },
 
     beforeCreate() {
 
@@ -52,8 +46,6 @@ export default {
             'background:transparent'
         )
     },
-
-    methods: {},
 }
 </script>
 

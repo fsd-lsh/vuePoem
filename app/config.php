@@ -2,8 +2,10 @@
 
 return [
 
-    //语言包路径
-    'lang_path' => realpath('./../app/admin/vue/src/assets/languages'),
+    //vue工程相关
+    'vue_project' => realpath('./../app/admin/vue'),  //工程根目录
+    'lang_path' => '/src/assets/languages',                 //语言包路径 （前后端复用）
+    'theme_path' => '/static/css/theme.less',               //主题路径
 
     //fontawesome字体图标库路径
     'fontawesome_path' => realpath('./../public/static/other/fontawesome.json'),

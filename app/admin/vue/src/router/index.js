@@ -6,7 +6,7 @@ Vue.use(Router);
 
 const title = ' - VuePoem';
 const lang = localStorage.getItem('sys-lang');
-
+console.log(Vue)
 let router = new Router({
 
     mode:'hash',

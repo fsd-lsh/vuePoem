@@ -31,4 +31,37 @@ class index extends middleware\login {
             },
         ]);
     }
+
+    /**
+     * Func: theme
+     * User: Force
+     * Date: 2022/8/19
+     * Time: 16:27
+     * Desc: 主题
+     */
+    public function theme() {
+
+        sys_api([
+
+            //加载主题
+            'load' => function() {
+
+                $theme_css_file = file_get_contents(config('vue_project').config('theme_path'));
+                if(empty($theme_css_file)) {
+                    ajax(0, trans('admin.public.error'));
+                }
+
+                preg_match_all('/.sys-theme-(.*)/', $theme_css_file, $theme_css_file);
+                $theme_css_file = $theme_css_file[0];
+                if(!is_array($theme_css_file)) {
+                    ajax(0, trans('admin.public.error'));
+                }
+
+                $theme_css_file = array_map(function ($v) {
+                    return str_replace([' ', '{', '.'], '', $v);
+                }, $theme_css_file);
+                ajax(1, trans('admin.public.success'), $theme_css_file);
+            },
+        ]);
+    }
 }

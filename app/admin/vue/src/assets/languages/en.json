@@ -23,6 +23,10 @@
             "selectMenu": "Please select",
             "themeNotFound": "Theme not found"
         },
+        "restful": {
+            "noSupportMethod": "Methods that are not supported",
+            "methodNotFound": "Method not found"
+        },
         "dash": {
             "dataStatistics": "Data Statistics",
             "user": "User",
