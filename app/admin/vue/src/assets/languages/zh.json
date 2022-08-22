@@ -21,7 +21,10 @@
             "warning": "警告",
             "checkRec": "操作前请先勾选记录",
             "selectMenu": "请选择",
-            "themeNotFound": "主题不存在"
+            "themeNotFound": "主题不存在",
+            "apiNotFound": "控制器没有开发API",
+            "statusNotAllow": "非法状态",
+            "rowDataNotFound": "找不到数据"
         },
         "restful": {
             "noSupportMethod": "不支持的方法",
@@ -184,7 +187,8 @@
             "loadOk": "列表加载完成",
             "enterAcc": "请输入姓名 / 账号",
             "enterPwd": "请输入密码",
-            "reEnterPwd": "请重新输入密码"
+            "reEnterPwd": "请重新输入密码",
+            "userInfo": "用户信息"
         },
         "userInfo": {
             "account": "账号",

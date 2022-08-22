@@ -124,17 +124,13 @@
             this.loadDash();
         },
 
-        mounted() {
-
-        },
-
         methods: {
 
             //加载面板数据
             loadDash() {
                 this.poemRequest({
                     type: 'post',
-                    url: '/admin/dash/main?api=load',
+                    url: '/admin/dash?api=load',
                     success: (res) => {
                         if(res.data.code === 1) {
                             this.adminTotal = res.data.data.admin_total;

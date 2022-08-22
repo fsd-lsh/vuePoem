@@ -98,7 +98,7 @@ class log extends middleware\login {
                 //排序
                 $lists = array_order_by($lists, 'log_name', SORT_DESC);
 
-                //视图及变量写入
+                //response
                 ajax(1, trans('admin.sysLog.loadListOk'), [
                     'lists' => $lists,
                 ]);
@@ -147,7 +147,7 @@ class log extends middleware\login {
                     }
                 }
 
-                //视图及变量写入
+                //response
                 ajax(1, trans('admin.sysLog.loadListOk'), [
                     'lists' => $log_data['list'],
                     'page_html' => $log_data['html'],

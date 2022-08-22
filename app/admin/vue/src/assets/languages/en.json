@@ -21,7 +21,10 @@
             "warning": "Warning",
             "checkRec": "Select Record before you perform this operation",
             "selectMenu": "Please select",
-            "themeNotFound": "Theme not found"
+            "themeNotFound": "Theme not found",
+            "apiNotFound": "API not found",
+            "statusNotAllow": "status not allow",
+            "rowDataNotFound": "row data not found"
         },
         "restful": {
             "noSupportMethod": "Methods that are not supported",
@@ -184,7 +187,8 @@
             "loadOk": "List loaded",
             "enterAcc": "Enter account",
             "enterPwd": "Enter password",
-            "reEnterPwd": "Re-enter password"
+            "reEnterPwd": "Re-enter password",
+            "userInfo": "Userinfo"
         },
         "userInfo": {
             "account": "Account",

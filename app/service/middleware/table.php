@@ -27,10 +27,10 @@ class table
         $status = intval($_REQUEST['status']);
 
         if(empty($ids)) {
-            ajax(0, '请选择记录');
+            ajax(0, trans('admin.public.selectMenu'));
         }
         if(!in_array($status, [0, 1, 2])) {
-            ajax(0, '状态切换失败，不允许的状态值');
+            ajax(0, trans('admin.public.statusNotAllow'));
         }
 
         foreach ($ids as $key => $id) {
@@ -44,9 +44,9 @@ class table
         }
 
         if($result) {
-            ajax(1, '修改完成');
+            ajax(1, trans('admin.public.success'));
         }else {
-            ajax(0, '修改失败');
+            ajax(0, trans('admin.public.error'));
         }
     }
 
@@ -82,13 +82,13 @@ class table
         }
 
         if($load) {
-            ajax(1, '加载完成', [
+            ajax(1, trans('admin.public.success'), [
                 'lists' => $lists,
                 'page_html' => $page_info['html'],
                 'column' => array_keys($lists[0]),
             ]);
         }else {
-            ajax(0, '加载失败');
+            ajax(0, trans('admin.public.error'));
         }
         return true;
     }
@@ -114,7 +114,7 @@ class table
                 ])
                 ->find();
             if(!$has) {
-                ajax(0, '无法保存，词条数据不存在');
+                ajax(0, trans('admin.public.rowDataNotFound'));
             }
 
             $data['utime'] = time();
@@ -131,9 +131,9 @@ class table
         }
 
         if($result) {
-            ajax(1, '保存成功');
+            ajax(1, trans('admin.public.success'));
         }else {
-            ajax(0, '保存失败');
+            ajax(0, trans('admin.public.error'));
         }
     }
 }

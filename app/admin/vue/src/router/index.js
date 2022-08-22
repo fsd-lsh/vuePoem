@@ -4,9 +4,6 @@ import axios from 'axios';
 
 Vue.use(Router);
 
-const title = ' - VuePoem';
-const lang = localStorage.getItem('sys-lang');
-console.log(Vue)
 let router = new Router({
 
     mode:'hash',
@@ -18,7 +15,7 @@ let router = new Router({
             name: 'signIn',
             component: resolve => require(['@/views/signIn'], resolve),
             meta: {
-                title: '登录' + title,
+                title: '',
             },
         },
 
@@ -27,12 +24,13 @@ let router = new Router({
             name: 'userInfo',
             component: resolve => require(['@/views/admin/userInfo'], resolve),
             meta: {
-                title: '用户信息' + title,
+                title: '',
             },
         },
     ],
 });
 
+const lang = localStorage.getItem('sys-lang');
 axios.get('/admin/menu/load?lang='+lang).then(res => {
 
     if(res.data.code === 955) {

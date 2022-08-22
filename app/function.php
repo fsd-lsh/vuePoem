@@ -21,13 +21,13 @@ if(!function_exists('sys_api')) {
 
             //检测API表
             if(empty($table) && !is_array($table)) {
-                ajax(0, '控制器没有开发API');
+                ajax(0, trans('admin.public.apiNotFound'));
             }
 
             //检测API
             $table_keys = array_keys($table);
             if(!in_array($api, $table_keys)) {
-                ajax(0, '控制器找不到您请求的API');
+                ajax(0, trans('admin.public.apiNotFound'));
             }
 
             //执行
@@ -36,7 +36,7 @@ if(!function_exists('sys_api')) {
         }else {
 
             //def
-            echo 'API running.....';
+            echo 'Phppoem API is running.....';
             exit;
         }
     }

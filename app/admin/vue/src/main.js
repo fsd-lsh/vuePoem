@@ -27,7 +27,7 @@ const i18n = new VueI18n({
     locale: lang,
     messages: {
         'zh': require('@/assets/languages/zh.json'),
-        'en': require('@/assets/languages/en.json')
+        'en': require('@/assets/languages/en.json'),
     }
 });
 
@@ -35,6 +35,16 @@ const i18n = new VueI18n({
 router.beforeEach((to, from, next) => {
     if (to.meta.title) {
         document.title = to.meta.title;
+    }
+    switch (to.path) {
+        case '/': {
+            document.title = i18n.t('admin.signIn.signIn');
+            break;
+        }
+        case '/userInfo': {
+            document.title = i18n.t('admin.user.userInfo');
+            break;
+        }
     }
     next();
 })

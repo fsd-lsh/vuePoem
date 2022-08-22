@@ -20,16 +20,16 @@ class dash extends middleware\login {
     /**
      * Func: index
      * User: Force
-     * Date: 11/28/20
-     * Time: 9:40 PM
-     * Desc: 后台界面主体框架
+     * Date: 2022/8/22
+     * Time: 17:05
+     * Desc: 面板
      */
     public function index() {
 
         //API
         sys_api([
 
-            //清理后台视图缓存
+            //清理日志和视图缓存
             'clear_cache' => function() {
 
                 $cache_view = APP_RUNTIME_PATH . 'admin';
@@ -55,20 +55,6 @@ class dash extends middleware\login {
 
                 ajax(1, $info);
             },
-        ]);
-    }
-
-    /**
-     * Func: main
-     * User: Force
-     * Date: 2021/4/7
-     * Time: 20:53
-     * Desc: 后台默认面板
-     */
-    public function main() {
-
-        //API
-        sys_api([
 
             //加载面板数据
             'load' => function() {
@@ -129,7 +115,7 @@ class dash extends middleware\login {
                     }
                 }
 
-                //渲染视图
+                //response
                 ajax(1, trans('admin.dash.loadPanelOk'), [
                     'admin_total' => $admin_total,
                     'role_total' => $role_total,
@@ -226,7 +212,7 @@ class dash extends middleware\login {
                 $user_info['utime'] = date('Y-m-d H:i:s', $user_info['utime']);
                 unset($user_info['password']);
 
-                //渲染视图
+                //response
                 ajax(1, trans('admin.dash.loadUserInfoOk'), [
                     'roles_config' => $roles_info,
                     'user_info' => $user_info,

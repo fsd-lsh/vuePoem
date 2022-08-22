@@ -178,7 +178,7 @@ class user extends middleware\login {
                     }
                 }
 
-                //渲染视图
+                //response
                 ajax(1, trans('admin.user.loadOk'), [
                     'lists' => $lists,
                     'page_html' => $page_info['html'],
