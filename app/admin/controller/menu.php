@@ -440,7 +440,7 @@ class menu extends middleware\login {
             //组装
             if(is_array($method) && !empty($method)) {
 
-                //排除非必要
+                //白名单
                 $filter = ['__construct', '__deconstruct', 'check_login', 'sign_in', 'sign_up', 'sign_out', 'log'];
 
                 //格式化

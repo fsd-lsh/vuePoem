@@ -119,7 +119,7 @@ EOF;
         $path_check = [
             'app/admin/vue',
             'app/admin/controller',
-            'app/service/component',
+            'app/service/middleware',
             'phppoem/core',
             'public/index.php',
             'global.cnf'

@@ -12,11 +12,11 @@
 |  任务/季度  | 2022 Q1 | 2022 Q2 | 2022 Q3 | 2022 Q4 |
 |    ----    |   ----  |   ----  |   ----  |   ----  |
 | 1 | 前后分离 | 国际化支持 | 测试版本修复 | 升级vue3+elementUI Plus |
-| 2 | 基础功能重构 | 基础版本发布 | 发布1.0release | LowCode Dev敬请期待! |
+| 2 | 基础功能重构 | 基础版本发布 | 发布1.0release | x |
 
 ## 项目简介
 - vuePoem是一款轻量级，开源后台快速开发脚手架
-- 基于vue + phppoem框架组合开发
+- 基于vue2 + phppoem框架组合开发
 - 如果您同时熟悉vue和php框架，可以以最短时间利用本脚手架开发项目
 ![show-0](app/admin/vue/static/imgs/show-0.png)
 ![show-1](app/admin/vue/static/imgs/show-1.png)
@@ -24,7 +24,7 @@
 ![show-3](app/admin/vue/static/imgs/show-3.png)
 
 ## 项目特性
-- vue + php前后端分离
+- vue + phppoem前后端分离
 - 命令行工具（一键启动开发模式、一键打包部署模式）
 - 开发即上手，接近0学习成本
 - 系统拥有
@@ -33,14 +33,14 @@
   - 自定义主题
   - 多国语支持
 
-## 项目环境（推荐该版本附近版本）
+## 项目环境（推荐该版本相近版本）
 - PHP 7.4+
 - Node v17.7.2 (npm v8.5.2) +
-- MariaDB / Mysql
+- Mysql5.7
 
 ## 开发运行（以vuePoem项目目录为基准）
 
-自动模式
+自动模式（仅支持linux、MacOS）
 ```shell
 # 1. 填写配置 `global.cnf`（根据你的实际情况修改vue、php、mysql配置）
 vim global.cnf
@@ -104,7 +104,7 @@ server {
 ```
 
 ## 开发文档
-编写中...
+[VuePoem Doc](https://vuepoem.easybhu.cn)
 
 ## 开源许可
 [MIT](LICENSE)
