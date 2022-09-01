@@ -13,10 +13,10 @@
 - vuePoem是一款轻量级，开源后台快速开发脚手架
 - 基于vue2 + phppoem框架组合开发
 - 如果您同时熟悉vue和php框架，可以以最短时间利用本脚手架开发项目
-![show-0](app/admin/vue/static/imgs/show-0.png)
-![show-1](app/admin/vue/static/imgs/show-1.png)
-![show-2](app/admin/vue/static/imgs/show-2.png)
-![show-3](app/admin/vue/static/imgs/show-3.png)
+![show-0](./app/admin/vue/static/imgs/show-0.png)
+![show-1](./app/admin/vue/static/imgs/show-1.png)
+![show-2](./app/admin/vue/static/imgs/show-2.png)
+![show-3](./app/admin/vue/static/imgs/show-3.png)
 
 ## 项目特性
 - vue + phppoem前后端分离
