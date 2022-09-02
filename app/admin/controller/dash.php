@@ -37,7 +37,7 @@ class dash extends middleware\login {
 
                 $info = trans('admin.dash.cleanOk');
 
-                if(file_exists($cache_view) && 0) {
+                if(file_exists($cache_view)) {
                     exec('rm -rf ' . $cache_view);
                     unlink($cache_view);
                     $info .= ', ' . trans('admin.dash.cleanViewOK');

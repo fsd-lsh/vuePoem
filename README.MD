@@ -1,5 +1,5 @@
 # vuePoem
-[中文](./README_CN.MD)|EN
+[中文](./README_CN.MD)|ENGLISH
 
 ![](https://img.shields.io/badge/php-@phppoem-purple.svg?style=flat)
 ![](https://img.shields.io/badge/js-@vue-gree.svg?style=flat)
@@ -13,10 +13,6 @@
 - vuePoem is a lightweight, open source background rapid development scaffolding
 - Combined development based on VUE2 + PHPPOEM framework
 - If you are familiar with both VUE and PHP frameworks, you can use this scaffolding to develop your project in the shortest possible time
-![show-0](./app/admin/vue/static/imgs/show-0.png)
-![show-1](./app/admin/vue/static/imgs/show-1.png)
-![show-2](./app/admin/vue/static/imgs/show-2.png)
-![show-3](./app/admin/vue/static/imgs/show-3.png)
 
 ## Project features
 - vue + phppoem separation
@@ -41,3 +37,9 @@
 
 ## Author
 [Force](https://www.easybhu.cn)
+
+## Preview
+![show-0](./app/admin/vue/static/imgs/show-0.png)
+![show-1](./app/admin/vue/static/imgs/show-1.png)
+![show-2](./app/admin/vue/static/imgs/show-2.png)
+![show-3](./app/admin/vue/static/imgs/show-3.png)

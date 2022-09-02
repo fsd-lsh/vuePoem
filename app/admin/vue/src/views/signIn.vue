@@ -30,8 +30,8 @@ export default {
     data() {
         return {
             form: {
-                name: 'admin',
-                pwd: '123456',
+                name: '',
+                pwd: '',
             },
         }
     },
