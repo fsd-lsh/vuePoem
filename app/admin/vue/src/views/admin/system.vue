@@ -69,7 +69,7 @@
 
             return {
 
-                //系统监控信息
+                timer: '',
                 systemInfo: {
                     cpu: [],
                     hdd: [],
@@ -83,7 +83,7 @@
 
             //加载系统监控信息
             let that = this;
-            setInterval(() => {
+            this.timer = setInterval(() => {
                 that.loadSystemInfo();
             }, 2500);
         },
@@ -102,7 +102,11 @@
                     },
                 });
             },
-        }
+        },
+
+        destroyed() {
+            clearInterval(this.timer);
+        },
     };
 </script>
 

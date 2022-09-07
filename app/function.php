@@ -111,7 +111,7 @@ if(!function_exists('array_order_by')) {
      * Time: 13:57
      * Desc: PHP多维数组ORDER BY
      */
-    function array_order_by(){
+    function array_order_by() {
         $args = func_get_args();
         $data = array_shift($args);
         foreach ($args as $n => $field) {
