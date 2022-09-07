@@ -302,7 +302,7 @@
                     success: (res) => {
                         if(res.data.code === 1) {
                             this.$notify({
-                                title: $t('admin.public.success'),
+                                title: this.$t('admin.public.success'),
                                 message: res.data.info,
                                 type: 'success'
                             });
@@ -320,7 +320,7 @@
 
                 if(s === undefined) {
                     if(this.tableSelection.length === 0) {
-                        this.$notify({message:$t('admin.public.checkRec'), type:'warning'});
+                        this.$notify({message:this.$t('admin.public.checkRec'), type:'warning'});
                         return false;
                     }else {
                         for (let key in this.tableSelection) {
@@ -332,7 +332,7 @@
                 }
 
                 if(ids.length === 0) {
-                    this.$message({ message:$t('admin.public.checkRec'), type:'warning' });
+                    this.$message({ message:this.$t('admin.public.checkRec'), type:'warning' });
                     return false;
                 }
                 this.poemRequest({
@@ -342,7 +342,7 @@
                     success: (res) => {
                         if(res.data.code === 1) {
                             this.$notify({
-                                title: $t('admin.public.success'),
+                                title: this.$t('admin.public.success'),
                                 message: res.data.info,
                                 type: 'success'
                             });

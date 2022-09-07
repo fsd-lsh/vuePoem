@@ -26,12 +26,12 @@
                 > .logo {
 
                     width: 100%;
-                    height: 60px;
+                    height: 52px;
+                    line-height: 52px;
                     background: var(--sys-main-menu-color);
                     text-align: center;
                     font-weight: 600;
                     font-size: 1.4rem;
-                    line-height: 60px;
                     color: #fff;
 
                     i {
@@ -83,6 +83,12 @@
                     .el-submenu__title,
                     .el-menu-item {
                         text-align: left;
+                        &:hover {
+                            background: var(--sys-main-ft-color)!important;
+                            > i {
+                                color: #fff!important;
+                            }
+                        }
                     }
 
                     li.el-menu-item {
@@ -153,7 +159,17 @@
                 }
 
                 > .el-menu {
+
                     border: none;
+
+                    > li {
+                        height: 52px;
+                        line-height: 52px;
+                        > div {
+                            height: 52px;
+                            line-height: 52px;
+                        }
+                    }
                 }
 
                 > div:nth-child(2) {

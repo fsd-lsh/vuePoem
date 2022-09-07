@@ -21,6 +21,7 @@
                 @close="handleClose"
                 background-color="var(--sys-main-menu-color2)"
                 text-color="#fff"
+                :unique-opened="true"
                 :collapse="isCollapse">
                 <div
                     v-for="(item, key) in this.subMenuTree.child"
@@ -343,10 +344,9 @@ export default {
             for (let key = 0; key < menuTree.length; key++) {
                 if (parseInt(menuTree[key].id) === parseInt(tree_key)) {
                     this.subMenuTree = menuTree[key];
-                    if(!onSelect) {
+                    if (!onSelect) {
                         //刷新
-
-                    }else {
+                    } else {
                         //点击
                         this.$router.push(this.subMenuTree.child[0].href);
                     }
@@ -357,16 +357,35 @@ export default {
 
         //定位menu active
         positionMenu() {
+
             let menuTree = this.$store.state.menuTree.menuInfo;
+            let active = (pid, id) => {
+                this.menuHandleSelect(pid, false);
+                this.pid = pid;
+                this.id = id;
+                this.activeIndex = pid;
+                this.activeSubIndex = id;
+            };
+
             for (let key in menuTree) {
                 if (menuTree[key].child.length) {
                     for (let s_key in menuTree[key].child) {
-                        if (menuTree[key].child[s_key].href === this.$route.path) {
-                            this.pid = menuTree[key].child[s_key].pid;
-                            this.id = menuTree[key].child[s_key].id;
-                            this.menuHandleSelect(this.pid, false);
-                            this.activeIndex = this.pid;
-                            this.activeSubIndex = this.id;
+                        if(menuTree[key].child[s_key].child.length) {
+                            for (let ss_key in menuTree[key].child[s_key].child) {
+                                if(this.$route.path === menuTree[key].child[s_key].child[ss_key].href) {
+                                    active(
+                                        menuTree[key].child[s_key].pid,
+                                        menuTree[key].child[s_key].child[ss_key].pid + '-' + menuTree[key].child[s_key].child[ss_key].id,
+                                    );
+                                }
+                            }
+                        }else {
+                            if (this.$route.path === menuTree[key].child[s_key].href) {
+                                active(
+                                    menuTree[key].child[s_key].pid,
+                                    menuTree[key].child[s_key].id,
+                                );
+                            }
                         }
                     }
                 }

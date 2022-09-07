@@ -309,7 +309,7 @@
                 this.editForm.menu_ids = temp_ids;
 
                 if(this.editForm.menu_ids.length === 0) {
-                    this.$notify({title:this.$t('admin.public.warning'), message:$t('admin.roles.selectMenu'), type:'warning' });
+                    this.$notify({title:this.$t('admin.public.warning'), message:this.$t('admin.roles.selectMenu'), type:'warning' });
                     return false;
                 }
 
