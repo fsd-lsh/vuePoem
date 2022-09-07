@@ -66,8 +66,6 @@ export default {
 
                 if(options.error) {
                     options.error;
-                }else {
-                    //this.$notify.error({message: '服务器发生异常'});
                 }
             });
         },
@@ -93,23 +91,35 @@ export default {
         //加载主题
         loadTheme() {
 
-            this.poemRequest({
-                type: 'get',
-                url: '/admin/index/theme?api=load',
-                success: (res) => {
-                    if(res.data.code === 1) {
-                        this.themeList = res.data.data;
+            let focusTheme = () => {
+                if(this.in_array(window.localStorage.getItem('sys-theme'), this.themeList)) {
+                    this.nowTheme = window.localStorage.getItem('sys-theme');
+                }else {
+                    this.nowTheme = this.themeList[0];
+                }
+            };
 
-                        if(this.in_array(window.localStorage.getItem('sys-theme'), this.themeList)) {
-                            this.nowTheme = window.localStorage.getItem('sys-theme');
+            if(window.sessionStorage.getItem('sys-theme-lists')) {
+
+                this.themeList = JSON.parse(window.sessionStorage.getItem('sys-theme-lists'));
+                focusTheme();
+
+            }else {
+
+                this.poemRequest({
+                    type: 'get',
+                    url: '/admin/index/theme?api=load',
+                    success: (res) => {
+                        if(res.data.code === 1) {
+                            this.themeList = res.data.data;
+                            window.sessionStorage.setItem('sys-theme-lists', JSON.stringify(res.data.data));
+                            focusTheme();
                         }else {
-                            this.nowTheme = this.themeList[0];
+                            this.$notify({message: res.data.info, type: 'warning'});
                         }
-                    }else {
-                        this.$notify({message: res.data.info, type: 'warning'});
-                    }
-                },
-            });
+                    },
+                });
+            }
         },
 
         //页面每次刷新加载时候都会去读取sessionStorage里面的vuex状态
@@ -127,8 +137,8 @@ export default {
         //获取GET请求
         parseGET() {
 
-            let url = window.document.location.href.toString();   //当前完整url
-            let u = url.split("?");                               //以？为分隔符把url转换成字符串数组
+            let url = window.document.location.href.toString();
+            let u = url.split("?");
 
             if(typeof(u[1]) == "string"){
 

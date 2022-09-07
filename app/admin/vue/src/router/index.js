@@ -1,7 +1,6 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import axios from 'axios';
-
 Vue.use(Router);
 
 let router = new Router({
@@ -35,9 +34,7 @@ axios.get('/admin/menu/load?lang='+lang).then(res => {
 
     if(res.data.code === 955) {
         sessionStorage.setItem('store', JSON.stringify({isSignIn:false,menuTree:{}}));
-        if(window.location.hash !== '#/') {
-            window.location.href = '/';
-        }
+        router.push('/');
         return false;
     }
 
@@ -74,6 +71,15 @@ axios.get('/admin/menu/load?lang='+lang).then(res => {
             }
         }
     }
+});
+
+router.beforeEach((to, from, next) => {
+
+    let store = JSON.parse(window.sessionStorage.getItem('store'));
+    if(to.path === '/' && store.isSignIn === true) {
+        router.push('/dash');
+    }
+    next();
 });
 
 export default router;

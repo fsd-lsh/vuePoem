@@ -23,8 +23,8 @@
             "selectMenu": "Please select",
             "themeNotFound": "Theme not found",
             "apiNotFound": "API not found",
-            "statusNotAllow": "status not allow",
-            "rowDataNotFound": "row data not found"
+            "statusNotAllow": "Status not allow",
+            "rowDataNotFound": "Row data not found"
         },
         "restful": {
             "noSupportMethod": "Methods that are not supported",

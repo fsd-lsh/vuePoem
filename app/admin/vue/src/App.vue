@@ -38,6 +38,9 @@ export default {
 
     created() {
 
+        //load theme
+        this.loadTheme();
+
         //sysInfo
         console.log(
             `%c Design By Force %c VuePoem %c`,

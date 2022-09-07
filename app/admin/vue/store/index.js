@@ -28,6 +28,11 @@ const store = new Vuex.Store({
         getMenuTree(state) {
             return state.menuTree;
         },
+
+        //获取登录状态
+        getSignIn(state) {
+            return state.isSignIn;
+        }
     },
 });
 
