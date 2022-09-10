@@ -4,13 +4,14 @@
 
         <!--左侧部分（logo、二级菜单）-->
         <el-col
-            :span="this.$store.state.isSignIn ? 3 : 0"
+            :span="this.leftViewSpan"
             v-if="this.$store.state.isSignIn"
             id="left">
 
             <!--logo-->
             <div class="logo">
-                <i class="fa fa-chrome">&nbsp;&nbsp;</i><b>Vue<i>Poem</i></b>
+                <i class="fa fa-chrome"></i>
+                <b v-if="!isCollapse">&nbsp;&nbsp;Vue<i>Poem</i></b>
             </div>
 
             <!--二级菜单-->
@@ -19,9 +20,10 @@
                 class="menu-level-2"
                 @open="handleOpen"
                 @close="handleClose"
-                background-color="var(--sys-main-menu-color2)"
+                background-color="#23262e"
                 text-color="#fff"
                 :unique-opened="true"
+                :collapse-transition="true"
                 :collapse="isCollapse">
                 <div
                     v-for="(item, key) in this.subMenuTree.child"
@@ -30,6 +32,8 @@
                     <!--多级-->
                     <el-submenu
                         v-if="item.child.length"
+                        :show-timeout="200"
+                        :hide-timeout="200"
                         :index="item.id">
                         <template
                             slot="title">
@@ -56,8 +60,8 @@
                         <i :class="item.icon"></i>
                         <span
                             slot="title">
-                                &nbsp;&nbsp;&nbsp;{{ item.title }}
-                            </span>
+                            &nbsp;&nbsp;&nbsp;{{ item.title }}
+                        </span>
                     </el-menu-item>
                 </div>
             </el-menu>
@@ -95,17 +99,11 @@
 
         <!--右侧部分（一级菜单、路由视图）-->
         <el-col
-            :span="this.$store.state.isSignIn ? 21 : 24"
+            :span="this.rightViewSpan"
             :class="{
                 'inner-view': this.$store.state.isSignIn,
             }"
             id="right">
-
-            <!--展开收起左侧菜单-->
-            <el-radio-group v-if="0" v-model="isCollapse" style="margin-bottom: 20px;">
-                <el-radio-button :label="false">{{$t('admin.public.open')}}</el-radio-button>
-                <el-radio-button :label="true">{{$t('admin.public.close')}}</el-radio-button>
-            </el-radio-group>
 
             <!--一级菜单-->
             <el-menu
@@ -119,13 +117,26 @@
                 style="width:100%!important;"
                 active-text-color="var(--sys-main-ft-color2)">
                 <el-menu-item
+                    @click="toolsGroup('menu')">
+                    <el-tooltip
+                        class="item"
+                        effect="dark"
+                        :content="(isCollapse === true ? $t('admin.public.open') : $t('admin.public.close'))"
+                        placement="bottom">
+                        <i :class="{
+                        'fa fa-indent': isCollapse,
+                        'fa fa-outdent': !isCollapse,
+                    }"/>
+                    </el-tooltip>
+                </el-menu-item>
+                <el-menu-item
                     v-for="(item, key) in this.$store.state.menuTree.menuInfo"
                     :key="item.id"
                     :index="item.id">
                     {{ item.title }}
                 </el-menu-item>
                 <el-menu-item
-                    @click="openTools('configPanel')"
+                    @click="toolsGroup('configPanel')"
                     class="pull-right">
                     <el-tooltip class="item" effect="dark" :content="$t('admin.public.config')" placement="bottom">
                         <i class="fa fa-ellipsis-v"></i>
@@ -136,16 +147,16 @@
                     class="pull-right">
                     <template slot="title">{{ username }}</template>
                     <el-menu-item
-                        @click="openTools('modAccount')"
+                        @click="toolsGroup('modAccount')"
                         index="2-1">{{$t('admin.public.modAccount')}}
                     </el-menu-item>
                     <el-menu-item
-                        @click="openTools('signOut')"
+                        @click="toolsGroup('signOut')"
                         index="2-2">{{$t('admin.public.signOut')}}
                     </el-menu-item>
                 </el-submenu>
                 <el-menu-item
-                    @click="openTools('fullScreen')"
+                    @click="toolsGroup('fullScreen')"
                     class="pull-right">
                     <el-tooltip class="item" effect="dark" :content="$t('admin.public.fullScreen')" placement="bottom">
                         <i v-if="!iFullscreen" class="fa fa-arrows-alt"></i>
@@ -155,14 +166,14 @@
                     </el-tooltip>
                 </el-menu-item>
                 <el-menu-item
-                    @click="openTools('clean')"
+                    @click="toolsGroup('clean')"
                     class="pull-right">
                     <el-tooltip class="item" effect="dark" :content="$t('admin.public.clear')" placement="bottom">
                         <i class="fa fa-trash-o"></i>
                     </el-tooltip>
                 </el-menu-item>
                 <el-menu-item
-                    @click="openTools('language')"
+                    @click="toolsGroup('language')"
                     class="pull-right">
                     <el-tooltip class="item" effect="dark" :content="$t('admin.public.switchLanguage')" placement="bottom">
                         <i class="fa fa-language"></i>
@@ -170,8 +181,21 @@
                 </el-menu-item>
             </el-menu>
 
-            <!--hot view-->
-            <slot/>
+            <!--Nav tabs-->
+            <el-tabs
+                v-model="focusTab"
+                type="border-card"
+                @tab-click="tabClick"
+                @tab-remove="tabRemove"
+                :closable="tabs.length !== 1">
+                <el-tab-pane
+                    v-for="(item, index) in tabs"
+                    :key="item.name"
+                    :label="item.title"
+                    :name="item.name">
+                    <slot/>
+                </el-tab-pane>
+            </el-tabs>
         </el-col>
     </el-row>
 </template>
@@ -210,6 +234,12 @@ export default {
 
         //写入用户信息
         this.username = sessionStorage.getItem('username');
+
+        //initCollapse
+        let collapse = window.localStorage.getItem('collapse');
+        collapse = collapse === 'true';
+        this.isCollapse = collapse;
+        window.localStorage.setItem('collapse', collapse);
     },
 
     updated() {
@@ -223,7 +253,7 @@ export default {
     methods: {
 
         //工具组
-        openTools(type) {
+        toolsGroup(type) {
 
             switch (type) {
 
@@ -289,6 +319,7 @@ export default {
 
                 //注销系统
                 case 'signOut': {
+
                     this.poemRequest({
                         type: 'post',
                         url: '/admin?api=sign_out',
@@ -297,6 +328,7 @@ export default {
                                 this.$store.commit('changeSignInState', false);
                                 sessionStorage.setItem('store', JSON.stringify({isSignIn:false,menuTree:{}}));
                                 this.$router.push(res.data.data);
+                                this.tabClear();
                                 this.$notify({message: res.data.info, type: 'success'});
                             } else {
                                 this.$notify({message: res.data.info, type: 'warning'});
@@ -327,7 +359,17 @@ export default {
                             break;
                         }
                     }
+
+                    this.tabClear();
+
                     window.location.reload();
+                    break;
+                }
+
+                //菜单控制
+                case 'menu': {
+                    this.isCollapse = !this.isCollapse;
+                    window.localStorage.setItem('collapse', this.isCollapse);
                     break;
                 }
             }
@@ -423,11 +465,11 @@ export default {
             this.positionMenu();
         },
 
-        isCollapse() {
+        isCollapse(v) {
 
             if(this.$store.state.isSignIn) {
 
-                if(isCollapse) {
+                if(v) {
                     this.leftViewSpan = 1;
                     this.rightViewSpan = 23;
                 }else {

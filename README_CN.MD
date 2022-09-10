@@ -1,5 +1,5 @@
 # vuePoem
-[ENGLISH](./README.MD)|中文
+[ENGLISH](./README.MD) | 中文
 
 ![](https://img.shields.io/badge/php-@phppoem-purple.svg?style=flat)
 ![](https://img.shields.io/badge/js-@vue-gree.svg?style=flat)

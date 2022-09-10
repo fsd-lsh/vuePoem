@@ -46,6 +46,8 @@
 
                 > .menu-level-2 {
 
+                    width: 100%;
+
                     .el-submenu {
 
                         .el-menu-item-group {
@@ -93,6 +95,27 @@
 
                     li.el-menu-item {
                         font-size: .8rem;
+                    }
+                }
+
+                > .menu-level-2.el-menu--collapse {
+
+                    > div {
+
+                        > li {
+
+                            > div {
+
+                                text-align: center;
+
+                                > span:nth-child(2) {
+                                    display: none;
+                                }
+                                > i:nth-child(3) {
+                                    display: none;
+                                }
+                            }
+                        }
                     }
                 }
 
@@ -201,6 +224,10 @@
 
                             &:hover {
                                 background: var(--sys-main-color)!important;
+                            }
+
+                            span {
+                                white-space: unset!important;
                             }
                         }
                     }
