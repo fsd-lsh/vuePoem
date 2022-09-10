@@ -202,7 +202,9 @@ export default {
 
         //navTab 点击回调
         tabClick({name}) {
-            this.$router.push({name:name});
+            if(name !== this.$route.name) {
+                this.$router.push({name:name});
+            }
         },
 
         //navTab 移除回调

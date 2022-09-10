@@ -183,6 +183,7 @@
 
             <!--Nav tabs-->
             <el-tabs
+                id="nav-tabs"
                 v-model="focusTab"
                 type="border-card"
                 @tab-click="tabClick"
