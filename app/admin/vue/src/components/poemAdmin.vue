@@ -194,9 +194,9 @@
                     :key="item.name"
                     :label="item.title"
                     :name="item.name">
-                    <slot/>
                 </el-tab-pane>
             </el-tabs>
+            <slot/>
         </el-col>
     </el-row>
 </template>
