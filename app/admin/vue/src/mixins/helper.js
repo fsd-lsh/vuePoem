@@ -1,21 +1,6 @@
 import axios from "axios";
 export default {
 
-    data() {
-        return {
-
-            //主题列表
-            themeList: [],
-
-            //当前主题
-            nowTheme: '',
-
-            //Nav tab
-            focusTab: '',
-            tabs: [],
-        }
-    },
-
     created() {
 
         //加载store
@@ -25,12 +10,6 @@ export default {
         window.addEventListener("pagehide", () => {
             sessionStorage.setItem("store", JSON.stringify(this.$store.state));
         });
-
-        //加载主题
-        this.loadTheme();
-
-        //Nav tab
-        this.tabInit();
     },
 
     methods: {
@@ -95,40 +74,6 @@ export default {
             });
         },
 
-        //加载主题
-        loadTheme() {
-
-            let focusTheme = () => {
-                if(this.in_array(window.localStorage.getItem('sys-theme'), this.themeList)) {
-                    this.nowTheme = window.localStorage.getItem('sys-theme');
-                }else {
-                    this.nowTheme = this.themeList[0];
-                }
-            };
-
-            if(window.sessionStorage.getItem('sys-theme-lists')) {
-
-                this.themeList = JSON.parse(window.sessionStorage.getItem('sys-theme-lists'));
-                focusTheme();
-
-            }else {
-
-                this.poemRequest({
-                    type: 'get',
-                    url: '/admin/index/theme?api=load',
-                    success: (res) => {
-                        if(res.data.code === 1) {
-                            this.themeList = res.data.data;
-                            window.sessionStorage.setItem('sys-theme-lists', JSON.stringify(res.data.data));
-                            focusTheme();
-                        }else {
-                            this.$notify({message: res.data.info, type: 'warning'});
-                        }
-                    },
-                });
-            }
-        },
-
         //页面每次刷新加载时候都会去读取sessionStorage里面的vuex状态
         loadStore() {
             if (sessionStorage.getItem("store")) {
@@ -173,61 +118,21 @@ export default {
             return false;
         },
 
-        //NavTab 初始化
-        tabInit() {
-
-            let tabs = JSON.parse(window.sessionStorage.getItem('tabs'));
-            if(tabs) {
-                this.tabs = tabs;
-            }
-            this.focusTab = this.$route.name;
-            if(this.$route.name && this.$route.name !== 'signIn') {
-                let title = this.$route.meta.title;
-                this.tabs.push({
-                    name: this.$route.name,
-                    title: title.slice(0, title.indexOf(' -'))
-                });
-            }
-
-            let map = new Map();
-            for (let item of this.tabs) {
-                if (!map.has(item.name)) {
-                    map.set(item.name, item);
+        //切换语言
+        switchLang() {
+            let lang = window.localStorage.getItem('sys-lang');
+            switch (lang) {
+                case 'en': {
+                    window.localStorage.setItem('sys-lang', 'zh');
+                    break;
                 }
-            }
-            this.tabs = [...map.values()];
-
-            window.sessionStorage.setItem('tabs', JSON.stringify(this.tabs));
-        },
-
-        //navTab 点击回调
-        tabClick({name}) {
-            if(name !== this.$route.name) {
-                this.$router.push({name:name});
-            }
-        },
-
-        //navTab 移除回调
-        tabRemove(name) {
-
-            for (let index in this.tabs) {
-                if(this.tabs[index].name === name) {
-                    this.tabs.splice(index, 1);
+                case 'zh':
+                default: {
+                    window.localStorage.setItem('sys-lang', 'en');
                     break;
                 }
             }
-
-            window.sessionStorage.setItem('tabs', JSON.stringify(this.tabs));
-            let autoFocusTab = this.tabs[0].name;
-            if(this.$route.name === name && this.$route.name !== autoFocusTab) {
-                this.tabClick({name:autoFocusTab});
-            }
-        },
-
-        //navTab cache clear
-        tabClear() {
-            this.tabs = [];
-            window.sessionStorage.setItem('tabs', JSON.stringify([]));
+            this.$router.go(0);
         },
     },
 }

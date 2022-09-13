@@ -74,21 +74,24 @@
                     :gutter="20">
                     <el-col
                         class="config-panel-title"
-                        :span="24">{{$t('admin.public.setTheme')}}</el-col>
+                        :span="24">
+                        {{$t('admin.public.setTheme')}}
+                    </el-col>
                     <el-col
                         :span="8"
                         :key="key"
-                        v-for="(item, key) in themeList"
-                        @click.native="themeHandleChange(item)"
+                        v-for="(theme, key) in themeList"
+                        @click.native="themeHandleChange(theme)"
                         class="config-panel-item">
                         <div
-                            :class="{
-                                'grid-content': true,
-                                'active': (nowTheme === item),
-                            }">
-                            <el-tooltip class="item" effect="dark" :content="item" placement="bottom">
-                                <div class="text">{{item}}</div>
-                            </el-tooltip>
+                            :class="[
+                                'grid-content',
+                                theme,
+                            ]">
+                            <div class="top"></div>
+                            <div class="left"></div>
+                            <div class="right"></div>
+                            <b class="fa fa-check-circle" v-if="(nowTheme === theme)"/>
                         </div>
                     </el-col>
                 </el-row>
@@ -201,12 +204,14 @@
 
 <script>
 import helper from "../mixins/helper";
+import navTab from "../mixins/navTab";
+import theme from "../mixins/theme";
 
 export default {
 
     name: 'admin',
 
-    mixins: [helper],
+    mixins: [helper, navTab, theme],
 
     data() {
         return {
@@ -345,23 +350,8 @@ export default {
 
                 //语言切换
                 case 'language': {
-
-                    let lang = window.localStorage.getItem('sys-lang');
-                    switch (lang) {
-                        case 'en': {
-                            window.localStorage.setItem('sys-lang', 'zh');
-                            break;
-                        }
-                        case 'zh':
-                        default: {
-                            window.localStorage.setItem('sys-lang', 'en');
-                            break;
-                        }
-                    }
-
                     this.tabClear();
-
-                    window.location.reload();
+                    this.switchLang();
                     break;
                 }
 
@@ -436,17 +426,6 @@ export default {
         //切换页面
         openMenu(item) {
             this.$router.push(item.href);
-        },
-
-        //主题面板切换
-        themeHandleChange(themeClassName) {
-
-            if(!this.in_array(themeClassName, this.themeList)) {
-                this.$notify({ message:this.$t('admin.public.themeNotFound'), type:'error'});
-                return false;
-            }
-            window.localStorage.setItem('sys-theme', themeClassName);
-            this.nowTheme = themeClassName;
         },
     },
 

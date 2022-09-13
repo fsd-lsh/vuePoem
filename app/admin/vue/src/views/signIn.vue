@@ -1,6 +1,6 @@
 <!--系统管理 - 登录-->
 <template>
-    <div id="sign-in">
+    <div id="sign-in" :class="nowTheme">
         <div class="head">{{$t('admin.signIn.title')}}</div>
         <el-form ref="form" :model="form" label-width="65px">
             <el-form-item :label="$t('admin.signIn.account')">
@@ -13,19 +13,20 @@
                 <el-button @click="signIn" type="success" size="small">{{$t('admin.signIn.signIn')}}</el-button>
             </div>
         </el-form>
-        <el-button id="switch-lang" @click="switchLang" type="success" size="mini"><i class="fa fa-language"/>&nbsp;{{$t('admin.signIn.signName')}}</el-button>
+        <el-link id="switch-lang" type="primary" @click="switchLang"><i class="fa fa-language"/>&nbsp;{{$t('admin.signIn.signName')}}</el-link>
     </div>
 </template>
 
 <script>
 
 import helper from '../mixins/helper';
+import theme from '../mixins/theme';
 
 export default {
 
     name: 'signIn',
 
-    mixins: [helper],
+    mixins: [helper, theme],
 
     data() {
         return {
@@ -83,22 +84,6 @@ export default {
                 },
             });
         },
-
-        switchLang() {
-            let lang = window.localStorage.getItem('sys-lang');
-            switch (lang) {
-                case 'en': {
-                    window.localStorage.setItem('sys-lang', 'zh');
-                    break;
-                }
-                case 'zh':
-                default: {
-                    window.localStorage.setItem('sys-lang', 'en');
-                    break;
-                }
-            }
-            this.$router.go(0);
-        },
     },
 }
 </script>
@@ -122,7 +107,7 @@ export default {
         position: relative;
 
         .head {
-            background-color: #48bfa4;
+            background-color: var(--sys-main-color);
             height: 60px;
             line-height: 60px;
             border-radius: 12px 12px 0 0;
@@ -138,28 +123,29 @@ export default {
 
         #switch-lang {
             position: absolute;
-            bottom: 0;
-            right: 0;
+            bottom: 5px;
+            right: 5px;
             display: inline-block;
         }
     }
 
     .el-form {
 
-        padding:25px;
+        padding: 25px;
 
         .el-form-item {
-            margin:0 0 10px 0;
+            margin: 0 0 10px 0;
         }
 
         .button-group {
 
-            text-align:center;
-            margin:20px 0 0 0;
+            text-align: center;
+            margin: 20px 0 0 0;
 
             > button {
-                width:100%;
-                background:#48bfa4;
+                width: 100%;
+                background: var(--sys-main-ft-color);
+                border-color: var(--sys-main-ft-color);
             }
         }
     }

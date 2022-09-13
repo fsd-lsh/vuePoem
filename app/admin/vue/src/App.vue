@@ -11,12 +11,13 @@
 <script>
 
 import helper from "./mixins/helper";
+import theme from "./mixins/theme";
 
 export default {
 
     name: 'App',
 
-    mixins: [helper],
+    mixins: [helper, theme],
 
     beforeCreate() {
 
