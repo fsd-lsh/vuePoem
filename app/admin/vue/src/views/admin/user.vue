@@ -235,7 +235,7 @@
         created() {
 
             //加载列表
-            this.loadList(
+            this.loadLists(
                 this.parseGET()['p']
             );
         },
@@ -245,7 +245,7 @@
                 handler() {
 
                     //加载列表
-                    this.loadList(
+                    this.loadLists(
                         this.parseGET()['p']
                     );
                 },
@@ -270,6 +270,7 @@
                     data: this.form,
                     success: (res) => {
                         if(res.data.code === 1) {
+                            this.loadLists();
                             this.$notify({
                                 title: this.$t('admin.public.success'),
                                 message: res.data.info,
@@ -301,6 +302,7 @@
                     data: {form:this.editForm},
                     success: (res) => {
                         if(res.data.code === 1) {
+                            this.loadLists();
                             this.$notify({
                                 title: this.$t('admin.public.success'),
                                 message: res.data.info,
@@ -341,6 +343,7 @@
                     data: {ids:ids, status:status},
                     success: (res) => {
                         if(res.data.code === 1) {
+                            this.loadLists();
                             this.$notify({
                                 title: this.$t('admin.public.success'),
                                 message: res.data.info,
@@ -373,7 +376,7 @@
             },
 
             //加载列表
-            loadList(page) {
+            loadLists(page) {
 
                 page = (!page) ? (page = 1) : (page);
 

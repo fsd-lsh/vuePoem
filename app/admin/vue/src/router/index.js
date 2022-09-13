@@ -40,9 +40,14 @@ axios.get('/admin/menu/load?lang='+lang).then(res => {
 
     let menu = res.data.data.menuInfo;
     let logoInfo = res.data.data.logoInfo;
-    let store = JSON.parse(window.sessionStorage.getItem('store'));
-    store.menuTree.menuInfo = menu;
-    window.sessionStorage.setItem('store', JSON.stringify(store));
+
+    if(window.sessionStorage.getItem('store')) {
+        let store = JSON.parse(window.sessionStorage.getItem('store'));
+        store.menuTree.menuInfo = menu;
+        window.sessionStorage.setItem('store', JSON.stringify(store));
+    }else {
+        window.sessionStorage.setItem('store', JSON.stringify([]));
+    }
 
     if(res.data.code === 1) {
         for (let index = 0; index < menu.length; index++) {
@@ -75,9 +80,11 @@ axios.get('/admin/menu/load?lang='+lang).then(res => {
 
 router.beforeEach((to, from, next) => {
 
-    let store = JSON.parse(window.sessionStorage.getItem('store'));
-    if(to.path === '/' && store.isSignIn === true) {
-        router.push('/dash');
+    if(window.sessionStorage.getItem('store')) {
+        let store = JSON.parse(window.sessionStorage.getItem('store'));
+        if(to.path === '/' && store.isSignIn === true) {
+            router.push('/dash');
+        }
     }
     next();
 });

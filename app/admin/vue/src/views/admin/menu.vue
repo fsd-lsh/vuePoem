@@ -424,6 +424,7 @@
                     data: this.form,
                     success: (res) => {
                         if(res.data.code === 1) {
+                            this.loadLists();
                             this.$notify({
                                 title: this.$t('admin.public.success'),
                                 message: res.data.info,
@@ -445,6 +446,7 @@
                     data: this.editForm,
                     success: (res) => {
                         if(res.data.code === 1) {
+                            this.loadLists();
                             this.$notify({
                                 title: this.$t('admin.public.success'),
                                 message: res.data.info,
@@ -486,6 +488,7 @@
                     data: {ids:ids, status:status},
                     success: (res) => {
                         if(res.data.code === 1) {
+                            this.loadLists();
                             this.$notify({
                                 title: this.$t('admin.public.success'),
                                 message: res.data.info,

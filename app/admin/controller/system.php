@@ -43,9 +43,11 @@ class system extends middleware\login {
 
                 //CPU
                 exec('cat /proc/cpuinfo | head -20', $data['cpu']);
+                $data['cpu'] ? : exec('sysctl machdep.cpu', $data['cpu']);
 
                 //内存
                 exec('cat /proc/meminfo | head -20', $data['ram']);
+                $data['ram'] ? : exec('top -l 1 | head -n 10 | grep PhysMem', $data['ram']);
 
                 //磁盘
                 exec('df -h', $data['hdd']);

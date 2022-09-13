@@ -18,8 +18,6 @@
             <el-menu
                 :default-active="activeSubIndex"
                 class="menu-level-2"
-                @open="handleOpen"
-                @close="handleClose"
                 background-color="#23262e"
                 text-color="#fff"
                 :unique-opened="true"
@@ -449,14 +447,6 @@ export default {
             }
             window.localStorage.setItem('sys-theme', themeClassName);
             this.nowTheme = themeClassName;
-        },
-
-        handleOpen(key, keyPath) {
-            //console.log(key, keyPath);
-        },
-
-        handleClose(key, keyPath) {
-            //console.log(key, keyPath);
         },
     },
 
