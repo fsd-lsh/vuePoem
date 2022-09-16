@@ -20,8 +20,8 @@ class dash extends middleware\login {
     /**
      * Func: index
      * User: Force
-     * Date: 2022/8/22
-     * Time: 17:05
+     * Date: 2022/9/16
+     * Time: 14:42
      * Desc: 面板
      */
     public function index() {
@@ -117,10 +117,10 @@ class dash extends middleware\login {
 
                 //response
                 ajax(1, trans('admin.dash.loadPanelOk'), [
-                    'admin_total' => $admin_total,
-                    'role_total' => $role_total,
-                    'menu_total' => $menu_total,
-                    'log_total' => $log_total,
+                    'user' => $admin_total,
+                    'roles' => $role_total,
+                    'menu' => $menu_total,
+                    'log/sysLog' => $log_total,
                 ]);
             },
         ]);

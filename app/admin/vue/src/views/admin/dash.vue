@@ -10,77 +10,51 @@
                         <div>
                             <p><i class="fa fa-area-chart"></i>&nbsp;&nbsp;{{$t('admin.dash.dataStatistics')}}</p>
                             <el-row :gutter="10" class="dash-item-cover">
-                                <el-col :span="12" class="dash-item-card">
+
+                                <el-col
+                                    :span="12"
+                                    class="dash-item-card"
+                                    :key="flag"
+                                    v-for="(subDash, flag) in dashData">
                                     <div>
-                                        <p>{{$t('admin.dash.user')}}</p>
+                                        <p v-if="flag === 'user'">{{$t('admin.dash.user')}}</p>
+                                        <p v-if="flag === 'roles'">{{$t('admin.dash.role')}}</p>
+                                        <p v-if="flag === 'menu'">{{$t('admin.dash.menu')}}</p>
+                                        <p v-if="flag === 'log/sysLog'">{{$t('admin.dash.log')}}</p>
                                         <div class="total-group">
-                                            <span class="total">{{parseInt(adminTotal[0]) + parseInt(adminTotal[1]) + parseInt(adminTotal[2])}}</span>
+                                            <span class="total">{{parseInt(subDash[0]) + parseInt(subDash[1]) + parseInt(subDash[2])}}</span>
                                             <span>(</span>
-                                            <el-tooltip class="item" effect="dark" :content="$t('admin.dash.userNormal')" placement="top">
-                                                <span class="status_1">{{adminTotal[1]}}&nbsp;&nbsp;</span>
-                                            </el-tooltip>
-                                            <el-tooltip class="item" effect="dark" :content="$t('admin.dash.userStop')" placement="top">
-                                                <span class="status_2">{{adminTotal[2]}}&nbsp;&nbsp;</span>
-                                            </el-tooltip>
-                                            <el-tooltip class="item" effect="dark" :content="$t('admin.dash.userDel')" placement="top">
-                                                <span class="status_0">{{adminTotal[0]}}</span>
-                                            </el-tooltip>
-                                            <span>)</span>
-                                        </div>
-                                    </div>
-                                </el-col>
-                                <el-col :span="12" class="dash-item-card">
-                                    <div>
-                                        <p>{{$t('admin.dash.role')}}</p>
-                                        <div class="total-group">
-                                            <span class="total">{{parseInt(roleTotal[0]) + parseInt(roleTotal[1]) + parseInt(roleTotal[2])}}</span>
-                                            <span>(</span>
-                                            <el-tooltip class="item" effect="dark" :content="$t('admin.dash.roleNormal')" placement="top">
-                                                <span class="status_1">{{roleTotal[1]}}&nbsp;&nbsp;</span>
-                                            </el-tooltip>
-                                            <el-tooltip class="item" effect="dark" :content="$t('admin.dash.roleStop')" placement="top">
-                                                <span class="status_2">{{roleTotal[2]}}&nbsp;&nbsp;</span>
-                                            </el-tooltip>
-                                            <el-tooltip class="item" effect="dark" :content="$t('admin.dash.roleDel')" placement="top">
-                                                <span class="status_0">{{roleTotal[0]}}</span>
-                                            </el-tooltip>
-                                            <span>)</span>
-                                        </div>
-                                    </div>
-                                </el-col>
-                                <el-col :span="12" class="dash-item-card">
-                                    <div>
-                                        <p>{{$t('admin.dash.menu')}}</p>
-                                        <div class="total-group">
-                                            <span class="total">{{parseInt(menuTotal[0]) + parseInt(menuTotal[1]) + parseInt(menuTotal[2])}}</span>
-                                            <span>(</span>
-                                            <el-tooltip class="item" effect="dark" :content="$t('admin.dash.menuNormal')" placement="top">
-                                                <span class="status_1">{{menuTotal[1]}}&nbsp;&nbsp;</span>
-                                            </el-tooltip>
-                                            <el-tooltip class="item" effect="dark" :content="$t('admin.dash.menuStop')" placement="top">
-                                                <span class="status_2">{{menuTotal[2]}}&nbsp;&nbsp;</span>
-                                            </el-tooltip>
-                                            <el-tooltip class="item" effect="dark" :content="$t('admin.dash.menuDel')" placement="top">
-                                                <span class="status_0">{{menuTotal[0]}}</span>
-                                            </el-tooltip>
-                                            <span>)</span>
-                                        </div>
-                                    </div>
-                                </el-col>
-                                <el-col :span="12" class="dash-item-card">
-                                    <div>
-                                        <p>{{$t('admin.dash.log')}}</p>
-                                        <div class="total-group">
-                                            <span class="total">{{parseInt(logTotal[0]) + parseInt(logTotal[1]) + parseInt(logTotal[2])}}</span>
-                                            <span>(</span>
-                                            <el-tooltip class="item" effect="dark" :content="$t('admin.dash.logNormal')" placement="top">
-                                                <span class="status_1">{{logTotal[0]}}&nbsp;&nbsp;</span>
-                                            </el-tooltip>
-                                            <el-tooltip class="item" effect="dark" :content="$t('admin.dash.logWarning')" placement="top">
-                                                <span class="status_2">{{logTotal[1]}}&nbsp;&nbsp;</span>
-                                            </el-tooltip>
-                                            <el-tooltip class="item" effect="dark" :content="$t('admin.dash.logDanger')" placement="top">
-                                                <span class="status_0">{{logTotal[2]}}</span>
+                                            <el-tooltip
+                                                class="item"
+                                                effect="dark"
+                                                :key="status"
+                                                v-for="(count, status) in subDash"
+                                                :content="
+                                                    (status === 1 && flag === 'user') ? $t('admin.dash.userNormal') :
+                                                    (status === 2 && flag === 'user') ? $t('admin.dash.userStop') :
+                                                    (status === 0 && flag === 'user') ? $t('admin.dash.userDel') :
+                                                    (status === 1 && flag === 'roles') ? $t('admin.dash.roleNormal') :
+                                                    (status === 2 && flag === 'roles') ? $t('admin.dash.roleStop') :
+                                                    (status === 0 && flag === 'roles') ? $t('admin.dash.roleDel') :
+                                                    (status === 1 && flag === 'menu') ? $t('admin.dash.menuNormal') :
+                                                    (status === 2 && flag === 'menu') ? $t('admin.dash.menuStop') :
+                                                    (status === 0 && flag === 'menu') ? $t('admin.dash.menuDel') :
+                                                    (status === 1 && flag === 'log/sysLog') ? $t('admin.dash.logDanger') :
+                                                    (status === 2 && flag === 'log/sysLog') ? $t('admin.dash.logWarning') :
+                                                    (status === 0 && flag === 'log/sysLog') ? $t('admin.dash.logNormal') : ''
+                                                "
+                                                placement="top">
+                                                <span
+                                                    :class="
+                                                        (flag !== 'log/sysLog') ? 'status_' + status :
+                                                        (status === 1 && flag === 'log/sysLog') ? 'status_2' :
+                                                        (status === 2 && flag === 'log/sysLog') ? 'status_0' :
+                                                        (status === 0 && flag === 'log/sysLog') ? 'status_1' : ''
+                                                    "
+                                                    @click="goStatus(flag, status)">
+                                                    {{count}}
+                                                    <span v-if="status !== 2">&nbsp;&nbsp;</span>
+                                                </span>
                                             </el-tooltip>
                                             <span>)</span>
                                         </div>
@@ -90,8 +64,6 @@
                         </div>
                     </el-col>
                 </el-row>
-
-                <div id="main" style="width: 600px;height:400px; display:none"></div>
             </el-card>
         </poemAdmin>
     </div>
@@ -110,11 +82,8 @@
         data() {
 
             return {
-
-                adminTotal: [],
-                roleTotal: [],
-                menuTotal: [],
-                logTotal: [],
+                dashData: [],
+                dashKeys: [],
             }
         },
 
@@ -133,14 +102,30 @@
                     url: '/admin/dash?api=load',
                     success: (res) => {
                         if(res.data.code === 1) {
-                            this.adminTotal = res.data.data.admin_total;
-                            this.roleTotal = res.data.data.role_total;
-                            this.menuTotal = res.data.data.menu_total;
-                            this.logTotal = res.data.data.log_total;
+                            this.dashData = res.data.data;
+                            this.dashKeys = Object.keys(this.dashData);
                         }else {
                             this.$notify.error({message:res.data.info});
                         }
                     },
+                });
+            },
+
+            //跳转统计状态
+            goStatus(flag, status) {
+
+                if(this.dashKeys.length === 0) {
+                    return false;
+                }
+
+                if(!this.in_array(flag, this.dashKeys)) {
+                    return false;
+                }
+                this.$router.push({
+                    path: flag,
+                    query: {
+                        status: status,
+                    }
                 });
             },
         },

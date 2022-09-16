@@ -131,9 +131,18 @@ class log extends middleware\login {
             //加载列表
             'load' => function() {
 
+                //组装条件
+                $where = [];
+                if(is_numeric($_POST['status'])) {
+                    $where['level'] = intval($_POST['status']);
+                }
+
                 //获取日志
                 $log_data = m('sys_log')
+                    ->where($where)
                     ->order('id desc');
+
+                //分页
                 $log_data = \poem\more\page::run($log_data, '/#/log/sysLog', 15);
 
                 //数据格式化

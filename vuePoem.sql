@@ -1,17 +1,13 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : Brew_Mysql
  Source Server Type    : MySQL
  Source Server Version : 50737
- Source Host           : localhost:3306
  Source Schema         : vuePoem
 
  Target Server Type    : MySQL
  Target Server Version : 50737
  File Encoding         : 65001
-
- Date: 09/05/2022 18:22:54
 */
 
 SET NAMES utf8mb4;

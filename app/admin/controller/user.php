@@ -133,10 +133,18 @@ class user extends middleware\login {
             //加载列表
             'load' => function() {
 
+                //组装条件
+                $where = [
+                    'status' => ['!=', 0],
+                ];
+                if(is_numeric($_POST['status'])) {
+                    $where['status'] = intval($_POST['status']);
+                }
+
                 //加载用户列表
                 $lists = m('sys_admin')
                     ->field('id, name, password, roles, status, ctime, utime')
-                    ->where('status != 0')
+                    ->where($where)
                     ->order('id asc');
                 $page_info = \poem\more\page::run($lists, '/#/user', 15);
 
