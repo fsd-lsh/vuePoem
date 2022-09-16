@@ -176,7 +176,7 @@ class user extends middleware\login {
                         $lists[$key]['roles'] = $item['roles'];
 
                         //状态含义
-                        $lists[$key]['status_mean'] = trans('admin.user.status');
+                        $lists[$key]['status_mean'] = ($item['status'] == 0) ? trans('admin.user.del') : (($item['status'] == 1) ? trans('admin.user.open') : (($item['status'] == 2) ? trans('admin.user.stop') : ''));
 
                         //创建时间
                         $lists[$key]['ctime'] = date('Y-m-d H:i:s', $item['ctime']);

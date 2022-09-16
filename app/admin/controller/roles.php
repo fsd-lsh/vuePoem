@@ -195,13 +195,20 @@ class roles extends middleware\login {
                         sort($menu_ids);
                     }
 
+                    //status
+                    switch (intval($item['status'])) {
+                        case 0: { $item['status_mean'] = trans('admin.roles.del'); break; }
+                        case 1: { $item['status_mean'] = trans('admin.roles.open'); break; }
+                        case 2: { $item['status_mean'] = trans('admin.roles.stop'); break; }
+                    }
+
                     //组装数据
                     $data[] = [
                         'id' => $item['id'],
                         'name' => $item['name'],
                         'menu_ids' => $menu_ids,
                         'status' => $item['status'],
-                        'status_mean' => trans('admin.roles.status'),
+                        'status_mean' => $item['status_mean'],
                         'ctime' => date('Y-m-d H:i:s', $item['ctime']),
                         'utime' => date('Y-m-d H:i:s', $item['utime']),
                     ];
