@@ -65,6 +65,7 @@
             "module": "Module",
             "log": "Log",
             "date": "Date",
+            "time": "Time",
             "hour": "Hour",
             "logDetail": "Log detail",
             "num": "Num",

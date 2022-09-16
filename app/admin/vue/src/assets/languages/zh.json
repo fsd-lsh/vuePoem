@@ -65,6 +65,7 @@
             "module": "模块",
             "log": "日志",
             "date": "日期",
+            "time": "时间",
             "hour": "小时",
             "logDetail": "日志详情",
             "num": "序号",

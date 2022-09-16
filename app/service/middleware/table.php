@@ -53,11 +53,15 @@ class table
     /**
      * Func: lists
      * User: Force
-     * Date: 2022/6/18
-     * Time: 16:35
+     * Date: 2022/9/14
+     * Time: 15:51
      * Desc: 列表加载
      */
     public function lists($url = '', $page_size = 15, $data_callback = NULL) {
+
+        if(!is_numeric($page_size)) {
+            $page_size = (intval($page_size) > 0) ? intval($page_size) : 15;
+        }
 
         $load = m($this->table)
             ->where([

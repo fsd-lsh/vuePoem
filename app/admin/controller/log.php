@@ -41,6 +41,9 @@ class log extends middleware\login {
                     $dir[array_search('.', $dir)],
                     $dir[array_search('..', $dir)]
                 );
+                if(count($dir) > 100) {
+                    $dir = array_slice($dir, 0, 50);
+                }
 
                 //队列
                 $lists = [];
@@ -53,6 +56,7 @@ class log extends middleware\login {
                         $log_file[array_search('.', $log_file)],
                         $log_file[array_search('..', $log_file)]
                     );
+                    $log_file = array_slice($log_file, 0, 50);
 
                     //队列
                     foreach ($log_file as $log_name) {
@@ -62,7 +66,9 @@ class log extends middleware\login {
                         $log_detail = file_get_contents($this->log_path . '/' . $dir_name . '/' . $log_name);
                         $log_detail = explode("\n", $log_detail);
                         $log_detail = array_filter($log_detail);
-                        foreach ($log_detail as $key_log => $item_log) {
+
+                        foreach ($log_detail as $item_log) {
+
                             $level = '';
                             if(is_numeric(strpos($item_log,'[INFO]'))) {
                                 $item_log = str_replace('[INFO] ', '', $item_log);
@@ -72,24 +78,29 @@ class log extends middleware\login {
                                 $item_log = str_replace('[FATAL] ', '', $item_log);
                                 $level = 'fatal';
                             }
+
+                            $log_time = substr($item_log, 0, 19);
+                            $item_log = str_replace($log_time.' ', '', $item_log);
+
                             $temp[] = [
-                                'key' => $key_log + 1,
                                 'info' => $item_log,
                                 'level' => $level,
-                                'log_time' => substr($item_log, 0, 18),
+                                'log_time' => $log_time,
                             ];
                         }
                         $log_detail = $temp;
+                        unset($temp);
 
                         //排序
-                        //$log_detail = array_order_by($log_detail, 'log_time', SORT_DESC);
+                        $log_detail = array_order_by($log_detail, 'log_time', SORT_DESC);
+                        $log_detail = array_values($log_detail);
 
                         //组装数据
                         $lists[] = [
                             'module_path' => $this->log_path . '/' . $dir_name . '/',
                             'log_name' => $log_name,
                             'log_date' => date('Y-m-d', strtotime(substr($log_name, 0, 8))),
-                            'log_hour' => substr($log_name, 8, 2) . '点',
+                            'log_hour' => substr($log_name, 8, 2),
                             'log_detail' => $log_detail,
                         ];
                     }
@@ -97,11 +108,10 @@ class log extends middleware\login {
 
                 //排序
                 $lists = array_order_by($lists, 'log_name', SORT_DESC);
+                $lists = array_values($lists);
 
                 //response
-                ajax(1, trans('admin.sysLog.loadListOk'), [
-                    'lists' => $lists,
-                ]);
+                ajax(1, trans('admin.sysLog.loadListOk'), $lists);
             },
         ]);
     }

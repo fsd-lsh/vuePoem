@@ -54,6 +54,7 @@
             <el-dialog
                 :title="$t('admin.fwLog.logDetail')"
                 :visible.sync="showLog"
+                :highlight-current-row="true"
                 top="5vh"
                 width="90%">
                 <el-table
@@ -64,10 +65,14 @@
                     :row-class-name="logStatus"
                     style="width:100%">
                     <el-table-column
-                        prop="key"
-                        width="60"
                         fixed="left"
-                        :label="$t('admin.fwLog.num')">
+                        type="index">
+                    </el-table-column>
+                    <el-table-column
+                        prop="log_time"
+                        width="160"
+                        fixed="left"
+                        :label="$t('admin.fwLog.time')">
                     </el-table-column>
                     <el-table-column
                         prop="info"
@@ -117,7 +122,7 @@
                     url: '/admin/log/fwLog?api=load',
                     success: (res) => {
                         if(res.data.code === 1) {
-                            this.tableData = res.data.data.lists;
+                            this.tableData = res.data.data;
                         }else {
                             this.$notify.error({message:res.data.info});
                         }
