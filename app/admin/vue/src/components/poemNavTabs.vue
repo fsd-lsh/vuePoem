@@ -33,6 +33,12 @@ export default {
     mixins: [navTab],
 
     components: {draggable},
+
+    watch: {
+        'tabs'() {
+            window.sessionStorage.setItem('tabs', JSON.stringify(this.tabs));
+        },
+    },
 }
 </script>
 
@@ -71,6 +77,12 @@ export default {
                     position: absolute;
                     left: 0;
                     bottom: -2px;
+                }
+            }
+
+            /deep/.el-tag__close {
+                &:hover {
+                    background: var(--sys-main-color)!important;
                 }
             }
         }
