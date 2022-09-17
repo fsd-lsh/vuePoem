@@ -51,7 +51,7 @@ export default {
         },
 
         //navTab 移除回调
-        tabRemove(name) {
+        tabRemove({name}) {
 
             for (let index in this.tabs) {
                 if(this.tabs[index].name === name) {

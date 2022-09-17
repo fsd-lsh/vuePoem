@@ -183,20 +183,9 @@
             </el-menu>
 
             <!--Nav tabs-->
-            <el-tabs
-                id="nav-tabs"
-                v-model="focusTab"
-                type="border-card"
-                @tab-click="tabClick"
-                @tab-remove="tabRemove"
-                :closable="tabs.length !== 1">
-                <el-tab-pane
-                    v-for="(item, index) in tabs"
-                    :key="item.name"
-                    :label="item.title"
-                    :name="item.name">
-                </el-tab-pane>
-            </el-tabs>
+            <poemNavTabs/>
+
+            <!--Pages-->
             <slot/>
         </el-col>
     </el-row>
@@ -204,14 +193,14 @@
 
 <script>
 import helper from "../mixins/helper";
-import navTab from "../mixins/navTab";
 import theme from "../mixins/theme";
+import navTab from "../mixins/navTab";
 
 export default {
 
     name: 'admin',
 
-    mixins: [helper, navTab, theme],
+    mixins: [helper, theme, navTab],
 
     data() {
         return {
