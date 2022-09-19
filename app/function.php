@@ -30,6 +30,16 @@ if(!function_exists('sys_api')) {
                 ajax(0, trans('admin.public.apiNotFound'));
             }
 
+            //演示模式
+            if(APP_DEMO) {
+
+                foreach (config('demo_not_allow') as $item) {
+                    if(stripos($api, $item) !== false) {
+                        ajax(0, trans('admin.public.apiNotAllowRequest'));
+                    }
+                }
+            }
+
             //执行
             $table[$api]();
             exit;

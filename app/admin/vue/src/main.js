@@ -5,19 +5,53 @@ import App from './App';
 import router from './router';
 import less from 'less';
 import store from '../store';
-import ElementUI from 'element-ui';
 import VueI18n from 'vue-i18n';
+import {
+    Button, Form, FormItem, Input, Link, Row, Col, Menu, MenuItem, Drawer, Tooltip, Submenu, Tag,
+    Card, MenuItemGroup, Table, TableColumn, Dialog, Select, Switch, Option, OptionGroup, Tree,
+    Notification, Loading, Message, MessageBox
+} from 'element-ui';
 
 import 'element-ui/lib/theme-chalk/index.css';
 import 'font-awesome/css/font-awesome.min.css';
 
-import './components/index';
+import './components/custom';
 
 Vue.config.productionTip = false;
 
-Vue.use(ElementUI);
 Vue.use(less);
 Vue.use(VueI18n);
+
+Vue.use(Button);
+Vue.use(Form);
+Vue.use(FormItem);
+Vue.use(Input);
+Vue.use(Link);
+Vue.use(Row);
+Vue.use(Col);
+Vue.use(Menu);
+Vue.use(MenuItem);
+Vue.use(Drawer);
+Vue.use(Tooltip);
+Vue.use(Submenu);
+Vue.use(Tag);
+Vue.use(Card);
+Vue.use(MenuItemGroup);
+Vue.use(Table);
+Vue.use(TableColumn);
+Vue.use(Dialog);
+Vue.use(Select);
+Vue.use(Switch);
+Vue.use(Option);
+Vue.use(OptionGroup);
+Vue.use(Tree);
+Vue.prototype.$loading = Loading.service;
+Vue.prototype.$msgbox = MessageBox;
+Vue.prototype.$alert = MessageBox.alert;
+Vue.prototype.$confirm = MessageBox.confirm;
+Vue.prototype.$prompt = MessageBox.prompt;
+Vue.prototype.$notify = Notification;
+Vue.prototype.$message = Message;
 
 //i18n
 let lang = window.localStorage.getItem('sys-lang');

@@ -23,6 +23,7 @@
             "selectMenu": "请选择",
             "themeNotFound": "主题不存在",
             "apiNotFound": "控制器没有开发API",
+            "apiNotAllowRequest": "演示模式无法操作此行为",
             "statusNotAllow": "非法状态",
             "rowDataNotFound": "找不到数据"
         },

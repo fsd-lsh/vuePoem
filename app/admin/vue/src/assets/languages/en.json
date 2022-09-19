@@ -23,6 +23,7 @@
             "selectMenu": "Please select",
             "themeNotFound": "Theme not found",
             "apiNotFound": "API not found",
+            "apiNotAllowRequest": "Demo mode cannot operate this behavior",
             "statusNotAllow": "Status not allow",
             "rowDataNotFound": "Row data not found"
         },
@@ -213,7 +214,8 @@
             "menu_id_7": "The system log",
             "menu_id_8": "Framework log",
             "menu_id_9": "Run log",
-            "menu_id_11": "System monitoring"
+            "menu_id_11": "System monitoring",
+            "menu_id_12": "d"
         },
         "field": {
             "ctime": "Create Time",

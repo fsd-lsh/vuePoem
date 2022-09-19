@@ -18,4 +18,17 @@ return [
 
     //restful支持方法
     'restful_method' => ['get', 'post', 'put', 'delete'],
+
+    //演示模式禁用API
+    'demo_not_allow' => [
+        'clear_cache',
+        'change_userinfo',
+        'add',
+        'save',
+        'status_change',
+        'add_role',
+        'edit_role',
+        'create_user',
+        'info_change',
+    ],
 ];
