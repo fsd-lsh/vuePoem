@@ -162,7 +162,7 @@ class log extends middleware\login {
                     foreach ($log_data['list'] as $key => $item) {
                         $log_data['list'][$key]['admin'] = $admin_info[$item['admin_id']]['name'];
                         $log_data['list'][$key]['ctime'] = date('Y-m-d H:i:s', $item['ctime']);
-                        $log_data['list'][$key]['level_mean'] = config('log_level')[$item['level']];
+                        $log_data['list'][$key]['level_mean'] = trans('admin.sysLog.levelMean'.$item['level']);
                     }
                 }
 

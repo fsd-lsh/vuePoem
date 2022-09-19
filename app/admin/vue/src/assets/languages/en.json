@@ -150,7 +150,10 @@
             "path": "Path",
             "ctime": "Create time",
             "level": "Level",
-            "loadListOk": "Loading list completed"
+            "loadListOk": "Loading list completed",
+            "levelMean0": "Normal",
+            "levelMean1": "Warning",
+            "levelMean2": "Danger"
         },
         "system": {
             "info": "System info",

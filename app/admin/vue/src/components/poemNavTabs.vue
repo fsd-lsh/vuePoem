@@ -33,12 +33,6 @@ export default {
     mixins: [navTab],
 
     components: {draggable},
-
-    watch: {
-        'tabs'() {
-            window.sessionStorage.setItem('tabs', JSON.stringify(this.tabs));
-        },
-    },
 }
 </script>
 

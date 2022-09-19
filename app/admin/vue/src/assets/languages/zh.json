@@ -150,7 +150,10 @@
             "path": "路径",
             "ctime": "创建时间",
             "level": "等级",
-            "loadListOk": "加载列表完成"
+            "loadListOk": "加载列表完成",
+            "levelMean0": "一般",
+            "levelMean1": "警示",
+            "levelMean2": "高危"
         },
         "system": {
             "info": "系统信息",

@@ -73,4 +73,13 @@ export default {
             window.sessionStorage.setItem('tabs', JSON.stringify([]));
         },
     },
+
+    watch: {
+        'tabs'() {
+            if(this.tabs.length > 15) {
+                this.tabs = this.tabs.slice(1, this.tabs.length);
+            }
+            window.sessionStorage.setItem('tabs', JSON.stringify(this.tabs));
+        },
+    },
 };
