@@ -144,26 +144,20 @@ if(!function_exists('res_safe')) {
     /**
      * Func: res_safe
      * User: Force
-     * Date: 2021/4/4
-     * Time: 17:46
+     * Date: 2022/9/20
+     * Time: 16:36
      * Desc: 请求过滤
      */
-    function res_safe($data, $ignore_magic_quotes = false) {
+    function res_safe($data) {
 
         if(is_string($data)) {
 
-            //防止被挂马，跨站攻击
             $data = trim(htmlspecialchars($data));
-            if($ignore_magic_quotes) {
-
-                //防止sql注入
-                $data = addslashes($data);
-            }
+            $data = addslashes($data);
             return  $data;
 
         }else if(is_array($data)) {
 
-            //如果是数组采用递归过滤
             foreach($data as $key => $value) {
                 $data[$key] = res_safe($value);
             }

@@ -31,11 +31,30 @@ class app {
         define('SYS_LANG', trans());
 
         // 解析请求
-        $request = file_get_contents('php://input');
-        $request = json_decode($request, true);
-        $request = res_safe($request, true);
-        $_POST = $request;
-        $_REQUEST = $request;
+        $request_cnf = config('request_safe');
+        if($request_cnf['global']) {
+            switch ($request_cnf['type']) {
+                case 'json': {
+                    $request = file_get_contents('php://input');
+                    $request = json_decode($request, true);
+                    $temp = res_safe($request);
+                    if($request_cnf['replace']['$_REQUEST']) { $_REQUEST = $temp; }
+                    if($request_cnf['replace']['$_POST']) { $_POST = $temp; }
+                    if($request_cnf['replace']['$_GET']) { $_GET = $temp; }
+                    unset($temp,$request);
+                    break;
+                }
+                case 'other': {
+                    if($request_cnf['replace']['$_REQUEST']) { $_REQUEST = res_safe($_REQUEST); }
+                    if($request_cnf['replace']['$_POST']) { $_POST = res_safe($_POST); }
+                    if($request_cnf['replace']['$_GET']) { $_GET = res_safe($_GET); }
+                }
+                default: {
+                    echo 'Request way not allow';
+                    break;
+                }
+            }
+        }
 
         route::run(); // 路由管理
 

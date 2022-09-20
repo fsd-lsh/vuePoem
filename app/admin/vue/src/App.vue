@@ -21,7 +21,7 @@ export default {
 
     beforeCreate() {
 
-        //Vuex State 预定义
+        //Vuex State
         this.$store.replaceState(
             Object.assign({},
                 this.$store.state,

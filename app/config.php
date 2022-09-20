@@ -2,6 +2,17 @@
 
 return [
 
+    //全局请求过滤
+    'request_safe' => [
+        'global' => true,
+        'type' => 'json',
+        'replace' => [
+            '$_REQUEST' => true,
+            '$_POST' => true,
+            '$_GET' => false,
+        ],
+    ],
+
     //vue工程相关
     'vue_project' => realpath('./../app/admin/vue'),  //工程根目录
     'lang_path' => '/src/assets/languages',                 //语言包路径 （前后端复用）

@@ -20,13 +20,13 @@ export default {
 
         //加载主题
         loadTheme() {
-
             let focusTheme = () => {
                 if(this.in_array(window.localStorage.getItem('sys-theme'), this.themeList)) {
                     this.nowTheme = window.localStorage.getItem('sys-theme');
                 }else {
                     this.nowTheme = this.themeList[0];
                 }
+                document.querySelector('body').setAttribute('class', this.nowTheme);
             };
 
             if(window.sessionStorage.getItem('sys-theme-lists')) {
@@ -61,6 +61,7 @@ export default {
             }
             window.localStorage.setItem('sys-theme', themeClassName);
             this.nowTheme = themeClassName;
+            document.querySelector('body').setAttribute('class', this.nowTheme);
         },
     },
 };

@@ -1,6 +1,6 @@
 <template>
 
-    <el-row :class="nowTheme">
+    <el-row>
 
         <!--左侧部分（logo、二级菜单）-->
         <el-col
