@@ -27,9 +27,6 @@ class app {
             \poem\more\build::checkModule($module);
         }
 
-        // 挂载语言
-        define('SYS_LANG', trans());
-
         // 解析请求
         $request_cnf = config('request_safe');
         if($request_cnf['global']) {
@@ -85,23 +82,27 @@ class app {
      * @return null
      */
     static function boot() {
-        // 加载方法
+
         $time = microtime(1);
         include CORE_FUNC; // 核心库
         if (is_file(APP_FUNC)) {
             include APP_FUNC;
         }
-        // App公共
+
         t('POEM_FUNC_TIME', '', microtime(1) - $time);
 
-        // 加载配置
         t('POEM_CONF_TIME');
-        config(include CORE_CONF); // 核心库
+
+        define('SYS_ENV', load_env());  // 挂载env
+
+        config(include CORE_CONF);      // 核心库
         if (is_file(APP_CONF)) {
             config(include APP_CONF);
         }
-        // App公共
+
         t('POEM_CONF_TIME', 0);
+
+        define('SYS_LANG', trans());
     }
 
     /**

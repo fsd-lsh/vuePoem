@@ -12,12 +12,12 @@ const portfinder = require('portfinder');
 const ini = require('ini');
 const fs = require('fs');
 
-let str = fs.readFileSync(path.resolve(__dirname, '../../../../global.cnf')).toString();
-let globalConfig = ini.parse(str);
-const VUE_HOST = globalConfig.VUE_HOST;
-const VUE_PORT = globalConfig.VUE_PORT && Number(globalConfig.VUE_PORT);
-const PHP_HOST = globalConfig.PHP_HOST;
-const PHP_PORT = globalConfig.PHP_PORT && Number(globalConfig.PHP_PORT);
+let str = fs.readFileSync(path.resolve(__dirname, '../../../../.env')).toString();
+let env = ini.parse(str);
+const VUE_HOST = env.VUE_HOST;
+const VUE_PORT = env.VUE_PORT && Number(env.VUE_PORT);
+const PHP_HOST = env.PHP_HOST;
+const PHP_PORT = env.PHP_PORT && Number(env.PHP_PORT);
 
 const devWebpackConfig = merge(baseWebpackConfig, {
     module: {

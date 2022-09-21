@@ -6,8 +6,8 @@ const path = require('path');
 const ini = require('ini');
 const fs = require('fs');
 
-let str = fs.readFileSync(path.resolve(__dirname, '../../../../global.cnf')).toString();
-let globalConfig = ini.parse(str);
+let str = fs.readFileSync(path.resolve(__dirname, '../../../../.env')).toString();
+let env = ini.parse(str);
 
 module.exports = {
 
@@ -18,7 +18,7 @@ module.exports = {
         assetsPublicPath: '/',
         proxyTable: {
             '/admin': {
-                target: 'http://' + globalConfig.PHP_HOST + ':' + globalConfig.PHP_PORT,
+                target: 'http://' + env.PHP_HOST + ':' + env.PHP_PORT,
                 changeOrigin: true,
                 pathRewrite: {
                     '^/admin': '/admin'
@@ -27,8 +27,8 @@ module.exports = {
         },
 
         // Various Dev Server settings
-        host: globalConfig.VUE_HOST, // can be overwritten by process.env.HOST
-        port: globalConfig.VUE_PORT, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
+        host: env.VUE_HOST, // can be overwritten by process.env.HOST
+        port: env.VUE_PORT, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
         autoOpenBrowser: false,
         errorOverlay: true,
         notifyOnErrors: true,

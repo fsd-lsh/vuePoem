@@ -208,11 +208,11 @@ if(!function_exists('fetch_lang')) {
      */
     function trans($str = NULL) {
 
-        if(!$_GET['lang']) {
+        if(!@$_GET['lang']) {
             $_GET['lang'] = 'en';
         }
 
-        if(!empty(SYS_LANG) && is_array(SYS_LANG)) {
+        if(!empty(@SYS_LANG) && is_array(@SYS_LANG)) {
 
             if(strpos($str, '.')) {
                 $keys = explode('.', $str);
@@ -303,5 +303,24 @@ if(!function_exists('lang_edit')) {
         }
 
         return true;
+    }
+}
+
+if(!function_exists('env_cnf')) {
+
+    /**
+     * Func: env_cnf
+     * User: Force
+     * Date: 2022/9/21
+     * Time: 11:08
+     * Desc: 加载env配置文件
+     */
+    function load_env() {
+
+        $path = realpath(__DIR__.'/../.env');
+        if(!$path) {
+            ajax(0, trans('admin.public.envFileNotFound'));
+        }
+        return parse_ini_file($path);
     }
 }

@@ -1,25 +1,23 @@
 <?php
 
-$global_config = parse_ini_file('../global.cnf', true);
-
-$config = [
+return [
     'layout_on'       => true,
     'layout'          => false,
 
     // 数据库配置
     'db_type'         => 'mysql',
-    'db_host'         => $global_config['MYSQL_HOST'] ? : '127.0.0.1',
-    'db_name'         => $global_config['MYSQL_DBNM'] ? : 'vuePoem',
-    'db_user'         => $global_config['MYSQL_USER'] ? : 'root',
-    'db_pass'         => $global_config['MYSQL_PASS'] ? : '',
-    'db_prefix'       => 'poem_',
-    'db_port'         => $global_config['MYSQL_PORT'] ? : '3306',
-    'db_charset'      => 'utf8',
-    'db_dsn'          => '',
-    'db_deploy'       => false, // 部署方式: false 集中式(单一服务器),true 分布式(主从服务器)
-    'db_rw_separate'  => false, // 数据库读写是否分离 主从式有效
-    'db_master_num'   => 1, // 读写分离后 主服务器数量
-    'db_slave_no'     => '', // 指定从服务器序号
+    'db_host'         => SYS_ENV['MYSQL_HOST'] ? : '127.0.0.1',
+    'db_name'         => SYS_ENV['MYSQL_DBNM'] ? : 'vuePoem',
+    'db_user'         => SYS_ENV['MYSQL_USER'] ? : 'root',
+    'db_pass'         => SYS_ENV['MYSQL_PASS'] ? : '',
+    'db_prefix'       => @SYS_ENV['MYSQL_PREFIX'] ? : 'poem_',
+    'db_port'         => @SYS_ENV['MYSQL_PORT'] ? : '3306',
+    'db_charset'      => @SYS_ENV['MYSQL_CHARSET'] ? : 'utf8mb4',
+    'db_dsn'          => @SYS_ENV['MYSQL_DSN'] ? : '',
+    'db_deploy'       => @SYS_ENV['MYSQL_DEPLOY'] ? : false, // 部署方式: false 集中式(单一服务器),true 分布式(主从服务器)
+    'db_rw_separate'  => @SYS_ENV['MYSQL_RW_SEPARATE'] ? : false, // 数据库读写是否分离 主从式有效
+    'db_master_num'   => @SYS_ENV['MYSQL_MASTER_NUM'] ? : 1, // 读写分离后 主服务器数量
+    'db_slave_no'     => @SYS_ENV['MYSQL_SLAVE_NO'] ? : '', // 指定从服务器序号
 
     'session_type'    => '',
     'session_prefix'  => '',
@@ -39,4 +37,3 @@ $config = [
 
     'debug_trace'  => false, // 页面右下角展示调试信息
 ];
-return $config;

@@ -21,6 +21,12 @@ node  : {status_node}
 npm   : {status_npm}
 mysql : {status_mysql}\n\n
 EOF;
+    private $env;
+    private $env_required_fields = [
+        'MYSQL_HOST', 'MYSQL_PORT', 'MYSQL_USER', 'MYSQL_PASS', 'MYSQL_DBNM',
+        'VUE_HOST', 'VUE_PORT', 'VUE_PROJECT_PATH',
+        'PHP_HOST', 'PHP_PORT'
+    ];
 
     public function __construct() {
 
@@ -38,6 +44,8 @@ EOF;
         }else {
             unset($this->help);
         }
+
+        $this->load_env();
     }
 
     public function run() {
@@ -52,10 +60,9 @@ EOF;
             $this->log('cd app/admin/vue/ && npm i', true);
         }
 
-        $global_config = parse_ini_file('global.cnf', true);
         $this->log(__FUNCTION__ . ' running...');
         $this->log('press ctrl+c to quit');
-        $this->log("cd public && php -S {$global_config['PHP_HOST']}:{$global_config['PHP_PORT']} index.php & cd app/admin/vue && npm run dev", true);
+        $this->log("cd public && php -S {$this->env['PHP_HOST']}:{$this->env['PHP_PORT']} index.php & cd app/admin/vue && npm run dev", true);
     }
 
     private function build() {
@@ -92,24 +99,23 @@ EOF;
 
         try {
 
-            $global_config = parse_ini_file('global.cnf', true);
             $tables = file_get_contents('vuePoem.sql');
             if(empty($tables)) {
                 $this->log('vuePoem.sql not found');
                 exit;
             }
 
-            $mysql = new PDO("mysql:host={$global_config['MYSQL_HOST']}", $global_config['MYSQL_USER'], $global_config['MYSQL_PASS']);
+            $mysql = new PDO("mysql:host={$this->env['MYSQL_HOST']}", $this->env['MYSQL_USER'], $this->env['MYSQL_PASS']);
             $mysql->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-            $mysql->exec('CREATE DATABASE IF NOT EXISTS ' . $global_config['MYSQL_DBNM']);
-            $mysql->exec('USE ' . $global_config['MYSQL_DBNM']);
+            $mysql->exec('CREATE DATABASE IF NOT EXISTS ' . $this->env['MYSQL_DBNM']);
+            $mysql->exec('USE ' . $this->env['MYSQL_DBNM']);
             $mysql->exec($tables);
 
             $this->log('mysql db & tables init success');
 
         }catch (PDOException $e) {
-            $this->log('auto create database' . $global_config['MYSQL_DBNM']);
+            $this->log('auto create database' . $this->env['MYSQL_DBNM']);
         }
     }
 
@@ -122,7 +128,7 @@ EOF;
             'app/service/middleware',
             'phppoem/core',
             'public/index.php',
-            'global.cnf'
+            '.env'
         ];
 
         $status['status_path'] = '';
@@ -173,10 +179,30 @@ EOF;
             return false;
         }
 
-        echo 'vuePoem: ' . date('Y-m-d H:i:s') . " - {$info} \n";
+        echo 'VuePoem: ' . date('Y-m-d H:i:s') . " - {$info} \n";
 
         if($command) {
             system($info);
+        }
+    }
+
+    private function load_env() {
+
+        if(!file_exists('.env')) {
+            $this->log('.env file not found');
+        }
+
+        $this->env = parse_ini_file('.env', true);
+
+        $err_flag = 0;
+        foreach ($this->env_required_fields as $field) {
+            if(!isset($this->env[$field])) {
+                $this->log("Check .env file required field: {$field}");
+                $err_flag++;
+            }
+        }
+        if($err_flag) {
+            exit;
         }
     }
 

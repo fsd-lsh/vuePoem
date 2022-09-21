@@ -14,7 +14,7 @@ return [
     ],
 
     //vue工程相关
-    'vue_project' => realpath('./../app/admin/vue'),  //工程根目录
+    'vue_project' => realpath('./../'.SYS_ENV['VUE_PROJECT_PATH']),  //工程根目录
     'lang_path' => '/src/assets/languages',                 //语言包路径 （前后端复用）
     'theme_path' => '/static/css/theme.less',               //主题路径
 

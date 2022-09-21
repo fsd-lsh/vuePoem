@@ -25,7 +25,8 @@
             "apiNotFound": "API not found",
             "apiNotAllowRequest": "Demo mode cannot operate this behavior",
             "statusNotAllow": "Status not allow",
-            "rowDataNotFound": "Row data not found"
+            "rowDataNotFound": "Row data not found",
+            "envFileNotFound": "Env file not found"
         },
         "restful": {
             "noSupportMethod": "Methods that are not supported",
