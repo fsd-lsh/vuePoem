@@ -53,6 +53,13 @@ button.el-button.el-button--primary {
     background-color: var(--sys-main-ft-color);
     border-color: var(--sys-main-ft-color);
 }
+.el-select-dropdown__item.selected,
 .el-menu-item.is-active {
     color: var(--sys-main-ft-color);
+}
+.el-select .el-input.is-focus .el-input__inner,
+.el-select .el-input__inner:focus,
+.el-input.is-active .el-input__inner,
+.el-input__inner:focus {
+    border-color: var(--sys-main-ft-color);
 }

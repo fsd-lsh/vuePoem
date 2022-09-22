@@ -56,11 +56,10 @@ class menu extends middleware\login {
                     $data['show'] = intval(i('show'));
                 }
 
-                if(empty($data['title'])) { ajax(0, 'title不能为空'); }
-                //if(empty($data['href']) && $data['pid'] != 0) { ajax(0, 'href不能为空'); }
-                if(empty($data['target'])) { ajax(0, 'target不能为空'); }
-                if(!is_numeric($data['sort'])) { ajax(0, 'sort不是一个数值'); }
-                if(empty($data)) { ajax(0, '请检查表单是否填写完整'); }
+                if(empty($data['title'])) { ajax(0, 'title '.trans('admin.public.isEmpty')); }
+                if(empty($data['target'])) { ajax(0, 'target '.trans('admin.public.isEmpty')); }
+                if(!is_numeric($data['sort'])) { ajax(0, 'sort '.trans('admin.public.notNumber')); }
+                if(empty($data)) { ajax(0, trans('admin.public.checkForm')); }
 
                 if(!is_numeric($data['pid'])) {
                     $data['pid'] = 0;
@@ -76,9 +75,9 @@ class menu extends middleware\login {
 
                     lang_edit('add', $menu_id, [$_GET['lang'] => $data['title']]);
 
-                    ajax(1, '添加菜单成功');
+                    ajax(1, trans('admin.public.success'));
                 }else {
-                    ajax(0, '添加菜单失败');
+                    ajax(0, trans('admin.public.error'));
                 }
             },
 
@@ -88,14 +87,14 @@ class menu extends middleware\login {
                 $ids = $_POST['ids'];
                 $status = intval(i('status'));
 
-                if(empty($ids) || !is_array($ids)) { ajax(0, '请选择或点击您要删除的数据'); }
-                if(!isset($status)) { ajax(0, '没有识别您要变更的数据状态'); }
+                if(empty($ids) || !is_array($ids)) { ajax(0, trans('admin.public.checkRec')); }
+                if(!isset($status)) { ajax(0, trans('admin.public.statusErr')); }
 
                 switch ($status) {
-                    case 2: { $info = '停用'; break; }
-                    case 1: { $info = '启用'; break; }
-                    case 0: { $info = '删除'; break; }
-                    default: { ajax(0, '不能识别您的行为'); break; }
+                    case 2: { $info = trans('admin.menu.stop'); break; }
+                    case 1: { $info = trans('admin.menu.open'); break; }
+                    case 0: { $info = trans('admin.menu.del'); break; }
+                    default: { ajax(0, trans('admin.public.statusErr')); break; }
                 }
 
                 $ids = implode(',', $ids);
@@ -113,9 +112,9 @@ class menu extends middleware\login {
                     ->update($data);
 
                 if($result) {
-                    ajax(1, $info.'成功');
+                    ajax(1, $info.trans('admin.public.success'));
                 }else {
-                    ajax(0, $info.'失败');
+                    ajax(0, $info.trans('admin.public.error'));
                 }
             },
 
@@ -182,9 +181,9 @@ class menu extends middleware\login {
 
                 if($result) {
                     $result['title'] = trans('admin.userMenu.menu_id_'.$result['id']);
-                    ajax(1, '加载菜单完成', $result);
+                    ajax(1, trans('admin.public.success'), $result);
                 }else {
-                    ajax(0, '加载菜单失败');
+                    ajax(0, trans('admin.public.error'));
                 }
             },
 
@@ -275,7 +274,7 @@ class menu extends middleware\login {
                 $link_config = $this->build_menu_link();
 
                 //响应
-                ajax(1, '加载完成', [
+                ajax(1, trans('admin.public.success'), [
                     'lists' => $menu,
                     'menu_config' => $menu_config,
                     'fontawesome_config' => $fontawesome,

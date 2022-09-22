@@ -20,13 +20,18 @@
             "error": "Error",
             "warning": "Warning",
             "checkRec": "Select Record before you perform this operation",
+            "pleaseInput": "Please input",
             "selectMenu": "Please select",
             "themeNotFound": "Theme not found",
             "apiNotFound": "API not found",
             "apiNotAllowRequest": "Demo mode cannot operate this behavior",
             "statusNotAllow": "Status not allow",
             "rowDataNotFound": "Row data not found",
-            "envFileNotFound": "Env file not found"
+            "envFileNotFound": "Env file not found",
+            "isEmpty": "Can't be empty",
+            "notNumber": "Not number",
+            "statusErr": "Status ERR",
+            "checkForm": "Check form data"
         },
         "restful": {
             "noSupportMethod": "Methods that are not supported",

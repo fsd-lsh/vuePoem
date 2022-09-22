@@ -223,9 +223,9 @@
                     </el-form-item>
                 </el-form>
                 <span slot="footer" class="dialog-footer">
-            <el-button size="mini" @click="newMenuFlag = false">{{$t('admin.menu.cancel')}}</el-button>
-            <el-button size="mini" type="primary" @click="addMenu">{{$t('admin.menu.save')}}</el-button>
-        </span>
+                    <el-button size="mini" @click="newMenuFlag = false">{{$t('admin.menu.cancel')}}</el-button>
+                    <el-button size="mini" type="primary" @click="addMenu">{{$t('admin.menu.save')}}</el-button>
+                </span>
             </el-dialog>
 
             <!--编辑-->
@@ -235,7 +235,7 @@
                 width="50%">
                 <el-form ref="editForm" :model="editForm" label-width="100px" size="small">
                     <el-form-item :label="$t('admin.menu.name')">
-                        <el-input placeholder="请输入菜单名称" v-model="editForm.title"></el-input>
+                        <el-input :placeholder="$t('admin.public.pleaseInput')" v-model="editForm.title"></el-input>
                     </el-form-item>
                     <el-form-item :label="$t('admin.menu.href')">
                         <el-select
@@ -246,7 +246,7 @@
                             <el-option-group
                                 v-for="(methods, func) in linkConfig"
                                 :key="func"
-                                :label="func + '控制器'">
+                                :label="func + 'controller'">
                                 <el-option
                                     v-for="(item, key) in methods"
                                     :key="key"
@@ -316,7 +316,7 @@
                     </el-form-item>
                     <el-form-item :label="$t('admin.menu.sort')">
                         <el-input
-                            placeholder="请输入排序号码"
+                            :placeholder="$t('admin.public.pleaseInput')"
                             type="number"
                             minlength="0"
                             v-model="editForm.sort">
@@ -357,7 +357,7 @@
                     href: '',
                     pid: '',
                     icon: '',
-                    show: 1,
+                    show: '1',
                     target: '',
                     sort: 0,
                 },

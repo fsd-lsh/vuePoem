@@ -20,13 +20,18 @@
             "error": "失败",
             "warning": "警告",
             "checkRec": "操作前请先勾选记录",
+            "pleaseInput": "请输入",
             "selectMenu": "请选择",
             "themeNotFound": "主题不存在",
             "apiNotFound": "控制器没有开发API",
             "apiNotAllowRequest": "演示模式无法操作此行为",
             "statusNotAllow": "非法状态",
             "rowDataNotFound": "找不到数据",
-            "envFileNotFound": "找不到env文件"
+            "envFileNotFound": "找不到env文件",
+            "isEmpty": "不能为空",
+            "notNumber": "不是数值",
+            "statusErr": "不识别的状态",
+            "checkForm": "请检查表单是否完整"
         },
         "restful": {
             "noSupportMethod": "不支持的方法",
