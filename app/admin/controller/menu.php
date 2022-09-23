@@ -143,13 +143,12 @@ class menu extends middleware\login {
                     $data['show'] = intval(i('show'));
                 }
 
-                if(empty($id)) { ajax(0, 'ID不能为空'); }
-                if(empty($data['title'])) { ajax(0, 'title不能为空'); }
-                if(!is_numeric($data['pid'])) { ajax(0, 'pid不是一个数值'); }
-                if(empty($data['href']) && $data['pid'] != 0) { ajax(0, 'href不能为空'); }
-                if(empty($data['target'])) { ajax(0, 'target不能为空'); }
-                if(!is_numeric($data['sort'])) { ajax(0, 'sort不是一个数值'); }
-                if(empty($data)) { ajax(0, '请检查表单是否填写完整'); }
+                if(empty($id)) { ajax(0, 'ID '.trans('admin.public.isEmpty')); }
+                if(empty($data['title'])) { ajax(0, 'title '.trans('admin.public.isEmpty')); }
+                if(!is_numeric($data['pid'])) { ajax(0, 'pid '.trans('admin.public.notNumber')); }
+                if(empty($data['href']) && $data['pid'] != 0) { ajax(0, 'href '.trans('admin.public.isEmpty')); }
+                if(!is_numeric($data['sort'])) { ajax(0, 'sort '.trans('admin.public.notNumber')); }
+                if(empty($data)) { ajax(0, trans('admin.public.checkForm')); }
                 $data['utime'] = time();
 
                 $result = m('sys_menu')
@@ -162,9 +161,9 @@ class menu extends middleware\login {
 
                     lang_edit('add', $id, [$_GET['lang'] => $data['title']]);
 
-                    ajax(1, '修改菜单成功');
+                    ajax(1, trans('admin.public.success'));
                 }else {
-                    ajax(0, '修改菜单失败');
+                    ajax(0, trans('admin.public.error'));
                 }
             },
 

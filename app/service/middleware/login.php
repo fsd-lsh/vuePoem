@@ -68,6 +68,12 @@ class login {
         }
         $username = base64_decode(i('username'));
         $password = base64_decode(i('password'));
+        if(empty(json_encode($username))) {
+            ajax(0, trans('admin.signIn.enterAcc'));
+        }
+        if(empty(json_encode($password))) {
+            ajax(0, trans('admin.signIn.enterPwd'));
+        }
 
         //获取账号信息
         switch ($this->user_type) {

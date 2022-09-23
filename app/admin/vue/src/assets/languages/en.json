@@ -138,7 +138,7 @@
             "password": "Password",
             "signIn": "SignIn",
             "noSignIn": "You are not logged in",
-            "enterAcc": "Please enter your account number",
+            "enterAcc": "Please enter your account",
             "enterPwd": "Please enter your password",
             "accNoFound": "The account does not exist or has been frozen",
             "pwdErr": "Password mistake",
