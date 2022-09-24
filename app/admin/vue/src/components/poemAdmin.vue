@@ -10,8 +10,8 @@
 
             <!--logo-->
             <div class="logo">
-                <i class="fa fa-chrome"></i>
-                <b v-if="!isCollapse">&nbsp;&nbsp;Vue<i>Poem</i></b>
+                <img src="/favicon.ico" alt="logo" style="width:24px; height:24px; border-radius:100%;">
+                <b v-if="!isCollapse">&nbsp;Vue<i>Poem</i></b>
             </div>
 
             <!--二级菜单-->

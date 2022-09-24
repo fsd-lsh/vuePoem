@@ -33,14 +33,23 @@
                     font-weight: 600;
                     font-size: 1.4rem;
                     color: #fff;
+                    position: relative;
 
-                    i {
-                        font-size: 1.2rem;
-                        color: var(--sys-main-ft-color);
+                    > img {
+                        border: 2px solid var(--sys-main-ft-color);
+                        position: absolute;
+                        left: 20px;
+                        top: 10px;
                     }
 
                     > b {
                         font-size: 1.2rem;
+                        margin: 0 0 0 20px;
+
+                        > i {
+                            font-size: 1.2rem;
+                            color: var(--sys-main-ft-color);
+                        }
                     }
                 }
 
