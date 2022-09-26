@@ -31,7 +31,8 @@
             "isEmpty": "不能为空",
             "notNumber": "不是数值",
             "statusErr": "不识别的状态",
-            "checkForm": "请检查表单是否完整"
+            "checkForm": "请检查表单是否完整",
+            "cancel": "取消"
         },
         "restful": {
             "noSupportMethod": "不支持的方法",
@@ -208,7 +209,10 @@
             "accountStatus": "账号状态",
             "stime": "注册时间",
             "utime": "更新时间",
-            "save": "保存"
+            "save": "保存",
+            "modAccountInfo": "修改账号信息",
+            "modPassNull": "密码为空不修改",
+            "modSuccessBack": "修改完成后系统会自动注销登录，是否继续?"
         },
         "userMenu": {
             "menu_id_1": "业务管理",

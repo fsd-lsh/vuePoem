@@ -9,7 +9,7 @@ import VueI18n from 'vue-i18n';
 import {
     Button, Form, FormItem, Input, Link, Row, Col, Menu, MenuItem, Drawer, Tooltip, Submenu, Tag,
     Card, MenuItemGroup, Table, TableColumn, Dialog, Select, Switch, Option, OptionGroup, Tree,
-    Notification, Loading, Message, MessageBox
+    Notification, Loading, Message, MessageBox,
 } from 'element-ui';
 
 import 'element-ui/lib/theme-chalk/index.css';

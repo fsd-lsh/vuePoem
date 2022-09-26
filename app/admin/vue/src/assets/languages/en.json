@@ -31,7 +31,8 @@
             "isEmpty": "Can't be empty",
             "notNumber": "Not number",
             "statusErr": "Status ERR",
-            "checkForm": "Check form data"
+            "checkForm": "Check form data",
+            "cancel": "Cancel"
         },
         "restful": {
             "noSupportMethod": "Methods that are not supported",
@@ -208,7 +209,10 @@
             "accountStatus": "Account status",
             "stime": "SignUp time",
             "utime": "Update time",
-            "save": "Save"
+            "save": "Save",
+            "modAccountInfo": "Modified account info",
+            "modPassNull": "If the value is empty, it is not modified",
+            "modSuccessBack": "After the modification is complete, the system automatically logs out. Do you want to continue?"
         },
         "userMenu": {
             "menu_id_1": "Business",

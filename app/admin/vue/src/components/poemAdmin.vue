@@ -187,6 +187,9 @@
 
             <!--Pages-->
             <slot/>
+
+            <!--SubViews-->
+            <modAccount :value="modAccountFlag" :closeHandle="accountFlagHandle"/>
         </el-col>
     </el-row>
 </template>
@@ -195,12 +198,15 @@
 import helper from "../mixins/helper";
 import theme from "../mixins/theme";
 import navTab from "../mixins/navTab";
+import modAccount from "../views/subViews/modAccount";
 
 export default {
 
     name: 'admin',
 
     mixins: [helper, theme, navTab],
+
+    components: {modAccount},
 
     data() {
         return {
@@ -215,6 +221,7 @@ export default {
             isCollapse: false,
             leftViewSpan: 3,
             rightViewSpan: 21,
+            modAccountFlag: false,
         }
     },
 
@@ -305,8 +312,7 @@ export default {
 
                 //修改账号信息
                 case 'modAccount': {
-
-                    this.$router.push('/userInfo');
+                    this.accountFlagHandle();
                     break;
                 }
 
@@ -415,6 +421,11 @@ export default {
         //切换页面
         openMenu(item) {
             this.$router.push(item.href);
+        },
+
+        //修改账号信息Flag互斥
+        accountFlagHandle() {
+            this.modAccountFlag = !this.modAccountFlag;
         },
     },
 

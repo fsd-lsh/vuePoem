@@ -17,15 +17,6 @@ let router = new Router({
                 title: '',
             },
         },
-
-        {
-            path: '/userInfo',
-            name: 'userInfo',
-            component: resolve => require(['@/views/admin/userInfo'], resolve),
-            meta: {
-                title: '',
-            },
-        },
     ],
 });
 
