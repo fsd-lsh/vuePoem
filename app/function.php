@@ -208,8 +208,12 @@ if(!function_exists('fetch_lang')) {
      */
     function trans($str = NULL) {
 
-        if(!@$_GET['lang']) {
-            $_GET['lang'] = 'en';
+        if(@session('admin_info')['lang']) {
+            $lang = session('admin_info')['lang'];
+        }else if(@$_REQUEST['lang']){
+            $lang = $_REQUEST['lang'];
+        }else {
+            $lang = 'en';
         }
 
         if(!empty(@SYS_LANG) && is_array(@SYS_LANG)) {
@@ -227,7 +231,7 @@ if(!function_exists('fetch_lang')) {
 
         $path = config('vue_project').config('lang_path');
         $path = realpath($path);
-        $lang_json = file_get_contents($path . '/' . $_GET['lang'] . '.json');
+        $lang_json = file_get_contents($path . '/' . $lang . '.json');
 
         if(empty($lang_json) && !IS_CLI) {
             ajax(0, 'language not support');

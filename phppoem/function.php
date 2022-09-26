@@ -427,7 +427,7 @@ function session($name = '', $value = '') {
     }
 
     if ($value === '') {
-        return $_SESSION[$name];
+        return @$_SESSION[$name];
     } elseif (is_null($value)) {
         unset($_SESSION[$name]);
     } else {

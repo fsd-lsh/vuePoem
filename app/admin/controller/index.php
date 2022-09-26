@@ -29,6 +29,24 @@ class index extends middleware\login {
                 parent::__construct(0, 'admin');
                 parent::sign_out();
             },
+
+            //语言切换
+            'lang' => function() {
+
+                $lang = $_REQUEST['lang'];
+                $lang_json = config('vue_project').'/'.config('lang_path').'/'.$lang.'.json';
+
+                if(empty($lang) || file_exists($lang_json)) {
+                    $user_info = is_array(session('admin_info')) && !empty(session('admin_info'))
+                        ? session('admin_info') : [];
+                    session('admin_info', array_merge($user_info, [
+                        'lang' => $lang
+                    ]));
+                    ajax(1, 'The language has been set successfully');
+                }else {
+                    ajax(0, "Language {$lang} is not supported");
+                }
+            },
         ]);
     }
 

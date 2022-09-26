@@ -18,19 +18,12 @@ export default {
         poemRequest(options) {
 
             let request;
-            let lang = window.localStorage.getItem('sys-lang');
 
             switch (options.type) {
                 case 'get': { request = axios.get; break; }
                 case 'post': { request = axios.post; break; }
                 case 'put': { request = axios.put; break; }
                 case 'delete': { request = axios.delete; break; }
-            }
-
-            if(options.url.indexOf('?') === -1) {
-                options.url = options.url + '?lang=' + lang;
-            }else {
-                options.url = options.url + '&lang=' + lang;
             }
 
             request(
@@ -124,15 +117,28 @@ export default {
             switch (lang) {
                 case 'en': {
                     window.localStorage.setItem('sys-lang', 'zh');
+                    lang = 'zh';
                     break;
                 }
                 case 'zh':
                 default: {
                     window.localStorage.setItem('sys-lang', 'en');
+                    lang = 'en';
                     break;
                 }
             }
-            this.$router.go(0);
+            this.poemRequest({
+                type: 'post',
+                url: '/admin?api=lang',
+                data: {lang: lang},
+                success: (res) => {
+                    if(res.data.code === 1) {
+                        this.$router.go(0);
+                    }else {
+                        this.$notify.error({message:res.data.info});
+                    }
+                },
+            });
         },
     },
 }

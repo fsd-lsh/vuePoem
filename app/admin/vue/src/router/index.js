@@ -29,18 +29,19 @@ axios.get('/admin/menu/load?lang='+lang).then(res => {
         return false;
     }
 
-    let menu = res.data.data.menuInfo;
-    let logoInfo = res.data.data.logoInfo;
-
-    if(window.sessionStorage.getItem('store')) {
-        let store = JSON.parse(window.sessionStorage.getItem('store'));
-        store.menuTree.menuInfo = menu;
-        window.sessionStorage.setItem('store', JSON.stringify(store));
-    }else {
-        window.sessionStorage.setItem('store', JSON.stringify([]));
-    }
-
     if(res.data.code === 1) {
+
+        let menu = res.data.data.menuInfo;
+        let logoInfo = res.data.data.logoInfo;
+
+        if(window.sessionStorage.getItem('store')) {
+            let store = JSON.parse(window.sessionStorage.getItem('store'));
+            store.menuTree.menuInfo = menu;
+            window.sessionStorage.setItem('store', JSON.stringify(store));
+        }else {
+            window.sessionStorage.setItem('store', JSON.stringify([]));
+        }
+
         for (let index = 0; index < menu.length; index++) {
             for (let sub_index = 0; sub_index < menu[index].child.length; sub_index++) {
                 if(menu[index].child[sub_index].child.length) {
