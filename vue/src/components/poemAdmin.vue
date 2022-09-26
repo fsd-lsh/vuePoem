@@ -116,7 +116,7 @@
                 background-color="var(--sys-main-color)"
                 text-color="#fff"
                 style="width:100%!important;"
-                active-text-color="var(--sys-main-ft-color2)">
+                active-text-color="var(--sys-main-ft-color)">
                 <el-menu-item
                     @click="toolsGroup('menu')">
                     <el-tooltip

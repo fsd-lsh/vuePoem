@@ -56,13 +56,14 @@ EOF;
 
     private function dev() {
 
-        if(!file_exists('app/admin/vue/node_modules')) {
-            $this->log('cd app/admin/vue/ && npm i', true);
+        if(!file_exists($this->env['VUE_PROJECT_PATH'] . '/node_modules')) {
+            $this->log("cd {$this->env['VUE_PROJECT_PATH']}/ && npm i", true);
+            exit;
         }
 
         $this->log(__FUNCTION__ . ' running...');
         $this->log('press ctrl+c to quit');
-        $this->log("cd public && php -S {$this->env['PHP_HOST']}:{$this->env['PHP_PORT']} index.php & cd app/admin/vue && npm run dev", true);
+        $this->log("cd server/public/ && php -S {$this->env['PHP_HOST']}:{$this->env['PHP_PORT']} index.php & cd {$this->env['VUE_PROJECT_PATH']} && npm run dev", true);
     }
 
     private function build() {
@@ -193,6 +194,10 @@ EOF;
         }
 
         $this->env = parse_ini_file('.env', true);
+
+        if($this->env['VUE_PROJECT_PATH']) {
+            $this->env['VUE_PROJECT_PATH'] = realpath($this->env['VUE_PROJECT_PATH']);
+        }
 
         $err_flag = 0;
         foreach ($this->env_required_fields as $field) {
