@@ -34,7 +34,7 @@ class index extends middleware\login {
             'lang' => function() {
 
                 $lang = $_REQUEST['lang'];
-                $lang_json = config('vue_project').'/'.config('lang_path').'/'.$lang.'.json';
+                $lang_json = config('lang_path').'/'.$lang.'.json';
 
                 if(empty($lang) || file_exists($lang_json)) {
                     $user_info = is_array(session('admin_info')) && !empty(session('admin_info'))
@@ -44,7 +44,7 @@ class index extends middleware\login {
                     ]));
                     ajax(1, 'The language has been set successfully');
                 }else {
-                    ajax(0, "Language {$lang} is not supported");
+                    ajax(0, "Language '{$lang}' is not supported");
                 }
             },
         ]);

@@ -39,7 +39,6 @@ ENGLISH | [中文](./README_CN.MD)
 [Force](https://www.easybhu.cn)
 
 ## Preview
-![show-0](./app/admin/vue/static/imgs/show-0.png)
-![show-1](./app/admin/vue/static/imgs/show-1.png)
-![show-2](./app/admin/vue/static/imgs/show-2.png)
-![show-3](./app/admin/vue/static/imgs/show-3.png)
+![show-0](./vue/static/imgs/1.png)
+![show-1](./vue/static/imgs/2.png)
+![show-2](./vue/static/imgs/3.png)
