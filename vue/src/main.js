@@ -60,8 +60,8 @@ window.localStorage.setItem('sys-lang', lang);
 const i18n = new VueI18n({
     locale: lang,
     messages: {
-        'zh': require('@/assets/languages/zh.json'),
-        'en': require('@/assets/languages/en.json'),
+        'zh': require('@/../../common/lang/zh.json'),
+        'en': require('@/../../common/lang/en.json'),
     }
 });
 
