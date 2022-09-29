@@ -229,7 +229,7 @@ if(!function_exists('fetch_lang')) {
             }
         }
 
-        $path = config('vue_project').config('lang_path');
+        $path = APP_PATH . '/../../common/lang';
         $path = realpath($path);
         $lang_json = file_get_contents($path . '/' . $lang . '.json');
 
@@ -321,7 +321,7 @@ if(!function_exists('env_cnf')) {
      */
     function load_env() {
 
-        $path = realpath(__DIR__.'/../.env');
+        $path = realpath(APP_PATH. '/../../.env');
         if(!$path) {
             ajax(0, trans('admin.public.envFileNotFound'));
         }

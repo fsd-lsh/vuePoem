@@ -13,13 +13,13 @@ return [
         ],
     ],
 
-    //vue工程相关
+    //通用工程相关
     'vue_project' => realpath('./..'.SYS_ENV['VUE_PROJECT_PATH']),    //工程根目录
-    'lang_path' => '/src/assets/languages',                                 //语言包路径 （前后端复用）
-    'theme_path' => '/static/css/theme.less',                               //主题路径
+    'lang_path' => SYS_ENV['LANG_PATH'],                                    //语言包路径
+    'theme_path' => SYS_ENV['THEME_PATH'],                                  //主题路径
 
     //fontawesome字体图标库路径
-    'fontawesome_path' => realpath('./../public/static/other/fontawesome.json'),
+    'fontawesome_path' => realpath(APP_PATH . '../../common/other/fontawesome.json'),
 
     //状态
     'user_status' => [0, 1, 2],  //用户状态

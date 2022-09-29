@@ -56,42 +56,36 @@ EOF;
 
     private function dev() {
 
-        if(!file_exists($this->env['VUE_PROJECT_PATH'] . '/node_modules')) {
+        $php_path = realpath($this->env['PHP_PROJECT_PATH']);
+        $vue_path = realpath($this->env['VUE_PROJECT_PATH']);
+
+        if(!file_exists($vue_path . '/node_modules')) {
             $this->log("cd {$this->env['VUE_PROJECT_PATH']}/ && npm i", true);
             exit;
         }
 
         $this->log(__FUNCTION__ . ' running...');
         $this->log('press ctrl+c to quit');
-        $this->log("cd server/public/ && php -S {$this->env['PHP_HOST']}:{$this->env['PHP_PORT']} index.php & cd {$this->env['VUE_PROJECT_PATH']} && npm run dev", true);
+        $this->log("cd {$php_path}/public/ && php -S {$this->env['PHP_HOST']}:{$this->env['PHP_PORT']} index.php & cd {$vue_path} && npm run dev", true);
     }
 
     private function build() {
 
         $this->log(__FUNCTION__ . ' running...');
-        $this->log("cd app/admin/vue && npm run build", true);
+        $this->log("cd {$this->env['VUE_PROJECT_PATH']} && npm run build", true);
         $this->log(__FUNCTION__ . ' finished');
     }
 
     private function clean() {
 
-        if(file_exists('public/index.html')) {
-            $this->log('rm -rf public/index.html', true);
+        if(file_exists($this->env['PHP_PROJECT_PATH'].'/public/index.html')) {
+            $this->log("rm -rf {$this->env['PHP_PROJECT_PATH']}/public/index.html", true);
         }
-        if(file_exists('public/static/css')) {
-            $this->log('rm -rf public/static/css', true);
+        if(file_exists($this->env['PHP_PROJECT_PATH'].'/public/static')) {
+            $this->log("rm -rf {$this->env['PHP_PROJECT_PATH']}/public/static", true);
         }
-        if(file_exists('public/static/fonts')) {
-            $this->log('rm -rf public/static/fonts', true);
-        }
-        if(file_exists('public/static/img')) {
-            $this->log('rm -rf public/static/img', true);
-        }
-        if(file_exists('public/static/imgs')) {
-            $this->log('rm -rf public/static/imgs', true);
-        }
-        if(file_exists('public/static/js')) {
-            $this->log('rm -rf public/static/js', true);
+        if(file_exists($this->env['PHP_PROJECT_PATH'].'/public/favicon.ico')) {
+            $this->log("rm -rf {$this->env['PHP_PROJECT_PATH']}/public/favicon.ico", true);
         }
         $this->log('clean success');
     }
@@ -124,12 +118,12 @@ EOF;
 
         $status = [];
         $path_check = [
-            'app/admin/vue',
-            'app/admin/controller',
-            'app/service/middleware',
-            'phppoem/core',
-            'public/index.php',
-            '.env'
+            '.env',
+            $this->env['PHP_PROJECT_PATH'].'/public/index.php',
+            $this->env['PHP_PROJECT_PATH'].'/phppoem/core',
+            $this->env['PHP_PROJECT_PATH'].'/app/admin/controller',
+            $this->env['PHP_PROJECT_PATH'].'/app/service/middleware',
+            $this->env['VUE_PROJECT_PATH']
         ];
 
         $status['status_path'] = '';

@@ -54,6 +54,6 @@ export default {
 </script>
 
 <style lang="less">
-    @import "../static/css/theme";
-    @import "../static/css/public";
+    @import "../../common/theme/public";
+    @import "../../common/theme/theme";
 </style>

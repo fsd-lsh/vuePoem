@@ -64,7 +64,7 @@ class index extends middleware\login {
             //加载主题
             'load' => function() {
 
-                $theme_css_file = file_get_contents(config('vue_project').config('theme_path'));
+                $theme_css_file = file_get_contents(realpath(APP_PATH . '../../' .config('theme_path')).'/theme.less');
                 if(empty($theme_css_file)) {
                     ajax(0, trans('admin.public.error'));
                 }

@@ -12,7 +12,7 @@ const portfinder = require('portfinder');
 const ini = require('ini');
 const fs = require('fs');
 
-let str = fs.readFileSync(path.resolve(__dirname, '../../../../.env')).toString();
+let str = fs.readFileSync(path.resolve(__dirname, '../../.env')).toString();
 let env = ini.parse(str);
 const VUE_HOST = env.VUE_HOST;
 const VUE_PORT = env.VUE_PORT && Number(env.VUE_PORT);

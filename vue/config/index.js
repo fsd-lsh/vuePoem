@@ -6,9 +6,8 @@ const path = require('path');
 const ini = require('ini');
 const fs = require('fs');
 
-let str = fs.readFileSync(path.resolve(__dirname, '../../../../.env')).toString();
+let str = fs.readFileSync(path.resolve(__dirname, '../../.env')).toString();
 let env = ini.parse(str);
-
 module.exports = {
 
     dev: {
@@ -52,10 +51,10 @@ module.exports = {
 
     build: {
         // Template for index.html
-        index: path.resolve(__dirname, '../../../../public/index.html'),
+        index: path.resolve(__dirname, '../../server/public/index.html'),
 
         // Paths
-        assetsRoot: path.resolve(__dirname, '../../../../public'),
+        assetsRoot: path.resolve(__dirname, '../../server/public'),
         assetsSubDirectory: 'static',
         assetsPublicPath: '/',
 
