@@ -183,7 +183,7 @@
             </el-menu>
 
             <!--Nav tabs-->
-            <poemNavTabs/>
+            <vp-nav-tabs/>
 
             <!--Pages-->
             <slot/>

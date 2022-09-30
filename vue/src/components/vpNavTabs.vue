@@ -28,7 +28,7 @@ import draggable from "vuedraggable";
 
 export default {
 
-    name: "poemNavTabs",
+    name: "vpNavTabs",
 
     mixins: [navTab],
 

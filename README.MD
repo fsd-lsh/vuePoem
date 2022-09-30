@@ -1,9 +1,10 @@
 # vuePoem
 ENGLISH | [中文](./README_CN.MD)
 
-![](https://img.shields.io/badge/php-@phppoem-purple.svg?style=flat)
 ![](https://img.shields.io/badge/js-@vue-gree.svg?style=flat)
 ![](https://img.shields.io/badge/ui-@elementUI-blue.svg?style=flat)
+![](https://img.shields.io/badge/php-@phppoem-purple.svg?style=flat)
+![](https://img.shields.io/badge/db-@mysql-purple.svg?style=flat)
 ![](https://img.shields.io/badge/font-@fontawesome-red.svg?style=flat)
 ![](https://img.shields.io/badge/License-@MIT-yellow.svg?style=flat)
 

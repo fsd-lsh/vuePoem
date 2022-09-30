@@ -4,13 +4,13 @@
 
     <div id="user">
 
-        <poemAdmin>
+        <vp-admin>
 
             <el-card class="box-card">
-                <el-button @click="newUserFlag = !newUserFlag" icon="fa fa-user-plus" type="primary" size="small">&nbsp;{{$t('admin.user.add')}}</el-button>
-                <el-button @click="userChange(2)" change-type="0" icon="fa fa-toggle-on" type="warning" size="small">&nbsp;{{$t('admin.user.batch')}}{{$t('admin.user.stop')}}</el-button>
-                <el-button @click="userChange(1)" icon="fa fa-toggle-off" type="success" size="small">&nbsp;{{$t('admin.user.batch')}}{{$t('admin.user.open')}}</el-button>
-                <el-button @click="userChange(0)" icon="fa fa-user-times" type="danger" size="small">&nbsp;{{$t('admin.user.batch')}}{{$t('admin.user.del')}}</el-button>
+                <el-button @click="newUserFlag = !newUserFlag" icon="fa fa-user-plus" type="primary" size="mini">&nbsp;{{$t('admin.user.add')}}</el-button>
+                <el-button @click="userChange(2)" change-type="0" icon="fa fa-toggle-on" type="warning" size="mini">&nbsp;{{$t('admin.user.batch')}}{{$t('admin.user.stop')}}</el-button>
+                <el-button @click="userChange(1)" icon="fa fa-toggle-off" type="success" size="mini">&nbsp;{{$t('admin.user.batch')}}{{$t('admin.user.open')}}</el-button>
+                <el-button @click="userChange(0)" icon="fa fa-user-times" type="danger" size="mini">&nbsp;{{$t('admin.user.batch')}}{{$t('admin.user.del')}}</el-button>
                 <el-table
                     :data="tableData"
                     stripe
@@ -150,9 +150,9 @@
                     </el-form-item>
                 </el-form>
                 <span slot="footer" class="dialog-footer">
-            <el-button size="mini" @click="newUserFlag = false">{{$t('admin.user.cancel')}}</el-button>
-            <el-button size="mini" type="primary" @click="createUserNow">{{$t('admin.user.save')}}</el-button>
-        </span>
+                    <el-button size="mini" @click="newUserFlag = false">{{$t('admin.user.cancel')}}</el-button>
+                    <el-button size="mini" type="primary" @click="createUserNow">{{$t('admin.user.save')}}</el-button>
+                </span>
             </el-dialog>
 
             <!--编辑用户模态框-->
@@ -185,11 +185,11 @@
                     </el-form-item>
                 </el-form>
                 <span slot="footer" class="dialog-footer">
-            <el-button size="mini" @click="editUserFlag = false">{{$t('admin.user.cancel')}}</el-button>
-            <el-button size="mini" type="primary" @click="saveUser">{{$t('admin.user.save')}}</el-button>
-        </span>
+                    <el-button size="mini" @click="editUserFlag = false">{{$t('admin.user.cancel')}}</el-button>
+                    <el-button size="mini" type="primary" @click="saveUser">{{$t('admin.user.save')}}</el-button>
+                </span>
             </el-dialog>
-        </poemAdmin>
+        </vp-admin>
     </div>
 </template>
 

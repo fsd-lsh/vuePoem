@@ -2,7 +2,7 @@
 
 <template>
     <div id="fw-log">
-        <poemAdmin>
+        <vp-admin>
             <el-card class="box-card">
                 <el-table
                     :data="tableData"
@@ -81,10 +81,10 @@
                     </el-table-column>
                 </el-table>
                 <span slot="footer" class="dialog-footer">
-        <el-button size="mini" @click="showLog = !showLog">{{$t('admin.fwLog.close')}}</el-button>
-      </span>
+                    <el-button size="mini" @click="showLog = !showLog">{{$t('admin.fwLog.close')}}</el-button>
+                </span>
             </el-dialog>
-        </poemAdmin>
+        </vp-admin>
     </div>
 </template>
 

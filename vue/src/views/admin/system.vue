@@ -4,7 +4,7 @@
 
     <div id="system">
 
-        <poemAdmin>
+        <vp-admin>
             <el-row :gutter="20" class="sta">
 
                 <el-col :span="12" class="sta-item">
@@ -51,7 +51,7 @@
                     </el-card>
                 </el-col>
             </el-row>
-        </poemAdmin>
+        </vp-admin>
     </div>
 </template>
 

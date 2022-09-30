@@ -4,13 +4,13 @@
 
     <div id="roles">
 
-        <poemAdmin>
+        <vp-admin>
 
             <el-card class="box-card">
-                <el-button @click="newRoleFlag = !newRoleFlag" icon="fa fa-user-plus" type="primary" size="small">&nbsp;{{$t('admin.roles.add')}}</el-button>
-                <el-button @click="roleChange(2)" icon="fa fa-toggle-on" type="warning" size="small">&nbsp;{{$t('admin.roles.batch')}}{{$t('admin.roles.stop')}}</el-button>
-                <el-button @click="roleChange(1)" icon="fa fa-toggle-off" type="success" size="small">&nbsp;{{$t('admin.roles.batch')}}{{$t('admin.roles.open')}}</el-button>
-                <el-button @click="roleChange(0)" icon="fa fa-user-times" type="danger" size="small">&nbsp;{{$t('admin.roles.batch')}}{{$t('admin.roles.del')}}</el-button>
+                <el-button @click="newRoleFlag = !newRoleFlag" icon="fa fa-user-plus" type="primary" size="mini">&nbsp;{{$t('admin.roles.add')}}</el-button>
+                <el-button @click="roleChange(2)" icon="fa fa-toggle-on" type="warning" size="mini">&nbsp;{{$t('admin.roles.batch')}}{{$t('admin.roles.stop')}}</el-button>
+                <el-button @click="roleChange(1)" icon="fa fa-toggle-off" type="success" size="mini">&nbsp;{{$t('admin.roles.batch')}}{{$t('admin.roles.open')}}</el-button>
+                <el-button @click="roleChange(0)" icon="fa fa-user-times" type="danger" size="mini">&nbsp;{{$t('admin.roles.batch')}}{{$t('admin.roles.del')}}</el-button>
                 <el-table
                     :data="tableData"
                     stripe
@@ -137,9 +137,9 @@
                     </el-form-item>
                 </el-form>
                 <span slot="footer" class="dialog-footer">
-            <el-button size="mini" @click="newRoleFlag = false">{{$t('admin.roles.cancel')}}</el-button>
-            <el-button size="mini" type="primary" @click="createRoleNow">{{$t('admin.roles.save')}}</el-button>
-        </span>
+                    <el-button size="mini" @click="newRoleFlag = false">{{$t('admin.roles.cancel')}}</el-button>
+                    <el-button size="mini" type="primary" @click="createRoleNow">{{$t('admin.roles.save')}}</el-button>
+                </span>
             </el-dialog>
 
             <!--编辑角色模态框-->
@@ -164,11 +164,11 @@
                     </el-form-item>
                 </el-form>
                 <span slot="footer" class="dialog-footer">
-            <el-button size="mini" @click="editRoleFlag = false">{{$t('admin.roles.cancel')}}</el-button>
-            <el-button size="mini" type="primary" @click="saveRole">{{$t('admin.roles.save')}}</el-button>
-        </span>
+                    <el-button size="mini" @click="editRoleFlag = false">{{$t('admin.roles.cancel')}}</el-button>
+                    <el-button size="mini" type="primary" @click="saveRole">{{$t('admin.roles.save')}}</el-button>
+                </span>
             </el-dialog>
-        </poemAdmin>
+        </vp-admin>
     </div>
 </template>
 

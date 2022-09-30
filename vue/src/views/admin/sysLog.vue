@@ -4,7 +4,7 @@
 
     <div id="sys-log">
 
-        <poemAdmin>
+        <vp-admin>
             <el-card class="box-card">
                 <el-table
                     :data="tableData"
@@ -44,7 +44,7 @@
                 </el-table>
                 <div class="pagination" v-html="pageHtml"></div>
             </el-card>
-        </poemAdmin>
+        </vp-admin>
     </div>
 </template>
 

@@ -4,10 +4,10 @@
 
     <div id="menu">
 
-        <poemAdmin>
+        <vp-admin>
 
             <el-card class="box-card">
-                <el-button @click="newMenuFlag = !newMenuFlag" icon="fa fa-bars" type="primary" size="small">&nbsp;{{$t('admin.menu.add')}}</el-button>
+                <el-button @click="newMenuFlag = !newMenuFlag" icon="fa fa-bars" type="primary" size="mini">&nbsp;{{$t('admin.menu.add')}}</el-button>
                 <el-table
                     :data="tableData"
                     style="width: 100%;margin-bottom: 20px;"
@@ -324,11 +324,11 @@
                     </el-form-item>
                 </el-form>
                 <span slot="footer" class="dialog-footer">
-            <el-button size="mini" @click="editMenuFlag = false">{{$t('admin.menu.cancel')}}</el-button>
-            <el-button size="mini" type="primary" @click="saveMenu">{{$t('admin.menu.save')}}</el-button>
-        </span>
+                    <el-button size="mini" @click="editMenuFlag = false">{{$t('admin.menu.cancel')}}</el-button>
+                    <el-button size="mini" type="primary" @click="saveMenu">{{$t('admin.menu.save')}}</el-button>
+                </span>
             </el-dialog>
-        </poemAdmin>
+        </vp-admin>
     </div>
 </template>
 

@@ -3,7 +3,7 @@
 <template>
     <div id="user-info">
 
-        <poemAdmin>
+        <vp-admin>
             <el-card class="box-card">
                 <el-form ref="form" :model="userInfo" label-width="180px">
                     <el-form-item :label="$t('admin.userInfo.account')">
@@ -43,7 +43,7 @@
                     </div>
                 </el-form>
             </el-card>
-        </poemAdmin>
+        </vp-admin>
     </div>
 </template>
 

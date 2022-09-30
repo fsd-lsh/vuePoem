@@ -3,7 +3,7 @@
 <template>
 
     <div id="dash">
-        <poemAdmin>
+        <vp-admin>
             <el-card class="box-card">
                 <el-row :gutter="20">
                     <el-col :span="8" class="dash-item">
@@ -65,7 +65,7 @@
                     </el-col>
                 </el-row>
             </el-card>
-        </poemAdmin>
+        </vp-admin>
     </div>
 </template>
 

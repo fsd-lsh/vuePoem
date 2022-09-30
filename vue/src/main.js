@@ -9,7 +9,7 @@ import VueI18n from 'vue-i18n';
 import {
     Button, Form, FormItem, Input, Link, Row, Col, Menu, MenuItem, Drawer, Tooltip, Submenu, Tag,
     Card, MenuItemGroup, Table, TableColumn, Dialog, Select, Switch, Option, OptionGroup, Tree,
-    Notification, Loading, Message, MessageBox,
+    Notification, Loading, Message, MessageBox, Descriptions, DescriptionsItem
 } from 'element-ui';
 
 import 'element-ui/lib/theme-chalk/index.css';
@@ -45,6 +45,8 @@ Vue.use(Switch);
 Vue.use(Option);
 Vue.use(OptionGroup);
 Vue.use(Tree);
+Vue.use(Descriptions);
+Vue.use(DescriptionsItem);
 Vue.prototype.$loading = Loading.service;
 Vue.prototype.$msgbox = MessageBox;
 Vue.prototype.$alert = MessageBox.alert;

@@ -4,10 +4,10 @@
 
         <!--table-->
         <el-card class="box-card">
-            <el-button @click="openSaveDiaLog('new')" icon="fa fa-user-plus" type="primary" size="small" v-if="this.dialog.length > 0">&nbsp;{{$t('admin.user.add')}}</el-button>
-            <el-button @click="statusChange(2)" change-type="0" icon="fa fa-toggle-on" type="warning" size="small">&nbsp;{{$t('admin.user.batch')}}{{$t('admin.user.stop')}}</el-button>
-            <el-button @click="statusChange(1)" icon="fa fa-toggle-off" type="success" size="small">&nbsp;{{$t('admin.user.batch')}}{{$t('admin.user.open')}}</el-button>
-            <el-button @click="statusChange(0)" icon="fa fa-user-times" type="danger" size="small">&nbsp;{{$t('admin.user.batch')}}{{$t('admin.user.del')}}</el-button>
+            <el-button @click="openSaveDiaLog('new')" icon="fa fa-user-plus" type="primary" size="mini" v-if="this.dialog.length > 0">&nbsp;{{$t('admin.user.add')}}</el-button>
+            <el-button @click="statusChange(2)" change-type="0" icon="fa fa-toggle-on" type="warning" size="mini">&nbsp;{{$t('admin.user.batch')}}{{$t('admin.user.stop')}}</el-button>
+            <el-button @click="statusChange(1)" icon="fa fa-toggle-off" type="success" size="mini">&nbsp;{{$t('admin.user.batch')}}{{$t('admin.user.open')}}</el-button>
+            <el-button @click="statusChange(0)" icon="fa fa-user-times" type="danger" size="mini">&nbsp;{{$t('admin.user.batch')}}{{$t('admin.user.del')}}</el-button>
             <el-table
                 :data="tableData"
                 stripe

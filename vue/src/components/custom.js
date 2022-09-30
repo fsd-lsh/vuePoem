@@ -1,8 +1,8 @@
 import Vue from "vue";
-import poemAdmin from './poemAdmin';
-import poemTable from "./poemTable";
-import poemNavTabs from "./poemNavTabs";
+import vpAdmin from './vpAdmin';
+import vpTable from "./vpTable";
+import vpNavTabs from "./vpNavTabs";
 
-Vue.component('poemAdmin', poemAdmin);
-Vue.component('poemTable', poemTable);
-Vue.component('poemNavTabs', poemNavTabs);
+Vue.component('vpAdmin', vpAdmin);
+Vue.component('vpTable', vpTable);
+Vue.component('vpNavTabs', vpNavTabs);
