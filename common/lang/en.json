@@ -32,7 +32,9 @@
             "notNumber": "Not number",
             "statusErr": "Status ERR",
             "checkForm": "Check form data",
-            "cancel": "Cancel"
+            "cancel": "Cancel",
+            "query": "Query",
+            "reset": "Reset"
         },
         "restful": {
             "noSupportMethod": "Methods that are not supported",

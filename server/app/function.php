@@ -328,3 +328,32 @@ if(!function_exists('env_cnf')) {
         return parse_ini_file($path);
     }
 }
+
+if(!function_exists('sql_fis')) {
+
+    /**
+     * Func: sql_fis
+     * User: Force
+     * Date: 2022/9/30
+     * Time: 17:08
+     * Desc: sql 组装FIND_IN_SET辅助
+     */
+    function sql_fis($arr = [], $field = '') {
+
+        if(!$arr || count($arr) == 0 || !$field) {
+            return '';
+        }
+
+        $arr = array_unique($arr);
+        $arr = array_filter($arr);
+
+        $sql = '(';
+        foreach ($arr as $item) {
+            $sql .= "FIND_IN_SET('{$item}', `{$field}`) or ";
+        }
+        $sql = rtrim($sql, ' or ');
+        $sql .= ')';
+
+        return $sql;
+    }
+}

@@ -32,7 +32,9 @@
             "notNumber": "不是数值",
             "statusErr": "不识别的状态",
             "checkForm": "请检查表单是否完整",
-            "cancel": "取消"
+            "cancel": "取消",
+            "query": "查询",
+            "reset": "重置"
         },
         "restful": {
             "noSupportMethod": "不支持的方法",

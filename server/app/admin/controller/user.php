@@ -133,6 +133,8 @@ class user extends middleware\login {
             //加载列表
             'load' => function() {
 
+                $lists = m('sys_admin');
+
                 //组装条件
                 $where = [
                     'status' => ['!=', 0],
@@ -140,9 +142,32 @@ class user extends middleware\login {
                 if(is_numeric($_POST['status'])) {
                     $where['status'] = intval($_POST['status']);
                 }
+                if(!empty($_POST['id'])) {
+                    $where['id'] = intval($_POST['id']);
+                }
+                if(!empty($_POST['name'])) {
+                    $lists->where("name like '%{$_POST['name']}%'");
+                }
+                if(!empty($_POST['roles'])) {
+                    if(is_array($_POST['roles'])) {
+                        $lists->where(sql_fis($_POST['roles'], 'roles'));
+                    }else {
+                        $where['status'] = intval($_POST['roles']);
+                    }
+                }
+                if(!empty($_POST['ctime'])) {
+                    $_POST['ctime'][0] = substr($_POST['ctime'][0], 0, 10);
+                    $_POST['ctime'][1] = substr($_POST['ctime'][1], 0, 10);
+                    $lists->where("ctime >= '{$_POST['ctime'][0]}' && ctime <= '{$_POST['ctime'][1]}'");
+                }
+                if(!empty($_POST['utime'])) {
+                    $_POST['utime'][0] = substr($_POST['utime'][0], 0, 10);
+                    $_POST['utime'][1] = substr($_POST['utime'][1], 0, 10);
+                    $lists->where("utime >= '{$_POST['utime'][0]}' && utime <= '{$_POST['utime'][1]}'");
+                }
 
                 //加载用户列表
-                $lists = m('sys_admin')
+                $lists
                     ->field('id, name, password, roles, status, ctime, utime')
                     ->where($where)
                     ->order('id asc');

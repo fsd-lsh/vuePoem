@@ -7,10 +7,14 @@
         <vp-admin>
 
             <el-card class="box-card">
-                <el-button @click="newUserFlag = !newUserFlag" icon="fa fa-user-plus" type="primary" size="mini">&nbsp;{{$t('admin.user.add')}}</el-button>
-                <el-button @click="userChange(2)" change-type="0" icon="fa fa-toggle-on" type="warning" size="mini">&nbsp;{{$t('admin.user.batch')}}{{$t('admin.user.stop')}}</el-button>
-                <el-button @click="userChange(1)" icon="fa fa-toggle-off" type="success" size="mini">&nbsp;{{$t('admin.user.batch')}}{{$t('admin.user.open')}}</el-button>
-                <el-button @click="userChange(0)" icon="fa fa-user-times" type="danger" size="mini">&nbsp;{{$t('admin.user.batch')}}{{$t('admin.user.del')}}</el-button>
+                <vp-table-search @reload="loadLists" @submit="search" :formFormat="formFormat">
+                    <template v-slot:btn>
+                        <el-button @click="newUserFlag = !newUserFlag" icon="fa fa-user-plus" type="primary" size="mini">&nbsp;{{$t('admin.user.add')}}</el-button>
+                        <el-button @click="userChange(2)" change-type="0" icon="fa fa-toggle-on" type="warning" size="mini">&nbsp;{{$t('admin.user.batch')}}{{$t('admin.user.stop')}}</el-button>
+                        <el-button @click="userChange(1)" icon="fa fa-toggle-off" type="success" size="mini">&nbsp;{{$t('admin.user.batch')}}{{$t('admin.user.open')}}</el-button>
+                        <el-button @click="userChange(0)" icon="fa fa-user-times" type="danger" size="mini">&nbsp;{{$t('admin.user.batch')}}{{$t('admin.user.del')}}</el-button>
+                    </template>
+                </vp-table-search>
                 <el-table
                     :data="tableData"
                     stripe
@@ -229,6 +233,8 @@
                 rolesConfig: [],
 
                 pageHtml: '',
+
+                formFormat: [],
             }
         },
 
@@ -241,16 +247,26 @@
         },
 
         watch: {
+
             $route: {
                 handler() {
-
-                    //加载列表
                     this.loadLists(
                         this.parseGET()['p']
                     );
                 },
                 deep: true,
-            }
+            },
+
+            tableData() {
+                this.formFormat = [
+                    { name:'ID', remoteName:'id', component:'input', componentType:'text' },
+                    { name:this.$t('admin.user.account'), remoteName:'name', component:'input', componentType:'text' },
+                    { name:this.$t('admin.user.role'), remoteName:'roles', component:'select', componentOptions:this.rolesConfig, componentMultiple:true },
+                    { name:this.$t('admin.user.ctime'), remoteName:'ctime', component:'date-picker', componentType:'daterange' },
+                    { name:this.$t('admin.user.utime'), remoteName:'utime', component:'date-picker', componentType:'daterange' },
+                    { name:this.$t('admin.user.status'), remoteName:'status', component:'select', componentOptions:[{id:1,name:this.$t('admin.user.open')}, {id:2,name:this.$t('admin.user.stop')}, {id:0,name:this.$t('admin.user.del')}], componentMultiple:false },
+                ];
+            },
         },
 
         methods: {
@@ -270,7 +286,6 @@
                     data: this.form,
                     success: (res) => {
                         if(res.data.code === 1) {
-                            this.loadLists();
                             this.$notify({
                                 title: this.$t('admin.public.success'),
                                 message: res.data.info,
@@ -376,14 +391,16 @@
             },
 
             //加载列表
-            loadLists(page) {
+            loadLists(page, query) {
 
-                page = (!page) ? (page = 1) : (page);
+                page = !page ? (page = 1) : page;
+                query = !query ? (query = {}) : query;
+                query = Object.assign(query, this.$route.query);
 
                 this.poemRequest({
                     type: 'post',
                     url: '/admin/user?api=load&p=' + page,
-                    data: this.$route.query,
+                    data: query,
                     success: (res) => {
                         if(res.data.code === 1) {
                             this.tableData = res.data.data.lists;
@@ -394,6 +411,11 @@
                         }
                     },
                 });
+            },
+
+            //检索
+            search(query) {
+                this.loadLists(this.parseGET()['p'], query);
             },
         },
     };
