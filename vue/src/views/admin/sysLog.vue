@@ -6,6 +6,7 @@
 
         <vp-admin>
             <el-card class="box-card">
+                <vp-table-search @reload="loadLists" @submit="search" :formFormat="formFormat"/>
                 <el-table
                     :data="tableData"
                     stripe
@@ -63,33 +64,41 @@
             return {
                 tableData: [],
                 pageHtml: '',
+                formFormat: {},
             }
         },
 
         created() {
 
-            //加载列表
-            this.loadList(
+            this.loadLists(
                 this.parseGET()['p']
             );
         },
 
         watch: {
+
             $route: {
                 handler() {
-
-                    //加载列表
-                    this.loadList(
+                    this.loadLists(
                         this.parseGET()['p']
                     );
                 },
                 deep: true,
-            }
+            },
+
+            tableData() {
+                this.formFormat = [
+                    { name:'ID', remoteName:'id', component:'input', componentType:'text' },
+                    { name:this.$t('admin.sysLog.user'), remoteName:'admin_id', component:'input', componentType:'text' },
+                    { name:this.$t('admin.sysLog.path'), remoteName:'path', component:'input', componentType:'text' },
+                    { name:this.$t('admin.sysLog.ctime'), remoteName:'ctime', component:'date-picker', componentType:'daterange' },
+                    { name:this.$t('admin.sysLog.level'), remoteName:'level', component:'select', componentOptions:[{id:1,name:this.$t('admin.sysLog.levelMean1')}, {id:2,name:this.$t('admin.sysLog.levelMean2')}, {id:0,name:this.$t('admin.sysLog.levelMean0')}], componentMultiple:false },
+                ];
+            },
         },
 
         methods: {
 
-            //列表行颜色切换
             tableStyle({row, column, rowIndex, columnIndex}) {
 
                 //等级
@@ -103,15 +112,16 @@
                 }
             },
 
-            //加载列表
-            loadList(page) {
+            loadLists(page, query) {
 
-                page = (!page) ? (page = 1) : (page);
+                page = !page ? (page = 1) : page;
+                query = !query ? (query = {}) : query;
+                query = Object.assign(query, this.$route.query);
 
                 this.poemRequest({
                     type: 'post',
                     url: '/admin/log/sysLog?api=load&p=' + page,
-                    data: this.$route.query,
+                    data: query,
                     success: (res) => {
                         if(res.data.code === 1) {
                             this.tableData = res.data.data.lists;
@@ -121,7 +131,11 @@
                         }
                     },
                 });
-            }
+            },
+
+            search(query) {
+                this.loadLists(this.parseGET()['p'], query);
+            },
         },
     };
 </script>

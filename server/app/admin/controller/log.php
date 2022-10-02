@@ -132,13 +132,28 @@ class log extends middleware\login {
             'load' => function() {
 
                 //组装条件
+                $log_data = m('sys_log');
                 $where = [];
                 if(is_numeric($_POST['status'])) {
                     $where['level'] = intval($_POST['status']);
                 }
+                if(!empty($_POST['id'])) {
+                    $where['id'] = intval($_POST['id']);
+                }
+                if(!empty($_POST['log'])) {
+                    $log_data->where("log like '%{$_POST['log']}%'");
+                }
+                if(!empty($_POST['path'])) {
+                    $log_data->where("path like '%{$_POST['path']}%'");
+                }
+                if(!empty($_POST['ctime'])) {
+                    $_POST['ctime'][0] = substr($_POST['ctime'][0], 0, 10);
+                    $_POST['ctime'][1] = substr($_POST['ctime'][1], 0, 10);
+                    $log_data->where("ctime >= '{$_POST['ctime'][0]}' && ctime <= '{$_POST['ctime'][1]}'");
+                }
 
                 //获取日志
-                $log_data = m('sys_log')
+                $log_data
                     ->where($where)
                     ->order('id desc');
 
