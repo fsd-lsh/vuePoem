@@ -7,10 +7,14 @@
         <vp-admin>
 
             <el-card class="box-card">
-                <el-button @click="newRoleFlag = !newRoleFlag" icon="fa fa-user-plus" type="primary" size="mini">&nbsp;{{$t('admin.roles.add')}}</el-button>
-                <el-button @click="roleChange(2)" icon="fa fa-toggle-on" type="warning" size="mini">&nbsp;{{$t('admin.roles.batch')}}{{$t('admin.roles.stop')}}</el-button>
-                <el-button @click="roleChange(1)" icon="fa fa-toggle-off" type="success" size="mini">&nbsp;{{$t('admin.roles.batch')}}{{$t('admin.roles.open')}}</el-button>
-                <el-button @click="roleChange(0)" icon="fa fa-user-times" type="danger" size="mini">&nbsp;{{$t('admin.roles.batch')}}{{$t('admin.roles.del')}}</el-button>
+                <vp-table-search @reload="loadLists" @submit="search" :formFormat="formFormat">
+                    <template v-slot:btn>
+                        <el-button @click="newRoleFlag = !newRoleFlag" icon="fa fa-user-plus" type="primary" size="mini">&nbsp;{{$t('admin.roles.add')}}</el-button>
+                        <el-button @click="roleChange(2)" icon="fa fa-toggle-on" type="warning" size="mini">&nbsp;{{$t('admin.roles.batch')}}{{$t('admin.roles.stop')}}</el-button>
+                        <el-button @click="roleChange(1)" icon="fa fa-toggle-off" type="success" size="mini">&nbsp;{{$t('admin.roles.batch')}}{{$t('admin.roles.open')}}</el-button>
+                        <el-button @click="roleChange(0)" icon="fa fa-user-times" type="danger" size="mini">&nbsp;{{$t('admin.roles.batch')}}{{$t('admin.roles.del')}}</el-button>
+                    </template>
+                </vp-table-search>
                 <el-table
                     :data="tableData"
                     stripe
@@ -91,7 +95,7 @@
                                 :type="'info'"
                                 style="margin:2px 5px;"
                                 effect="dark">
-                                {{m_id}}
+                                {{menuOneDimensionalArr[m_id]}}
                             </el-tag>
                         </template>
                     </el-table-column>
@@ -205,38 +209,50 @@
                 menu_config: [],
 
                 pageHtml: '',
+
+                formFormat: [],
+
+                menuOneDimensionalMap: {},
+                menuOneDimensionalArr: [],
             }
         },
 
         created() {
 
-            //加载列表
             this.loadLists(
                 this.parseGET()['p']
             );
+
+            this.menuOneDimensional();
         },
 
         watch: {
+
             $route: {
                 handler() {
-
-                    //加载列表
                     this.loadLists(
                         this.parseGET()['p']
                     );
                 },
                 deep: true,
-            }
+            },
+
+            tableData() {
+                this.formFormat = [
+                    { name:'ID', remoteName:'id', component:'input', componentType:'text' },
+                    { name:this.$t('admin.roles.name'), remoteName:'name', component:'input', componentType:'text' },
+                    { name:this.$t('admin.roles.power'), remoteName:'menu_ids', component:'select', componentOptions:this.menuOneDimensionalMap, componentMultiple:true },
+                    { name:this.$t('admin.roles.ctime'), remoteName:'ctime', component:'date-picker', componentType:'daterange' },
+                    { name:this.$t('admin.roles.utime'), remoteName:'utime', component:'date-picker', componentType:'daterange' },
+                    { name:this.$t('admin.roles.status'), remoteName:'status', component:'select', componentOptions:[{id:1,name:this.$t('admin.roles.open')}, {id:2,name:this.$t('admin.roles.stop')}, {id:0,name:this.$t('admin.roles.del')}], componentMultiple:false },
+                ];
+            },
         },
 
         methods: {
 
-            //列表行颜色切换
             tableStyle({row, column, rowIndex, columnIndex}) {
-
-                //状态
                 if(column.label === this.$t('admin.roles.status')) {
-
                     switch (row.status) {
                         case '0': { return 'background:#e4393c; color:#fff!important;'; }
                         case '1': { return 'background:#009688; color:#fff!important;'; }
@@ -245,12 +261,10 @@
                 }
             },
 
-            //表格多选
             handleSelectionChange(val) {
                 this.tableSelection = val;
             },
 
-            //打开编辑
             editRoleNow(s) {
 
                 this.editForm = s.row;
@@ -260,7 +274,6 @@
                 this.editRoleFlag = true;
             },
 
-            //创建用户
             createRoleNow() {
 
                 if(!this.form.name) {
@@ -293,7 +306,6 @@
                 });
             },
 
-            //保存角色
             saveRole() {
 
                 if(!this.editForm.name) {
@@ -333,7 +345,6 @@
                 });
             },
 
-            //变更状态
             roleChange(status, s) {
 
                 let ids = [];
@@ -375,14 +386,16 @@
                 });
             },
 
-            //加载列表
-            loadLists(page) {
+            loadLists(page, query) {
 
-                page = (!page) ? (page = 1) : (page);
+                page = !page ? (page = 1) : page;
+                query = !query ? (query = {}) : query;
+                query = Object.assign(query, this.$route.query);
 
                 this.poemRequest({
                     type: 'post',
                     url: '/admin/roles?api=load&p=' + page,
+                    data: query,
                     success: (res) => {
                         if(res.data.code === 1) {
                             this.tableData = res.data.data.lists;
@@ -393,6 +406,40 @@
                         }
                     },
                 });
+            },
+
+            search(query) {
+                this.loadLists(this.parseGET()['p'], query);
+            },
+
+            menuOneDimensional() {
+                let menuInfo = this.$store.state.menuTree.menuInfo;
+                let lists = {};
+                for (let index = 0; index < menuInfo.length; index++) {
+                    for (let s_index = 0; s_index < menuInfo[index].child.length; s_index++) {
+                        if(menuInfo[index].child[s_index].title) {
+                            lists[menuInfo[index].child[s_index].id] = {
+                                id: menuInfo[index].child[s_index].id,
+                                name: menuInfo[index].child[s_index].title,
+                            };
+                            this.menuOneDimensionalArr[menuInfo[index].child[s_index].id] =
+                                menuInfo[index].child[s_index].title;
+                        }
+                        if(menuInfo[index].child[s_index].child.length) {
+                            for (let ss_index = 0; ss_index < menuInfo[index].child[s_index].child.length; ss_index++) {
+                                if(menuInfo[index].child[s_index].child[ss_index].title) {
+                                    lists[menuInfo[index].child[s_index].child[ss_index].id] = {
+                                        id: menuInfo[index].child[s_index].child[ss_index].id,
+                                        name: menuInfo[index].child[s_index].child[ss_index].title,
+                                    };
+                                    this.menuOneDimensionalArr[menuInfo[index].child[s_index].child[ss_index].id] =
+                                        menuInfo[index].child[s_index].child[ss_index].title;
+                                }
+                            }
+                        }
+                    }
+                }
+                this.menuOneDimensionalMap = lists;
             },
         },
     };

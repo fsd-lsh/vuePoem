@@ -158,15 +158,45 @@ class roles extends middleware\login {
             //加载列表
             'load' => function() {
 
+                $lists = m('sys_roles');
+
+                $where = [
+                    'status' => ['!=', 0],
+                ];
+                if(is_numeric($_POST['status'])) {
+                    $where['status'] = intval($_POST['status']);
+                }
+                if(!empty($_POST['id'])) {
+                    $where['id'] = intval($_POST['id']);
+                }
+                if(!empty($_POST['name'])) {
+                    $lists->where("name like '%{$_POST['name']}%'");
+                }
+                if(!empty($_POST['menu_ids'])) {
+                    if(is_array($_POST['menu_ids'])) {
+                        $lists->where(sql_fis($_POST['menu_ids'], 'menu_ids'));
+                    }else {
+                        $where['menu_ids'] = intval($_POST['menu_ids']);
+                    }
+                }
+                if(!empty($_POST['ctime'])) {
+                    $_POST['ctime'][0] = substr($_POST['ctime'][0], 0, 10);
+                    $_POST['ctime'][1] = substr($_POST['ctime'][1], 0, 10);
+                    $lists->where("ctime >= '{$_POST['ctime'][0]}' && ctime <= '{$_POST['ctime'][1]}'");
+                }
+                if(!empty($_POST['utime'])) {
+                    $_POST['utime'][0] = substr($_POST['utime'][0], 0, 10);
+                    $_POST['utime'][1] = substr($_POST['utime'][1], 0, 10);
+                    $lists->where("utime >= '{$_POST['utime'][0]}' && utime <= '{$_POST['utime'][1]}'");
+                }
+
                 //获取角色数据
-                $roles_lists = m('sys_roles')
-                    ->where([
-                        'status' => ['!=', 0],
-                    ])
+                $lists
+                    ->where($where)
                     ->order('id asc');
-                $roles_lists = \poem\more\page::run($roles_lists, '/#/roles', 15);
-                $lists = $roles_lists['list'];
-                $page_html = $roles_lists['html'];
+                $lists = \poem\more\page::run($lists, '/#/roles', 15);
+                $lists = $lists['list'];
+                $page_html = $lists['html'];
 
                 //获取菜单
                 $pids = m('sys_menu')

@@ -152,7 +152,7 @@ class user extends middleware\login {
                     if(is_array($_POST['roles'])) {
                         $lists->where(sql_fis($_POST['roles'], 'roles'));
                     }else {
-                        $where['status'] = intval($_POST['roles']);
+                        $where['roles'] = intval($_POST['roles']);
                     }
                 }
                 if(!empty($_POST['ctime'])) {

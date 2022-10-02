@@ -96,7 +96,7 @@ INSERT INTO `poem_sys_menu` (`id`, `pid`, `title`, `icon`, `href`, `target`, `so
 INSERT INTO `poem_sys_menu` (`id`, `pid`, `title`, `icon`, `href`, `target`, `sort`, `status`, `lock`, `show`, `remark`, `ctime`, `utime`, `dtime`) VALUES (7, 3, '系统日志', 'fa fa-bitbucket', '', '_self', 0, 1, 1, 1, NULL, '1617536467', '1617536467', NULL);
 INSERT INTO `poem_sys_menu` (`id`, `pid`, `title`, `icon`, `href`, `target`, `sort`, `status`, `lock`, `show`, `remark`, `ctime`, `utime`, `dtime`) VALUES (8, 7, '框架日志', '', '/log/fwLog', '_self', 0, 1, 1, 1, NULL, '1617536467', '1617536467', NULL);
 INSERT INTO `poem_sys_menu` (`id`, `pid`, `title`, `icon`, `href`, `target`, `sort`, `status`, `lock`, `show`, `remark`, `ctime`, `utime`, `dtime`) VALUES (9, 7, '运行日志', '', '/log/sysLog', '_self', 0, 1, 1, 1, NULL, '1617536467', '1617536467', NULL);
-INSERT INTO `poem_sys_menu` (`id`, `pid`, `title`, `icon`, `href`, `target`, `sort`, `status`, `lock`, `show`, `remark`, `ctime`, `utime`, `dtime`) VALUES (11, 3, '系统监控', 'fa fa-area-chart', '/system', '_self', 0, 1, 1, 1, NULL, '1632745477', '1638412220', NULL);
+INSERT INTO `poem_sys_menu` (`id`, `pid`, `title`, `icon`, `href`, `target`, `sort`, `status`, `lock`, `show`, `remark`, `ctime`, `utime`, `dtime`) VALUES (10, 3, '系统监控', 'fa fa-area-chart', '/system', '_self', 0, 1, 1, 1, NULL, '1632745477', '1638412220', NULL);
 COMMIT;
 
 -- ----------------------------

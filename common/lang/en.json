@@ -136,7 +136,7 @@
         },
         "signIn": {
             "title": "VuePoem Background Login",
-            "signName": "Switch the language",
+            "signName": "切换语言",
             "account": "Account",
             "password": "Password",
             "signIn": "SignIn",
@@ -226,7 +226,7 @@
             "menu_id_7": "The system log",
             "menu_id_8": "Framework log",
             "menu_id_9": "Run log",
-            "menu_id_11": "System monitoring"
+            "menu_id_10": "System monitoring"
         },
         "field": {
             "ctime": "Create Time",

@@ -136,7 +136,7 @@
         },
         "signIn": {
             "title": "VuePoem 后台登录",
-            "signName": "切换语言",
+            "signName": "Switch the language",
             "account": "账号",
             "password": "密码",
             "signIn": "登录",
@@ -226,7 +226,7 @@
             "menu_id_7": "系统日志",
             "menu_id_8": "框架日志",
             "menu_id_9": "运行日志",
-            "menu_id_11": "系统监控"
+            "menu_id_10": "系统监控"
         },
         "field": {
             "ctime": "创建时间",
