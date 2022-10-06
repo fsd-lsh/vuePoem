@@ -4,6 +4,18 @@
 
         <div class="btn-group">
             <div class="curd">
+                <el-select
+                    id="page-size"
+                    size="mini"
+                    @change="pageSizeChange"
+                    v-model="formData.pageSize"
+                    :placeholder="$t('admin.public.selectMenu')">
+                    <el-option
+                        v-for="(item, key) in pageSizeRange"
+                        :key="key"
+                        :value="item.value"
+                        :label="item.label"/>
+                </el-select>
                 <slot name="btn"/>
             </div>
             <div class="control">
@@ -59,9 +71,13 @@
 </template>
 
 <script>
+import helper from "../mixins/helper";
+import merge from "webpack-merge";
 export default {
 
     name: "vpTableSearch",
+
+    mixins: [helper],
 
     props: {
         value: false,
@@ -71,7 +87,17 @@ export default {
     data() {
         return {
             searchOpenFlag: false,
-            formData: {},
+            formData: {
+                pageSize: 15,
+            },
+            pageSizeRange: [
+                { value:1, label:1 },
+                { value:15, label:15 },
+                { value:50, label:50 },
+                { value:100, label:100 },
+                { value:150, label:150 },
+                { value:500, label:500 },
+            ],
         }
     },
 
@@ -92,22 +118,41 @@ export default {
         },
 
         reloadTable() {
-            this.formData = {};
+            this.formData = {
+                pageSize: this.formData.pageSize
+            };
             this.$emit('reload');
         },
 
         submit() {
             this.$emit('submit', this.formData);
         },
+
+        pageSizeChange() {
+
+            this.$router.push({
+                query: merge(this.$route.query, {
+                    p: 1,
+                    pageSize: this.formData.pageSize
+                })
+            });
+            this.submit();
+        },
     },
 
     watch: {
+
         value(v) {
             this.searchOpenFlag = v;
         },
+
         searchOpenFlag(v) {
             window.localStorage.setItem('searchOpenFlag', (v === true) ?  '1' : '0')
         },
+
+        'formData.pageSize'(v) {
+            this.formData.pageSize = Number(v);
+        }
     },
 }
 </script>
@@ -131,6 +176,16 @@ export default {
                 flex: .7;
                 text-align: left;
                 line-height: 26px;
+
+                /deep/#page-size {
+                    width: 74px;
+                    height: 24px;
+                    line-height: 24px;
+                }
+
+                /deep/.el-input__suffix {
+                    top: 2px;
+                }
             }
 
             >.control {

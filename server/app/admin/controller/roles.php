@@ -159,6 +159,7 @@ class roles extends middleware\login {
             'load' => function() {
 
                 $lists = m('sys_roles');
+                $_POST['pageSize'] = $_POST['pageSize'] ? intval($_POST['pageSize']) : 15;
 
                 $where = [
                     'status' => ['!=', 0],
@@ -194,8 +195,8 @@ class roles extends middleware\login {
                 $lists
                     ->where($where)
                     ->order('id asc');
-                $lists = \poem\more\page::run($lists, '/#/roles', 15);
-                $lists = $lists['list'];
+                $lists = \poem\more\page::run($lists, '/#/roles', $_POST['pageSize']);
+                $data = $lists['list'];
                 $page_html = $lists['html'];
 
                 //获取菜单
@@ -211,8 +212,8 @@ class roles extends middleware\login {
                 }
 
                 //数据格式化
-                $data = [];
-                foreach ($lists as $key => $item) {
+                $lists = [];
+                foreach ($data as $key => $item) {
 
                     //过滤父级菜单ID
                     $menu_ids = explode(',', $item['menu_ids']);
@@ -233,7 +234,7 @@ class roles extends middleware\login {
                     }
 
                     //组装数据
-                    $data[] = [
+                    $lists[] = [
                         'id' => $item['id'],
                         'name' => $item['name'],
                         'menu_ids' => $menu_ids,
@@ -243,6 +244,7 @@ class roles extends middleware\login {
                         'utime' => date('Y-m-d H:i:s', $item['utime']),
                     ];
                 }
+                unset($data);
 
                 //组装菜单配置
                 $menu = m('sys_menu')
@@ -276,7 +278,7 @@ class roles extends middleware\login {
 
                 //响应
                 ajax(1, trans('admin.roles.loadOk'), [
-                    'lists' => $data,
+                    'lists' => $lists,
                     'page_html' => $page_html,
                     'menu_config' => $menu,
                 ]);
