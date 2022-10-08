@@ -8,7 +8,7 @@
 
 /* VuePoem theme */
 .sys-theme-admin-poem {
-    --sys-main-color: #409EFF;          //主题色     (顶导航背景)
+    --sys-main-color: #000;             //主题色     (顶导航背景)
     --sys-main-ft-color: #409EFF;       //主题字色   (左侧菜单)
     --sys-main-ft-color2: #fff;         //主题字色   (顶部导航)
     --sys-main-menu-color: #0c0c0c;     //菜单背景1
@@ -17,7 +17,7 @@
 
 /* Green theme */
 .sys-theme-green {
-    --sys-main-color: #1aa094;          //主题色     (顶导航背景)
+    --sys-main-color: #000;             //主题色     (顶导航背景)
     --sys-main-ft-color: #1aa094;       //主题字色   (左侧菜单)
     --sys-main-ft-color2: #fff;         //主题字色   (顶部导航)
     --sys-main-menu-color: #0c0c0c;     //菜单背景1
@@ -27,7 +27,7 @@
 /* 重制elementUI */
 .el-pagination.is-background .el-pager li:not(.disabled).active,
 button.el-button.el-button--primary {
-    background: var(--sys-main-ft-color);
+    background: var(--sys-main-ft-color)!important;
     border: 1px solid var(--sys-main-ft-color);
 }
 .el-table .ascending .sort-caret.ascending {
@@ -35,7 +35,7 @@ button.el-button.el-button--primary {
 }
 .el-menu--vertical {
     > ul {
-        background-color: var(--sys-main-menu-color2);
+        background-color: var(--sys-main-menu-color2)!important;
     }
 }
 .el-aside {
@@ -50,18 +50,18 @@ button.el-button.el-button--primary {
 }
 .el-checkbox__input.is-checked .el-checkbox__inner,
 .el-checkbox__input.is-indeterminate .el-checkbox__inner {
-    background-color: var(--sys-main-ft-color);
-    border-color: var(--sys-main-ft-color);
+    background-color: var(--sys-main-ft-color)!important;
+    border-color: var(--sys-main-ft-color)!important;
 }
 .el-select-dropdown__item.selected,
 .el-menu-item.is-active {
-    color: var(--sys-main-ft-color);
+    color: var(--sys-main-ft-color)!important;
 }
 .el-select .el-input.is-focus .el-input__inner,
 .el-select .el-input__inner:focus,
 .el-input.is-active .el-input__inner,
 .el-input__inner:focus {
-    border-color: var(--sys-main-ft-color);
+    border-color: var(--sys-main-ft-color)!important;
 }
 .el-menu--vertical > ul > li > ul > li {
     line-height: 32px;
