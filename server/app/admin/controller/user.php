@@ -134,6 +134,7 @@ class user extends middleware\login {
             'load' => function() {
 
                 $lists = m('sys_admin');
+                $_POST['pageSize'] = $_POST['pageSize'] ? intval($_POST['pageSize']) : 15;
 
                 //组装条件
                 $where = [
@@ -171,7 +172,7 @@ class user extends middleware\login {
                     ->field('id, name, password, roles, status, ctime, utime')
                     ->where($where)
                     ->order('id asc');
-                $page_info = \poem\more\page::run($lists, '/#/user', 15);
+                $page_info = \poem\more\page::run($lists, '/#/user', $_POST['pageSize']);
 
                 //获取角色信息
                 $roles_info = m('sys_roles')

@@ -6,7 +6,7 @@
 
         <vp-admin>
             <el-card class="box-card">
-                <vp-table-search @reload="loadLists" @submit="search" :formFormat="formFormat"/>
+                <vp-table-search @reload="loadLists" @submit="search" :formFormat="formFormat" :pageLimit="true"/>
                 <el-table
                     :data="tableData"
                     stripe

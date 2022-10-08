@@ -7,7 +7,7 @@
         <vp-admin>
 
             <el-card class="box-card">
-                <vp-table-search @reload="loadLists" @submit="search" :formFormat="formFormat">
+                <vp-table-search @reload="loadLists" @submit="search" :formFormat="formFormat" :pageLimit="true">
                     <template v-slot:btn>
                         <el-button @click="newUserFlag = !newUserFlag" icon="fa fa-user-plus" type="primary" size="mini">&nbsp;{{$t('admin.user.add')}}</el-button>
                         <el-button @click="userChange(2)" change-type="0" icon="fa fa-toggle-on" type="warning" size="mini">&nbsp;{{$t('admin.user.batch')}}{{$t('admin.user.stop')}}</el-button>

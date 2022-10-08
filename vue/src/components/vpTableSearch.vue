@@ -5,6 +5,7 @@
         <div class="btn-group">
             <div class="curd">
                 <el-select
+                    v-if="pageLimit"
                     id="page-size"
                     size="mini"
                     @change="pageSizeChange"
@@ -82,6 +83,7 @@ export default {
     props: {
         value: false,
         formFormat: [],
+        pageLimit: false,
     },
 
     data() {
@@ -91,7 +93,6 @@ export default {
                 pageSize: 15,
             },
             pageSizeRange: [
-                { value:1, label:1 },
                 { value:15, label:15 },
                 { value:50, label:50 },
                 { value:100, label:100 },

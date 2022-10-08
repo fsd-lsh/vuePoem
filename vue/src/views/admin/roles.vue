@@ -7,7 +7,7 @@
         <vp-admin>
 
             <el-card class="box-card">
-                <vp-table-search @reload="loadLists" @submit="search" :formFormat="formFormat">
+                <vp-table-search @reload="loadLists" @submit="search" :formFormat="formFormat" :pageLimit="true">
                     <template v-slot:btn>
                         <el-button @click="newRoleFlag = !newRoleFlag" icon="fa fa-user-plus" type="primary" size="mini">&nbsp;{{$t('admin.roles.add')}}</el-button>
                         <el-button @click="roleChange(2)" icon="fa fa-toggle-on" type="warning" size="mini">&nbsp;{{$t('admin.roles.batch')}}{{$t('admin.roles.stop')}}</el-button>

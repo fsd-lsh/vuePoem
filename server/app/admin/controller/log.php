@@ -131,8 +131,10 @@ class log extends middleware\login {
             //加载列表
             'load' => function() {
 
-                //组装条件
                 $log_data = m('sys_log');
+                $_POST['pageSize'] = $_POST['pageSize'] ? intval($_POST['pageSize']) : 15;
+
+                //组装条件
                 $where = [];
                 if(is_numeric($_POST['status'])) {
                     $where['level'] = intval($_POST['status']);
@@ -158,7 +160,7 @@ class log extends middleware\login {
                     ->order('id desc');
 
                 //分页
-                $log_data = \poem\more\page::run($log_data, '/#/log/sysLog', 15);
+                $log_data = \poem\more\page::run($log_data, '/#/log/sysLog', $_POST['pageSize']);
 
                 //数据格式化
                 if(is_array($log_data['list']) && !empty($log_data['list'])) {
