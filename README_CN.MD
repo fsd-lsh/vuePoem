@@ -1,12 +1,13 @@
 # vuePoem
 [ENGLISH](./README.MD) | 中文
 
-![](https://img.shields.io/badge/js-@vue-gree.svg?style=flat)
-![](https://img.shields.io/badge/ui-@elementUI-blue.svg?style=flat)
-![](https://img.shields.io/badge/php-@phppoem-purple.svg?style=flat)
-![](https://img.shields.io/badge/db-@mysql-purple.svg?style=flat)
-![](https://img.shields.io/badge/font-@fontawesome-red.svg?style=flat)
-![](https://img.shields.io/badge/License-@MIT-yellow.svg?style=flat)
+![](https://img.shields.io/badge/Phppoem-2.1.x-brightgreen?color=545c64&amp;labelColor=ffd04b)
+![](https://img.shields.io/badge/Vue-2.5.2-brightgreen?color=545c64&amp;labelColor=ffd04b)
+![](https://img.shields.io/badge/ElementUI-2.15.6-brightgreen?color=545c64&amp;labelColor=ffd04b)
+![](https://img.shields.io/badge/Mysql-5.7-brightgreen?color=545c64&amp;labelColor=ffd04b)
+![](https://img.shields.io/badge/Fontawesome-4.7.0-brightgreen?color=545c64&amp;labelColor=ffd04b)
+![](https://img.shields.io/badge/Container-docker-brightgreen?color=545c64&amp;labelColor=ffd04b)
+![](https://img.shields.io/badge/License-MIT-brightgreen?color=545c64&amp;labelColor=ffd04b)
 
 > 一款轻量级，开源后台快速开发脚手架
 

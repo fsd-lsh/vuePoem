@@ -1,6 +1,6 @@
 <?php
 
-if($_SERVER['IS_DOCKER']) {
+if(@$_SERVER['IS_DOCKER']) {
     $db_host = SYS_ENV['DOCKER_MYSQL_HOST'];
 }else {
     $db_host = SYS_ENV['MYSQL_HOST'] ? : '127.0.0.1';
