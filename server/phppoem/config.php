@@ -1,12 +1,18 @@
 <?php
 
+if($_SERVER['IS_DOCKER']) {
+    $db_host = SYS_ENV['DOCKER_MYSQL_HOST'];
+}else {
+    $db_host = SYS_ENV['MYSQL_HOST'] ? : '127.0.0.1';
+}
+
 return [
     'layout_on'       => true,
     'layout'          => false,
 
     // 数据库配置
     'db_type'         => 'mysql',
-    'db_host'         => SYS_ENV['MYSQL_HOST'] ? : '127.0.0.1',
+    'db_host'         => $db_host,
     'db_name'         => SYS_ENV['MYSQL_DBNM'] ? : 'vuePoem',
     'db_user'         => SYS_ENV['MYSQL_USER'] ? : 'root',
     'db_pass'         => SYS_ENV['MYSQL_PASS'] ? : '',

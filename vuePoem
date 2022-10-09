@@ -10,7 +10,8 @@ class vuePoem {
 --------------------------------------
 check  :Checking the Operating Environment
 dev    :Automatic loading of Vue and PHP development servers
-build  :Vue projects are packaged as static resources in public/
+build  :Vue projects are packaged as static resources in /server/public/
+docker :Start with docker
 clean  :Clean up build front-end resources
 mysql  :Automatic Database deployment\n\n
 EOF;
@@ -27,6 +28,7 @@ EOF;
         'VUE_HOST', 'VUE_PORT', 'VUE_PROJECT_PATH',
         'PHP_HOST', 'PHP_PORT'
     ];
+    private $docker_env;
 
     public function __construct() {
 
@@ -76,6 +78,36 @@ EOF;
         $this->log(__FUNCTION__ . ' finished');
     }
 
+    private function docker() {
+
+        $this->log(__FUNCTION__ . ' running...');
+        $this->log('press ctrl+c to quit');
+        $this->log('docker -v && node -v && npm -v', true);
+
+        $this->build();
+
+        $this->log("cd {$this->env['DOCKER_PATH']} && docker-compose up -d", true);
+
+        sleep(2);
+        $this->mysql(__FUNCTION__);
+
+        $this->log("cd {$this->env['DOCKER_PATH']} && docker-compose down", true);
+
+        sleep(2);
+        switch (PHP_OS) {
+            case 'Linux': {
+                $this->log("xdg-open http://127.0.0.1:{$this->docker_env['NGINX_HTTP_HOST_PORT']}", true);
+                break;
+            }
+            case 'Darwin': {
+                $this->log("open http://127.0.0.1:{$this->docker_env['NGINX_HTTP_HOST_PORT']}", true);
+                break;
+            }
+        }
+
+        $this->log("cd {$this->env['DOCKER_PATH']} && docker-compose up", true);
+    }
+
     private function clean() {
 
         if(file_exists($this->env['PHP_PROJECT_PATH'].'/public/index.html')) {
@@ -90,27 +122,52 @@ EOF;
         $this->log('clean success');
     }
 
-    private function mysql() {
+    private function mysql($from = '') {
+
+        $tables = file_get_contents('vuePoem.sql');
 
         try {
 
-            $tables = file_get_contents('vuePoem.sql');
-            if(empty($tables)) {
-                $this->log('vuePoem.sql not found');
-                exit;
+            if($from == 'docker') {
+
+                $this->docker_env = parse_ini_file('./docker/.env');
+                $has_db = 0;
+                $mysql = new PDO("mysql:host=127.0.0.1;port={$this->docker_env['MYSQL_HOST_PORT']}", $this->env['MYSQL_USER'], $this->docker_env['MYSQL_ROOT_PASSWORD']);
+                $mysql->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                $re = $mysql->query('show databases;')->fetchAll(PDO::FETCH_ASSOC);
+                foreach ($re as $item) {
+                    if($item['Database'] == $this->env['MYSQL_DBNM']) {
+                        $has_db++; break;
+                    }
+                }
+                if(!$has_db) {
+                    $mysql->exec('CREATE DATABASE IF NOT EXISTS ' . $this->env['MYSQL_DBNM']);
+                    $mysql->exec('USE ' . $this->env['MYSQL_DBNM']);
+                    if(empty($tables)) {
+                        $this->log('vuePoem.sql not found');
+                        exit;
+                    }
+                    $mysql->exec($tables);
+                    $this->log('mysql db & tables init success');
+                }
+
+            }else {
+
+                $mysql = new PDO("mysql:host={$this->env['MYSQL_HOST']}", $this->env['MYSQL_USER'], $this->env['MYSQL_PASS']);
+                $mysql->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                $mysql->exec('CREATE DATABASE IF NOT EXISTS ' . $this->env['MYSQL_DBNM']);
+                $mysql->exec('USE ' . $this->env['MYSQL_DBNM']);
+                if(empty($tables)) {
+                    $this->log('vuePoem.sql not found');
+                    exit;
+                }
+                $mysql->exec($tables);
+                $this->log('mysql db & tables init success');
             }
 
-            $mysql = new PDO("mysql:host={$this->env['MYSQL_HOST']}", $this->env['MYSQL_USER'], $this->env['MYSQL_PASS']);
-            $mysql->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-            $mysql->exec('CREATE DATABASE IF NOT EXISTS ' . $this->env['MYSQL_DBNM']);
-            $mysql->exec('USE ' . $this->env['MYSQL_DBNM']);
-            $mysql->exec($tables);
-
-            $this->log('mysql db & tables init success');
-
         }catch (PDOException $e) {
-            $this->log('auto create database' . $this->env['MYSQL_DBNM']);
+            $this->log('auto create database ' . $this->env['MYSQL_DBNM'] . "\n" . $e);
+            exit;
         }
     }
 
