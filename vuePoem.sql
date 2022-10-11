@@ -117,7 +117,7 @@ CREATE TABLE `poem_sys_roles` (
 -- Records of poem_sys_roles
 -- ----------------------------
 BEGIN;
-INSERT INTO `poem_sys_roles` (`id`, `name`, `menu_ids`, `status`, `ctime`, `utime`) VALUES (1, '系统管理员', '1,2,3,4,5,6,7,8,9,10,11', 1, '1620033242', '1620033242');
+INSERT INTO `poem_sys_roles` (`id`, `name`, `menu_ids`, `status`, `ctime`, `utime`) VALUES (1, '系统管理员', '1,2,3,4,5,6,7,8,9,10', 1, '1620033242', '1620033242');
 INSERT INTO `poem_sys_roles` (`id`, `name`, `menu_ids`, `status`, `ctime`, `utime`) VALUES (2, '业务管理员', '1,2,3,5,10', 1, '1627980503', '1627980503');
 INSERT INTO `poem_sys_roles` (`id`, `name`, `menu_ids`, `status`, `ctime`, `utime`) VALUES (3, '客户A', '1,2,10', 1, '1631113295', '1631113295');
 COMMIT;

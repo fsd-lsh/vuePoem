@@ -2,8 +2,8 @@
 ENGLISH | [中文](./README_CN.MD)
 
 ![](https://img.shields.io/badge/Phppoem-2.1.x-brightgreen?color=545c64&amp;labelColor=ffd04b)
-![](https://img.shields.io/badge/Vue-2.5.2-brightgreen?color=545c64&amp;labelColor=ffd04b)
-![](https://img.shields.io/badge/ElementUI-2.15.6-brightgreen?color=545c64&amp;labelColor=ffd04b)
+![](https://img.shields.io/badge/Vue-2.7.10-brightgreen?color=545c64&amp;labelColor=ffd04b)
+![](https://img.shields.io/badge/ElementUI-2.15.10-brightgreen?color=545c64&amp;labelColor=ffd04b)
 ![](https://img.shields.io/badge/Mysql-5.7-brightgreen?color=545c64&amp;labelColor=ffd04b)
 ![](https://img.shields.io/badge/Fontawesome-4.7.0-brightgreen?color=545c64&amp;labelColor=ffd04b)
 ![](https://img.shields.io/badge/Container-docker-brightgreen?color=545c64&amp;labelColor=ffd04b)
@@ -28,7 +28,7 @@ ENGLISH | [中文](./README_CN.MD)
 
 ## Project Environment (similar to this version is recommended)
 - PHP 7.4 +
-- Node v17.7.2 (NPM v8.5.2) +
+- Node v14.20.0 (NPM v6.14.17) 
 - Mysql5.7
 
 ## Development of the document
