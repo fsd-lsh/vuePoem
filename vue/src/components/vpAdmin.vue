@@ -113,10 +113,10 @@
                 class="menu-level-1"
                 mode="horizontal"
                 @select="menuHandleSelect"
-                background-color="var(--sys-main-color)"
+                background-color="var(--sys-title-color)"
                 text-color="#fff"
                 style="width:100%!important;"
-                active-text-color="var(--sys-main-ft-color)">
+                active-text-color="var(--sys-main-color)">
                 <el-menu-item
                     @click="toolsGroup('menu')">
                     <el-tooltip

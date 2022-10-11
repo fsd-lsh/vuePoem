@@ -29,7 +29,10 @@ export default {
                 document.querySelector('body').setAttribute('class', this.nowTheme);
             };
 
-            if(window.sessionStorage.getItem('sys-theme-lists')) {
+            if(
+                window.sessionStorage.getItem('sys-theme-lists') &&
+                JSON.parse(window.sessionStorage.getItem('sys-theme-lists')).length !== 0
+            ) {
 
                 this.themeList = JSON.parse(window.sessionStorage.getItem('sys-theme-lists'));
                 focusTheme();

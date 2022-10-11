@@ -69,7 +69,7 @@ class index extends middleware\login {
                     ajax(0, trans('admin.public.error'));
                 }
 
-                preg_match_all('/.sys-theme-(.*)/', $theme_css_file, $theme_css_file);
+                preg_match_all('/.theme-(.*)/', $theme_css_file, $theme_css_file);
                 $theme_css_file = $theme_css_file[0];
                 if(!is_array($theme_css_file)) {
                     ajax(0, trans('admin.public.error'));
