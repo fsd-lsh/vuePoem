@@ -260,14 +260,8 @@ class menu extends middleware\login {
                 }
 
                 //加载字体图标
-                $fontawesome = file_get_contents(config('fontawesome_path'));
-                $fontawesome = json_decode($fontawesome, true);
-                if(is_array($fontawesome) && !empty($fontawesome)) {
-                    $fontawesome = array_keys($fontawesome);
-                    foreach ($fontawesome as $key => $item) {
-                        $fontawesome[$key] = 'fa ' . str_replace('_', '-', $item);
-                    }
-                }
+                $font_map = file_get_contents(config('class_font_map_path'));
+                $font_map = json_decode($font_map, true);
 
                 //构建后台菜单链接
                 $link_config = $this->build_menu_link();
@@ -276,7 +270,7 @@ class menu extends middleware\login {
                 ajax(1, trans('admin.public.success'), [
                     'lists' => $menu,
                     'menu_config' => $menu_config,
-                    'fontawesome_config' => $fontawesome,
+                    'font_map' => $font_map,
                     'link_config' => $link_config,
                 ]);
             },

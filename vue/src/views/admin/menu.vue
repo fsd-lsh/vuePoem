@@ -179,7 +179,7 @@
                             style="width:100%"
                             :placeholder="$t('admin.public.selectMenu')">
                             <el-option
-                                v-for="(item, key) in fontawesomeConfig"
+                                v-for="(item, key) in fontMap"
                                 :key="key"
                                 :label="item"
                                 :value="item">
@@ -280,7 +280,7 @@
                             style="width:100%"
                             :placeholder="$t('admin.public.selectMenu')">
                             <el-option
-                                v-for="(item, key) in fontawesomeConfig"
+                                v-for="(item, key) in fontMap"
                                 :key="key"
                                 :label="item"
                                 :value="item">
@@ -364,7 +364,7 @@
                 editForm: {},
 
                 menuConfig: [],
-                fontawesomeConfig: [],
+                fontMap: [],
                 linkConfig: [],
                 openWayConfig: { 0:'_self', 1:'_blank',},
             }
@@ -387,7 +387,7 @@
                         if(res.data.code === 1) {
                             that.tableData = res.data.data.lists;
                             that.menuConfig = res.data.data.menu_config;
-                            that.fontawesomeConfig = res.data.data.fontawesome_config;
+                            that.fontMap = res.data.data.font_map;
                             that.linkConfig = res.data.data.link_config;
                         }else {
                             this.$notify.error({message:res.data.info});

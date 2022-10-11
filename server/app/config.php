@@ -17,8 +17,8 @@ return [
     'lang_path' => realpath(APP_PATH . '../../common/lang'),      //语言包路径
     'theme_path' => SYS_ENV['THEME_PATH'],                              //主题路径
 
-    //fontawesome字体图标库路径
-    'fontawesome_path' => realpath(APP_PATH . '../../common/other/fontawesome.json'),
+    //class字体图标库路径
+    'class_font_map_path' => realpath(APP_PATH . '../../common/other/classFontMap.json'),
 
     //状态
     'user_status' => [0, 1, 2],  //用户状态
