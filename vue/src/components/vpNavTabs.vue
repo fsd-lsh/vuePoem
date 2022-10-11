@@ -53,7 +53,7 @@ export default {
             text-align: center;
             border-left: 1px solid transparent;
             border-right: 1px solid transparent;
-            color: var(--sys-title-color);
+            color: var(--title-color);
             font-size: .8rem;
             font-weight: 700;
 
@@ -76,7 +76,7 @@ export default {
 
             /deep/.el-tag__close {
                 &:hover {
-                    background: var(--sys-title-color)!important;
+                    background: var(--title-color)!important;
                 }
             }
         }

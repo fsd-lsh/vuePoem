@@ -18,8 +18,8 @@
             <el-menu
                 :default-active="activeSubIndex"
                 class="menu-level-2"
-                background-color="#23262e"
-                text-color="#fff"
+                background-color="var(--menu-background-color)"
+                text-color="var(--menu-font-normal-color)"
                 :unique-opened="true"
                 :collapse-transition="true"
                 :collapse="isCollapse">
@@ -113,10 +113,10 @@
                 class="menu-level-1"
                 mode="horizontal"
                 @select="menuHandleSelect"
-                background-color="var(--sys-title-color)"
+                background-color="var(--title-color)"
                 text-color="#fff"
                 style="width:100%!important;"
-                active-text-color="var(--sys-main-color)">
+                active-text-color="var(--main-color)">
                 <el-menu-item
                     @click="toolsGroup('menu')">
                     <el-tooltip

@@ -107,7 +107,7 @@ export default {
         position: relative;
 
         .head {
-            background-color: var(--sys-title-color);
+            background-color: var(--title-color);
             height: 60px;
             line-height: 60px;
             border-radius: 12px 12px 0 0;
@@ -144,8 +144,8 @@ export default {
 
             > button {
                 width: 100%;
-                background: var(--sys-main-color);
-                border-color: var(--sys-main-color);
+                background: var(--main-color);
+                border-color: var(--main-color);
             }
         }
     }
