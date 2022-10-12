@@ -1,9 +1,6 @@
-<!--系统管理 - 系统日志-->
-
+<!--/sysLog-->
 <template>
-
     <div id="sys-log">
-
         <vp-admin>
             <el-card class="box-card">
                 <vp-table-search @reload="loadLists" @submit="search" :formFormat="formFormat" :pageLimit="true"/>

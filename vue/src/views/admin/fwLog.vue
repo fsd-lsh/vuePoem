@@ -1,5 +1,4 @@
-<!--系统管理 - 框架日志-->
-
+<!--/log/fwLog-->
 <template>
     <div id="fw-log">
         <vp-admin>
@@ -25,15 +24,15 @@
                         </template>
                     </el-table-column>
                     <el-table-column
-                        prop="module_path"
-                        width="400"
-                        sortable
-                        :label="$t('admin.fwLog.module')">
-                    </el-table-column>
-                    <el-table-column
                         prop="log_name"
                         sortable
                         :label="$t('admin.fwLog.log')">
+                    </el-table-column>
+                    <el-table-column
+                        prop="module_name"
+                        width="400"
+                        sortable
+                        :label="$t('admin.fwLog.module')">
                     </el-table-column>
                     <el-table-column
                         prop="log_date"
@@ -52,7 +51,7 @@
                 </el-table>
             </el-card>
             <el-dialog
-                :title="$t('admin.fwLog.logDetail')"
+                :title="$t('admin.fwLog.logDetail') + ' - ' + (logDetailCount)"
                 :visible.sync="showLog"
                 :highlight-current-row="true"
                 top="5vh"
@@ -63,20 +62,32 @@
                     size="mini"
                     :max-height="400"
                     :row-class-name="logStatus"
+                    :border="true"
                     style="width:100%">
                     <el-table-column
                         fixed="left"
+                        width="100"
+                        label="Num"
                         type="index">
+                        <template slot="header" slot-scope="scope">
+                            <el-input
+                                v-model="logSearch"
+                                size="mini"
+                                :placeholder="$t('admin.public.filter')"/>
+                        </template>
                     </el-table-column>
                     <el-table-column
                         prop="log_time"
                         width="160"
                         fixed="left"
+                        sortable
+                        resizable
                         :label="$t('admin.fwLog.time')">
                     </el-table-column>
                     <el-table-column
                         prop="info"
                         width="3000"
+                        resizable
                         :label="$t('admin.fwLog.detail')">
                     </el-table-column>
                 </el-table>
@@ -101,22 +112,22 @@
         data() {
 
             return {
-
                 tableData: [],
                 showLog: false,
                 logDetail: [],
+                logDetailTemp: [],
+                logDetailCount: 0,
+                logSearch: '',
             }
         },
 
         created() {
-
             this.loadList();
         },
 
         methods: {
 
             loadList() {
-
                 this.poemRequest({
                     type: 'post',
                     url: '/admin/log/fwLog?api=load',
@@ -131,24 +142,65 @@
             },
 
             showLogDetail(v) {
-
-                this.logDetail = v.row.log_detail;
+                this.logDetail = [];
+                this.logSearch = '';
+                this.logDetailCount = 0;
 
                 if(this.showLog) {
                     this.showLog = false;
 
                 }else {
                     this.showLog = true;
+                    this.openLog(v.row);
                 }
             },
 
             logStatus({row, rowIndex}) {
-
                 switch (row.level) {
-                    case 'fatal': { return 'fatal-row'; }
-                    case 'info': { return 'info-row'; }
+                    case 0: { return 'fatal-row'; }
+                    case 1: { return 'info-row'; }
                     default: { return ''; }
                 }
+            },
+
+            openLog({module_name, log_name}) {
+                this.poemRequest({
+                    type: 'post',
+                    url: '/admin/log/fwLog?api=open_log',
+                    data: {
+                        module_name: module_name,
+                        log_name: log_name,
+                    },
+                    success: (res) => {
+                        if(res.data.code === 1) {
+                            this.logDetail = res.data.data;
+                            this.logDetailTemp = res.data.data;
+                        }else {
+                            this.$notify.error({message:res.data.info});
+                        }
+                    },
+                });
+            },
+
+            logSearchFunc(v) {
+                if(v) {
+                    this.logDetail = this.logDetail.filter(
+                        data => !v ||
+                            data.log_time.toLowerCase().includes(v.toLowerCase()) ||
+                            data.info.toLowerCase().includes(v.toLowerCase())
+                    );
+                }else {
+                    this.logDetail = this.logDetailTemp;
+                }
+            },
+        },
+
+        watch: {
+            logDetail(v) {
+                this.logDetailCount = v.length;
+            },
+            logSearch(v) {
+                this.logSearchFunc(v);
             },
         },
     };

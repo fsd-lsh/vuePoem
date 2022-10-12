@@ -224,9 +224,7 @@ class login {
         $menu_path = array_unique($menu_path);
         $menu_path = array_merge($menu_path, [
             '/dash',
-            '/dash/userInfo',
             '/menu/load',
-            '/dash/main',
         ]);
 
         //检查用户权限

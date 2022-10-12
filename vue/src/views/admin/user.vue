@@ -1,11 +1,7 @@
-<!--系统管理 - 用户管理-->
-
+<!--/user-->
 <template>
-
     <div id="user">
-
         <vp-admin>
-
             <el-card class="box-card">
                 <vp-table-search @reload="loadLists" @submit="search" :formFormat="formFormat" :pageLimit="true">
                     <template v-slot:btn>
@@ -271,7 +267,6 @@
 
         methods: {
 
-            //创建用户
             createUserNow() {
 
                 if(!this.form.name) { this.$notify({title:this.$t('admin.public.warning'), message:this.$t('admin.user.enterAcc'), type:'warning' }); return false; }
@@ -298,14 +293,12 @@
                 });
             },
 
-            //打开编辑
             editUserNow(s) {
                 this.editForm = s.row;
                 this.editForm.password = '';
                 this.editUserFlag = true;
             },
 
-            //保存编辑用户
             saveUser() {
 
                 if(!this.editForm.name) { this.$notify({title:this.$t('admin.public.warning'), message:this.$t('admin.user.enterAcc'), type:'warning' }); return false; }
@@ -330,7 +323,6 @@
                 });
             },
 
-            //变更状态
             userChange(status, s) {
 
                 let ids = [];
@@ -371,7 +363,6 @@
                 });
             },
 
-            //列表行颜色切换
             tableStyle({row, column, rowIndex, columnIndex}) {
 
                 //状态
@@ -385,12 +376,10 @@
                 }
             },
 
-            //表格多选
             handleSelectionChange(val) {
                 this.tableSelection = val;
             },
 
-            //加载列表
             loadLists(page, query) {
 
                 page = !page ? (page = 1) : page;
@@ -413,7 +402,6 @@
                 });
             },
 
-            //检索
             search(query) {
                 this.loadLists(this.parseGET()['p'], query);
             },

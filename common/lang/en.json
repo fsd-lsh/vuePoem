@@ -34,7 +34,8 @@
             "checkForm": "Check form data",
             "cancel": "Cancel",
             "query": "Query",
-            "reset": "Reset"
+            "reset": "Reset",
+            "filter": "Filter"
         },
         "restful": {
             "noSupportMethod": "Methods that are not supported",
@@ -80,7 +81,8 @@
             "logDetail": "Log detail",
             "num": "Num",
             "detail": "Detail",
-            "close": "Close"
+            "close": "Close",
+            "logLost": "The log does not exist or has been deleted"
         },
         "menu": {
             "add": "Add",

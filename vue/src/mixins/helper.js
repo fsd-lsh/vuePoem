@@ -14,7 +14,6 @@ export default {
 
     methods: {
 
-        //ajax请求封装
         poemRequest(options) {
 
             let request;
@@ -49,7 +48,6 @@ export default {
             });
         },
 
-        //加载菜单
         loadMenu() {
 
             this.poemRequest({
@@ -67,7 +65,6 @@ export default {
             });
         },
 
-        //页面每次刷新加载时候都会去读取sessionStorage里面的vuex状态
         loadStore() {
             if (sessionStorage.getItem("store")) {
                 this.$store.replaceState(
@@ -79,7 +76,6 @@ export default {
             }
         },
 
-        //获取GET请求
         parseGET() {
 
             let url = window.document.location.href.toString();
@@ -101,7 +97,6 @@ export default {
             }
         },
 
-        //js版in_array
         in_array(search, array) {
             for(var i in array) {
                 if(array[i] == search){
@@ -111,7 +106,6 @@ export default {
             return false;
         },
 
-        //切换语言
         switchLang() {
             let lang = window.localStorage.getItem('sys-lang');
             switch (lang) {

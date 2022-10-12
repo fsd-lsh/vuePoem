@@ -1,9 +1,6 @@
-<!--系统管理 - 系统监控-->
-
+<!--/system-->
 <template>
-
     <div id="system">
-
         <vp-admin>
             <el-row :gutter="20" class="sta">
 

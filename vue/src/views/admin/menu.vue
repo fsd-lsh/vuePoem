@@ -1,11 +1,7 @@
-<!--系统管理 - 菜单设置-->
-
+<!--/menu-->
 <template>
-
     <div id="menu">
-
         <vp-admin>
-
             <el-card class="box-card">
                 <el-button @click="newMenuFlag = !newMenuFlag" icon="fa fa-bars" type="primary" size="mini">&nbsp;{{$t('admin.menu.add')}}</el-button>
                 <el-table

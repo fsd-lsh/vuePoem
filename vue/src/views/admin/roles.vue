@@ -1,11 +1,7 @@
-<!--系统管理 - 角色设置-->
-
+<!--/roles-->
 <template>
-
     <div id="roles">
-
         <vp-admin>
-
             <el-card class="box-card">
                 <vp-table-search @reload="loadLists" @submit="search" :formFormat="formFormat" :pageLimit="true">
                     <template v-slot:btn>

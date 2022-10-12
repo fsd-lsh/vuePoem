@@ -23,8 +23,8 @@ class log extends middleware\login {
     /**
      * Func: fwLog
      * User: Force
-     * Date: 2021/9/1
-     * Time: 20:46
+     * Date: 2022/10/12
+     * Time: 11:15
      * Desc: 框架日志
      */
     public function fwLog() {
@@ -32,24 +32,21 @@ class log extends middleware\login {
         //API
         sys_api([
 
-            //加载列表
             'load' => function() {
 
-                //扫描日志模块
+                $max_module = 5;
                 $dir = scandir($this->log_path);
                 unset(
                     $dir[array_search('.', $dir)],
                     $dir[array_search('..', $dir)]
                 );
-                if(count($dir) > 100) {
-                    $dir = array_slice($dir, 0, 50);
+                if(count($dir) > $max_module) {
+                    $dir = array_slice($dir, 0, $max_module);
                 }
 
-                //队列
                 $lists = [];
                 foreach ($dir as $dir_name) {
 
-                    //扫描日志目录
                     $log_file = $this->log_path . '/' . $dir_name;
                     $log_file = scandir($log_file);
                     unset(
@@ -58,60 +55,64 @@ class log extends middleware\login {
                     );
                     $log_file = array_slice($log_file, 0, 50);
 
-                    //队列
                     foreach ($log_file as $log_name) {
 
-                        //日志详情处理
-                        $temp = [];
-                        $log_detail = file_get_contents($this->log_path . '/' . $dir_name . '/' . $log_name);
-                        $log_detail = explode("\n", $log_detail);
-                        $log_detail = array_filter($log_detail);
-
-                        foreach ($log_detail as $item_log) {
-
-                            $level = '';
-                            if(is_numeric(strpos($item_log,'[INFO]'))) {
-                                $item_log = str_replace('[INFO] ', '', $item_log);
-                                $level = 'info';
-                            }
-                            if(is_numeric(strpos($item_log,'[FATAL]'))) {
-                                $item_log = str_replace('[FATAL] ', '', $item_log);
-                                $level = 'fatal';
-                            }
-
-                            $log_time = substr($item_log, 0, 19);
-                            $item_log = str_replace($log_time.' ', '', $item_log);
-
-                            $temp[] = [
-                                'info' => $item_log,
-                                'level' => $level,
-                                'log_time' => $log_time,
-                            ];
-                        }
-                        $log_detail = $temp;
-                        unset($temp);
-
-                        //排序
-                        $log_detail = array_order_by($log_detail, 'log_time', SORT_DESC);
-                        $log_detail = array_values($log_detail);
-
-                        //组装数据
                         $lists[] = [
-                            'module_path' => $this->log_path . '/' . $dir_name . '/',
+                            'module_name' => $dir_name,
                             'log_name' => $log_name,
                             'log_date' => date('Y-m-d', strtotime(substr($log_name, 0, 8))),
                             'log_hour' => substr($log_name, 8, 2),
-                            'log_detail' => $log_detail,
                         ];
                     }
                 }
 
-                //排序
                 $lists = array_order_by($lists, 'log_name', SORT_DESC);
                 $lists = array_values($lists);
 
-                //response
                 ajax(1, trans('admin.sysLog.loadListOk'), $lists);
+            },
+
+            'open_log' => function() {
+
+                $log_path = $this->log_path . '/' . $_POST['module_name'] . '/' . $_POST['log_name'];
+                if(!file_exists($log_path)) {
+                    ajax(0, trans('admin.fwLog.logLost'));
+                }
+
+                $temp = [];
+                $log_detail = file_get_contents($log_path);
+                $log_detail = explode("\n", $log_detail);
+                $log_detail = array_filter($log_detail);
+
+                foreach ($log_detail as $item_log) {
+
+                    $level = '';
+                    if(is_numeric(strpos($item_log,'[INFO]'))) {
+                        $item_log = str_replace('[INFO] ', '', $item_log);
+                        $level = 1;
+                    }
+                    if(is_numeric(strpos($item_log,'[FATAL]'))) {
+                        $item_log = str_replace('[FATAL] ', '', $item_log);
+                        $level = 0;
+                    }
+
+                    $log_time = substr($item_log, 0, 19);
+                    $item_log = str_replace($log_time.' ', '', $item_log);
+                    $item_log = str_replace(VUEPOEM_ROOT, '', $item_log);
+
+                    $temp[] = [
+                        'info' => $item_log,
+                        'level' => $level,
+                        'log_time' => $log_time,
+                    ];
+                }
+                $log_detail = $temp;
+                unset($temp);
+
+                $log_detail = array_order_by($log_detail, 'log_time', SORT_DESC);
+                $log_detail = array_values($log_detail);
+
+                ajax(1, trans('admin.sysLog.loadListOk'), $log_detail);
             },
         ]);
     }

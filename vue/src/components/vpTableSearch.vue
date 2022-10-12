@@ -20,10 +20,10 @@
                 <slot name="btn"/>
             </div>
             <div class="control">
-                <el-tooltip class="item" effect="dark" content="search" placement="top-start">
+                <el-tooltip class="item" effect="dark" :content="(this.searchOpenFlag ? $t('admin.public.close') : $t('admin.public.open')) + $t('admin.public.query')" placement="top-start">
                     <el-button @click="changeOpenFlag" icon="fa fa-search" circle size="mini"></el-button>
                 </el-tooltip>
-                <el-tooltip class="item" effect="dark" content="refresh" placement="top-start">
+                <el-tooltip class="item" effect="dark" :content="$t('admin.public.reset')" placement="top-start">
                     <el-button @click="reloadTable" icon="fa fa-refresh" circle size="mini"></el-button>
                 </el-tooltip>
             </div>

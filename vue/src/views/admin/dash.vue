@@ -1,7 +1,5 @@
-<!--业务管理 - 面板统计-->
-
+<!--/dash-->
 <template>
-
     <div id="dash">
         <vp-admin>
             <el-card class="box-card">
