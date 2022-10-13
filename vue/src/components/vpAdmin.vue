@@ -64,38 +64,8 @@
                 </div>
             </el-menu>
 
-            <!--配置面板-->
-            <el-drawer
-                :visible.sync="drawer"
-                :show-close="true"
-                :with-header="false">
-                <el-row
-                    id="config-panel"
-                    :gutter="20">
-                    <el-col
-                        class="config-panel-title"
-                        :span="24">
-                        {{$t('admin.public.setTheme')}}
-                    </el-col>
-                    <el-col
-                        :span="8"
-                        :key="key"
-                        v-for="(theme, key) in themeList"
-                        @click.native="themeHandleChange(theme)"
-                        class="config-panel-item">
-                        <div
-                            :class="[
-                                'grid-content',
-                                theme,
-                            ]">
-                            <div class="top"></div>
-                            <div class="left"></div>
-                            <div class="right"></div>
-                            <b class="fa fa-check-circle" v-if="(nowTheme === theme)"/>
-                        </div>
-                    </el-col>
-                </el-row>
-            </el-drawer>
+            <!--Config panel-->
+            <vp-config :drawer="drawer" :close-handle="configFlagHandle"/>
         </el-col>
 
         <!--右侧部分（一级菜单、路由视图）-->
@@ -189,14 +159,13 @@
             <slot/>
 
             <!--SubViews-->
-            <modAccount :value="modAccountFlag" :closeHandle="accountFlagHandle"/>
+            <mod-account :value="modAccountFlag" :closeHandle="accountFlagHandle"/>
         </el-col>
     </el-row>
 </template>
 
 <script>
 import helper from "../mixins/helper";
-import theme from "../mixins/theme";
 import navTab from "../mixins/navTab";
 import modAccount from "../views/subViews/modAccount";
 
@@ -204,7 +173,7 @@ export default {
 
     name: 'admin',
 
-    mixins: [helper, theme, navTab],
+    mixins: [helper, navTab],
 
     components: {modAccount},
 
@@ -252,7 +221,6 @@ export default {
 
     methods: {
 
-        //工具组
         toolsGroup(type) {
 
             switch (type) {
@@ -339,7 +307,7 @@ export default {
 
                 //配置面板
                 case 'configPanel': {
-                    this.drawer = true;
+                    this.configFlagHandle();
                     break;
                 }
 
@@ -359,7 +327,6 @@ export default {
             }
         },
 
-        //一级菜单点击回调
         menuHandleSelect(tree_key, onSelect) {
 
             //clear
@@ -381,7 +348,6 @@ export default {
             }
         },
 
-        //定位menu active
         positionMenu() {
 
             let menuTree = this.$store.state.menuTree.menuInfo;
@@ -418,14 +384,16 @@ export default {
             }
         },
 
-        //切换页面
         openMenu(item) {
             this.$router.push(item.href);
         },
 
-        //修改账号信息Flag互斥
         accountFlagHandle() {
             this.modAccountFlag = !this.modAccountFlag;
+        },
+
+        configFlagHandle() {
+            this.drawer = !this.drawer
         },
     },
 

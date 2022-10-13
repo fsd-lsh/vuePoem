@@ -2,7 +2,7 @@
     "sysName": "VuePoem",
     "admin": {
         "public": {
-            "setTheme": "Set the theme",
+            "setTheme": "Set theme",
             "open": "Open",
             "close": "Close",
             "config": "Configuration Panel",
@@ -35,7 +35,8 @@
             "cancel": "Cancel",
             "query": "Query",
             "reset": "Reset",
-            "filter": "Filter"
+            "filter": "Filter",
+            "customTheme": "Custom theme"
         },
         "restful": {
             "noSupportMethod": "Methods that are not supported",
@@ -237,6 +238,18 @@
             "id": "ID",
             "word": "Words",
             "from": "From"
+        },
+        "theme": {
+            "titleColor": "Title color",
+            "mainColor": "Main color",
+            "logoBgColor": "Logo bg color",
+            "menuBgColor": "Menu bg color",
+            "menuFontNormalColor": "Menu fonts - Normal color",
+            "menuFontFocusColor": "Menu fonts - Focus color",
+            "menuFontActiveColor": "Menu fonts - Active color",
+            "addCustomTheme": "Add custom theme",
+            "selectColor": "Select color",
+            "addOk": "Adding a custom theme is complete and only works in the current browser"
         }
     }
 }
