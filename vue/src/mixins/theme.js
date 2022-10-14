@@ -24,10 +24,11 @@ export default {
 
         loadTheme(force) {
 
+            this.themeList = JSON.parse(window.sessionStorage.getItem('sys-theme-lists'));
+
             if(
                 window.sessionStorage.getItem('sys-theme-lists') &&
                 JSON.parse(window.sessionStorage.getItem('sys-theme-lists')).length !== 0 &&
-                this.themeList.length !== 0 &&
                 !force
             ) {
                 this.focusTheme();

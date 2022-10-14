@@ -201,24 +201,31 @@ export default {
     methods: {
         ccTitleColor({style, colors, deg, color}) {
             this.customForm.titleColor = color.hex;
+            this.refTemp();
         },
         ccMainColor({style, colors, deg, color}) {
             this.customForm.mainColor = color.hex;
+            this.refTemp();
         },
         ccLogoBgColor({style, colors, deg, color}) {
             this.customForm.logoBgColor = color.hex;
+            this.refTemp();
         },
         ccMenuBgColor({style, colors, deg, color}) {
             this.customForm.menuBgColor = color.hex;
+            this.refTemp();
         },
         ccMenuFontNormalColor({style, colors, deg, color}) {
             this.customForm.menuFontNormalColor = color.hex;
+            this.refTemp();
         },
         ccMenuFontFocusColor({style, colors, deg, color}) {
             this.customForm.menuFontFocusColor = color.hex;
+            this.refTemp();
         },
         ccMenuFontActiveColor({style, colors, deg, color}) {
             this.customForm.menuFontActiveColor = color.hex;
+            this.refTemp();
         },
         addCustomTheme() {
             let timestamp = (new Date()).getTime();
@@ -282,6 +289,29 @@ export default {
             });
             this.focusTheme();
         },
+        refTemp() {
+            let head = document.getElementsByTagName('head');
+            let styleLabel = document.createElement('style');
+            let sysThemeTemp = document.getElementById('sys-theme-temp');
+            if(sysThemeTemp) {
+                head.item(0).removeChild(document.getElementById('sys-theme-temp'));
+            }
+            styleLabel.type = 'text/css';
+            styleLabel.id = 'sys-theme-temp';
+            styleLabel.innerHTML = `
+                    .theme-temp {
+                        --title-color: ${this.customForm.titleColor};
+                        --main-color: ${this.customForm.mainColor};
+                        --logo-bg-color: ${this.customForm.logoBgColor};
+                        --menu-background-color: ${this.customForm.menuBgColor};
+                        --menu-font-normal-color: ${this.customForm.menuFontNormalColor};
+                        --menu-font-hover-color: ${this.customForm.menuFontFocusColor};
+                        --menu-font-active-color: ${this.customForm.menuFontActiveColor};
+                    }
+                `;
+            head.item(0).appendChild(styleLabel);
+            document.querySelector('body').setAttribute('class', 'theme-temp');
+        },
     },
 
     watch: {
@@ -290,35 +320,8 @@ export default {
             this.drawer = v;
             if(v) {
                 this.resetCustomTheme();
+                this.refTemp();
             }
-        },
-
-        customForm: {
-            handler(v) {
-                let head = document.getElementsByTagName('head');
-                let styleLabel = document.createElement('style');
-                let sysThemeTemp = document.getElementById('sys-theme-temp');
-                if(sysThemeTemp) {
-                    head.item(0).removeChild(document.getElementById('sys-theme-temp'));
-                }
-                styleLabel.type = 'text/css';
-                styleLabel.id = 'sys-theme-temp';
-                styleLabel.innerHTML = `
-                .theme-temp {
-                    --title-color: ${v.titleColor};
-                    --main-color: ${v.mainColor};
-                    --logo-bg-color: ${v.logoBgColor};
-                    --menu-background-color: ${v.menuBgColor};
-                    --menu-font-normal-color: ${v.menuFontNormalColor};
-                    --menu-font-hover-color: ${v.menuFontFocusColor};
-                    --menu-font-active-color: ${v.menuFontActiveColor};
-                }
-            `;
-                head.item(0).appendChild(styleLabel);
-                document.querySelector('body').setAttribute('class', 'theme-temp');
-            },
-            deep: true,
-            immediate: true,
         },
     },
 }
