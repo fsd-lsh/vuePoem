@@ -36,7 +36,8 @@
             "query": "Query",
             "reset": "Reset",
             "filter": "Filter",
-            "customTheme": "Custom theme"
+            "customTheme": "Custom theme",
+            "confirm": "Confirm"
         },
         "restful": {
             "noSupportMethod": "Methods that are not supported",
@@ -251,7 +252,8 @@
             "selectColor": "Select color",
             "addOk": "Adding a custom theme is complete and only works in the current browser",
             "rmOk": "Removal of custom theme completed",
-            "custom": "Custom"
+            "custom": "Custom",
+            "exportCSS": "Export CSS"
         }
     }
 }

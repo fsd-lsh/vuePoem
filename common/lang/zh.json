@@ -36,7 +36,8 @@
             "query": "查询",
             "reset": "重置",
             "filter": "过滤",
-            "customTheme": "自定义主题"
+            "customTheme": "自定义主题",
+            "confirm": "确定"
         },
         "restful": {
             "noSupportMethod": "不支持的方法",
@@ -249,7 +250,8 @@
             "selectColor": "选择颜色",
             "addOk": "添加自定义主题完成，仅在当前浏览器生效",
             "rmOk": "移除自定义主题完成",
-            "custom": "自定义"
+            "custom": "自定义",
+            "exportCSS": "导出CSS"
         }
     }
 }

@@ -134,5 +134,21 @@ export default {
                 },
             });
         },
+
+        hexToRgba(hex, opacity) {
+            if(!hex) {
+                return false;
+            }
+            if(!opacity) {
+                opacity = 0;
+            }
+            let RGBA = "rgba(" + parseInt("0x" + hex.slice(1, 3)) + "," + parseInt("0x" + hex.slice(3, 5)) + "," + parseInt( "0x" + hex.slice(5, 7)) + "," + opacity + ")";
+            return {
+                r: parseInt("0x" + hex.slice(1, 3)),
+                g: parseInt("0x" + hex.slice(3, 5)),
+                b: parseInt("0x" + hex.slice(5, 7)),
+                rgba: RGBA
+            }
+        }
     },
 }

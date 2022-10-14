@@ -3,6 +3,7 @@
         :visible.sync="drawer"
         :show-close="true"
         :before-close="closeHandle"
+        :modal="false"
         :with-header="false">
         <el-row
             id="config-panel"
@@ -50,6 +51,17 @@
                             type="linear"
                             :showClose="true"
                             @changeColor="ccTitleColor"
+                            :pColor="{
+                                hex: customForm.titleColor,
+                                hex8: customForm.titleColor,
+                                color: hexToRgba(customForm.titleColor).rgba,
+                                rgba: {
+                                    r: hexToRgba(customForm.titleColor).r,
+                                    g: hexToRgba(customForm.titleColor).g,
+                                    b: hexToRgba(customForm.titleColor).b,
+                                    a: hexToRgba(customForm.titleColor).a,
+                                },
+                            }"
                             :titleConfig="{show:true,text:$t('admin.theme.selectColor')}"
                             v-model="colorPickerFlag.titleColor"/>
                     </el-form-item>
@@ -64,6 +76,17 @@
                             type="linear"
                             :showClose="true"
                             @changeColor="ccMainColor"
+                            :pColor="{
+                                hex: customForm.mainColor,
+                                hex8: customForm.mainColor,
+                                color: hexToRgba(customForm.mainColor).rgba,
+                                rgba: {
+                                    r: hexToRgba(customForm.mainColor).r,
+                                    g: hexToRgba(customForm.mainColor).g,
+                                    b: hexToRgba(customForm.mainColor).b,
+                                    a: hexToRgba(customForm.mainColor).a,
+                                },
+                            }"
                             :titleConfig="{show:true,text:$t('admin.theme.selectColor')}"
                             v-model="colorPickerFlag.mainColor"/>
                     </el-form-item>
@@ -78,6 +101,17 @@
                             type="linear"
                             :showClose="true"
                             @changeColor="ccLogoBgColor"
+                            :pColor="{
+                                hex: customForm.logoBgColor,
+                                hex8: customForm.logoBgColor,
+                                color: hexToRgba(customForm.logoBgColor).rgba,
+                                rgba: {
+                                    r: hexToRgba(customForm.logoBgColor).r,
+                                    g: hexToRgba(customForm.logoBgColor).g,
+                                    b: hexToRgba(customForm.logoBgColor).b,
+                                    a: hexToRgba(customForm.logoBgColor).a,
+                                },
+                            }"
                             :titleConfig="{show:true,text:$t('admin.theme.selectColor')}"
                             v-model="colorPickerFlag.logoBgColor"/>
                     </el-form-item>
@@ -92,6 +126,17 @@
                             type="linear"
                             :showClose="true"
                             @changeColor="ccMenuBgColor"
+                            :pColor="{
+                                hex: customForm.menuBgColor,
+                                hex8: customForm.menuBgColor,
+                                color: hexToRgba(customForm.menuBgColor).rgba,
+                                rgba: {
+                                    r: hexToRgba(customForm.menuBgColor).r,
+                                    g: hexToRgba(customForm.menuBgColor).g,
+                                    b: hexToRgba(customForm.menuBgColor).b,
+                                    a: hexToRgba(customForm.menuBgColor).a,
+                                },
+                            }"
                             :titleConfig="{show:true,text:$t('admin.theme.selectColor')}"
                             v-model="colorPickerFlag.menuBgColor"/>
                     </el-form-item>
@@ -106,6 +151,17 @@
                             type="linear"
                             :showClose="true"
                             @changeColor="ccMenuFontNormalColor"
+                            :pColor="{
+                                hex: customForm.menuFontNormalColor,
+                                hex8: customForm.menuFontNormalColor,
+                                color: hexToRgba(customForm.menuFontNormalColor).rgba,
+                                rgba: {
+                                    r: hexToRgba(customForm.menuFontNormalColor).r,
+                                    g: hexToRgba(customForm.menuFontNormalColor).g,
+                                    b: hexToRgba(customForm.menuFontNormalColor).b,
+                                    a: hexToRgba(customForm.menuFontNormalColor).a,
+                                },
+                            }"
                             :titleConfig="{show:true,text:$t('admin.theme.selectColor')}"
                             v-model="colorPickerFlag.menuFontNormalColor"/>
                     </el-form-item>
@@ -120,6 +176,17 @@
                             type="linear"
                             :showClose="true"
                             @changeColor="ccMenuFontFocusColor"
+                            :pColor="{
+                                hex: customForm.menuFontFocusColor,
+                                hex8: customForm.menuFontFocusColor,
+                                color: hexToRgba(customForm.menuFontFocusColor).rgba,
+                                rgba: {
+                                    r: hexToRgba(customForm.menuFontFocusColor).r,
+                                    g: hexToRgba(customForm.menuFontFocusColor).g,
+                                    b: hexToRgba(customForm.menuFontFocusColor).b,
+                                    a: hexToRgba(customForm.menuFontFocusColor).a,
+                                },
+                            }"
                             :titleConfig="{show:true,text:$t('admin.theme.selectColor')}"
                             v-model="colorPickerFlag.menuFontFocusColor"/>
                     </el-form-item>
@@ -134,17 +201,44 @@
                             type="linear"
                             :showClose="true"
                             @changeColor="ccMenuFontActiveColor"
+                            :pColor="{
+                                hex: customForm.menuFontActiveColor,
+                                hex8: customForm.menuFontActiveColor,
+                                color: hexToRgba(customForm.menuFontActiveColor).rgba,
+                                rgba: {
+                                    r: hexToRgba(customForm.menuFontActiveColor).r,
+                                    g: hexToRgba(customForm.menuFontActiveColor).g,
+                                    b: hexToRgba(customForm.menuFontActiveColor).b,
+                                    a: hexToRgba(customForm.menuFontActiveColor).a,
+                                },
+                            }"
                             :titleConfig="{show:true,text:$t('admin.theme.selectColor')}"
                             v-model="colorPickerFlag.menuFontActiveColor"/>
                     </el-form-item>
-
-                    <el-form-item>
-                        <el-button @click="addCustomTheme" type="primary" size="mini">{{$t('admin.theme.addCustomTheme')}}</el-button>
-                        <el-button @click="resetCustomTheme" plain size="mini">{{$t('admin.public.reset')}}</el-button>
-                    </el-form-item>
                 </el-form>
+
+                <el-button @click="addCustomTheme" type="primary" size="mini">{{$t('admin.theme.addCustomTheme')}}</el-button>
+                <el-button @click="exportCustomTheme" plain size="mini">{{$t('admin.theme.exportCSS')}}</el-button>
+                <el-button @click="resetCustomTheme" plain size="mini">{{$t('admin.public.reset')}}</el-button>
             </el-col>
         </el-row>
+
+        <el-dialog
+            :title="$t('admin.theme.exportCSS')"
+            :visible.sync="exportCSSFlag"
+            :modal="false"
+            width="30%">
+            <span>{{$t('admin.theme.exportCSS')}}</span>
+            <el-input
+                type="textarea"
+                :rows="11"
+                placeholder="请输入内容"
+                v-model="exportCSSArticle">
+            </el-input>
+            <span slot="footer" class="dialog-footer">
+                <el-button @click="exportCSSFlag = false">{{$t('admin.public.cancel')}}</el-button>
+            </span>
+        </el-dialog>
     </el-drawer>
 </template>
 
@@ -181,6 +275,8 @@ export default {
                 menuFontFocusColor: false,
                 menuFontActiveColor: false,
             },
+            exportCSSFlag: false,
+            exportCSSArticle: "",
         }
     },
 
@@ -191,8 +287,8 @@ export default {
                 mainColor: '#FFD04B',
                 logoBgColor: '#0c0c0c',
                 menuBgColor: '#23262e',
-                menuFontNormalColor: '#fff',
-                menuFontFocusColor: '#fff',
+                menuFontNormalColor: '#ffffff',
+                menuFontFocusColor: '#ffffff',
                 menuFontActiveColor: '#FFD04B',
             };
         });
@@ -289,6 +385,22 @@ export default {
             });
             this.focusTheme();
         },
+        exportCustomTheme() {
+            this.exportCSSArticle = "";
+            this.exportCSSFlag = true;
+            let tempClassName = 'theme-temp-' + (new Date()).getTime();
+            this.exportCSSArticle = `
+.${tempClassName} {
+    --title-color: ${this.customForm.titleColor};
+    --main-color: ${this.customForm.mainColor};
+    --logo-bg-color: ${this.customForm.logoBgColor};
+    --menu-background-color: ${this.customForm.menuBgColor};
+    --menu-font-normal-color: ${this.customForm.menuFontNormalColor};
+    --menu-font-hover-color: ${this.customForm.menuFontFocusColor};
+    --menu-font-active-color: ${this.customForm.menuFontActiveColor};
+}
+            `;
+        },
         refTemp() {
             let head = document.getElementsByTagName('head');
             let styleLabel = document.createElement('style');
@@ -299,16 +411,16 @@ export default {
             styleLabel.type = 'text/css';
             styleLabel.id = 'sys-theme-temp';
             styleLabel.innerHTML = `
-                    .theme-temp {
-                        --title-color: ${this.customForm.titleColor};
-                        --main-color: ${this.customForm.mainColor};
-                        --logo-bg-color: ${this.customForm.logoBgColor};
-                        --menu-background-color: ${this.customForm.menuBgColor};
-                        --menu-font-normal-color: ${this.customForm.menuFontNormalColor};
-                        --menu-font-hover-color: ${this.customForm.menuFontFocusColor};
-                        --menu-font-active-color: ${this.customForm.menuFontActiveColor};
-                    }
-                `;
+                .theme-temp {
+                    --title-color: ${this.customForm.titleColor};
+                    --main-color: ${this.customForm.mainColor};
+                    --logo-bg-color: ${this.customForm.logoBgColor};
+                    --menu-background-color: ${this.customForm.menuBgColor};
+                    --menu-font-normal-color: ${this.customForm.menuFontNormalColor};
+                    --menu-font-hover-color: ${this.customForm.menuFontFocusColor};
+                    --menu-font-active-color: ${this.customForm.menuFontActiveColor};
+                }
+            `;
             head.item(0).appendChild(styleLabel);
             document.querySelector('body').setAttribute('class', 'theme-temp');
         },
@@ -321,6 +433,8 @@ export default {
             if(v) {
                 this.resetCustomTheme();
                 this.refTemp();
+            }else {
+                this.focusTheme();
             }
         },
     },
