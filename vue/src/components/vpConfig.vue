@@ -27,6 +27,7 @@
                     <div class="left"></div>
                     <div class="right"></div>
                     <b class="fa fa-check-circle" v-if="(nowTheme === theme)"/>
+                    <b class="fa fa-trash" @click="delCustomTheme(theme)" v-if="(nowTheme !== theme) && theme.slice(0, 6) === 'custom'"/>
                 </div>
             </el-col>
 
@@ -139,7 +140,7 @@
 
                     <el-form-item>
                         <el-button @click="addCustomTheme" type="primary" size="mini">{{$t('admin.theme.addCustomTheme')}}</el-button>
-                        <el-button @click="resetCustomPicker" plain size="mini">{{$t('admin.public.reset')}}</el-button>
+                        <el-button @click="resetCustomTheme" plain size="mini">{{$t('admin.public.reset')}}</el-button>
                     </el-form-item>
                 </el-form>
             </el-col>
@@ -186,13 +187,13 @@ export default {
     created() {
         this.$nextTick(() => {
             this.customForm = {
-                titleColor: '#fff',
-                mainColor: '#fff',
-                logoBgColor: '#fff',
-                menuBgColor: '#fff',
+                titleColor: '#545C64',
+                mainColor: '#FFD04B',
+                logoBgColor: '#0c0c0c',
+                menuBgColor: '#23262e',
                 menuFontNormalColor: '#fff',
                 menuFontFocusColor: '#fff',
-                menuFontActiveColor: '#fff',
+                menuFontActiveColor: '#FFD04B',
             };
         });
     },
@@ -225,22 +226,26 @@ export default {
             if(!custom) {
                 custom = {};
             }
-            custom['custom-' + timestamp] = `
-                .custom-${timestamp} {
-                    --title-color: ${this.customForm.titleColor};
-                    --main-color: ${this.customForm.mainColor};
-                    --logo-bg-color: ${this.customForm.logoBgColor};
-                    --menu-background-color: ${this.customForm.menuBgColor};
-                    --menu-font-normal-color: ${this.customForm.menuFontNormalColor};
-                    --menu-font-hover-color: ${this.customForm.menuFontFocusColor};
-                    --menu-font-active-color: ${this.customForm.menuFontActiveColor};
-                }
-            `;
-            this.resetCustomPicker();
+
+            custom['custom-' + timestamp] =
+            '.custom-'+timestamp+' {' +
+                '--title-color:' + this.customForm.titleColor + ';' +
+                '--main-color:' + this.customForm.mainColor + ';' +
+                '--logo-bg-color:' + this.customForm.logoBgColor + ';' +
+                '--menu-background-color:' + this.customForm.menuBgColor + ';' +
+                '--menu-font-normal-color:' + this.customForm.menuFontNormalColor + ';' +
+                '--menu-font-hover-color:' + this.customForm.menuFontFocusColor + ';' +
+                '--menu-font-active-color:' + this.customForm.menuFontActiveColor + ';' +
+            '}';
+
+            this.resetCustomTheme();
             window.localStorage.setItem('sys-theme-custom', JSON.stringify(custom));
 
             let sysThemeLists = JSON.parse(window.sessionStorage.getItem('sys-theme-lists'));
             sysThemeLists.push(`custom-${timestamp}`)
+            sysThemeLists = sysThemeLists.filter((v, i, s) => {
+                return s.indexOf(v) === i;
+            });
             window.sessionStorage.setItem('sys-theme-lists', JSON.stringify(sysThemeLists));
 
             this.loadTheme(true);
@@ -250,25 +255,70 @@ export default {
                 type: 'success'
             });
         },
-        resetCustomPicker() {
-            this.customForm = {
-                titleColor: '#fff',
-                mainColor: '#fff',
-                logoBgColor: '#fff',
-                menuBgColor: '#fff',
-                menuFontNormalColor: '#fff',
-                menuFontFocusColor: '#fff',
-                menuFontActiveColor: '#fff',
-            };
+        delCustomTheme(className) {
+            window.localStorage.removeItem('sys-theme');
+            let sysThemeCustom = JSON.parse(window.localStorage.getItem('sys-theme-custom'));
+            delete sysThemeCustom[className];
+            window.localStorage.setItem('sys-theme-custom', JSON.stringify(sysThemeCustom));
+
+            this.loadTheme(true);
+
+            this.$notify({
+                message: this.$t('admin.theme.rmOk'),
+                type: 'success'
+            });
+        },
+        resetCustomTheme() {
+            this.$nextTick(() => {
+                this.customForm = {
+                    titleColor: '#545C64',
+                    mainColor: '#FFD04B',
+                    logoBgColor: '#0c0c0c',
+                    menuBgColor: '#23262e',
+                    menuFontNormalColor: '#fff',
+                    menuFontFocusColor: '#fff',
+                    menuFontActiveColor: '#FFD04B',
+                };
+            });
+            this.focusTheme();
         },
     },
 
     watch: {
+
         drawer(v) {
             this.drawer = v;
             if(v) {
-                this.resetCustomPicker();
+                this.resetCustomTheme();
             }
+        },
+
+        customForm: {
+            handler(v) {
+                let head = document.getElementsByTagName('head');
+                let styleLabel = document.createElement('style');
+                let sysThemeTemp = document.getElementById('sys-theme-temp');
+                if(sysThemeTemp) {
+                    head.item(0).removeChild(document.getElementById('sys-theme-temp'));
+                }
+                styleLabel.type = 'text/css';
+                styleLabel.id = 'sys-theme-temp';
+                styleLabel.innerHTML = `
+                .theme-temp {
+                    --title-color: ${v.titleColor};
+                    --main-color: ${v.mainColor};
+                    --logo-bg-color: ${v.logoBgColor};
+                    --menu-background-color: ${v.menuBgColor};
+                    --menu-font-normal-color: ${v.menuFontNormalColor};
+                    --menu-font-hover-color: ${v.menuFontFocusColor};
+                    --menu-font-active-color: ${v.menuFontActiveColor};
+                }
+            `;
+                head.item(0).appendChild(styleLabel);
+                document.querySelector('body').setAttribute('class', 'theme-temp');
+            },
+            deep: true,
+            immediate: true,
         },
     },
 }
@@ -338,6 +388,17 @@ export default {
                 font-size: 20px;
                 border-radius: 100%;
                 display: block;
+            }
+
+            >.fa-trash {
+                font-weight: 700;
+                position: absolute;
+                bottom: 2px;
+                right: 2px;
+                font-size: 20px;
+                display: block;
+                border-radius: 100%;
+                cursor: pointer;
             }
         }
 

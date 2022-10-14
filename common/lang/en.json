@@ -249,7 +249,9 @@
             "menuFontActiveColor": "Menu fonts - Active color",
             "addCustomTheme": "Add custom theme",
             "selectColor": "Select color",
-            "addOk": "Adding a custom theme is complete and only works in the current browser"
+            "addOk": "Adding a custom theme is complete and only works in the current browser",
+            "rmOk": "Removal of custom theme completed",
+            "custom": "Custom"
         }
     }
 }

@@ -247,7 +247,9 @@
             "menuFontActiveColor": "菜单-字体-激活色",
             "addCustomTheme": "添加自定义主题",
             "selectColor": "选择颜色",
-            "addOk": "添加自定义主题完成，仅在当前浏览器生效"
+            "addOk": "添加自定义主题完成，仅在当前浏览器生效",
+            "rmOk": "移除自定义主题完成",
+            "custom": "自定义"
         }
     }
 }
