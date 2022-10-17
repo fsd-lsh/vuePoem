@@ -171,7 +171,7 @@ import modAccount from "../views/subViews/modAccount";
 
 export default {
 
-    name: 'admin',
+    name: 'vpAdmin',
 
     mixins: [helper, navTab],
 

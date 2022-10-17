@@ -456,8 +456,12 @@ class menu extends middleware\login {
                     }
 
                     //comment
-                    $class = "\\admin\\controller\\{$controller}";
-                    $comment = func_comment($class, $func['name'], 'Desc');
+                    if($_SESSION['admin_info']['lang'] == 'cn') {
+                        $class = "\\admin\\controller\\{$controller}";
+                        $comment = func_comment($class, $func['name'], 'Desc');
+                    }else {
+                        $comment = '';
+                    }
 
                     //save
                     $method[$key] = [

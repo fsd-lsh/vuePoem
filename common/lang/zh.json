@@ -109,7 +109,9 @@
             "utime": "更新时间",
             "parent": "父级菜单",
             "cancel": "取消",
-            "save": "保存"
+            "save": "保存",
+            "controller": "控制器",
+            "inputNumber": "请输入排序号码"
         },
         "roles": {
             "add": "添加",

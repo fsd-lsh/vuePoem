@@ -130,7 +130,7 @@
                 width="50%">
                 <el-form ref="form" :model="form" label-width="100px" size="small">
                     <el-form-item :label="$t('admin.menu.name')">
-                        <el-input placeholder="请输入菜单名称" v-model="form.title"></el-input>
+                        <el-input :placeholder="$t('admin.public.pleaseInput')" v-model="form.title"></el-input>
                     </el-form-item>
                     <el-form-item :label="$t('admin.menu.href')">
                         <el-select
@@ -141,7 +141,7 @@
                             <el-option-group
                                 v-for="(methods, func) in linkConfig"
                                 :key="func"
-                                :label="func + '控制器'">
+                                :label="func + $t('admin.menu.controller')">
                                 <el-option
                                     v-for="(item, key) in methods"
                                     :key="key"
@@ -211,7 +211,7 @@
                     </el-form-item>
                     <el-form-item :label="$t('admin.menu.sort')">
                         <el-input
-                            placeholder="请输入排序号码"
+                            :placeholder="$t('admin.menu.inputNumber')"
                             type="number"
                             minlength="0"
                             v-model="form.sort">
@@ -242,7 +242,7 @@
                             <el-option-group
                                 v-for="(methods, func) in linkConfig"
                                 :key="func"
-                                :label="func + 'controller'">
+                                :label="func + $t('admin.menu.controller')">
                                 <el-option
                                     v-for="(item, key) in methods"
                                     :key="key"

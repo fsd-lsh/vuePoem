@@ -232,7 +232,7 @@
             <el-input
                 type="textarea"
                 :rows="11"
-                placeholder="请输入内容"
+                :placeholder="$t('admin.public.pleaseInput')"
                 v-model="exportCSSArticle">
             </el-input>
             <span slot="footer" class="dialog-footer">

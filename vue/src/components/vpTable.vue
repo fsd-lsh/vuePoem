@@ -113,7 +113,7 @@
                         :label="$t('admin.field.'+item.name)">
                         <el-select
                             v-model="item.value"
-                            placeholder="请选择">
+                            :placeholder="$t('admin.public.pleaseInput')">
                             <el-option
                                 v-for="s_item in item.options"
                                 :key="s_item.value"
@@ -164,7 +164,7 @@
 import helper from "../mixins/helper";
 export default {
 
-    name: "poemTable",
+    name: "vpTable",
 
     mixins: [
         helper
@@ -257,7 +257,7 @@ export default {
 
             if(s === undefined) {
                 if(this.tableSelection.length === 0) {
-                    this.$notify({message:'批量操作前请先勾选记录', type:'warning'});
+                    this.$notify({message:this.$t('admin.public.checkRec'), type:'warning'});
                     return false;
                 }else {
                     for (let key in this.tableSelection) {
@@ -269,7 +269,7 @@ export default {
             }
 
             if(ids.length === 0) {
-                this.$message({ message:'操作前请先勾选记录', type:'warning' });
+                this.$message({ message:this.$t('admin.public.checkRec'), type:'warning' });
                 return false;
             }
             this.poemRequest({

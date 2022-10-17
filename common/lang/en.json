@@ -109,7 +109,9 @@
             "utime": "Update time",
             "parent": "Parent menu",
             "cancel": "Cancel",
-            "save": "Save"
+            "save": "Save",
+            "controller": "Controller",
+            "inputNumber": "Input NUM"
         },
         "roles": {
             "add": "Add",
