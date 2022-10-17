@@ -3,12 +3,12 @@ const path = require('path');
 const utils = require('./utils');
 const webpack = require('webpack');
 const config = require('../config');
-const merge = require('webpack-merge');
+const {merge} = require('webpack-merge');
 const baseWebpackConfig = require('./webpack.base.conf');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-const OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const CssMinimizerWebpackPlugin = require('css-minimizer-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 const env = require('../config/prod.env');
@@ -35,26 +35,10 @@ const webpackConfig = merge(baseWebpackConfig, {
         new webpack.DefinePlugin({
             'process.env': env
         }),
-        new UglifyJsPlugin({
-            uglifyOptions: {
-                compress: {
-                    warnings: false
-                }
-            },
-            sourceMap: config.build.productionSourceMap,
-            parallel: true
-        }),
         // extract css into its own file
         new MiniCssExtractPlugin({
             filename: utils.assetsPath('css/[name].css'),
             chunkFilename: utils.assetsPath('css/[name].[contenthash].css')
-        }),
-        // Compress extracted CSS. We are using this plugin so that possible
-        // duplicated CSS from different components can be deduped.
-        new OptimizeCSSPlugin({
-            cssProcessorOptions: config.build.productionSourceMap
-                ? {safe: true, map: {inline: false}}
-                : {safe: true}
         }),
         // generate dist index.html with correct asset hash for caching.
         // you can customize output by editing /index.html
@@ -72,27 +56,29 @@ const webpackConfig = merge(baseWebpackConfig, {
                 // https://github.com/kangax/html-minifier#options-quick-reference
             },
             // necessary to consistently work with multiple chunks via CommonsChunkPlugin
-            // chunksSortMode: 'dependency'
+            chunksSortMode: 'auto'
         }),
-        // keep module.id stable when vendor modules does not change
-        new webpack.HashedModuleIdsPlugin(),
         // enable scope hoisting
         new webpack.optimize.ModuleConcatenationPlugin(),
 
         // copy custom static assets
-        new CopyWebpackPlugin([
-            {
+        new CopyWebpackPlugin({
+            patterns:[{
                 from: path.resolve(__dirname, '../static'),
                 to: config.build.assetsSubDirectory,
-                ignore: ['.*']
-            }
-        ])
+                globOptions: {            // webpack5 ignore要写在globOptions这里
+                    ignore: ['.*']
+                }
+            }]
+        }),
     ],
     optimization: {
+        moduleIds: 'hashed',
         runtimeChunk: {
             name: 'manifest'
         },
         minimizer: [
+            new CssMinimizerWebpackPlugin(),
             new UglifyJsPlugin({
                 cache: true,
                 parallel: true,
@@ -101,28 +87,29 @@ const webpackConfig = merge(baseWebpackConfig, {
                     warnings: false
                 }
             }),
-            new OptimizeCSSPlugin({
-                cssProcessorOptions: config.build.productionSourceMap
-                    ? { safe: true, map: { inline: false } }
-                    : { safe: true }
-            }),
         ],
         splitChunks: {
-            chunks: 'async',
+            chunks: 'all',
             minSize: 30000,
             minChunks: 1,
-            maxAsyncRequests: 5,
-            maxInitialRequests: 3,
-            name: false,
+            automaticNameDelimiter: '~',
             cacheGroups: {
                 vendors: {
-                    test: /[\\/]node_modules[\\/]/,
-                    name: 'vendor',
-                    chunks: 'initial',
-                    priority: -10
-                }
-            }
-        }
+                    name: 'vendors',
+                    test({ resource }) {
+                        return /[\\/]node_modules[\\/]/.test(resource);
+                    },
+                    priority: 10,
+                },
+                styles: {
+                    name: "styles",
+                    test: /\.(le|c)ss$/,
+                    type: "css/mini-extract",
+                    chunks: "all",
+                    enforce: true,
+                },
+            },
+        },
     }
 })
 

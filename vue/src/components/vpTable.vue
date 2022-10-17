@@ -411,7 +411,7 @@ export default {
 #poem-table {
 
 
-    /deep/.el-select {
+    :deep(.el-select) {
         width: 100%;
     }
 }

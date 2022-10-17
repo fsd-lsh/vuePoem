@@ -73,7 +73,7 @@
 
 <script>
 import helper from "../mixins/helper";
-import merge from "webpack-merge";
+import {merge} from "webpack-merge";
 export default {
 
     name: "vpTableSearch",
@@ -178,13 +178,13 @@ export default {
                 text-align: left;
                 line-height: 26px;
 
-                /deep/#page-size {
+                :deep(#page-size) {
                     width: 74px;
                     height: 24px;
                     line-height: 24px;
                 }
 
-                /deep/.el-input__suffix {
+                :deep(.el-input__suffix) {
                     top: 2px;
                 }
             }
@@ -204,12 +204,8 @@ export default {
 
                     margin: 4px;
 
-                    /deep/.el-form-item__label {
+                    :deep(.el-form-item__label) {
                         font-size: 12px;
-                    }
-
-                    /deep/.el-form-item__content {
-
                     }
                 }
             }

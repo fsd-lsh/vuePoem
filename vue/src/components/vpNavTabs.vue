@@ -74,7 +74,7 @@ export default {
                 }
             }
 
-            /deep/.el-tag__close {
+            :deep(.el-tag__close) {
                 &:hover {
                     background: var(--title-color)!important;
                 }

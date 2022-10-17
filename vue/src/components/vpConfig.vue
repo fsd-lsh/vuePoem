@@ -528,7 +528,7 @@ export default {
 
     .custom-theme {
 
-        /deep/.el-form-item__content {
+        :deep(.el-form-item__content) {
 
             display: flex;
 

@@ -15,15 +15,6 @@ module.exports = {
         // Paths
         assetsSubDirectory: 'static',
         assetsPublicPath: '/',
-        proxyTable: {
-            '/admin': {
-                target: 'http://' + env.PHP_HOST + ':' + env.PHP_PORT,
-                changeOrigin: true,
-                pathRewrite: {
-                    '^/admin': '/admin'
-                }
-            }
-        },
 
         // Various Dev Server settings
         host: env.VUE_HOST, // can be overwritten by process.env.HOST
@@ -39,7 +30,7 @@ module.exports = {
          */
 
         // https://webpack.js.org/configuration/devtool/#development
-        devtool: 'cheap-module-eval-source-map',
+        devtool: 'eval-cheap-module-source-map',
 
         // If you have problems debugging vue-files in devtools,
         // set this to false - it *may* help
