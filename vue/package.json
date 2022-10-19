@@ -1,9 +1,9 @@
 {
-    "name": "vue_part",
+    "name": "vuepoem_frontend",
     "version": "1.0.0",
     "description": "vuePoem",
-    "author": "lisihan <lisihan@outlook.com>",
-    "private": true,
+    "author": "Force <lisihan@outlook.com> | https://www.easybhu.cn",
+    "license": "MIT",
     "scripts": {
         "dev": "webpack serve --progress --config build/webpack.dev.conf.js",
         "build": "node build/build.js"
