@@ -7,7 +7,6 @@ const path = require('path');
 const baseWebpackConfig = require('./webpack.base.conf');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin');
 const portfinder = require('portfinder');
 const ini = require('ini');
 const fs = require('fs');
@@ -103,18 +102,6 @@ module.exports = new Promise((resolve, reject) => {
             // add port to devServer config
             devWebpackConfig.devServer.port = port
 
-            // Add FriendlyErrorsPlugin
-            devWebpackConfig.plugins.push(new FriendlyErrorsPlugin({
-                compilationSuccessInfo: {
-                    messages: [
-                        `View: http://${VUE_HOST}:${VUE_PORT}`,
-                        `API: http://${PHP_HOST}:${PHP_PORT}`
-                    ],
-                },
-                onErrors: config.dev.notifyOnErrors
-                    ? utils.createNotifierCallback()
-                    : undefined
-            }))
             resolve(devWebpackConfig)
         }
     })

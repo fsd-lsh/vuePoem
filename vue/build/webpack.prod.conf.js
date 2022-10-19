@@ -9,7 +9,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CssMinimizerWebpackPlugin = require('css-minimizer-webpack-plugin');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const TerserWebpackPlugin = require("terser-webpack-plugin");
 
 const env = require('../config/prod.env');
 
@@ -73,20 +73,14 @@ const webpackConfig = merge(baseWebpackConfig, {
         }),
     ],
     optimization: {
-        moduleIds: 'hashed',
+        moduleIds: 'deterministic',
         runtimeChunk: {
             name: 'manifest'
         },
+        minimize: true,
         minimizer: [
             new CssMinimizerWebpackPlugin(),
-            new UglifyJsPlugin({
-                cache: true,
-                parallel: true,
-                sourceMap: config.build.productionSourceMap,
-                uglifyOptions: {
-                    warnings: false
-                }
-            }),
+            new TerserWebpackPlugin(),
         ],
         splitChunks: {
             chunks: 'all',
@@ -118,8 +112,7 @@ if (config.build.productionGzip) {
 
     webpackConfig.plugins.push(
         new CompressionWebpackPlugin({
-            //asset: '[path].gz[query]',
-            filename: '[path].gz[query]',
+            filename: '[path][base].gz',
             algorithm: 'gzip',
             test: new RegExp(
                 '\\.(' +
