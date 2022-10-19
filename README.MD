@@ -2,7 +2,7 @@
 ENGLISH | [中文](./README_CN.MD)
 
 ![](https://img.shields.io/badge/Phppoem-2.1.x-brightgreen?color=545c64&amp;labelColor=ffd04b)
-![](https://img.shields.io/badge/Vue-2.7.10-brightgreen?color=545c64&amp;labelColor=ffd04b)
+![](https://img.shields.io/badge/Vue-2.7.13-brightgreen?color=545c64&amp;labelColor=ffd04b)
 ![](https://img.shields.io/badge/ElementUI-2.15.10-brightgreen?color=545c64&amp;labelColor=ffd04b)
 ![](https://img.shields.io/badge/Mysql-5.7-brightgreen?color=545c64&amp;labelColor=ffd04b)
 ![](https://img.shields.io/badge/Fontawesome-4.7.0-brightgreen?color=545c64&amp;labelColor=ffd04b)
@@ -30,6 +30,20 @@ ENGLISH | [中文](./README_CN.MD)
 - PHP 7.4 +
 - Node v14.20.0 (NPM v6.14.17) 
 - Mysql5.7
+
+## Development mode
+- Windows  
+  `cd server/public && php -S 127.0.0.1:8899 index.php`  
+  `cd vue/ && npm run dev`
+
+- MacOS/Linux  
+  `./vuePoem dev`
+
+- Docker  
+  `cd vue / && npm run build`  
+  `cd docker/ && docker-compose up`  
+  or  
+  `./vuePoem docker`
 
 ## Development of the document
 [VuePoem Doc](https://vuepoem.easybhu.cn/doc/en/)

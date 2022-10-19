@@ -1,8 +1,9 @@
 'use strict'
-const path = require('path')
-const utils = require('./utils')
-const config = require('../config')
-const { VueLoaderPlugin } = require('vue-loader')
+const path = require('path');
+const utils = require('./utils');
+const config = require('../config');
+const { VueLoaderPlugin } = require('vue-loader');
+const os = require('os');
 
 function resolve(dir) {
     return path.join(__dirname, '..', dir)
@@ -48,8 +49,26 @@ module.exports = {
             },
             {
                 test: /\.js$/,
-                loader: 'babel-loader',
-                include: [resolve('src'), resolve('test'), resolve('node_modules/webpack-dev-server/client')]
+                include: [
+                    resolve('src'),
+                    resolve('test'),
+                    resolve('node_modules/webpack-dev-server/client')
+                ],
+                use: [
+                    {
+                        loader: 'thread-loader',
+                        options: {
+                            workers: os.cpus().length,
+                        }
+                    },
+                    {
+                        loader: "babel-loader",
+                        options: {
+                            cacheDirectory: true,
+                            cacheCompression: false,
+                        }
+                    }
+                ],
             },
             {
                 test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
