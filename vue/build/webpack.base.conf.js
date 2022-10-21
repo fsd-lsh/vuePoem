@@ -72,13 +72,15 @@ module.exports = {
             },
             {
                 test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
+                loader: 'url-loader',
+                type: 'javascript/auto',
                 parser: {
                     dataUrlCondition: {
                         maxSize: 10 * 1024
                     }
                 },
                 generator: {
-                    filename: utils.assetsPath('imgs/[name].[hash:7].[ext]')
+                    filename: utils.assetsPath('imgs/VuePoem.[hash:7][ext]')
                 }
             },
             {
@@ -86,14 +88,14 @@ module.exports = {
                 loader: 'url-loader',
                 options: {
                     limit: 10000,
-                    name: utils.assetsPath('media/[name].[hash:7].[ext]')
+                    name: utils.assetsPath('media/VuePoem.[hash:7][ext]')
                 }
             },
             {
                 test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
                 type: 'asset/resource',
                 generator: {
-                    filename: utils.assetsPath('fonts/[name].[hash:7].[ext]')
+                    filename: utils.assetsPath('fonts/VuePoem.[hash:7][ext]')
                 }
             }
         ]

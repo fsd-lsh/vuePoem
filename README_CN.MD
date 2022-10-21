@@ -55,6 +55,6 @@
 [Force](https://www.easybhu.cn)
 
 ## 预览
-![show-0](./vue/static/imgs/1.png)
-![show-1](./vue/static/imgs/2.png)
-![show-2](./vue/static/imgs/3.png)
+![show-0](./common/md/1.png)
+![show-1](./common/md/2.png)
+![show-2](./common/md/3.png)

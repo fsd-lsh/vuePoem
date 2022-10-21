@@ -70,7 +70,7 @@ const devWebpackConfig = merge(baseWebpackConfig, {
         new HtmlWebpackPlugin({
             filename: 'index.html',
             template: 'index.html',
-            favicon: './static/favicon.ico',
+            favicon: './favicon.ico',
             inject: true
         }),
         // copy custom static assets

@@ -55,6 +55,6 @@ ENGLISH | [中文](./README_CN.MD)
 [Force](https://www.easybhu.cn)
 
 ## Preview
-![show-0](./vue/static/imgs/1.png)
-![show-1](./vue/static/imgs/2.png)
-![show-2](./vue/static/imgs/3.png)
+![show-0](./common/md/1.png)
+![show-1](./common/md/2.png)
+![show-2](./common/md/3.png)
