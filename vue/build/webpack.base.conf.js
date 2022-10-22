@@ -72,8 +72,6 @@ module.exports = {
             },
             {
                 test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
-                loader: 'url-loader',
-                type: 'javascript/auto',
                 parser: {
                     dataUrlCondition: {
                         maxSize: 10 * 1024
