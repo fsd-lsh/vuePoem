@@ -298,6 +298,10 @@ class menu extends middleware\login {
             'menuInfo' => $this->get_menu_list(),
         ];
 
+        if(in_array($_GET['lang'], ['zh', 'en'])) {
+            $_SESSION['admin_info']['lang'] = $_GET['lang'];
+        }
+
         ajax(1, trans('admin.public.success'), $menu);
     }
 
@@ -456,7 +460,7 @@ class menu extends middleware\login {
                     }
 
                     //comment
-                    if($_SESSION['admin_info']['lang'] == 'cn') {
+                    if($_SESSION['admin_info']['lang'] == 'zh') {
                         $class = "\\admin\\controller\\{$controller}";
                         $comment = func_comment($class, $func['name'], 'Desc');
                     }else {

@@ -7,7 +7,7 @@ body { background:#f2f2f2; }
 .el-table .info-row .cell { color:#545c64!important; font-weight:600; }
 .el-button--mini, .el-button--mini.is-round { padding:4px 6px; font-size:.8rem!important; }
 #app .el-card.box-card .el-card__body { padding:15px; text-align:left; }
-#app .el-card.box-card .el-card__body button { margin:0; }
+.el-button+.el-button { margin-left:5px!important; }
 .pagination { text-align:center; margin:10px 0 0 0; }
 .pagination a{ text-decoration:none!important; color:#606266!important; width:100%; height:100%; display:inline-block; }
 .pagination li.active a{ color:#fff!important; }

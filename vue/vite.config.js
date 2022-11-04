@@ -3,6 +3,7 @@ import vue from '@vitejs/plugin-vue2';
 
 // https://vitejs.dev/config/
 export default defineConfig({
+
     server: {
         proxy: {
             "/admin": {
@@ -15,5 +16,12 @@ export default defineConfig({
             }
         }
     },
+
     plugins: [vue()],
+
+    // https://cn.vitejs.dev/config/build-options.html
+    build: {
+        outDir: '../server/public',
+        assetsDir: 'static'
+    },
 });

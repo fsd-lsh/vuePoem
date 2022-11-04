@@ -145,7 +145,7 @@
                                 <el-option
                                     v-for="(item, key) in methods"
                                     :key="key"
-                                    :label="'【' + item.comment + '】  ' + item.link"
+                                    :label="(item.comment ? `【${item.comment}】` : item.comment) + '  ' + item.link"
                                     :value="item.link">
                                 </el-option>
                             </el-option-group>
@@ -246,7 +246,7 @@
                                 <el-option
                                     v-for="(item, key) in methods"
                                     :key="key"
-                                    :label="'【' + item.comment + '】  ' + item.link"
+                                    :label="(item.comment ? `【${item.comment}】` : item.comment) + '  ' + item.link"
                                     :value="item.link">
                                 </el-option>
                             </el-option-group>
