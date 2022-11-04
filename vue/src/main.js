@@ -1,11 +1,11 @@
-// The Vue build version to load with the `import` command
-// (runtime-only or standalone) has been set in webpack.base.conf with an alias.
-import Vue from 'vue';
-import App from './App';
+import Vue from "vue";
+import App from "./App.vue";
 import router from './router';
 import less from 'less';
-import store from '../store';
+import store from './store';
 import VueI18n from 'vue-i18n';
+import zh from '../../common/lang/zh.json';
+import en from '../../common/lang/en.json';
 import {
     Button, Form, FormItem, Input, Link, Row, Col, Menu, MenuItem, Drawer, Tooltip, Submenu, Tag,
     Card, MenuItemGroup, Table, TableColumn, Dialog, Select, Switch, Option, OptionGroup, Tree,
@@ -14,10 +14,7 @@ import {
 
 import 'element-ui/lib/theme-chalk/index.css';
 import 'font-awesome/css/font-awesome.min.css';
-
 import './components/custom';
-
-Vue.config.productionTip = false;
 
 Vue.use(less);
 Vue.use(VueI18n);
@@ -57,19 +54,17 @@ Vue.prototype.$prompt = MessageBox.prompt;
 Vue.prototype.$notify = Notification;
 Vue.prototype.$message = Message;
 
-//i18n
 let lang = window.localStorage.getItem('sys-lang');
 lang = lang ? lang : 'zh';
 window.localStorage.setItem('sys-lang', lang);
 const i18n = new VueI18n({
     locale: lang,
     messages: {
-        'zh': require('@/../../common/lang/zh.json'),
-        'en': require('@/../../common/lang/en.json'),
-    }
+        'zh': zh,
+        'en': en,
+    },
 });
 
-//路由切换-title更新
 router.beforeEach((to, from, next) => {
     if (to.meta.title) {
         document.title = to.meta.title;
@@ -85,23 +80,21 @@ router.beforeEach((to, from, next) => {
         }
     }
     next();
-})
+});
 
-//路由切换-自动返回页面顶部
 router.afterEach(() => {
     window.scrollTo(0, 0);
 });
 
-//防止手动修改本地存储
 window.addEventListener('storage', (e) => {
     sessionStorage.setItem(e.key, e.oldValue);
 });
 
+
 new Vue({
-    el: '#app',
+    el: "#app",
     router,
     i18n,
     store,
-    components: {App},
-    template: '<App/>',
-})
+    render: (h) => h(App),
+}).$mount();

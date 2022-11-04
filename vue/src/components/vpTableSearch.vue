@@ -73,7 +73,6 @@
 
 <script>
 import helper from "../mixins/helper";
-import {merge} from "webpack-merge";
 export default {
 
     name: "vpTableSearch",
@@ -130,9 +129,8 @@ export default {
         },
 
         pageSizeChange() {
-
             this.$router.push({
-                query: merge(this.$route.query, {
+                query: Object.assign(this.$route.query, {
                     p: 1,
                     pageSize: this.formData.pageSize
                 })

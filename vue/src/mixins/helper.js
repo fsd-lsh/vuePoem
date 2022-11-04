@@ -1,6 +1,12 @@
 import axios from "axios";
 export default {
 
+    data() {
+        return {
+            loading: false,
+        }
+    },
+
     created() {
 
         //加载store
@@ -16,20 +22,12 @@ export default {
 
         poemRequest(options) {
 
-            let request;
-
-            switch (options.type) {
-                case 'get': { request = axios.get; break; }
-                case 'post': { request = axios.post; break; }
-                case 'put': { request = axios.put; break; }
-                case 'delete': { request = axios.delete; break; }
-            }
-
-            request(
-                options.url,
-                options.data
-            )
-            .then((res) => {
+            this.loading = true;
+            axios({
+                method: options.type,
+                url: options.url,
+                data: options.data
+            }).then((res) => {
                 if(res.data.code === 955) {
                     this.$store.commit('changeSignInState', false);
                     let store = JSON.parse(sessionStorage.getItem('store'));
@@ -39,11 +37,15 @@ export default {
                     this.$router.push('/');
                 }
                 options.success(res);
-            })
-            .catch(() => {
-
+                this.loading = false;
+            }).catch((res) => {
+                this.loading = false;
                 if(options.error) {
                     options.error;
+                }else {
+                    this.$alert(res.response.data, res.code, {dangerouslyUseHTMLString:true});
+                    console.log('--------------------------API ERR:' + options.url);
+                    console.warn(res);
                 }
             });
         },

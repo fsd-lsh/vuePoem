@@ -167,7 +167,7 @@
 <script>
 import helper from "../mixins/helper";
 import navTab from "../mixins/navTab";
-import modAccount from "../views/subViews/modAccount";
+import modAccount from "../views/subViews/modAccount.vue";
 
 export default {
 

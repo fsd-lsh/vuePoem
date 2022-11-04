@@ -12,7 +12,7 @@ let router = new Router({
         {
             path: '/',
             name: 'signIn',
-            component: resolve => require(['@/views/signIn'], resolve),
+            component: () => import(/* webpackChunkName: "vuePoem-[request]" */'../views/signIn.vue'),
             meta: {
                 title: '',
             },
@@ -49,7 +49,8 @@ axios.get('/admin/menu/load?lang='+lang).then(res => {
                         router.addRoute({
                             path: menu[index].child[sub_index].child[sub_index2].href,
                             name: menu[index].child[sub_index].child[sub_index2].name,
-                            component: resolve => require(['@/views/admin/' + menu[index].child[sub_index].child[sub_index2].name], resolve),
+                            //component: resolve => require(['@/views/admin/' + menu[index].child[sub_index].child[sub_index2].name], resolve),
+                            component: () => import(/* webpackChunkName: "vuePoem-[request]" */`../views/admin/${menu[index].child[sub_index].child[sub_index2].name}.vue`),
                             meta: {
                                 title: menu[index].child[sub_index].child[sub_index2].title + ' - ' + logoInfo.title,
                             },
@@ -59,7 +60,8 @@ axios.get('/admin/menu/load?lang='+lang).then(res => {
                     router.addRoute({
                         path: menu[index].child[sub_index].href,
                         name: menu[index].child[sub_index].name,
-                        component: resolve => require(['@/views/admin/' + menu[index].child[sub_index].name], resolve),
+                        //component: resolve => require(['@/views/admin/' + menu[index].child[sub_index].name], resolve),
+                        component: () => import(/* webpackChunkName: "vuePoem-[request]" */`../views/admin/${menu[index].child[sub_index].name}.vue`),
                         meta: {
                             title: menu[index].child[sub_index].title + ' - ' + logoInfo.title,
                         },

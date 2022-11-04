@@ -1,9 +1,9 @@
 import Vue from "vue";
-import vpAdmin from './vpAdmin';
-import vpNavTabs from "./vpNavTabs";
-import vpTable from "./vpTable";
-import vpTableSearch from "./vpTableSearch";
-import vpConfig from "./vpConfig";
+import vpAdmin from './vpAdmin.vue';
+import vpNavTabs from "./vpNavTabs.vue";
+import vpTable from "./vpTable.vue";
+import vpTableSearch from "./vpTableSearch.vue";
+import vpConfig from "./vpConfig.vue";
 
 Vue.component('vpAdmin', vpAdmin);
 Vue.component('vpTable', vpTable);
