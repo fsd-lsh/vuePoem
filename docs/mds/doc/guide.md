@@ -78,52 +78,33 @@ php封装函数有两个path(都可在控制器内全局调用)，原则上「ph
 此章节将为您阐述vuePoem前端部分
 
 ### 配置
-配置位于`./vue/config/index.js`  
+配置位于`./vue/vite.config.js`  
 开发模式下，vuePoem为您预先代理后端API接口并基于`.env`文件。在后端服务启动情况下，您可以直接通过前端代理访问后端接口。  
 构建模式下，静态资源会统一向`./server/public`目录输出
 ```javascript
-'use strict'
-const path = require('path');
-const ini = require('ini');
-const fs = require('fs');
-let str = fs.readFileSync(path.resolve(__dirname, '../../.env')).toString();
-let env = ini.parse(str);
-module.exports = {
-    dev: {
-        assetsSubDirectory: 'static',
-        assetsPublicPath: '/',
-        proxyTable: {
-            '/admin': {
-                target: 'http://' + env.PHP_HOST + ':' + env.PHP_PORT,
+export default defineConfig({
+    server: {
+        port: envConfig.VUE_PORT ? envConfig.VUE_PORT : 7777,
+        strictPort: false,
+        proxy: {
+            "/admin": {
+                target: `http://${envConfig.PHP_HOST}:${envConfig.PHP_PORT}`,
                 changeOrigin: true,
+                secure: false,
                 pathRewrite: {
-                    '^/admin': '/admin'
+                    "^/admin": "/admin",
                 }
             }
-        },
-        host: env.VUE_HOST,
-        port: env.VUE_PORT,
-        autoOpenBrowser: false,
-        errorOverlay: true,
-        notifyOnErrors: true,
-        poll: false,
-        devtool: 'cheap-module-eval-source-map',
-        cacheBusting: true,
-        cssSourceMap: true
+        }
     },
-
+    plugins: [
+        vue(),
+    ],
     build: {
-        index: path.resolve(__dirname, '../../server/public/index.html'),
-        assetsRoot: path.resolve(__dirname, '../../server/public'),
-        assetsSubDirectory: 'static',
-        assetsPublicPath: '/',
-        productionSourceMap: true,
-        devtool: '#source-map',
-        productionGzip: true,
-        productionGzipExtensions: ['js', 'css'],
-        bundleAnalyzerReport: process.env.npm_config_report
-    }
-}
+        outDir: '../server/public',
+        assetsDir: 'static',
+    },
+});
 ```
 
 ### 组件
@@ -202,7 +183,7 @@ export default {
 前端：`./vue/src/components/table.vue` //需要您在新页面调用`<poemTable>`
 
 ### 状态管理
-vuePoem项目使用vuex作为状态管理，路径位于`./vue/store/index.js`  
+vuePoem项目使用vuex作为状态管理，路径位于`./vue/src/store/index.js`  
 ```js
 import Vue from 'vue';
 import Vuex from 'vuex';
@@ -246,13 +227,17 @@ import Vue from 'vue';
 import Router from 'vue-router';
 import axios from 'axios';
 Vue.use(Router);
+
 let router = new Router({
+
     mode:'hash',
+
     routes: [
+
         {
             path: '/',
             name: 'signIn',
-            component: resolve => require(['@/views/signIn'], resolve),
+            component: () => import(/* webpackChunkName: "vuePoem-[request]" */'../views/signIn.vue'),
             meta: {
                 title: '',
             },
@@ -265,19 +250,23 @@ axios.get('/admin/menu/load?lang='+lang).then(res => {
 
     if(res.data.code === 955) {
         sessionStorage.setItem('store', JSON.stringify({isSignIn:false,menuTree:{}}));
-        if(window.location.hash !== '#/') {
-            window.location.href = '/';
-        }
+        router.push('/');
         return false;
     }
 
-    let menu = res.data.data.menuInfo;
-    let logoInfo = res.data.data.logoInfo;
-    let store = JSON.parse(window.sessionStorage.getItem('store'));
-    store.menuTree.menuInfo = menu;
-    window.sessionStorage.setItem('store', JSON.stringify(store));
-
     if(res.data.code === 1) {
+
+        let menu = res.data.data.menuInfo;
+        let logoInfo = res.data.data.logoInfo;
+
+        if(window.sessionStorage.getItem('store')) {
+            let store = JSON.parse(window.sessionStorage.getItem('store'));
+            store.menuTree.menuInfo = menu;
+            window.sessionStorage.setItem('store', JSON.stringify(store));
+        }else {
+            window.sessionStorage.setItem('store', JSON.stringify([]));
+        }
+
         for (let index = 0; index < menu.length; index++) {
             for (let sub_index = 0; sub_index < menu[index].child.length; sub_index++) {
                 if(menu[index].child[sub_index].child.length) {
@@ -285,9 +274,11 @@ axios.get('/admin/menu/load?lang='+lang).then(res => {
                         router.addRoute({
                             path: menu[index].child[sub_index].child[sub_index2].href,
                             name: menu[index].child[sub_index].child[sub_index2].name,
-                            component: resolve => require(['@/views/admin/' + menu[index].child[sub_index].child[sub_index2].name], resolve),
+                            //component: resolve => require(['@/views/admin/' + menu[index].child[sub_index].child[sub_index2].name], resolve),
+                            component: () => import(/* webpackChunkName: "vuePoem-[request]" */`../views/admin/${menu[index].child[sub_index].child[sub_index2].name}.vue`),
                             meta: {
                                 title: menu[index].child[sub_index].child[sub_index2].title + ' - ' + logoInfo.title,
+                                icon: menu[index].child[sub_index].icon,
                             },
                         });
                     }
@@ -295,9 +286,11 @@ axios.get('/admin/menu/load?lang='+lang).then(res => {
                     router.addRoute({
                         path: menu[index].child[sub_index].href,
                         name: menu[index].child[sub_index].name,
-                        component: resolve => require(['@/views/admin/' + menu[index].child[sub_index].name], resolve),
+                        //component: resolve => require(['@/views/admin/' + menu[index].child[sub_index].name], resolve),
+                        component: () => import(/* webpackChunkName: "vuePoem-[request]" */`../views/admin/${menu[index].child[sub_index].name}.vue`),
                         meta: {
                             title: menu[index].child[sub_index].title + ' - ' + logoInfo.title,
+                            icon: menu[index].child[sub_index].icon,
                         },
                     });
                 }
@@ -305,6 +298,18 @@ axios.get('/admin/menu/load?lang='+lang).then(res => {
         }
     }
 });
+
+router.beforeEach((to, from, next) => {
+
+    if(window.sessionStorage.getItem('store')) {
+        let store = JSON.parse(window.sessionStorage.getItem('store'));
+        if(to.path === '/' && store.isSignIn === true) {
+            router.push('/dash');
+        }
+    }
+    next();
+});
+
 export default router;
 ```
 

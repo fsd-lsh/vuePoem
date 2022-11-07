@@ -73,7 +73,7 @@ cd ./vue && npm run dev
 ### Start to finish
 At this point, you can start the development task by seeing the startup completion information in the command line. Browser access `http://127.0.0.1:7777` can see the front end, the default account password: `admin 123456`.  
 The back-end API runs in `http://127.0.0.1:8899`; Normally, you won't debug by visiting this address. VuePoem has acted as a front-end agent for you in the development mode.  
-Details refer to: `vuepoem/vue/config/index.js` 19 to 27 rows.
+Details refer to: `vuepoem/vue/vite.config.js` server.proxy.
 
 ## Production deployment
 

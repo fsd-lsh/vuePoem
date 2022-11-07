@@ -75,52 +75,33 @@ Here is not recommended to modify, if have special requirements please visit [ph
 This chapter will explain the front end of vuePoem for you
 
 ### configuration
-Configuration is located in the`./vue/config/index.js`  
+Configuration is located in the`./vue/vite.config.js`  
 In development mode, vuePoem preproxies the back-end API interface for you and is based on the `.env` file. In the case of back-end service startup, you can access the back-end interface directly through the front-end proxy.  
 In the construction mode, static resources will be uniformly output to the `./server/public` directory  
 ```javascript
-'use strict'
-const path = require('path');
-const ini = require('ini');
-const fs = require('fs');
-let str = fs.readFileSync(path.resolve(__dirname, '../../.env')).toString();
-let env = ini.parse(str);
-module.exports = {
-    dev: {
-        assetsSubDirectory: 'static',
-        assetsPublicPath: '/',
-        proxyTable: {
-            '/admin': {
-                target: 'http://' + env.PHP_HOST + ':' + env.PHP_PORT,
+export default defineConfig({
+    server: {
+        port: envConfig.VUE_PORT ? envConfig.VUE_PORT : 7777,
+        strictPort: false,
+        proxy: {
+            "/admin": {
+                target: `http://${envConfig.PHP_HOST}:${envConfig.PHP_PORT}`,
                 changeOrigin: true,
+                secure: false,
                 pathRewrite: {
-                    '^/admin': '/admin'
+                    "^/admin": "/admin",
                 }
             }
-        },
-        host: env.VUE_HOST,
-        port: env.VUE_PORT,
-        autoOpenBrowser: false,
-        errorOverlay: true,
-        notifyOnErrors: true,
-        poll: false,
-        devtool: 'cheap-module-eval-source-map',
-        cacheBusting: true,
-        cssSourceMap: true
+        }
     },
-
+    plugins: [
+        vue(),
+    ],
     build: {
-        index: path.resolve(__dirname, '../../server/public/index.html'),
-        assetsRoot: path.resolve(__dirname, '../../server/public'),
-        assetsSubDirectory: 'static',
-        assetsPublicPath: '/',
-        productionSourceMap: true,
-        devtool: '#source-map',
-        productionGzip: true,
-        productionGzipExtensions: ['js', 'css'],
-        bundleAnalyzerReport: process.env.npm_config_report
-    }
-}
+        outDir: '../server/public',
+        assetsDir: 'static',
+    },
+});
 ```
 
 ### component
@@ -199,7 +180,7 @@ Backend: `./server/app/service/middleware/table.php`  //Requires you to use `sys
 Frontend: ` ./server/app/admin/vue/SRC/components/table.vue ` //You need to call `<poemTable>` on the new page
 
 ### Status management
-VuePoem projects using vuex as state management, path in `./server/app/admin/vue/store/index.js`  
+VuePoem projects using vuex as state management, path in `./vue/src/store/index.js`  
 ```js
 import Vue from 'vue';
 import Vuex from 'vuex';
@@ -230,13 +211,17 @@ import Vue from 'vue';
 import Router from 'vue-router';
 import axios from 'axios';
 Vue.use(Router);
+
 let router = new Router({
+
     mode:'hash',
+
     routes: [
+
         {
             path: '/',
             name: 'signIn',
-            component: resolve => require(['@/views/signIn'], resolve),
+            component: () => import(/* webpackChunkName: "vuePoem-[request]" */'../views/signIn.vue'),
             meta: {
                 title: '',
             },
@@ -249,19 +234,23 @@ axios.get('/admin/menu/load?lang='+lang).then(res => {
 
     if(res.data.code === 955) {
         sessionStorage.setItem('store', JSON.stringify({isSignIn:false,menuTree:{}}));
-        if(window.location.hash !== '#/') {
-            window.location.href = '/';
-        }
+        router.push('/');
         return false;
     }
 
-    let menu = res.data.data.menuInfo;
-    let logoInfo = res.data.data.logoInfo;
-    let store = JSON.parse(window.sessionStorage.getItem('store'));
-    store.menuTree.menuInfo = menu;
-    window.sessionStorage.setItem('store', JSON.stringify(store));
-
     if(res.data.code === 1) {
+
+        let menu = res.data.data.menuInfo;
+        let logoInfo = res.data.data.logoInfo;
+
+        if(window.sessionStorage.getItem('store')) {
+            let store = JSON.parse(window.sessionStorage.getItem('store'));
+            store.menuTree.menuInfo = menu;
+            window.sessionStorage.setItem('store', JSON.stringify(store));
+        }else {
+            window.sessionStorage.setItem('store', JSON.stringify([]));
+        }
+
         for (let index = 0; index < menu.length; index++) {
             for (let sub_index = 0; sub_index < menu[index].child.length; sub_index++) {
                 if(menu[index].child[sub_index].child.length) {
@@ -269,9 +258,11 @@ axios.get('/admin/menu/load?lang='+lang).then(res => {
                         router.addRoute({
                             path: menu[index].child[sub_index].child[sub_index2].href,
                             name: menu[index].child[sub_index].child[sub_index2].name,
-                            component: resolve => require(['@/views/admin/' + menu[index].child[sub_index].child[sub_index2].name], resolve),
+                            //component: resolve => require(['@/views/admin/' + menu[index].child[sub_index].child[sub_index2].name], resolve),
+                            component: () => import(/* webpackChunkName: "vuePoem-[request]" */`../views/admin/${menu[index].child[sub_index].child[sub_index2].name}.vue`),
                             meta: {
                                 title: menu[index].child[sub_index].child[sub_index2].title + ' - ' + logoInfo.title,
+                                icon: menu[index].child[sub_index].icon,
                             },
                         });
                     }
@@ -279,9 +270,11 @@ axios.get('/admin/menu/load?lang='+lang).then(res => {
                     router.addRoute({
                         path: menu[index].child[sub_index].href,
                         name: menu[index].child[sub_index].name,
-                        component: resolve => require(['@/views/admin/' + menu[index].child[sub_index].name], resolve),
+                        //component: resolve => require(['@/views/admin/' + menu[index].child[sub_index].name], resolve),
+                        component: () => import(/* webpackChunkName: "vuePoem-[request]" */`../views/admin/${menu[index].child[sub_index].name}.vue`),
                         meta: {
                             title: menu[index].child[sub_index].title + ' - ' + logoInfo.title,
+                            icon: menu[index].child[sub_index].icon,
                         },
                     });
                 }
@@ -289,6 +282,18 @@ axios.get('/admin/menu/load?lang='+lang).then(res => {
         }
     }
 });
+
+router.beforeEach((to, from, next) => {
+
+    if(window.sessionStorage.getItem('store')) {
+        let store = JSON.parse(window.sessionStorage.getItem('store'));
+        if(to.path === '/' && store.isSignIn === true) {
+            router.push('/dash');
+        }
+    }
+    next();
+});
+
 export default router;
 ```
 
