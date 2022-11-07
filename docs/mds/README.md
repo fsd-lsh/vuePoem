@@ -6,13 +6,13 @@ actionLink: /doc/
 ---
 
 <div style="text-align:center">
-    <img src="https://img.shields.io/badge/Phppoem-%3E2.1.x-brightgreen?color=545c64&amp;labelColor=ffd04b" alt="Phppoem">
-    <img src="https://img.shields.io/badge/Vue-%3E2.7.13-brightgreen?color=545c64&amp;labelColor=ffd04b" alt="Vue">
-    <img src="https://img.shields.io/badge/ElementUI-%3E2.15.10-brightgreen?color=545c64&amp;labelColor=ffd04b" alt="ElementUI">
-    <img src="https://img.shields.io/badge/Mysql-%3E5.7-brightgreen?color=545c64&amp;labelColor=ffd04b" alt="Mysql">
-    <img src="https://img.shields.io/badge/Fontawesome-%3E4.7.0-brightgreen?color=545c64&amp;labelColor=ffd04b" alt="Fontawesome">
-    <img src="https://img.shields.io/badge/Container-%3Edocker-brightgreen?color=545c64&amp;labelColor=ffd04b" alt="Container">
-    <img src="https://img.shields.io/badge/License-%3EMIT-brightgreen?color=545c64&amp;labelColor=ffd04b" alt="License">
+    <img src="https://img.shields.io/badge/Vite-3.2.0-brightgreen?color=545c64&amp;labelColor=ffd04b" alt="Vite">
+    <img src="https://img.shields.io/badge/Vue-2.7.13-brightgreen?color=545c64&amp;labelColor=ffd04b" alt="Vue">
+    <img src="https://img.shields.io/badge/ElementUI-2.15.10-brightgreen?color=545c64&amp;labelColor=ffd04b" alt="ElementUI">
+    <img src="https://img.shields.io/badge/Phppoem-2.1.x-brightgreen?color=545c64&amp;labelColor=ffd04b" alt="Phppoem">
+    <img src="https://img.shields.io/badge/Mysql-5.7-brightgreen?color=545c64&amp;labelColor=ffd04b" alt="Mysql">
+    <img src="https://img.shields.io/badge/Container-docker-brightgreen?color=545c64&amp;labelColor=ffd04b" alt="Docker">
+    <img src="https://img.shields.io/badge/License-MIT-brightgreen?color=545c64&amp;labelColor=ffd04b" alt="License">
 </div>
 
 <div class="features">

@@ -48,7 +48,7 @@ THEME_PATH      = common/theme
 ## Local development
 
 ### CLI script assisted startup
-To start the development service using the automated helper script, make sure you execute the following command in the `vuepoem` directory. The `./vuePoem mysql` command automatically creates a database for you, provided that `.env` is configured correctly. The `./vuePoem dev` command starts the front-end development service (automatic installation dependency and webpack-dev-server) and back-end development service (PHP built-in server provides API for the front-end). [More](/doc/ cliscript.html#help)
+To start the development service using the automated helper script, make sure you execute the following command in the `vuepoem` directory. The `./vuePoem mysql` command automatically creates a database for you, provided that `.env` is configured correctly. The `./vuePoem dev` command starts the front-end development service (automatic installation dependency and vite) and back-end development service (PHP built-in server provides API for the front-end). [More](/doc/ cliscript.html#help)
 ```shell
 ./vuePoem mysql && ./vuePoem dev
 ```

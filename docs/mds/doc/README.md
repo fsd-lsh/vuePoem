@@ -2,7 +2,7 @@
 sidebarDepth: 3
 ---
 # 介绍
-VuePoem是一款轻量级，开源后台快速开发脚手架。使用主流稳定技术栈组合PHP7、Vue2、ElementUI、Webpack、Phppoem、Nginx、Mysql。  
+VuePoem是一款轻量级，开源后台快速开发脚手架。使用主流稳定技术栈组合PHP7、Vue2、ElementUI、Vite、Phppoem、Nginx、Mysql。  
 精准适用于希望vue+php全栈开发人员使用
 
 ## 环境要求

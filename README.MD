@@ -1,11 +1,11 @@
 # vuePoem
 ENGLISH | [中文](./README_CN.MD)
 
-![](https://img.shields.io/badge/Phppoem-2.1.x-brightgreen?color=545c64&amp;labelColor=ffd04b)
+![](https://img.shields.io/badge/Vite-3.2.0-brightgreen?color=545c64&amp;labelColor=ffd04b)
 ![](https://img.shields.io/badge/Vue-2.7.13-brightgreen?color=545c64&amp;labelColor=ffd04b)
 ![](https://img.shields.io/badge/ElementUI-2.15.10-brightgreen?color=545c64&amp;labelColor=ffd04b)
+![](https://img.shields.io/badge/Phppoem-2.1.x-brightgreen?color=545c64&amp;labelColor=ffd04b)
 ![](https://img.shields.io/badge/Mysql-5.7-brightgreen?color=545c64&amp;labelColor=ffd04b)
-![](https://img.shields.io/badge/Fontawesome-4.7.0-brightgreen?color=545c64&amp;labelColor=ffd04b)
 ![](https://img.shields.io/badge/Container-docker-brightgreen?color=545c64&amp;labelColor=ffd04b)
 ![](https://img.shields.io/badge/License-MIT-brightgreen?color=545c64&amp;labelColor=ffd04b)
 

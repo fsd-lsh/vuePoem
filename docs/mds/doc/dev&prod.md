@@ -47,7 +47,7 @@ THEME_PATH      = common/theme
 ## 本地开发
 
 ### CLI脚本辅助启动
-使用自动化辅助脚本来启动开发服务，请确保您在`vuepoem`目录执行以下命令。`./vuePoem mysql`命令会为您自动创建数据库，当然前提是`.env`配置正确。`./vuePoem dev`命令会启动前端开发服务(自动安装依赖及webpack-dev-server)及后端开发服务(php内建服务器为前端提供API)，[关于CLI脚本更多可阅读此处](/doc/cliScript.html#help)
+使用自动化辅助脚本来启动开发服务，请确保您在`vuepoem`目录执行以下命令。`./vuePoem mysql`命令会为您自动创建数据库，当然前提是`.env`配置正确。`./vuePoem dev`命令会启动前端开发服务(自动安装依赖及vite)及后端开发服务(php内建服务器为前端提供API)，[关于CLI脚本更多可阅读此处](/doc/cliScript.html#help)
 ```shell
 ./vuePoem mysql && ./vuePoem dev
 ```

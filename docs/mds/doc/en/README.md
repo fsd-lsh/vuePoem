@@ -2,7 +2,7 @@
 sidebarDepth: 3
 ---
 # introduce
-VuePoem is a lightweight, open source scaffolding for rapid back-end development. Combine PHP7, Vue2, ElementUI, Webpack, Phppoem, Nginx, Mysql using the mainstream stable technology stack.  
+VuePoem is a lightweight, open source scaffolding for rapid back-end development. Combine PHP7, Vue2, ElementUI, Vite, Phppoem, Nginx, Mysql using the mainstream stable technology stack.  
 Precise for VUE + PHP full stack developers to use
 
 ## Environmental requirements
