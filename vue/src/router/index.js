@@ -53,6 +53,7 @@ axios.get('/admin/menu/load?lang='+lang).then(res => {
                             component: () => import(/* webpackChunkName: "vuePoem-[request]" */`../views/admin/${menu[index].child[sub_index].child[sub_index2].name}.vue`),
                             meta: {
                                 title: menu[index].child[sub_index].child[sub_index2].title + ' - ' + logoInfo.title,
+                                icon: menu[index].child[sub_index].icon,
                             },
                         });
                     }
@@ -64,6 +65,7 @@ axios.get('/admin/menu/load?lang='+lang).then(res => {
                         component: () => import(/* webpackChunkName: "vuePoem-[request]" */`../views/admin/${menu[index].child[sub_index].name}.vue`),
                         meta: {
                             title: menu[index].child[sub_index].title + ' - ' + logoInfo.title,
+                            icon: menu[index].child[sub_index].icon,
                         },
                     });
                 }

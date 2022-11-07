@@ -16,7 +16,7 @@
                 'el-tabs__item',
             ]"
             :closable="tabs.length !== 1">
-            {{item.title}}
+            <i :class="item.icon">&nbsp;&nbsp;</i>{{item.title}}
         </el-tag>
     </draggable>
 </template>

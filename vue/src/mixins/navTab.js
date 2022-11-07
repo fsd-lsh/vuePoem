@@ -2,21 +2,18 @@ export default {
 
     data() {
         return {
-            //Nav tab
             focusTab: '',
             tabs: [],
+            menuInfo: [],
         }
     },
 
     created() {
-
-        //Nav tab
         this.tabInit();
     },
 
     methods: {
 
-        //NavTab 初始化
         tabInit() {
 
             let tabs = JSON.parse(window.sessionStorage.getItem('tabs'));
@@ -28,7 +25,8 @@ export default {
                 let title = this.$route.meta.title;
                 this.tabs.push({
                     name: this.$route.name,
-                    title: title.slice(0, title.indexOf(' -'))
+                    title: title.slice(0, title.indexOf(' -')),
+                    icon: this.$route.meta.icon,
                 });
             }
 
@@ -43,14 +41,12 @@ export default {
             window.sessionStorage.setItem('tabs', JSON.stringify(this.tabs));
         },
 
-        //navTab 点击回调
         tabClick({name}) {
             if(name !== this.$route.name) {
                 this.$router.push({name:name});
             }
         },
 
-        //navTab 移除回调
         tabRemove({name}) {
 
             for (let index in this.tabs) {
@@ -67,7 +63,6 @@ export default {
             }
         },
 
-        //navTab cache clear
         tabClear() {
             this.tabs = [];
             window.sessionStorage.setItem('tabs', JSON.stringify([]));
