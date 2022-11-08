@@ -236,7 +236,7 @@
                 v-model="exportCSSArticle">
             </el-input>
             <span slot="footer" class="dialog-footer">
-                <el-button @click="exportCSSFlag = false">{{$t('admin.public.cancel')}}</el-button>
+                <el-button size="mini" @click="exportCSSFlag = false">{{$t('admin.public.cancel')}}</el-button>
             </span>
         </el-dialog>
     </el-drawer>
@@ -324,38 +324,46 @@ export default {
             this.refTemp();
         },
         addCustomTheme() {
-            let timestamp = (new Date()).getTime();
-            let custom = JSON.parse(window.localStorage.getItem('sys-theme-custom'));
-            if(!custom) {
-                custom = {};
-            }
 
-            custom['custom-' + timestamp] =
-            '.custom-'+timestamp+' {' +
-                '--title-color:' + this.customForm.titleColor + ';' +
-                '--main-color:' + this.customForm.mainColor + ';' +
-                '--logo-bg-color:' + this.customForm.logoBgColor + ';' +
-                '--menu-background-color:' + this.customForm.menuBgColor + ';' +
-                '--menu-font-normal-color:' + this.customForm.menuFontNormalColor + ';' +
-                '--menu-font-hover-color:' + this.customForm.menuFontFocusColor + ';' +
-                '--menu-font-active-color:' + this.customForm.menuFontActiveColor + ';' +
-            '}';
+            this.$confirm('确认添加?', '', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning'
+            }).then(() => {
 
-            this.resetCustomTheme();
-            window.localStorage.setItem('sys-theme-custom', JSON.stringify(custom));
+                let timestamp = (new Date()).getTime();
+                let custom = JSON.parse(window.localStorage.getItem('sys-theme-custom'));
+                if(!custom) {
+                    custom = {};
+                }
 
-            let sysThemeLists = JSON.parse(window.sessionStorage.getItem('sys-theme-lists'));
-            sysThemeLists.push(`custom-${timestamp}`)
-            sysThemeLists = sysThemeLists.filter((v, i, s) => {
-                return s.indexOf(v) === i;
-            });
-            window.sessionStorage.setItem('sys-theme-lists', JSON.stringify(sysThemeLists));
+                custom['custom-' + timestamp] =
+                    '.custom-'+timestamp+' {' +
+                    '--title-color:' + this.customForm.titleColor + ';' +
+                    '--main-color:' + this.customForm.mainColor + ';' +
+                    '--logo-bg-color:' + this.customForm.logoBgColor + ';' +
+                    '--menu-background-color:' + this.customForm.menuBgColor + ';' +
+                    '--menu-font-normal-color:' + this.customForm.menuFontNormalColor + ';' +
+                    '--menu-font-hover-color:' + this.customForm.menuFontFocusColor + ';' +
+                    '--menu-font-active-color:' + this.customForm.menuFontActiveColor + ';' +
+                    '}';
 
-            this.loadTheme(true);
+                this.resetCustomTheme();
+                window.localStorage.setItem('sys-theme-custom', JSON.stringify(custom));
 
-            this.$notify({
-                message: this.$t('admin.theme.addOk'),
-                type: 'success'
+                let sysThemeLists = JSON.parse(window.sessionStorage.getItem('sys-theme-lists'));
+                sysThemeLists.push(`custom-${timestamp}`)
+                sysThemeLists = sysThemeLists.filter((v, i, s) => {
+                    return s.indexOf(v) === i;
+                });
+                window.sessionStorage.setItem('sys-theme-lists', JSON.stringify(sysThemeLists));
+
+                this.loadTheme(true);
+
+                this.$notify({
+                    message: this.$t('admin.theme.addOk'),
+                    type: 'success'
+                });
             });
         },
         delCustomTheme(className) {
@@ -450,7 +458,7 @@ export default {
     .config-panel-item {
 
         padding: 1.2rem 1.2rem 0 1.2rem;
-        height: 86px;
+        height: 92px;
         vertical-align:middle;
         text-align: center;
         transition: all linear .3s;
@@ -485,7 +493,7 @@ export default {
 
             > .left {
                 height: 64px;
-                width: 22.0%;
+                width: 25.0%;
                 display: inline-block;
                 background: var(--menu-background-color);
             }

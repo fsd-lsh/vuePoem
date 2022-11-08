@@ -177,9 +177,8 @@ export default {
                 line-height: 26px;
 
                 :deep(#page-size) {
+                    margin: 0 5px 0 0;
                     width: 74px;
-                    height: 24px;
-                    line-height: 24px;
                 }
 
                 :deep(.el-input__suffix) {
