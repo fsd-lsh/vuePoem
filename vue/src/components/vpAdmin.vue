@@ -1,20 +1,16 @@
 <template>
-
     <el-row>
 
-        <!--左侧部分（logo、二级菜单）-->
         <el-col
             :span="this.leftViewSpan"
             v-if="this.$store.state.isSignIn"
             id="left">
 
-            <!--logo-->
             <div class="logo">
                 <img src="/favicon.ico" alt="logo" style="width:24px; height:24px; border-radius:100%;">
                 <b v-if="!isCollapse">&nbsp;Vue<i>Poem</i></b>
             </div>
 
-            <!--二级菜单-->
             <el-menu
                 :default-active="activeSubIndex"
                 class="menu-level-2"
@@ -24,19 +20,16 @@
                 :collapse-transition="true"
                 :collapse="isCollapse">
                 <div
-                    v-for="(item, key) in this.subMenuTree.child"
-                    :key="key">
+                    v-for="(item, key) in this.subMenuTree.child" :key="key">
 
-                    <!--多级-->
                     <el-sub-menu
                         v-if="item.child.length"
                         :show-timeout="200"
                         :hide-timeout="200"
                         :index="item.id">
-                        <template
-                            #title>
-                            <i :class="item.icon"></i>
-                            <span>&nbsp;&nbsp;&nbsp;{{ item.title }}</span>
+                        <template #title>
+                            <el-icon size="12"><i :class="item.icon"></i></el-icon>
+                            <span>{{ item.title }}</span>
                         </template>
                         <el-menu-item-group>
                             <el-menu-item
@@ -49,23 +42,22 @@
                         </el-menu-item-group>
                     </el-sub-menu>
 
-                    <!--单级-->
                     <el-menu-item
                         @click="openMenu(item)"
                         v-if="!item.child.length"
                         :key="key"
                         :index="item.id">
-                        <i :class="item.icon"></i>
-                        <span>&nbsp;&nbsp;&nbsp;{{ item.title }}</span>
+                        <el-icon size="12"><i :class="item.icon"></i></el-icon>
+                        <template #title>
+                            <span>{{ item.title }}</span>
+                        </template>
                     </el-menu-item>
                 </div>
             </el-menu>
 
-            <!--Config panel-->
             <vp-config :drawer="drawer" :close-handle="configFlagHandle"/>
         </el-col>
 
-        <!--右侧部分（一级菜单、路由视图）-->
         <el-col
             :span="this.rightViewSpan"
             :class="{
@@ -103,58 +95,58 @@
                     :index="item.id">
                     {{ item.title }}
                 </el-menu-item>
-                <el-menu-item
-                    @click="toolsGroup('configPanel')"
-                    class="pull-right">
-                    <el-tooltip class="item" effect="dark" :content="$t('admin.public.config')" placement="bottom">
-                        <i class="fa fa-ellipsis-v"></i>
-                    </el-tooltip>
-                </el-menu-item>
-                <el-sub-menu
-                    index="2"
-                    class="pull-right">
+
+                <div id="top-nav-group">
                     <el-menu-item
-                        @click="toolsGroup('modAccount')"
-                        index="2-1">{{$t('admin.public.modAccount')}}
+                        @click="toolsGroup('configPanel')"
+                        class="pull-right">
+                        <el-tooltip class="item" effect="dark" :content="$t('admin.public.config')" placement="bottom">
+                            <i class="fa fa-ellipsis-v"></i>
+                        </el-tooltip>
+                    </el-menu-item>
+                    <el-sub-menu
+                        index="2"
+                        class="pull-right">
+                        <el-menu-item
+                            @click="toolsGroup('modAccount')"
+                            index="2-1">{{$t('admin.public.modAccount')}}
+                        </el-menu-item>
+                        <el-menu-item
+                            @click="toolsGroup('signOut')"
+                            index="2-2">{{$t('admin.public.signOut')}}
+                        </el-menu-item>
+                    </el-sub-menu>
+                    <el-menu-item
+                        @click="toolsGroup('fullScreen')"
+                        class="pull-right">
+                        <el-tooltip v-if="!iFullscreen" class="item" effect="dark" :content="$t('admin.public.fullScreen')" placement="bottom">
+                            <i class="fa fa-arrows-alt"></i>
+                        </el-tooltip>
+                        <el-tooltip v-if="iFullscreen" class="item" effect="dark" :content="$t('admin.public.exitFullScreen')" placement="bottom">
+                            <i class="fa fa-compress"></i>
+                        </el-tooltip>
                     </el-menu-item>
                     <el-menu-item
-                        @click="toolsGroup('signOut')"
-                        index="2-2">{{$t('admin.public.signOut')}}
+                        @click="toolsGroup('clean')"
+                        class="pull-right">
+                        <el-tooltip class="item" effect="dark" :content="$t('admin.public.clear')" placement="bottom">
+                            <i class="fa fa-trash-o"></i>
+                        </el-tooltip>
                     </el-menu-item>
-                </el-sub-menu>
-                <el-menu-item
-                    @click="toolsGroup('fullScreen')"
-                    class="pull-right">
-                    <el-tooltip v-if="!iFullscreen" class="item" effect="dark" :content="$t('admin.public.fullScreen')" placement="bottom">
-                        <i class="fa fa-arrows-alt"></i>
-                    </el-tooltip>
-                    <el-tooltip v-if="iFullscreen" class="item" effect="dark" :content="$t('admin.public.exitFullScreen')" placement="bottom">
-                        <i class="fa fa-compress"></i>
-                    </el-tooltip>
-                </el-menu-item>
-                <el-menu-item
-                    @click="toolsGroup('clean')"
-                    class="pull-right">
-                    <el-tooltip class="item" effect="dark" :content="$t('admin.public.clear')" placement="bottom">
-                        <i class="fa fa-trash-o"></i>
-                    </el-tooltip>
-                </el-menu-item>
-                <el-menu-item
-                    @click="toolsGroup('language')"
-                    class="pull-right">
-                    <el-tooltip class="item" effect="dark" :content="$t('admin.public.switchLanguage')" placement="bottom">
-                        <i class="fa fa-language"></i>
-                    </el-tooltip>
-                </el-menu-item>
+                    <el-menu-item
+                        @click="toolsGroup('language')"
+                        class="pull-right">
+                        <el-tooltip class="item" effect="dark" :content="$t('admin.public.switchLanguage')" placement="bottom">
+                            <i class="fa fa-language"></i>
+                        </el-tooltip>
+                    </el-menu-item>
+                </div>
             </el-menu>
 
-            <!--Nav tabs-->
             <vp-nav-tabs/>
 
-            <!--Pages-->
             <slot/>
 
-            <!--SubViews-->
             <mod-account :value="modAccountFlag" :closeHandle="accountFlagHandle"/>
         </el-col>
     </el-row>
@@ -426,8 +418,13 @@ export default {
 </script>
 
 <style scoped lang="less">
+
     #top-nav-group {
-        justify-content: flex-end;
-        flex-grow: 1;
+        position: absolute;
+        right: 36px;
+        top: -4px;
+        :deep(.el-menu-item.is-active) {
+            color: #fff!important;
+        }
     }
 </style>

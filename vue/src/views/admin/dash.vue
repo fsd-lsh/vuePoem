@@ -21,7 +21,7 @@
                                         <p v-if="flag === 'log/sysLog'">{{$t('admin.dash.log')}}</p>
                                         <div class="total-group">
                                             <span class="total">{{parseInt(subDash[0]) + parseInt(subDash[1]) + parseInt(subDash[2])}}</span>
-                                            <span>(</span>
+                                            <span>&nbsp;「&nbsp;</span>
                                             <el-tooltip
                                                 class="item"
                                                 effect="dark"
@@ -54,7 +54,7 @@
                                                     <span v-if="status !== 2">&nbsp;&nbsp;</span>
                                                 </span>
                                             </el-tooltip>
-                                            <span>)</span>
+                                            <span>&nbsp;」</span>
                                         </div>
                                     </div>
                                 </el-col>
