@@ -1,22 +1,18 @@
-import Vue from 'vue';
-import Vuex from 'vuex';
+import { createStore } from "vuex";
 
-//挂载Vuex
-Vue.use(Vuex);
+window.addEventListener('storage', (e) => {
+    sessionStorage.setItem(e.key, e.oldValue);
+});
 
-//创建VueX对象
-const store = new Vuex.Store({
-
+export default createStore({
     state: {},
 
     mutations: {
 
-        //修改登录状态
         changeSignInState(state, bool) {
             state.isSignIn = bool;
         },
 
-        //设置菜单树
         setMenuTree(state, bool) {
             state.menuTree = bool;
         },
@@ -24,16 +20,12 @@ const store = new Vuex.Store({
 
     getters:{
 
-        //获取菜单树
         getMenuTree(state) {
             return state.menuTree;
         },
 
-        //获取登录状态
         getSignIn(state) {
             return state.isSignIn;
         }
     },
 });
-
-export default store;

@@ -61,7 +61,7 @@
             return {
                 tableData: [],
                 pageHtml: '',
-                formFormat: {},
+                formFormat: [],
             }
         },
 
@@ -97,14 +97,11 @@
         methods: {
 
             tableStyle({row, column, rowIndex, columnIndex}) {
-
-                //等级
                 if(column.label === this.$t('admin.sysLog.level')) {
-
                     switch (row.level) {
-                        case '0': { return 'background:#009688; color:#fff!important;'; }
-                        case '1': { return 'background:#FFB800; color:#fff!important;'; }
-                        case '2': { return 'background:#e4393c; color:#fff!important;'; }
+                        case '0': { return { 'background':'#009688', 'color':'#fff!important' }; }
+                        case '1': { return { 'background':'#FFB800', 'color':'#fff!important' }; }
+                        case '2': { return { 'background':'#e4393c', 'color':'#fff!important' }; }
                     }
                 }
             },

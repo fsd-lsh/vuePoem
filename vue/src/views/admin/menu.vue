@@ -3,7 +3,7 @@
     <div id="menu">
         <vp-admin>
             <el-card class="box-card">
-                <el-button @click="newMenuFlag = !newMenuFlag" icon="fa fa-bars" type="primary" size="mini">&nbsp;{{$t('admin.menu.add')}}</el-button>
+                <el-button @click="newMenuFlag = !newMenuFlag" type="primary" size="small"><i class="fa fa-bars">&nbsp;</i>{{$t('admin.menu.add')}}</el-button>
                 <el-table
                     :data="tableData"
                     style="width: 100%;margin-bottom: 20px;"
@@ -12,7 +12,7 @@
                     :highlight-current-row="true"
                     stripe
                     :cell-style="tableStyle"
-                    size="mini"
+                    size="small"
                     default-expand-all
                     :tree-props="{children: 'children', hasChildren: 'hasChildren'}">
                     <el-table-column
@@ -26,9 +26,9 @@
                         width="220"
                         fixed="left"
                         :label="$t('admin.menu.operation')">
-                        <template slot-scope="scope">
+                        <template #default="scope">
                             <el-button
-                                size="mini"
+                                size="small"
                                 type="primary"
                                 :title="$t('admin.menu.edit')"
                                 @click="editMenuNow(scope)">
@@ -36,7 +36,7 @@
                             </el-button>
                             <el-button
                                 v-if="scope.row.status === '1'"
-                                size="mini"
+                                size="small"
                                 type="warning"
                                 :title="$t('admin.menu.stop')"
                                 :disabled="scope.row.lock === $t('admin.menu.locked')"
@@ -45,7 +45,7 @@
                             </el-button>
                             <el-button
                                 v-if="scope.row.status === '2'"
-                                size="mini"
+                                size="small"
                                 type="success"
                                 :title="$t('admin.menu.open')"
                                 :disabled="scope.row.lock === $t('admin.menu.locked')"
@@ -53,7 +53,7 @@
                                 <i class="fa fa-user-times">&nbsp;{{$t('admin.menu.open')}}</i>
                             </el-button>
                             <el-button
-                                size="mini"
+                                size="small"
                                 type="danger"
                                 :title="$t('admin.menu.del')"
                                 :disabled="scope.row.lock === $t('admin.menu.locked')"
@@ -79,7 +79,7 @@
                         :label="$t('admin.menu.icon')"
                         sortable
                         width="100">
-                        <template slot-scope="scope">
+                        <template #default="scope">
                             <i v-if="scope.row.icon" :class="scope.row.icon"></i>
                             <i v-if="!scope.row.icon">-</i>
                         </template>
@@ -126,7 +126,7 @@
             <!--添加-->
             <el-dialog
                 :title="$t('admin.menu.add')"
-                :visible.sync="newMenuFlag"
+                v-model="newMenuFlag"
                 width="50%">
                 <el-form ref="form" :model="form" label-width="100px" size="small">
                     <el-form-item :label="$t('admin.menu.name')">
@@ -202,7 +202,7 @@
                             style="width:100%"
                             :placeholder="$t('admin.public.selectMenu')">
                             <el-option
-                                v-for="(item, key) in openWayConfig"
+                                v-for="item in openWayConfig"
                                 :key="item"
                                 :label="item"
                                 :value="item">
@@ -218,16 +218,18 @@
                         </el-input>
                     </el-form-item>
                 </el-form>
-                <span slot="footer" class="dialog-footer">
-                    <el-button size="mini" @click="newMenuFlag = false">{{$t('admin.menu.cancel')}}</el-button>
-                    <el-button size="mini" type="primary" @click="addMenu">{{$t('admin.menu.save')}}</el-button>
-                </span>
+                <template #footer>
+                    <span class="dialog-footer">
+                        <el-button size="small" @click="newMenuFlag = false">{{$t('admin.menu.cancel')}}</el-button>
+                        <el-button size="small" type="primary" @click="addMenu">{{$t('admin.menu.save')}}</el-button>
+                    </span>
+                </template>
             </el-dialog>
 
             <!--编辑-->
             <el-dialog
                 :title="$t('admin.menu.edit')"
-                :visible.sync="editMenuFlag"
+                v-model="editMenuFlag"
                 width="50%">
                 <el-form ref="editForm" :model="editForm" label-width="100px" size="small">
                     <el-form-item :label="$t('admin.menu.name')">
@@ -303,7 +305,7 @@
                             style="width:100%"
                             :placeholder="$t('admin.public.selectMenu')">
                             <el-option
-                                v-for="(item, key) in openWayConfig"
+                                v-for="item in openWayConfig"
                                 :key="item"
                                 :label="item"
                                 :value="item">
@@ -319,10 +321,12 @@
                         </el-input>
                     </el-form-item>
                 </el-form>
-                <span slot="footer" class="dialog-footer">
-                    <el-button size="mini" @click="editMenuFlag = false">{{$t('admin.menu.cancel')}}</el-button>
-                    <el-button size="mini" type="primary" @click="saveMenu">{{$t('admin.menu.save')}}</el-button>
-                </span>
+                <template #footer>
+                    <span class="dialog-footer">
+                        <el-button size="small" @click="editMenuFlag = false">{{$t('admin.menu.cancel')}}</el-button>
+                        <el-button size="small" type="primary" @click="saveMenu">{{$t('admin.menu.save')}}</el-button>
+                    </span>
+                </template>
             </el-dialog>
         </vp-admin>
     </div>
@@ -367,13 +371,11 @@
         },
 
         created() {
-
             this.loadLists();
         },
 
         methods: {
 
-            //加载列表
             loadLists() {
                 let that = this;
                 this.poemRequest({
@@ -392,11 +394,8 @@
                 });
             },
 
-            //打开编辑
             editMenuNow(s) {
-
                 this.editMenuFlag = true;
-
                 this.poemRequest({
                     type: 'post',
                     url: '/admin/menu?api=load',
@@ -411,9 +410,7 @@
                 });
             },
 
-            //添加菜单
             addMenu() {
-
                 this.poemRequest({
                     type: 'post',
                     url: '/admin/menu?api=add',
@@ -433,9 +430,7 @@
                 });
             },
 
-            //保存菜单
             saveMenu() {
-
                 this.poemRequest({
                     type: 'post',
                     url: '/admin/menu?api=save',
@@ -455,11 +450,8 @@
                 });
             },
 
-            //变更状态
             menuChange(status, s) {
-
                 let ids = [];
-
                 if(s === undefined) {
                     if(this.tableSelection.length === 0) {
                         this.$notify({message:this.$t('admin.public.checkRec'), type:'warning'});
@@ -472,12 +464,10 @@
                 }else {
                     ids.push(s.row.id);
                 }
-
                 if(ids.length === 0) {
                     this.$message({ message:this.$t('admin.public.checkRec'), type:'warning' });
                     return false;
                 }
-
                 this.poemRequest({
                     type: 'post',
                     url: '/admin/menu?api=status_change',
@@ -497,36 +487,29 @@
                 });
             },
 
-            //列表行颜色切换
             tableStyle({row, column, rowIndex, columnIndex}) {
-
-                //状态
                 if(column.label === this.$t('admin.menu.status')) {
                     if(row.status_mean === this.$t('admin.menu.open')) {
-                        return 'background:#009688; color:#fff!important;';
+                        return { 'background':'#009688', 'color':'#fff!important' };
                     }
                     if(row.status_mean === this.$t('admin.menu.stop')) {
-                        return 'background:#FFB800; color:#fff!important;';
+                        return { 'background':'#FFB800', 'color':'#fff!important' };
                     }
                 }
-
-                //锁
                 if(column.label === this.$t('admin.menu.lock')) {
                     if(row.lock === this.$t('admin.menu.unlock')) {
-                        return 'background:#009688; color:#fff!important;';
+                        return { 'background':'#009688', 'color':'#fff!important' };
                     }
                     if(row.lock === this.$t('admin.menu.locked')) {
-                        return 'background:#666; color:#fff!important;';
+                        return { 'background':'#666', 'color':'#fff!important' };
                     }
                 }
-
-                //显性
                 if(column.label === this.$t('admin.menu.display')) {
                     if(row.show === this.$t('admin.menu.show')) {
-                        return 'background:#009688; color:#fff!important;';
+                        return { 'background':'#009688', 'color':'#fff!important' };
                     }
                     if(row.show === this.$t('admin.menu.hide')) {
-                        return 'background:#666; color:#fff!important;';
+                        return { 'background':'#666', 'color':'#fff!important' };
                     }
                 }
             },
@@ -535,12 +518,6 @@
 </script>
 
 <style lang="less" scoped>
-
-    #menu {
-
-        > .box-card {}
-    }
-
     .el-table__row .cell {
         color:unset;
     }

@@ -2,11 +2,11 @@
 
     <el-dialog
         :title="$t('admin.userInfo.modAccountInfo')"
-        :visible.sync="dialogVisible"
+        v-model="dialogVisible"
         width="45%"
         @close="closeHandle"
         center>
-        <el-form ref="form" :model="userInfo" label-width="140px" size="mini">
+        <el-form ref="form" :model="userInfo" label-width="140px" size="small">
             <el-form-item :label="$t('admin.userInfo.account')">
                 <el-input v-model="userInfo.name"></el-input>
             </el-form-item>
@@ -40,10 +40,13 @@
                 <el-input v-model="userInfo.utime" disabled></el-input>
             </el-form-item>
         </el-form>
-        <span slot="footer" class="dialog-footer">
-            <el-button size="mini" @click="dialogVisible = false">{{$t('admin.public.cancel')}}</el-button>
-            <el-button size="mini" type="primary" @click="saveUserInfo">{{$t('admin.userInfo.save')}}</el-button>
-        </span>
+        <template #footer>
+            <span class="dialog-footer">
+                <el-button size="small" @click="dialogVisible = false">{{$t('admin.public.cancel')}}</el-button>
+                <el-button size="small" type="primary" @click="saveUserInfo">{{$t('admin.userInfo.save')}}</el-button>
+            </span>
+        </template>
+
     </el-dialog>
 </template>
 

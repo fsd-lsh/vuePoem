@@ -86,14 +86,11 @@
         },
 
         created() {
-
-            //加载面板数据
             this.loadDash();
         },
 
         methods: {
 
-            //加载面板数据
             loadDash() {
                 this.poemRequest({
                     type: 'post',
@@ -109,7 +106,6 @@
                 });
             },
 
-            //跳转统计状态
             goStatus(flag, status) {
 
                 if(this.dashKeys.length === 0) {

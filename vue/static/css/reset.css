@@ -36,4 +36,11 @@ button.el-button.el-button--primary { background:var(--main-color)!important; bo
 .el-input.is-active .el-input__inner,
 .el-input__inner:focus { border-color:var(--main-color)!important; }
 .el-menu--vertical > ul > li > ul > li { line-height:32px; height:32px; font-size:.8rem; }
+.el-menu-item-group__title { padding:0!important; }
 div.cell > button { padding:4px 6px; }
+.pull-right { float:right!important; }
+.router_animate-enter-active { animation:slideInLeft 0.5s; }
+.router_animate-leave-active { animation:slideOutLeft 0.3s; }
+#nprogress .bar { background:var(--main-color)!important; height:2px!important; }
+#nprogress .peg { box-shadow: 0 0 10px var(--main-color), 0 0 5px var(--main-color)!important; }
+#nprogress .spinner-icon { border-top-color:var(--main-color)!important; border-left-color:var(--main-color)!important; }

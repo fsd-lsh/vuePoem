@@ -8,7 +8,7 @@
                     <el-card class="box-card">
                         <p>{{$t('admin.system.info')}}</p>
                         <ul>
-                            <li v-for="(item, key) in systemInfo.sys">
+                            <li v-for="(item, key) in systemInfo.sys" :key="key">
                                 {{key}}: {{item}}
                             </li>
                         </ul>
@@ -19,7 +19,7 @@
                     <el-card class="box-card">
                         <p>CPU</p>
                         <ul>
-                            <li v-for="(item, key) in systemInfo.cpu">
+                            <li v-for="(item, key) in systemInfo.cpu" :key="key">
                                 {{item}}
                             </li>
                         </ul>
@@ -30,7 +30,7 @@
                     <el-card class="box-card">
                         <p>{{$t('admin.system.memory')}}</p>
                         <ul>
-                            <li v-for="(item, key) in systemInfo.ram">
+                            <li v-for="(item, key) in systemInfo.ram" :key="key">
                                 {{item}}
                             </li>
                         </ul>
@@ -41,7 +41,7 @@
                     <el-card class="box-card">
                         <p>{{$t('admin.system.disk')}}</p>
                         <ul>
-                            <li v-for="(item, key) in systemInfo.hdd">
+                            <li v-for="(item, key) in systemInfo.hdd" :key="key">
                                 {{item}}
                             </li>
                         </ul>
@@ -101,7 +101,7 @@
             },
         },
 
-        destroyed() {
+        unmounted() {
             clearInterval(this.timer);
         },
     };

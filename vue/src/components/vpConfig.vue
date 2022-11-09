@@ -1,82 +1,83 @@
 <template>
-    <el-drawer
-        :visible.sync="drawer"
-        :show-close="true"
-        :before-close="closeHandle"
-        :modal="false"
-        :with-header="false">
-        <el-row
-            id="config-panel"
-            :gutter="20">
+    <div>
+        <el-drawer
+            v-model="drawer"
+            :show-close="true"
+            :before-close="closeHandle"
+            :modal="true"
+            :with-header="false">
+            <el-row
+                id="config-panel"
+                :gutter="20">
 
-            <!--Set theme-->
-            <el-col :span="24">
-                <el-divider>{{$t('admin.public.setTheme')}}</el-divider>
-            </el-col>
-            <el-col
-                :span="8"
-                :key="key"
-                v-for="(theme, key) in themeList"
-                @click.native="themeHandleChange(theme)"
-                class="config-panel-item">
-                <div
-                    :class="[
-                        'grid-content',
-                        theme,
-                    ]">
-                    <div class="top"></div>
-                    <div class="left"></div>
-                    <div class="right"></div>
-                    <b class="fa fa-check-circle" v-if="(nowTheme === theme)"/>
-                    <b class="fa fa-trash" @click="delCustomTheme(theme)" v-if="(nowTheme !== theme) && theme.slice(0, 6) === 'custom'"/>
-                </div>
-            </el-col>
+                <!--Set theme-->
+                <el-col :span="24">
+                    <el-divider>{{$t('admin.public.setTheme')}}</el-divider>
+                </el-col>
+                <el-col
+                    :span="8"
+                    :key="key"
+                    v-for="(theme, key) in themeList"
+                    @click="themeHandleChange(theme)"
+                    class="config-panel-item">
+                    <div
+                        :class="[
+                            'grid-content',
+                            theme,
+                        ]">
+                        <div class="top"></div>
+                        <div class="left"></div>
+                        <div class="right"></div>
+                        <b class="fa fa-check-circle" v-if="(nowTheme === theme)"/>
+                        <b class="fa fa-trash" @click="delCustomTheme(theme)" v-if="(nowTheme !== theme) && theme.slice(0, 6) === 'custom'"/>
+                    </div>
+                </el-col>
 
-            <!--Custom theme-->
-            <el-col :span="24">
-                <el-divider>{{$t('admin.public.customTheme')}}</el-divider>
-            </el-col>
-            <el-col
-                :span="24"
-                class="custom-theme">
-                <el-form :model="customForm" label-width="180px" size="mini">
+                <!--Custom theme-->
+                <el-col :span="24">
+                    <el-divider>{{$t('admin.public.customTheme')}}</el-divider>
+                </el-col>
+                <el-col
+                    :span="24"
+                    class="custom-theme">
+                    <el-form :model="customForm" label-width="120px" size="small">
 
-                    <el-form-item :label="$t('admin.theme.titleColor')">
-                        <div
-                            class="color-show"
-                            :style="{ background:customForm.titleColor }"
-                            @click="colorPickerFlag.titleColor = true"/>
-                        <el-input class="color-input" v-model="customForm.titleColor" disabled/>
-                        <color-picker
-                            type="linear"
-                            :showClose="true"
-                            @changeColor="ccTitleColor"
-                            :pColor="{
-                                hex: customForm.titleColor,
-                                hex8: customForm.titleColor,
-                                color: hexToRgba(customForm.titleColor).rgba,
-                                rgba: {
-                                    r: hexToRgba(customForm.titleColor).r,
-                                    g: hexToRgba(customForm.titleColor).g,
-                                    b: hexToRgba(customForm.titleColor).b,
-                                    a: hexToRgba(customForm.titleColor).a,
-                                },
-                            }"
-                            :titleConfig="{show:true,text:$t('admin.theme.selectColor')}"
-                            v-model="colorPickerFlag.titleColor"/>
-                    </el-form-item>
+                        <el-form-item :label="$t('admin.theme.titleColor')">
+                            <div
+                                class="color-show"
+                                :style="{ background:customForm.titleColor }"
+                                @click="colorPickerFlag.titleColor = true"/>
+                            <el-input class="color-input" v-model="customForm.titleColor" disabled/>
+                            <color-picker
+                                type="linear"
+                                :showClose="true"
+                                @changeColor="ccTitleColor"
+                                :pColor="{
+                                    hex: customForm.titleColor,
+                                    hex8: customForm.titleColor,
+                                    color: hexToRgba(customForm.titleColor).rgba,
+                                    rgba: {
+                                        r: hexToRgba(customForm.titleColor).r,
+                                        g: hexToRgba(customForm.titleColor).g,
+                                        b: hexToRgba(customForm.titleColor).b,
+                                        a: hexToRgba(customForm.titleColor).a,
+                                    },
+                                }"
+                                :titleConfig="{show:true,text:$t('admin.theme.selectColor')}"
+                                v-model="colorPickerFlag.titleColor"/>
+                        </el-form-item>
 
-                    <el-form-item :label="$t('admin.theme.mainColor')">
-                        <div
-                            class="color-show"
-                            :style="{ background:customForm.mainColor }"
-                            @click="colorPickerFlag.mainColor = true"/>
-                        <el-input class="color-input" v-model="customForm.mainColor" disabled/>
-                        <color-picker
-                            type="linear"
-                            :showClose="true"
-                            @changeColor="ccMainColor"
-                            :pColor="{
+                        <el-form-item :label="$t('admin.theme.mainColor')">
+                            <div
+                                class="color-show"
+                                :style="{ background:customForm.mainColor }"
+                                @click="colorPickerFlag.mainColor = true"/>
+                            <el-input class="color-input" v-model="customForm.mainColor" disabled/>
+                            <color-picker
+                                type="linear"
+                                :showClose="true"
+                                @changeColor="ccMainColor"
+                                :pColor="{
                                 hex: customForm.mainColor,
                                 hex8: customForm.mainColor,
                                 color: hexToRgba(customForm.mainColor).rgba,
@@ -89,19 +90,19 @@
                             }"
                             :titleConfig="{show:true,text:$t('admin.theme.selectColor')}"
                             v-model="colorPickerFlag.mainColor"/>
-                    </el-form-item>
+                        </el-form-item>
 
-                    <el-form-item :label="$t('admin.theme.logoBgColor')">
-                        <div
-                            class="color-show"
-                            :style="{ background:customForm.logoBgColor }"
-                            @click="colorPickerFlag.logoBgColor = true"/>
-                        <el-input class="color-input" v-model="customForm.logoBgColor" disabled/>
-                        <color-picker
-                            type="linear"
-                            :showClose="true"
-                            @changeColor="ccLogoBgColor"
-                            :pColor="{
+                        <el-form-item :label="$t('admin.theme.logoBgColor')">
+                            <div
+                                class="color-show"
+                                :style="{ background:customForm.logoBgColor }"
+                                @click="colorPickerFlag.logoBgColor = true"/>
+                            <el-input class="color-input" v-model="customForm.logoBgColor" disabled/>
+                            <color-picker
+                                type="linear"
+                                :showClose="true"
+                                @changeColor="ccLogoBgColor"
+                                :pColor="{
                                 hex: customForm.logoBgColor,
                                 hex8: customForm.logoBgColor,
                                 color: hexToRgba(customForm.logoBgColor).rgba,
@@ -114,19 +115,19 @@
                             }"
                             :titleConfig="{show:true,text:$t('admin.theme.selectColor')}"
                             v-model="colorPickerFlag.logoBgColor"/>
-                    </el-form-item>
+                        </el-form-item>
 
-                    <el-form-item :label="$t('admin.theme.menuBgColor')">
-                        <div
-                            class="color-show"
-                            :style="{ background:customForm.menuBgColor }"
-                            @click="colorPickerFlag.menuBgColor = true"/>
-                        <el-input class="color-input" v-model="customForm.menuBgColor" disabled/>
-                        <color-picker
-                            type="linear"
-                            :showClose="true"
-                            @changeColor="ccMenuBgColor"
-                            :pColor="{
+                        <el-form-item :label="$t('admin.theme.menuBgColor')">
+                            <div
+                                class="color-show"
+                                :style="{ background:customForm.menuBgColor }"
+                                @click="colorPickerFlag.menuBgColor = true"/>
+                            <el-input class="color-input" v-model="customForm.menuBgColor" disabled/>
+                            <color-picker
+                                type="linear"
+                                :showClose="true"
+                                @changeColor="ccMenuBgColor"
+                                :pColor="{
                                 hex: customForm.menuBgColor,
                                 hex8: customForm.menuBgColor,
                                 color: hexToRgba(customForm.menuBgColor).rgba,
@@ -139,19 +140,19 @@
                             }"
                             :titleConfig="{show:true,text:$t('admin.theme.selectColor')}"
                             v-model="colorPickerFlag.menuBgColor"/>
-                    </el-form-item>
+                        </el-form-item>
 
-                    <el-form-item :label="$t('admin.theme.menuFontNormalColor')">
-                        <div
-                            class="color-show"
-                            :style="{ background:customForm.menuFontNormalColor }"
-                            @click="colorPickerFlag.menuFontNormalColor = true"/>
-                        <el-input class="color-input" v-model="customForm.menuFontNormalColor" disabled/>
-                        <color-picker
-                            type="linear"
-                            :showClose="true"
-                            @changeColor="ccMenuFontNormalColor"
-                            :pColor="{
+                        <el-form-item :label="$t('admin.theme.menuFontNormalColor')">
+                            <div
+                                class="color-show"
+                                :style="{ background:customForm.menuFontNormalColor }"
+                                @click="colorPickerFlag.menuFontNormalColor = true"/>
+                            <el-input class="color-input" v-model="customForm.menuFontNormalColor" disabled/>
+                            <color-picker
+                                type="linear"
+                                :showClose="true"
+                                @changeColor="ccMenuFontNormalColor"
+                                :pColor="{
                                 hex: customForm.menuFontNormalColor,
                                 hex8: customForm.menuFontNormalColor,
                                 color: hexToRgba(customForm.menuFontNormalColor).rgba,
@@ -164,19 +165,19 @@
                             }"
                             :titleConfig="{show:true,text:$t('admin.theme.selectColor')}"
                             v-model="colorPickerFlag.menuFontNormalColor"/>
-                    </el-form-item>
+                        </el-form-item>
 
-                    <el-form-item :label="$t('admin.theme.menuFontFocusColor')">
-                        <div
-                            class="color-show"
-                            :style="{ background:customForm.menuFontFocusColor }"
-                            @click="colorPickerFlag.menuFontFocusColor = true"/>
-                        <el-input class="color-input" v-model="customForm.menuFontFocusColor" disabled/>
-                        <color-picker
-                            type="linear"
-                            :showClose="true"
-                            @changeColor="ccMenuFontFocusColor"
-                            :pColor="{
+                        <el-form-item :label="$t('admin.theme.menuFontFocusColor')">
+                            <div
+                                class="color-show"
+                                :style="{ background:customForm.menuFontFocusColor }"
+                                @click="colorPickerFlag.menuFontFocusColor = true"/>
+                            <el-input class="color-input" v-model="customForm.menuFontFocusColor" disabled/>
+                            <color-picker
+                                type="linear"
+                                :showClose="true"
+                                @changeColor="ccMenuFontFocusColor"
+                                :pColor="{
                                 hex: customForm.menuFontFocusColor,
                                 hex8: customForm.menuFontFocusColor,
                                 color: hexToRgba(customForm.menuFontFocusColor).rgba,
@@ -189,19 +190,19 @@
                             }"
                             :titleConfig="{show:true,text:$t('admin.theme.selectColor')}"
                             v-model="colorPickerFlag.menuFontFocusColor"/>
-                    </el-form-item>
+                        </el-form-item>
 
-                    <el-form-item :label="$t('admin.theme.menuFontActiveColor')">
-                        <div
-                            class="color-show"
-                            :style="{ background:customForm.menuFontActiveColor }"
-                            @click="colorPickerFlag.menuFontActiveColor = true"/>
-                        <el-input class="color-input" v-model="customForm.menuFontActiveColor" disabled/>
-                        <color-picker
-                            type="linear"
-                            :showClose="true"
-                            @changeColor="ccMenuFontActiveColor"
-                            :pColor="{
+                        <el-form-item :label="$t('admin.theme.menuFontActiveColor')">
+                            <div
+                                class="color-show"
+                                :style="{ background:customForm.menuFontActiveColor }"
+                                @click="colorPickerFlag.menuFontActiveColor = true"/>
+                            <el-input class="color-input" v-model="customForm.menuFontActiveColor" disabled/>
+                            <color-picker
+                                type="linear"
+                                :showClose="true"
+                                @changeColor="ccMenuFontActiveColor"
+                                :pColor="{
                                 hex: customForm.menuFontActiveColor,
                                 hex8: customForm.menuFontActiveColor,
                                 color: hexToRgba(customForm.menuFontActiveColor).rgba,
@@ -214,36 +215,41 @@
                             }"
                             :titleConfig="{show:true,text:$t('admin.theme.selectColor')}"
                             v-model="colorPickerFlag.menuFontActiveColor"/>
-                    </el-form-item>
-                </el-form>
+                        </el-form-item>
+                    </el-form>
 
-                <el-button @click="addCustomTheme" type="primary" size="mini">{{$t('admin.theme.addCustomTheme')}}</el-button>
-                <el-button @click="exportCustomTheme" plain size="mini">{{$t('admin.theme.exportCSS')}}</el-button>
-                <el-button @click="resetCustomTheme" plain size="mini">{{$t('admin.public.reset')}}</el-button>
-            </el-col>
-        </el-row>
+                    <div class="btn-group">
+                        <el-button @click="addCustomTheme" type="primary" size="small">{{$t('admin.theme.addCustomTheme')}}</el-button>
+                        <el-button @click="exportCustomTheme" plain size="small">{{$t('admin.theme.exportCSS')}}</el-button>
+                        <el-button @click="resetCustomTheme" plain size="small">{{$t('admin.public.reset')}}</el-button>
+                    </div>
+                </el-col>
+            </el-row>
 
-        <el-dialog
-            :title="$t('admin.theme.exportCSS')"
-            :visible.sync="exportCSSFlag"
-            :modal="false"
-            width="30%">
-            <span>{{$t('admin.theme.exportCSS')}}</span>
-            <el-input
-                type="textarea"
-                :rows="11"
-                :placeholder="$t('admin.public.pleaseInput')"
-                v-model="exportCSSArticle">
-            </el-input>
-            <span slot="footer" class="dialog-footer">
-                <el-button size="mini" @click="exportCSSFlag = false">{{$t('admin.public.cancel')}}</el-button>
-            </span>
-        </el-dialog>
-    </el-drawer>
+            <el-dialog
+                :title="$t('admin.theme.exportCSS')"
+                v-model="exportCSSFlag"
+                :modal="false"
+                width="30%">
+                <span>{{$t('admin.theme.exportCSS')}}</span>
+                <el-input
+                    type="textarea"
+                    :rows="11"
+                    :placeholder="$t('admin.public.pleaseInput')"
+                    v-model="exportCSSArticle">
+                </el-input>
+                <template #footer>
+                    <span class="dialog-footer">
+                        <el-button size="small" @click="exportCSSFlag = false">{{$t('admin.public.cancel')}}</el-button>
+                    </span>
+                </template>
+            </el-dialog>
+        </el-drawer>
+    </div>
 </template>
 
 <script>
-import colorPicker from 'vue2-color-picker-gradient';
+import colorPicker from 'vue3-color-picker-gradient';
 import helper from "../mixins/helper";
 import theme from "../mixins/theme";
 
@@ -435,9 +441,7 @@ export default {
     },
 
     watch: {
-
         drawer(v) {
-            this.drawer = v;
             if(v) {
                 this.resetCustomTheme();
                 this.refTemp();
@@ -556,13 +560,21 @@ export default {
             .color-input {
                 display: inline-block;
                 align-self: center;
-                width: 88%;
+                width: 84%!important;
             }
 
             .color_picker_wrapper {
                 z-index: 99999;
                 position: absolute;
             }
+        }
+
+        :deep(.el-input__wrapper) {
+            width: 100%!important;
+        }
+
+        .btn-group {
+            margin: 32px 0 0 0;
         }
     }
 }

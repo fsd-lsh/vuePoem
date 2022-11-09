@@ -5,16 +5,16 @@
             <el-card class="box-card">
                 <vp-table-search @reload="loadLists" @submit="search" :formFormat="formFormat" :pageLimit="true">
                     <template v-slot:btn>
-                        <el-button @click="newRoleFlag = !newRoleFlag" icon="fa fa-user-plus" type="primary" size="mini">&nbsp;{{$t('admin.roles.add')}}</el-button>
-                        <el-button @click="roleChange(2)" icon="fa fa-toggle-on" type="warning" size="mini">&nbsp;{{$t('admin.roles.batch')}}{{$t('admin.roles.stop')}}</el-button>
-                        <el-button @click="roleChange(1)" icon="fa fa-toggle-off" type="success" size="mini">&nbsp;{{$t('admin.roles.batch')}}{{$t('admin.roles.open')}}</el-button>
-                        <el-button @click="roleChange(0)" icon="fa fa-user-times" type="danger" size="mini">&nbsp;{{$t('admin.roles.batch')}}{{$t('admin.roles.del')}}</el-button>
+                        <el-button @click="newRoleFlag = !newRoleFlag" type="primary" size="small"><i class="fa fa-user-plus">&nbsp;</i>{{$t('admin.roles.add')}}</el-button>
+                        <el-button @click="roleChange(2)" type="warning" size="small"><i class="fa fa-toggle-on">&nbsp;</i>{{$t('admin.roles.batch')}}{{$t('admin.roles.stop')}}</el-button>
+                        <el-button @click="roleChange(1)" type="success" size="small"><i class="fa fa-toggle-off">&nbsp;</i>{{$t('admin.roles.batch')}}{{$t('admin.roles.open')}}</el-button>
+                        <el-button @click="roleChange(0)" type="danger" size="small"><i class="fa fa-user-times">&nbsp;</i>{{$t('admin.roles.batch')}}{{$t('admin.roles.del')}}</el-button>
                     </template>
                 </vp-table-search>
                 <el-table
                     :data="tableData"
                     stripe
-                    size="mini"
+                    size="small"
                     fit
                     :highlight-current-row="true"
                     :cell-style="tableStyle"
@@ -30,16 +30,16 @@
                         width="220"
                         fixed="left"
                         :label="$t('admin.roles.operation')">
-                        <template slot-scope="scope">
+                        <template #default="scope">
                             <el-button
-                                size="mini"
+                                size="small"
                                 type="primary"
                                 :title="$t('admin.roles.edit')"
                                 @click="editRoleNow(scope)">
                                 <i class="fa fa-pencil">&nbsp;{{$t('admin.roles.edit')}}</i>
                             </el-button>
                             <el-button
-                                size="mini"
+                                size="small"
                                 type="warning"
                                 :title="$t('admin.roles.stop')"
                                 v-if="scope.row.status == 1"
@@ -48,7 +48,7 @@
                                 <i class="fa fa-toggle-on">&nbsp;{{$t('admin.roles.stop')}}</i>
                             </el-button>
                             <el-button
-                                size="mini"
+                                size="small"
                                 type="success"
                                 :title="$t('admin.roles.open')"
                                 v-if="scope.row.status == 2"
@@ -57,7 +57,7 @@
                                 <i class="fa fa-toggle-off">&nbsp;{{$t('admin.roles.open')}}</i>
                             </el-button>
                             <el-button
-                                size="mini"
+                                size="small"
                                 type="danger"
                                 :title="$t('admin.roles.del')"
                                 :disabled="scope.row.name == 'admin'"
@@ -83,11 +83,11 @@
                         prop="menu_ids"
                         sortable
                         :label="$t('admin.roles.power')">
-                        <template slot-scope="scope">
+                        <template #default="scope">
                             <el-tag
                                 v-for="m_id in scope.row.menu_ids"
                                 :key="m_id"
-                                size="mini"
+                                size="small"
                                 :type="'info'"
                                 style="margin:2px 5px;"
                                 effect="dark">
@@ -120,7 +120,7 @@
             <!--添加角色模态框-->
             <el-dialog
                 :title="$t('admin.roles.add')"
-                :visible.sync="newRoleFlag"
+                v-model="newRoleFlag"
                 width="50%">
                 <el-form ref="form" :model="form" label-width="100px" size="small">
                     <el-form-item :label="$t('admin.roles.name')">
@@ -136,16 +136,18 @@
                         </el-tree>
                     </el-form-item>
                 </el-form>
-                <span slot="footer" class="dialog-footer">
-                    <el-button size="mini" @click="newRoleFlag = false">{{$t('admin.roles.cancel')}}</el-button>
-                    <el-button size="mini" type="primary" @click="createRoleNow">{{$t('admin.roles.save')}}</el-button>
-                </span>
+                <template #footer>
+                    <span class="dialog-footer">
+                        <el-button size="small" @click="newRoleFlag = false">{{$t('admin.roles.cancel')}}</el-button>
+                        <el-button size="small" type="primary" @click="createRoleNow">{{$t('admin.roles.save')}}</el-button>
+                    </span>
+                </template>
             </el-dialog>
 
             <!--编辑角色模态框-->
             <el-dialog
                 :title="$t('admin.roles.edit')"
-                :visible.sync="editRoleFlag"
+                v-model="editRoleFlag"
                 width="50%">
                 <el-form ref="editForm" :model="editForm" label-width="100px" size="small">
                     <el-form-item :label="$t('admin.roles.name')">
@@ -163,10 +165,12 @@
                         </el-tree>
                     </el-form-item>
                 </el-form>
-                <span slot="footer" class="dialog-footer">
-                    <el-button size="mini" @click="editRoleFlag = false">{{$t('admin.roles.cancel')}}</el-button>
-                    <el-button size="mini" type="primary" @click="saveRole">{{$t('admin.roles.save')}}</el-button>
-                </span>
+                <template #footer>
+                    <span class="dialog-footer">
+                        <el-button size="small" @click="editRoleFlag = false">{{$t('admin.roles.cancel')}}</el-button>
+                        <el-button size="small" type="primary" @click="saveRole">{{$t('admin.roles.save')}}</el-button>
+                    </span>
+                </template>
             </el-dialog>
         </vp-admin>
     </div>
@@ -250,9 +254,9 @@
             tableStyle({row, column, rowIndex, columnIndex}) {
                 if(column.label === this.$t('admin.roles.status')) {
                     switch (row.status) {
-                        case '0': { return 'background:#e4393c; color:#fff!important;'; }
-                        case '1': { return 'background:#009688; color:#fff!important;'; }
-                        case '2': { return 'background:#FFB800; color:#fff!important;'; }
+                        case '0': { return {'background':'#e4393c', 'color':'#fff!important'}; }
+                        case '1': { return {'background':'#009688', 'color':'#fff!important'}; }
+                        case '2': { return {'background':'#FFB800', 'color':'#fff!important'}; }
                     }
                 }
             },

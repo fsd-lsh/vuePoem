@@ -4,14 +4,14 @@
 
         <!--table-->
         <el-card class="box-card">
-            <el-button @click="openSaveDiaLog('new')" icon="fa fa-user-plus" type="primary" size="mini" v-if="this.dialog.length > 0">&nbsp;{{$t('admin.user.add')}}</el-button>
-            <el-button @click="statusChange(2)" change-type="0" icon="fa fa-toggle-on" type="warning" size="mini">&nbsp;{{$t('admin.user.batch')}}{{$t('admin.user.stop')}}</el-button>
-            <el-button @click="statusChange(1)" icon="fa fa-toggle-off" type="success" size="mini">&nbsp;{{$t('admin.user.batch')}}{{$t('admin.user.open')}}</el-button>
-            <el-button @click="statusChange(0)" icon="fa fa-user-times" type="danger" size="mini">&nbsp;{{$t('admin.user.batch')}}{{$t('admin.user.del')}}</el-button>
+            <el-button @click="openSaveDiaLog('new')" type="primary" size="mini" v-if="this.dialog.length > 0"><i class="fa fa-user-plus">&nbsp;</i>{{$t('admin.user.add')}}</el-button>
+            <el-button @click="statusChange(2)" change-type="0" type="warning" size="mini"><i class="fa fa-toggle-on">&nbsp;</i>{{$t('admin.user.batch')}}{{$t('admin.user.stop')}}</el-button>
+            <el-button @click="statusChange(1)" type="success" size="mini"><i class="fa fa-toggle-off">&nbsp;</i>{{$t('admin.user.batch')}}{{$t('admin.user.open')}}</el-button>
+            <el-button @click="statusChange(0)" type="danger" size="mini"><i class="fa fa-user-times">&nbsp;</i>{{$t('admin.user.batch')}}{{$t('admin.user.del')}}</el-button>
             <el-table
                 :data="tableData"
                 stripe
-                size="mini"
+                size="small"
                 fit
                 :highlight-current-row="true"
                 :cell-style="tableStyle"
@@ -27,7 +27,7 @@
                     min-width="220"
                     fixed="left"
                     :label="$t('admin.user.operation')">
-                    <template slot-scope="scope">
+                    <template #default="scope">
                         <el-button
                             v-if="scope.row.viewShow === 1"
                             size="mini"
@@ -90,11 +90,11 @@
         <el-dialog
             v-if="dialogConfig.length !== 0"
             :title="diaLogTitle"
-            :visible.sync="diaLogSaveFlag"
+            v-model="diaLogSaveFlag"
             width="40%">
             <el-form ref="form" label-width="90px" size="small">
 
-                <div v-for="(item, key) in dialogConfig">
+                <div v-for="(item, key) in dialogConfig" :key="key">
 
                     <el-form-item
                         v-if="item.el === 'input'"
@@ -124,23 +124,25 @@
                     </el-form-item>
                 </div>
             </el-form>
-            <span slot="footer" class="dialog-footer">
-                <el-button size="mini" @click="diaLogSaveFlag = false">{{$t('admin.user.cancel')}}</el-button>
-                <el-button size="mini" type="primary" @click="saveDiaLog">{{$t('admin.user.save')}}</el-button>
-            </span>
+            <template #footer>
+                <span class="dialog-footer">
+                    <el-button size="mini" @click="diaLogSaveFlag = false">{{$t('admin.user.cancel')}}</el-button>
+                    <el-button size="mini" type="primary" @click="saveDiaLog">{{$t('admin.user.save')}}</el-button>
+                </span>
+            </template>
         </el-dialog>
 
         <!--模态框（查看）-->
         <el-dialog
             v-if="rowView.viewEnable"
-            :visible.sync="diaLogViewFlag"
+            v-model="diaLogViewFlag"
             width="70%">
             <template>
                 <el-descriptions class="margin-top" :title="$t('admin.public.view')" :column="2" size="small" border>
                     <el-descriptions-item
                         :key="key"
                         v-for="(item, key) in this.column">
-                        <template slot="label">
+                        <template #label>
                             <i :class="{
                                 'fa fa-spinner': (item === 'status'),
                                 'fa fa-clock-o': (item === 'ctime' || item === 'utime'),
@@ -153,9 +155,11 @@
                 </el-descriptions>
                 <slot name="diaLogViewSlot"></slot>
             </template>
-            <span slot="footer" class="dialog-footer">
-                <el-button size="mini" @click="diaLogViewFlag = false">{{$t('admin.user.cancel')}}</el-button>
-            </span>
+            <template #footer>
+                <span class="dialog-footer">
+                    <el-button size="mini" @click="diaLogViewFlag = false">{{$t('admin.user.cancel')}}</el-button>
+                </span>
+            </template>
         </el-dialog>
     </div>
 </template>

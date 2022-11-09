@@ -1,15 +1,13 @@
 <template>
-
-    <draggable
-        id="nav-tabs"
-        v-model="tabs">
+    <div
+        id="nav-tabs">
         <el-tag
             v-for="(item, index) in tabs"
             @click="tabClick(item)"
             @close="tabRemove(item)"
             :key="index"
             effect="plain"
-            size="medium"
+            :disable-transitions="true"
             :class="[
                 'nav-tabs',
                 (focusTab === item.name) ? 'active' : '',
@@ -18,13 +16,12 @@
             :closable="tabs.length !== 1">
             <i :class="item.icon">&nbsp;&nbsp;</i>{{item.title}}
         </el-tag>
-    </draggable>
+    </div>
 </template>
 
 <script>
 
 import navTab from "../mixins/navTab";
-import draggable from "vuedraggable";
 
 export default {
 
@@ -32,7 +29,7 @@ export default {
 
     mixins: [navTab],
 
-    components: {draggable},
+    components: {},
 }
 </script>
 
@@ -56,6 +53,8 @@ export default {
             color: var(--title-color);
             font-size: .8rem;
             font-weight: 700;
+            height: 30px;
+            line-height: 30px;
 
             &.active {
                 background: #fff;
@@ -78,6 +77,10 @@ export default {
                 &:hover {
                     background: var(--title-color)!important;
                 }
+            }
+
+            :deep(.el-tag__content) {
+                font-size: .75rem;
             }
         }
     }

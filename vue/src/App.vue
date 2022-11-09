@@ -1,14 +1,11 @@
 <template>
-
     <div id="app">
-
         <router-view/>
-
         <footer>Design By <a target="_blank" href="https://www.easybhu.cn">Force</a></footer>
     </div>
 </template>
 
-<script>
+<script lang="js">
 
 import helper from "./mixins/helper";
 import theme from "./mixins/theme";

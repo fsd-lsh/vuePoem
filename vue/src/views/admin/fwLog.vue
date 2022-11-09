@@ -14,13 +14,13 @@
                         width="100"
                         fixed="left"
                         :label="$t('admin.fwLog.operation')">
-                        <template slot-scope="scope">
-                            <el-button
-                                size="mini"
-                                type="primary"
-                                @click="showLogDetail(scope)">
-                                <i class="fa fa-eye">&nbsp;{{$t('admin.fwLog.show')}}</i>
-                            </el-button>
+                        <template #default="scope">
+                        <el-button
+                            size="small"
+                            type="primary"
+                            @click="showLogDetail(scope)">
+                            <i class="fa fa-eye">&nbsp;{{$t('admin.fwLog.show')}}</i>
+                        </el-button>
                         </template>
                     </el-table-column>
                     <el-table-column
@@ -38,7 +38,7 @@
                         prop="log_date"
                         sortable
                         :label="$t('admin.fwLog.date')">
-                        <template slot-scope="scope">
+                        <template #default="scope">
                             <i class="el-icon-time"></i>
                             <span style="margin-left: 10px">{{ scope.row.log_date }}</span>
                         </template>
@@ -52,14 +52,14 @@
             </el-card>
             <el-dialog
                 :title="$t('admin.fwLog.logDetail') + ' - ' + (logDetailCount)"
-                :visible.sync="showLog"
+                v-model="showLog"
                 :highlight-current-row="true"
                 top="5vh"
                 width="90%">
                 <el-table
                     id="table-show-log"
                     :data="logDetail"
-                    size="mini"
+                    size="small"
                     :max-height="400"
                     :row-class-name="logStatus"
                     :border="true"
@@ -69,10 +69,10 @@
                         width="100"
                         label="Num"
                         type="index">
-                        <template slot="header" slot-scope="scope">
+                        <template #header>
                             <el-input
                                 v-model="logSearch"
-                                size="mini"
+                                size="small"
                                 :placeholder="$t('admin.public.filter')"/>
                         </template>
                     </el-table-column>
@@ -91,9 +91,11 @@
                         :label="$t('admin.fwLog.detail')">
                     </el-table-column>
                 </el-table>
-                <span slot="footer" class="dialog-footer">
-                    <el-button size="mini" @click="showLog = !showLog">{{$t('admin.fwLog.close')}}</el-button>
-                </span>
+                <template #footer>
+                    <span class="dialog-footer">
+                        <el-button size="small" @click="showLog = !showLog">{{$t('admin.fwLog.close')}}</el-button>
+                    </span>
+                </template>
             </el-dialog>
         </vp-admin>
     </div>

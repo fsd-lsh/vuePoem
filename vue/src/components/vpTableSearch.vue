@@ -7,7 +7,7 @@
                 <el-select
                     v-if="pageLimit"
                     id="page-size"
-                    size="mini"
+                    size="small"
                     @change="pageSizeChange"
                     v-model="formData.pageSize"
                     :placeholder="$t('admin.public.selectMenu')">
@@ -21,16 +21,16 @@
             </div>
             <div class="control">
                 <el-tooltip class="item" effect="dark" :content="(this.searchOpenFlag ? $t('admin.public.close') : $t('admin.public.open')) + $t('admin.public.query')" placement="top-start">
-                    <el-button @click="changeOpenFlag" icon="fa fa-search" circle size="mini"></el-button>
+                    <span><el-button @click="changeOpenFlag" circle size="small"><i class="fa fa-search"/></el-button></span>
                 </el-tooltip>
                 <el-tooltip class="item" effect="dark" :content="$t('admin.public.reset')" placement="top-start">
-                    <el-button @click="reloadTable" icon="fa fa-refresh" circle size="mini"></el-button>
+                    <span><el-button @click="reloadTable" circle size="small"><i class="fa fa-refresh"/></el-button></span>
                 </el-tooltip>
             </div>
         </div>
 
         <div v-if="searchOpenFlag" class="search-form">
-            <el-form :inline="true" :model="formData" class="demo-form-inline" size="mini">
+            <el-form :inline="true" :model="formData" class="demo-form-inline" size="small">
                 <el-form-item
                     v-for="(item, key) in formFormat"
                     :key="key"
@@ -81,7 +81,7 @@ export default {
 
     props: {
         value: false,
-        formFormat: [],
+        formFormat: Array,
         pageLimit: false,
     },
 
@@ -176,7 +176,7 @@ export default {
                 text-align: left;
                 line-height: 26px;
 
-                :deep(#page-size) {
+                :deep(.el-select) {
                     margin: 0 5px 0 0;
                     width: 74px;
                 }

@@ -1,27 +1,24 @@
-import Vue from 'vue';
-import Router from 'vue-router';
+import {createRouter, createWebHashHistory} from 'vue-router';
 import axios from 'axios';
-Vue.use(Router);
+import NProgress from 'nprogress';
+import i18n from '../i18n';
 
-let router = new Router({
-
-    mode:'hash',
-
+const router = createRouter({
+    history: createWebHashHistory(),
     routes: [
-
         {
             path: '/',
             name: 'signIn',
-            component: () => import(/* webpackChunkName: "vuePoem-[request]" */'../views/signIn.vue'),
+            component: () => import('../views/signIn.vue'),
             meta: {
                 title: '',
             },
         },
-    ],
+    ]
 });
 
-const lang = localStorage.getItem('sys-lang');
-axios.get('/admin/menu/load?lang='+lang).then(res => {
+const lang = localStorage.getItem('sys-lang')
+await axios.get('/admin/menu/load?lang='+lang).then(res => {
 
     if(res.data.code === 955) {
         sessionStorage.setItem('store', JSON.stringify({isSignIn:false,menuTree:{}}));
@@ -35,7 +32,7 @@ axios.get('/admin/menu/load?lang='+lang).then(res => {
         let logoInfo = res.data.data.logoInfo;
 
         if(window.sessionStorage.getItem('store')) {
-            let store = JSON.parse(window.sessionStorage.getItem('store'));
+            let store = JSON.parse(<string>window.sessionStorage.getItem('store'));
             store.menuTree.menuInfo = menu;
             window.sessionStorage.setItem('store', JSON.stringify(store));
         }else {
@@ -49,40 +46,57 @@ axios.get('/admin/menu/load?lang='+lang).then(res => {
                         router.addRoute({
                             path: menu[index].child[sub_index].child[sub_index2].href,
                             name: menu[index].child[sub_index].child[sub_index2].name,
-                            //component: resolve => require(['@/views/admin/' + menu[index].child[sub_index].child[sub_index2].name], resolve),
-                            component: () => import(/* webpackChunkName: "vuePoem-[request]" */`../views/admin/${menu[index].child[sub_index].child[sub_index2].name}.vue`),
+                            component: () => import(`../views/admin/${menu[index].child[sub_index].child[sub_index2].name}.vue`),
                             meta: {
                                 title: menu[index].child[sub_index].child[sub_index2].title + ' - ' + logoInfo.title,
                                 icon: menu[index].child[sub_index].icon,
-                            },
+                            }
                         });
                     }
                 }else {
                     router.addRoute({
                         path: menu[index].child[sub_index].href,
                         name: menu[index].child[sub_index].name,
-                        //component: resolve => require(['@/views/admin/' + menu[index].child[sub_index].name], resolve),
-                        component: () => import(/* webpackChunkName: "vuePoem-[request]" */`../views/admin/${menu[index].child[sub_index].name}.vue`),
+                        component: () => import(`../views/admin/${menu[index].child[sub_index].name}.vue`),
                         meta: {
                             title: menu[index].child[sub_index].title + ' - ' + logoInfo.title,
                             icon: menu[index].child[sub_index].icon,
-                        },
+                        }
                     });
                 }
             }
         }
     }
-});
+})
 
 router.beforeEach((to, from, next) => {
-
     if(window.sessionStorage.getItem('store')) {
-        let store = JSON.parse(window.sessionStorage.getItem('store'));
+        let store = JSON.parse(<string>window.sessionStorage.getItem('store'));
         if(to.path === '/' && store.isSignIn === true) {
             router.push('/dash');
         }
     }
+    if (to.meta.title) {
+        // @ts-ignore
+        window.document.title = to.meta.title;
+    }
+    switch (to.path) {
+        case '/': {
+            window.document.title = i18n.global.t('admin.signIn.signIn');
+            break;
+        }
+        case '/userInfo': {
+            window.document.title = i18n.global.t('admin.user.userInfo');
+            break;
+        }
+    }
+    NProgress.start();
     next();
+});
+
+router.afterEach(() => {
+    window.scrollTo(0, 0);
+    NProgress.done();
 });
 
 export default router;

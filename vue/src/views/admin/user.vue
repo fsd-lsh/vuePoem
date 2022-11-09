@@ -5,16 +5,16 @@
             <el-card class="box-card">
                 <vp-table-search @reload="loadLists" @submit="search" :formFormat="formFormat" :pageLimit="true">
                     <template v-slot:btn>
-                        <el-button @click="newUserFlag = !newUserFlag" icon="fa fa-user-plus" type="primary" size="mini">&nbsp;{{$t('admin.user.add')}}</el-button>
-                        <el-button @click="userChange(2)" change-type="0" icon="fa fa-toggle-on" type="warning" size="mini">&nbsp;{{$t('admin.user.batch')}}{{$t('admin.user.stop')}}</el-button>
-                        <el-button @click="userChange(1)" icon="fa fa-toggle-off" type="success" size="mini">&nbsp;{{$t('admin.user.batch')}}{{$t('admin.user.open')}}</el-button>
-                        <el-button @click="userChange(0)" icon="fa fa-user-times" type="danger" size="mini">&nbsp;{{$t('admin.user.batch')}}{{$t('admin.user.del')}}</el-button>
+                        <el-button @click="newUserFlag = !newUserFlag" type="primary" size="small"><i class="fa fa-user-plus">&nbsp;</i>{{$t('admin.user.add')}}</el-button>
+                        <el-button @click="userChange(2)" change-type="0" type="warning" size="small"><i class="fa fa-toggle-on">&nbsp;</i>{{$t('admin.user.batch')}}{{$t('admin.user.stop')}}</el-button>
+                        <el-button @click="userChange(1)" type="success" size="small"><i class="fa fa-toggle-off">&nbsp;</i>{{$t('admin.user.batch')}}{{$t('admin.user.open')}}</el-button>
+                        <el-button @click="userChange(0)" type="danger" size="small"><i class="fa fa-user-times">&nbsp;</i>{{$t('admin.user.batch')}}{{$t('admin.user.del')}}</el-button>
                     </template>
                 </vp-table-search>
                 <el-table
                     :data="tableData"
                     stripe
-                    size="mini"
+                    size="small"
                     fit
                     :highlight-current-row="true"
                     :cell-style="tableStyle"
@@ -30,16 +30,16 @@
                         width="220"
                         fixed="left"
                         :label="$t('admin.user.operation')">
-                        <template slot-scope="scope">
+                        <template #default="scope">
                             <el-button
-                                size="mini"
+                                size="small"
                                 type="primary"
                                 :title="$t('admin.user.edit')"
                                 @click="editUserNow(scope)">
                                 <i class="fa fa-pencil">&nbsp;{{$t('admin.user.edit')}}</i>
                             </el-button>
                             <el-button
-                                size="mini"
+                                size="small"
                                 type="warning"
                                 :title="$t('admin.user.stop')"
                                 v-if="scope.row.status == 1"
@@ -48,7 +48,7 @@
                                 <i class="fa fa-toggle-on">&nbsp;{{$t('admin.user.stop')}}</i>
                             </el-button>
                             <el-button
-                                size="mini"
+                                size="small"
                                 type="success"
                                 :title="$t('admin.user.open')"
                                 v-if="scope.row.status == 2"
@@ -57,7 +57,7 @@
                                 <i class="fa fa-toggle-off">&nbsp;{{$t('admin.user.open')}}</i>
                             </el-button>
                             <el-button
-                                size="mini"
+                                size="small"
                                 type="danger"
                                 :title="$t('admin.user.del')"
                                 :disabled="scope.row.name == 'admin'"
@@ -83,11 +83,11 @@
                         prop="roles"
                         sortable
                         :label="$t('admin.user.role')">
-                        <template slot-scope="scope">
+                        <template #default="scope">
                             <el-tag
                                 v-for="role in scope.row.roles_mean"
                                 :key="role"
-                                size="mini"
+                                size="small"
                                 :type="'info'"
                                 style="margin:2px 5px;"
                                 effect="dark">
@@ -117,10 +117,9 @@
                 <div class="pagination" v-html="pageHtml"></div>
             </el-card>
 
-            <!--创建用户模态框-->
             <el-dialog
                 :title="$t('admin.user.add')"
-                :visible.sync="newUserFlag"
+                v-model="newUserFlag"
                 width="50%">
                 <el-form ref="form" :model="form" label-width="130px" size="small">
                     <el-form-item :label="$t('admin.user.account')">
@@ -149,16 +148,17 @@
                         </el-select>
                     </el-form-item>
                 </el-form>
-                <span slot="footer" class="dialog-footer">
-                    <el-button size="mini" @click="newUserFlag = false">{{$t('admin.user.cancel')}}</el-button>
-                    <el-button size="mini" type="primary" @click="createUserNow">{{$t('admin.user.save')}}</el-button>
-                </span>
+                <template #footer>
+                    <span class="dialog-footer">
+                        <el-button size="small" @click="newUserFlag = false">{{$t('admin.user.cancel')}}</el-button>
+                        <el-button size="small" type="primary" @click="createUserNow">{{$t('admin.user.save')}}</el-button>
+                    </span>
+                </template>
             </el-dialog>
 
-            <!--编辑用户模态框-->
             <el-dialog
                 :title="$t('admin.user.edit')"
-                :visible.sync="editUserFlag"
+                v-model="editUserFlag"
                 width="50%">
                 <el-form ref="editForm" :model="editForm" label-width="100px" size="small">
                     <el-form-item :label="$t('admin.user.account')">
@@ -184,10 +184,12 @@
                         </el-select>
                     </el-form-item>
                 </el-form>
-                <span slot="footer" class="dialog-footer">
-                    <el-button size="mini" @click="editUserFlag = false">{{$t('admin.user.cancel')}}</el-button>
-                    <el-button size="mini" type="primary" @click="saveUser">{{$t('admin.user.save')}}</el-button>
-                </span>
+                <template #footer>
+                    <span class="dialog-footer">
+                        <el-button size="small" @click="editUserFlag = false">{{$t('admin.user.cancel')}}</el-button>
+                        <el-button size="small" type="primary" @click="saveUser">{{$t('admin.user.save')}}</el-button>
+                    </span>
+                </template>
             </el-dialog>
         </vp-admin>
     </div>
@@ -364,14 +366,11 @@
             },
 
             tableStyle({row, column, rowIndex, columnIndex}) {
-
-                //状态
                 if(column.label === this.$t('admin.user.status')) {
-
                     switch (row.status) {
-                        case '0': { return 'background:#e4393c; color:#fff!important;'; }
-                        case '1': { return 'background:#009688; color:#fff!important;'; }
-                        case '2': { return 'background:#FFB800; color:#fff!important;'; }
+                        case '0': { return { 'background':'#e4393c', 'color':'#fff!important' }; }
+                        case '1': { return { 'background':'#009688', 'color':'#fff!important' }; }
+                        case '2': { return { 'background':'#FFB800', 'color':'#fff!important' }; }
                     }
                 }
             },

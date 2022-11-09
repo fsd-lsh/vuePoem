@@ -28,15 +28,15 @@
                     :key="key">
 
                     <!--多级-->
-                    <el-submenu
+                    <el-sub-menu
                         v-if="item.child.length"
                         :show-timeout="200"
                         :hide-timeout="200"
                         :index="item.id">
                         <template
-                            slot="title">
+                            #title>
                             <i :class="item.icon"></i>
-                            <span slot="title">&nbsp;&nbsp;&nbsp;{{ item.title }}</span>
+                            <span>&nbsp;&nbsp;&nbsp;{{ item.title }}</span>
                         </template>
                         <el-menu-item-group>
                             <el-menu-item
@@ -47,7 +47,7 @@
                                 {{ s_item.title }}
                             </el-menu-item>
                         </el-menu-item-group>
-                    </el-submenu>
+                    </el-sub-menu>
 
                     <!--单级-->
                     <el-menu-item
@@ -56,10 +56,7 @@
                         :key="key"
                         :index="item.id">
                         <i :class="item.icon"></i>
-                        <span
-                            slot="title">
-                            &nbsp;&nbsp;&nbsp;{{ item.title }}
-                        </span>
+                        <span>&nbsp;&nbsp;&nbsp;{{ item.title }}</span>
                     </el-menu-item>
                 </div>
             </el-menu>
@@ -95,13 +92,13 @@
                         :content="(isCollapse === true ? $t('admin.public.open') : $t('admin.public.close'))"
                         placement="bottom">
                         <i :class="{
-                        'fa fa-indent': isCollapse,
-                        'fa fa-outdent': !isCollapse,
-                    }"/>
+                            'fa fa-indent': isCollapse,
+                            'fa fa-outdent': !isCollapse,
+                        }"/>
                     </el-tooltip>
                 </el-menu-item>
                 <el-menu-item
-                    v-for="(item, key) in this.$store.state.menuTree.menuInfo"
+                    v-for="item in this.$store.state.menuTree.menuInfo"
                     :key="item.id"
                     :index="item.id">
                     {{ item.title }}
@@ -113,10 +110,9 @@
                         <i class="fa fa-ellipsis-v"></i>
                     </el-tooltip>
                 </el-menu-item>
-                <el-submenu
+                <el-sub-menu
                     index="2"
                     class="pull-right">
-                    <template slot="title">{{ username }}</template>
                     <el-menu-item
                         @click="toolsGroup('modAccount')"
                         index="2-1">{{$t('admin.public.modAccount')}}
@@ -125,15 +121,15 @@
                         @click="toolsGroup('signOut')"
                         index="2-2">{{$t('admin.public.signOut')}}
                     </el-menu-item>
-                </el-submenu>
+                </el-sub-menu>
                 <el-menu-item
                     @click="toolsGroup('fullScreen')"
                     class="pull-right">
-                    <el-tooltip class="item" effect="dark" :content="$t('admin.public.fullScreen')" placement="bottom">
-                        <i v-if="!iFullscreen" class="fa fa-arrows-alt"></i>
+                    <el-tooltip v-if="!iFullscreen" class="item" effect="dark" :content="$t('admin.public.fullScreen')" placement="bottom">
+                        <i class="fa fa-arrows-alt"></i>
                     </el-tooltip>
-                    <el-tooltip class="item" effect="dark" :content="$t('admin.public.exitFullScreen')" placement="bottom">
-                        <i v-if="iFullscreen" class="fa fa-compress"></i>
+                    <el-tooltip v-if="iFullscreen" class="item" effect="dark" :content="$t('admin.public.exitFullScreen')" placement="bottom">
+                        <i class="fa fa-compress"></i>
                     </el-tooltip>
                 </el-menu-item>
                 <el-menu-item
@@ -430,5 +426,8 @@ export default {
 </script>
 
 <style scoped lang="less">
-
+    #top-nav-group {
+        justify-content: flex-end;
+        flex-grow: 1;
+    }
 </style>
