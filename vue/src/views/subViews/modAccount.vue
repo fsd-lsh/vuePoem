@@ -6,7 +6,7 @@
         width="45%"
         @close="closeHandle"
         center>
-        <el-form ref="form" :model="userInfo" label-width="140px" size="small">
+        <el-form ref="form" :model="userInfo" label-width="140px">
             <el-form-item :label="$t('admin.userInfo.account')">
                 <el-input v-model="userInfo.name"></el-input>
             </el-form-item>

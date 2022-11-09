@@ -123,12 +123,11 @@
                 </el-table>
             </el-card>
 
-            <!--添加-->
             <el-dialog
                 :title="$t('admin.menu.add')"
                 v-model="newMenuFlag"
                 width="50%">
-                <el-form ref="form" :model="form" label-width="100px" size="small">
+                <el-form ref="form" :model="form" label-width="100px">
                     <el-form-item :label="$t('admin.menu.name')">
                         <el-input :placeholder="$t('admin.public.pleaseInput')" v-model="form.title"></el-input>
                     </el-form-item>
@@ -179,9 +178,7 @@
                                 :key="key"
                                 :label="item"
                                 :value="item">
-                                <template>
-                                    <i :class="item"></i>&nbsp;&nbsp;{{item}}
-                                </template>
+                                <i :class="item"></i>&nbsp;&nbsp;{{item}}
                             </el-option>
                         </el-select>
                     </el-form-item>
@@ -226,12 +223,11 @@
                 </template>
             </el-dialog>
 
-            <!--编辑-->
             <el-dialog
                 :title="$t('admin.menu.edit')"
                 v-model="editMenuFlag"
                 width="50%">
-                <el-form ref="editForm" :model="editForm" label-width="100px" size="small">
+                <el-form ref="editForm" :model="editForm" label-width="100px">
                     <el-form-item :label="$t('admin.menu.name')">
                         <el-input :placeholder="$t('admin.public.pleaseInput')" v-model="editForm.title"></el-input>
                     </el-form-item>
@@ -282,9 +278,7 @@
                                 :key="key"
                                 :label="item"
                                 :value="item">
-                                <template>
-                                    <i :class="item"></i>&nbsp;&nbsp;{{item}}
-                                </template>
+                                <i :class="item"></i>&nbsp;&nbsp;{{item}}
                             </el-option>
                         </el-select>
                     </el-form-item>

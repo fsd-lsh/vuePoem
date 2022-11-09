@@ -117,12 +117,11 @@
                 <div class="pagination" v-html="pageHtml"></div>
             </el-card>
 
-            <!--添加角色模态框-->
             <el-dialog
                 :title="$t('admin.roles.add')"
                 v-model="newRoleFlag"
                 width="50%">
-                <el-form ref="form" :model="form" label-width="100px" size="small">
+                <el-form ref="form" :model="form" label-width="100px">
                     <el-form-item :label="$t('admin.roles.name')">
                         <el-input v-model="form.name"></el-input>
                     </el-form-item>
@@ -144,12 +143,11 @@
                 </template>
             </el-dialog>
 
-            <!--编辑角色模态框-->
             <el-dialog
                 :title="$t('admin.roles.edit')"
                 v-model="editRoleFlag"
                 width="50%">
-                <el-form ref="editForm" :model="editForm" label-width="100px" size="small">
+                <el-form ref="editForm" :model="editForm" label-width="100px">
                     <el-form-item :label="$t('admin.roles.name')">
                         <el-input v-model="editForm.name"></el-input>
                     </el-form-item>

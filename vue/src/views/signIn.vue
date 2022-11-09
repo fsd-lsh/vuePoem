@@ -4,13 +4,13 @@
         <div class="head">{{$t('admin.signIn.title')}}</div>
         <el-form ref="form" :model="form" label-width="65px">
             <el-form-item :label="$t('admin.signIn.account')">
-                <el-input size="small" v-model="form.name"></el-input>
+                <el-input v-model="form.name"></el-input>
             </el-form-item>
             <el-form-item :label="$t('admin.signIn.password')">
-                <el-input size="small" v-model="form.pwd" show-password></el-input>
+                <el-input v-model="form.pwd" show-password></el-input>
             </el-form-item>
             <div class="button-group">
-                <el-button @click="signIn" type="success" size="small">{{$t('admin.signIn.signIn')}}</el-button>
+                <el-button @click="signIn" type="success">{{$t('admin.signIn.signIn')}}</el-button>
             </div>
         </el-form>
         <el-link id="switch-lang" type="primary" @click="switchLang"><i class="fa fa-language"/>&nbsp;{{$t('admin.signIn.signName')}}</el-link>
@@ -134,13 +134,13 @@ export default {
         padding: 25px;
 
         .el-form-item {
-            margin: 0 0 10px 0;
+            margin: 0 0 16px 0;
         }
 
         .button-group {
 
             text-align: center;
-            margin: 20px 0 0 0;
+            margin: 28px 0 0 0;
 
             > button {
                 width: 100%;

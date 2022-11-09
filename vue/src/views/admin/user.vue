@@ -121,7 +121,7 @@
                 :title="$t('admin.user.add')"
                 v-model="newUserFlag"
                 width="50%">
-                <el-form ref="form" :model="form" label-width="130px" size="small">
+                <el-form ref="form" :model="form" label-width="130px">
                     <el-form-item :label="$t('admin.user.account')">
                         <el-input v-model="form.name"></el-input>
                     </el-form-item>
@@ -160,7 +160,7 @@
                 :title="$t('admin.user.edit')"
                 v-model="editUserFlag"
                 width="50%">
-                <el-form ref="editForm" :model="editForm" label-width="100px" size="small">
+                <el-form ref="editForm" :model="editForm" label-width="100px">
                     <el-form-item :label="$t('admin.user.account')">
                         <el-input v-model="editForm.name"></el-input>
                     </el-form-item>

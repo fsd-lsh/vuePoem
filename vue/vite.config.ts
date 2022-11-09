@@ -28,9 +28,6 @@ export default defineConfig({
                 target: `http://${envConfig.PHP_HOST}:${envConfig.PHP_PORT}`,
                 changeOrigin: true,
                 secure: false,
-                pathRewrite: {
-                    "^/admin": "/admin",
-                }
             }
         }
     },
