@@ -7,7 +7,7 @@
                 <el-table
                     :data="tableData"
                     stripe
-                    size="mini"
+                    size="small"
                     fit
                     :highlight-current-row="true"
                     :cell-style="tableStyle"

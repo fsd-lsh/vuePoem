@@ -5,7 +5,11 @@ window.addEventListener('storage', (e) => {
 });
 
 export default createStore({
-    state: {},
+
+    state: {
+        isSignIn: false,
+        menuTree: [],
+    },
 
     mutations: {
 
@@ -13,19 +17,19 @@ export default createStore({
             state.isSignIn = bool;
         },
 
-        setMenuTree(state, bool) {
-            state.menuTree = bool;
+        setMenuTree(state, v) {
+            state.menuTree = v;
         },
     },
 
     getters:{
 
+        getSignIn(state) {
+            return state.isSignIn;
+        },
+
         getMenuTree(state) {
             return state.menuTree;
         },
-
-        getSignIn(state) {
-            return state.isSignIn;
-        }
     },
 });
