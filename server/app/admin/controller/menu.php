@@ -238,12 +238,12 @@ class menu extends middleware\login {
 
                     $pids = array_column($menu, 'id');
                     $sub_menu = m()
-                        ->query("select * from poem_sys_menu where pid in (" . implode(',', $pids) . ") and status != 0");
+                        ->query("select * from ".config('db_prefix')."sys_menu where pid in (" . implode(',', $pids) . ") and status != 0");
                     formatting($sub_menu, $menu_config, trans('admin.userMenu'));
                     $sub_pids = array_column($sub_menu, 'id');
                     $sub_menu = array_group_by($sub_menu, 'pid');
                     $sub_menu2 = m()
-                        ->query("select * from poem_sys_menu where pid in (" . implode(',', $sub_pids) . ") and status != 0");
+                        ->query("select * from ".config('db_prefix')."sys_menu where pid in (" . implode(',', $sub_pids) . ") and status != 0");
                     formatting($sub_menu2, $menu_config, trans('admin.userMenu'));
                     $sub_menu2 = array_group_by($sub_menu2, 'pid');
 

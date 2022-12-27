@@ -4,10 +4,10 @@
 
         <!--table-->
         <el-card class="box-card">
-            <el-button @click="openSaveDiaLog('new')" type="primary" size="mini" v-if="this.dialog.length > 0"><i class="fa fa-user-plus">&nbsp;</i>{{$t('admin.user.add')}}</el-button>
-            <el-button @click="statusChange(2)" change-type="0" type="warning" size="mini"><i class="fa fa-toggle-on">&nbsp;</i>{{$t('admin.user.batch')}}{{$t('admin.user.stop')}}</el-button>
-            <el-button @click="statusChange(1)" type="success" size="mini"><i class="fa fa-toggle-off">&nbsp;</i>{{$t('admin.user.batch')}}{{$t('admin.user.open')}}</el-button>
-            <el-button @click="statusChange(0)" type="danger" size="mini"><i class="fa fa-user-times">&nbsp;</i>{{$t('admin.user.batch')}}{{$t('admin.user.del')}}</el-button>
+            <el-button @click="openSaveDiaLog('new')" type="primary" size="small" v-if="this.dialog.length > 0"><i class="fa fa-user-plus">&nbsp;</i>{{$t('admin.user.add')}}</el-button>
+            <el-button @click="statusChange(2)" change-type="0" type="warning" size="small"><i class="fa fa-toggle-on">&nbsp;</i>{{$t('admin.user.batch')}}{{$t('admin.user.stop')}}</el-button>
+            <el-button @click="statusChange(1)" type="success" size="small"><i class="fa fa-toggle-off">&nbsp;</i>{{$t('admin.user.batch')}}{{$t('admin.user.open')}}</el-button>
+            <el-button @click="statusChange(0)" type="danger" size="small"><i class="fa fa-user-times">&nbsp;</i>{{$t('admin.user.batch')}}{{$t('admin.user.del')}}</el-button>
             <el-table
                 :data="tableData"
                 stripe
@@ -24,13 +24,12 @@
                     width="55">
                 </el-table-column>
                 <el-table-column
-                    min-width="220"
                     fixed="left"
                     :label="$t('admin.user.operation')">
                     <template #default="scope">
                         <el-button
                             v-if="scope.row.viewShow === 1"
-                            size="mini"
+                            size="small"
                             type="info"
                             :title="$t('admin.public.view')"
                             @click="openViewDialog(scope)">
@@ -38,14 +37,14 @@
                         </el-button>
                         <el-button
                             v-if="scope.row.editShow === 1"
-                            size="mini"
+                            size="small"
                             type="primary"
                             :title="$t('admin.user.edit')"
                             @click="openSaveDiaLog(scope)">
                             <i class="fa fa-pencil">&nbsp;{{$t('admin.user.edit')}}</i>
                         </el-button>
                         <el-button
-                            size="mini"
+                            size="small"
                             type="warning"
                             :title="$t('admin.user.stop')"
                             v-if="scope.row.status == 1"
@@ -54,7 +53,7 @@
                             <i class="fa fa-toggle-on">&nbsp;{{$t('admin.user.stop')}}</i>
                         </el-button>
                         <el-button
-                            size="mini"
+                            size="small"
                             type="success"
                             :title="$t('admin.user.open')"
                             v-if="scope.row.status == 2"
@@ -63,7 +62,7 @@
                             <i class="fa fa-toggle-off">&nbsp;{{$t('admin.user.open')}}</i>
                         </el-button>
                         <el-button
-                            size="mini"
+                            size="small"
                             type="danger"
                             :title="$t('admin.user.del')"
                             :disabled="scope.row.name == 'admin'"
@@ -74,7 +73,7 @@
                 </el-table-column>
 
                 <el-table-column
-                    :width="(item === 'id' || item === 'status' ) ? 90 : 180"
+                    :width="(item === 'id' || item === 'status' ) ? 90 : ''"
                     :fixed="(item === 'id')"
                     v-for="(item, key) in column"
                     :prop="item"
@@ -126,8 +125,8 @@
             </el-form>
             <template #footer>
                 <span class="dialog-footer">
-                    <el-button size="mini" @click="diaLogSaveFlag = false">{{$t('admin.user.cancel')}}</el-button>
-                    <el-button size="mini" type="primary" @click="saveDiaLog">{{$t('admin.user.save')}}</el-button>
+                    <el-button size="small" @click="diaLogSaveFlag = false">{{$t('admin.user.cancel')}}</el-button>
+                    <el-button size="small" type="primary" @click="saveDiaLog">{{$t('admin.user.save')}}</el-button>
                 </span>
             </template>
         </el-dialog>
@@ -157,7 +156,7 @@
             </template>
             <template #footer>
                 <span class="dialog-footer">
-                    <el-button size="mini" @click="diaLogViewFlag = false">{{$t('admin.user.cancel')}}</el-button>
+                    <el-button size="small" @click="diaLogViewFlag = false">{{$t('admin.user.cancel')}}</el-button>
                 </span>
             </template>
         </el-dialog>
@@ -217,10 +216,6 @@ export default {
         this.loadList(
             this.parseGET()['p']
         );
-    },
-
-    mounted() {
-
     },
 
     methods: {
@@ -398,8 +393,6 @@ export default {
         $route: {
 
             handler() {
-
-                //加载列表
                 this.loadList(
                     this.parseGET()['p']
                 );
@@ -413,7 +406,6 @@ export default {
 <style lang="less" scoped>
 
 #poem-table {
-
 
     :deep(.el-select) {
         width: 100%;

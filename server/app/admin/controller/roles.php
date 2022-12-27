@@ -53,7 +53,7 @@ class roles extends middleware\login {
 
                 $menu_ids = m()
                     ->query('
-                        select * from poem_sys_menu where status = 1 and id in('.implode(',', $form['menu_ids']).')
+                        select * from '.config('db_prefix').'sys_menu where status = 1 and id in('.implode(',', $form['menu_ids']).')
                     ');
                 if(!$menu_ids) {
                     ajax(0, trans('admin.roles.nameExists') . ' B2');
@@ -125,7 +125,7 @@ class roles extends middleware\login {
 
                 $menu_ids = m()
                     ->query('
-                        select * from poem_sys_menu where status = 1 and id in('.implode(',', $form['menu_ids']).')
+                        select * from '.config('db_prefix').'sys_menu where status = 1 and id in('.implode(',', $form['menu_ids']).')
                     ');
                 if(!$menu_ids) {
                     ajax(0, trans('admin.roles.nameExists') . ' B2');
@@ -257,11 +257,11 @@ class roles extends middleware\login {
 
                     $pids = array_column($menu, 'id');
                     $sub_menu = m()
-                        ->query("select id, pid, title as label from poem_sys_menu where pid in (" . implode(',', $pids) . ") and status = 1");
+                        ->query("select id, pid, title as label from ".config('db_prefix')."sys_menu where pid in (" . implode(',', $pids) . ") and status = 1");
                     $sub_pids = array_column($sub_menu, 'id');
                     $sub_menu = array_group_by($sub_menu, 'pid');
                     $sub_menu2 = m()
-                        ->query("select id, pid, title as label from poem_sys_menu where pid in (" . implode(',', $sub_pids) . ") and status = 1");
+                        ->query("select id, pid, title as label from ".config('db_prefix')."sys_menu where pid in (" . implode(',', $sub_pids) . ") and status = 1");
                     $sub_menu2 = array_group_by($sub_menu2, 'pid');
 
                     foreach($menu as $key => $item) {

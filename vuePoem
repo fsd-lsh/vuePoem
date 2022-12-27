@@ -5,7 +5,7 @@
 class vuePoem {
 
     private $argv;
-    private $help_info = <<<EOF
+    private string $help_info = <<<EOF
 \nvuePoem cli help (vuePoem [option])
 --------------------------------------
 check  :Checking the Operating Environment
@@ -15,7 +15,7 @@ docker :Start with docker
 clean  :Clean up build front-end resources
 mysql  :Automatic Database deployment\n\n
 EOF;
-    private $check_template = <<<EOF
+    private string $check_template = <<<EOF
 path  : {status_path}
 php   : {status_php}
 node  : {status_node}
@@ -23,8 +23,8 @@ npm   : {status_npm}
 mysql : {status_mysql}\n\n
 EOF;
     private $env;
-    private $env_required_fields = [
-        'MYSQL_HOST', 'MYSQL_PORT', 'MYSQL_USER', 'MYSQL_PASS', 'MYSQL_DBNM',
+    private array $env_required_fields = [
+        'MYSQL_HOST', 'MYSQL_PORT', 'MYSQL_USER', 'MYSQL_PASS', 'MYSQL_DBNM', 'MYSQL_PREFIX', 'MYSQL_CHARSET',
         'VUE_HOST', 'VUE_PORT', 'VUE_PROJECT_PATH',
         'PHP_HOST', 'PHP_PORT'
     ];
@@ -110,21 +110,22 @@ EOF;
 
     private function clean() {
 
-        if(file_exists($this->env['PHP_PROJECT_PATH'].'/public/index.html')) {
-            $this->log("rm -rf {$this->env['PHP_PROJECT_PATH']}/public/index.html", true);
-        }
-        if(file_exists($this->env['PHP_PROJECT_PATH'].'/public/static')) {
-            $this->log("rm -rf {$this->env['PHP_PROJECT_PATH']}/public/static", true);
-        }
-        if(file_exists($this->env['PHP_PROJECT_PATH'].'/public/favicon.ico')) {
-            $this->log("rm -rf {$this->env['PHP_PROJECT_PATH']}/public/favicon.ico", true);
-        }
+		$www_root_dir = scandir($this->env['PHP_PROJECT_PATH'].'/public');
+
+		foreach ($www_root_dir as $item) {
+			if(in_array($item, ['.', '..', 'index.php'])) {
+				continue;
+			}
+            $this->log("rm -rf {$this->env['PHP_PROJECT_PATH']}/public/{$item}", true);
+		}
         $this->log('clean success');
     }
 
     private function mysql($from = '') {
 
         $tables = file_get_contents('vuePoem.sql');
+        $tables = str_replace('{PREFIX}', $this->env['MYSQL_PREFIX'], $tables);
+        $tables = str_replace('{CHARSET}', $this->env['MYSQL_CHARSET'], $tables);
 
         try {
 
@@ -228,7 +229,7 @@ EOF;
     private function log($info = '', $command = false) {
 
         if(empty($info)) {
-            return false;
+			return false;
         }
 
         echo 'VuePoem: ' . date('Y-m-d H:i:s') . " - {$info} \n";
@@ -267,7 +268,6 @@ EOF;
     }
 
     public function __destruct() {
-
         if(count($this->argv) > 1) {
             if(!in_array($this->argv[1], ['check', 'help']) && !empty($this->argv[1])) {
                 $this->log('bye!');
