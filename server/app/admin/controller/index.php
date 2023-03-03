@@ -30,6 +30,12 @@ class index extends middleware\login {
                 parent::sign_out();
             },
 
+            //注册
+            'sign_up' => function() {
+                parent::__construct(0, 'admin');
+                parent::sign_up();
+            },
+
             //语言切换
             'lang' => function() {
 

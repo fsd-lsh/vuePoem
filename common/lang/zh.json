@@ -164,6 +164,17 @@
             "AccessPermissions": "您没有访问权限",
             "verifyCode": "验证码"
         },
+        "signUp": {
+            "rePassword": "重新输入",
+            "signUp": "注册",
+            "hasAcc": "已有账号？返回登录",
+            "enterMatchPwd": "两次密码输入不一致",
+            "accAlready": "账号已存在",
+            "success": "注册成功",
+            "error": "注册失败",
+            "uSpe": "用户名不允许包含特殊字符",
+            "uLen": "用户名长度不够"
+        },
         "sysLog": {
             "user": "用户",
             "path": "路径",

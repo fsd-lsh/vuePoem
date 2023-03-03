@@ -17,6 +17,7 @@
                 <el-button @click="signIn" type="success">{{$t('admin.signIn.signIn')}}</el-button>
             </div>
         </el-form>
+        <el-link id="sign-up" type="primary" @click="this.$router.push('/signUp')"><i class="fa fa-sitemap"/>&nbsp;{{$t('admin.signUp.signUp')}}</el-link>
         <el-link id="switch-lang" type="primary" @click="switchLang"><i class="fa fa-language"/>&nbsp;{{$t('admin.signIn.signName')}}</el-link>
     </div>
 </template>
@@ -59,9 +60,8 @@ export default {
                 this.liteNotice(0, this.$t('admin.user.enterPwd'));
                 return false;
             }
-
             if(!this.form.vCode) {
-                this.liteNotice(0, this.$t('admin.user.enterVCode'));
+                this.liteNotice(0, this.$t('admin.signIn.enterVCode'));
                 return false;
             }
 
@@ -141,10 +141,17 @@ export default {
             overflow: hidden;
         }
 
-        #switch-lang {
+        #sign-up {
             position: absolute;
             bottom: 5px;
             right: 5px;
+            display: inline-block;
+        }
+
+        #switch-lang {
+            position: absolute;
+            bottom: 5px;
+            right: 90px;
             display: inline-block;
         }
     }

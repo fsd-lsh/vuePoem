@@ -164,6 +164,17 @@
             "AccessPermissions": "You don't have access",
             "verifyCode": "Verify"
         },
+        "signUp": {
+            "rePassword": "Repass",
+            "signUp": "signUp",
+            "hasAcc": "Have an account? Return to login",
+            "enterMatchPwd": "The two password entries are inconsistent",
+            "accAlready": "Account already exists",
+            "success": "Successful registration",
+            "error": "Registration failure",
+            "uSpe": "The user name cannot contain special characters",
+            "uLen": "The length of the user name is insufficient"
+        },
         "sysLog": {
             "user": "User",
             "path": "Path",

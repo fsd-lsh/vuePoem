@@ -108,6 +108,7 @@ BEGIN;
 INSERT INTO `{PREFIX}sys_roles` (`id`, `name`, `menu_ids`, `status`, `ctime`, `utime`) VALUES (1, '系统管理员', '1,2,3,4,5,6,7,8,9,10', 1, '1620033242', '1620033242');
 INSERT INTO `{PREFIX}sys_roles` (`id`, `name`, `menu_ids`, `status`, `ctime`, `utime`) VALUES (2, '业务管理员', '1,2,3,5,10', 1, '1627980503', '1627980503');
 INSERT INTO `{PREFIX}sys_roles` (`id`, `name`, `menu_ids`, `status`, `ctime`, `utime`) VALUES (3, '客户A', '1,2,10', 1, '1631113295', '1631113295');
+INSERT INTO `{PREFIX}sys_roles` (`id`, `name`, `menu_ids`, `status`, `ctime`, `utime`) VALUES (4, '默认注册角色', '1', 1, '1677825906', '1677825906');
 COMMIT;
 
 SET FOREIGN_KEY_CHECKS = 1;

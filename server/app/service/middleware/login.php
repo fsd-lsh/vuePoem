@@ -10,6 +10,7 @@ class login {
 
     private $user_info;
     private $user_type;
+    private string $table;
 
     /**
      * login constructor.
@@ -17,11 +18,10 @@ class login {
      */
     public function __construct($check_login = 0, $user_type = 'user') {
 
-        //装载
         $this->user_type = $user_type;
         $this->user_info = session($this->user_type.'_info');
 
-        //登录检测
+
         if($check_login) {
 
             switch ($this->user_type) {
@@ -35,6 +35,11 @@ class login {
             }
 
             $this->authentication();
+        }
+
+        switch ($this->user_type) {
+            case 'user': { $this->table = 'user'; break; }
+            case 'admin': { $this->table = 'sys_admin'; break; }
         }
     }
 
@@ -84,11 +89,7 @@ class login {
         }
 
         //获取账号信息
-        switch ($this->user_type) {
-            case 'user': { $table = 'user'; break; }
-            case 'admin': { $table = 'sys_admin'; break; }
-        }
-        $user_info = m($table)
+        $user_info = m($this->table)
             ->where([
                 'name' => $username,
                 'status' => 1
@@ -121,12 +122,67 @@ class login {
     /**
      * Func: sign_up
      * User: Force
-     * Date: 2020/10/5
-     * Time: 17:23
+     * Date: 2023/3/3
+     * Time: 11:57
      * Desc: 注册
      */
     public function sign_up() {
 
+        if(empty(i('username'))) {
+            ajax(0, trans('admin.signIn.enterAcc'));
+        }
+        if(empty(i('password'))) {
+            ajax(0, trans('admin.signIn.enterPwd'));
+        }
+        $username = base64_decode(i('username'));
+        $password = base64_decode(i('password'));
+        $re_password = base64_decode(i('rePassword'));
+        $v_code = i('vCode');
+        if(empty(json_encode($username))) {
+            ajax(0, trans('admin.signIn.enterAcc'));
+        }
+        if(similar_text($username, "<,>/?~`!@#%^&*()+|\='{}.。，「」（）《》") > 0) {
+            ajax(0, trans('admin.signIn.uSpe'));
+        }
+        if(strlen($username) <= 3) {
+            ajax(0, trans('admin.signIn.uLen'));
+        }
+        if(empty(json_encode($password))) {
+            ajax(0, trans('admin.signIn.enterPwd'));
+        }
+        if($password !== $re_password) {
+            ajax(0, trans('admin.signUp.enterMatchPwd'));
+        }
+        if(empty($v_code)) {
+            ajax(0, trans('admin.signIn.enterVCode'));
+        }
+        if($v_code != session('verify_code')) {
+            ajax(0, trans('admin.signIn.vCodeErr'));
+        }
+
+        $check = m($this->table)
+            ->where([
+                'name' => $username,
+            ])
+            ->find();
+        if($check) {
+            ajax(0, trans('admin.signUp.accAlready'));
+        }
+
+        $re = m($this->table)
+            ->insert([
+                'name' => $username,
+                'password' => password_hash($password, PASSWORD_DEFAULT),
+                'roles' => '4',
+                'status' => 1,
+                'ctime' => time(),
+                'utime' => time(),
+            ]);
+        if($re) {
+            ajax(1, trans('admin.signUp.success'));
+        }else {
+            ajax(0, trans('admin.signUp.error'));
+        }
     }
 
     /**
