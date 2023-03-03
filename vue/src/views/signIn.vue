@@ -9,6 +9,10 @@
             <el-form-item :label="$t('admin.signIn.password')">
                 <el-input v-model="form.pwd" show-password></el-input>
             </el-form-item>
+            <el-form-item :label="$t('admin.signIn.verifyCode')" style="position:relative;">
+                <el-input v-model="form.vCode"></el-input>
+                <img :src="vCodeImgSrc" @click="refVcode" class="verify-code" style="position:absolute; right:1px; top:1px; border-radius:4px;"/>
+            </el-form-item>
             <div class="button-group">
                 <el-button @click="signIn" type="success">{{$t('admin.signIn.signIn')}}</el-button>
             </div>
@@ -33,12 +37,14 @@ export default {
             form: {
                 name: '',
                 pwd: '',
+                vCode: '',
             },
+            vCodeImgSrc: '',
         }
     },
 
     created() {
-
+        this.refVcode();
     },
 
     methods: {
@@ -46,11 +52,16 @@ export default {
         signIn() {
 
             if(!this.form.name) {
-                this.$notify({ message:this.$t('admin.user.enterAcc'), type:'warning'});
+                this.liteNotice(0, this.$t('admin.user.enterAcc'));
                 return false;
             }
             if(!this.form.pwd) {
-                this.$notify({ message:this.$t('admin.user.enterPwd'), type:'warning'});
+                this.liteNotice(0, this.$t('admin.user.enterPwd'));
+                return false;
+            }
+
+            if(!this.form.vCode) {
+                this.liteNotice(0, this.$t('admin.user.enterVCode'));
                 return false;
             }
 
@@ -60,6 +71,7 @@ export default {
                 data: {
                     username: window.btoa(this.form.name),
                     password: window.btoa(this.form.pwd),
+                    vCode: this.form.vCode,
                 },
                 success: (res) => {
 
@@ -79,10 +91,18 @@ export default {
                         this.$router.push(res.data.data.url);
                         this.$router.go(0);
                     }else {
+                        this.refVcode();
                         this.$notify({ message:res.data.info, type:'warning'});
                     }
                 },
             });
+        },
+
+        refVcode() {
+            this.form.vCode = '';
+            let rand = String(Math.random());
+            rand = rand.slice(-8);
+            this.vCodeImgSrc = '/admin?api=v_code&ver='+rand;
         },
     },
 }
@@ -102,7 +122,7 @@ export default {
         margin: 15% auto;
         background: #fff;
         width: 420px;
-        height: 266px;
+        height: 308px;
         border-radius: 12px;
         position: relative;
 

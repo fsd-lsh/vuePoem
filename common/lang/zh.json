@@ -149,6 +149,8 @@
             "noSignIn": "您未登录",
             "enterAcc": "请输入账号",
             "enterPwd": "请输入密码",
+            "enterVCode": "请输入验证码",
+            "vCodeErr": "验证码错误",
             "accNoFound": "账号不存在或已被冻结",
             "pwdErr": "密码错误",
             "signInOk": "登录成功",
@@ -159,7 +161,8 @@
             "roleNotConfigMenu": "角色没有配置菜单权限",
             "menuInvalid": "您权限内菜单不存在或无效",
             "requestInvalid": "您的请求无效",
-            "AccessPermissions": "您没有访问权限"
+            "AccessPermissions": "您没有访问权限",
+            "verifyCode": "验证码"
         },
         "sysLog": {
             "user": "用户",

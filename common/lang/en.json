@@ -149,6 +149,8 @@
             "noSignIn": "You are not logged in",
             "enterAcc": "Please enter your account",
             "enterPwd": "Please enter your password",
+            "enterVCode": "Please enter verify code",
+            "vCodeErr": "Verify code error",
             "accNoFound": "The account does not exist or has been frozen",
             "pwdErr": "Password mistake",
             "signInOk": "Login successful",
@@ -159,7 +161,8 @@
             "roleNotConfigMenu": "The role does not have the configuration menu permission",
             "menuInvalid": "The menu is invalid",
             "requestInvalid": "The request is invalid",
-            "AccessPermissions": "You don't have access"
+            "AccessPermissions": "You don't have access",
+            "verifyCode": "Verify"
         },
         "sysLog": {
             "user": "User",

@@ -56,6 +56,7 @@ class login {
      * Date: 2021/4/4
      * Time: 18:49
      * Desc: 登录
+     * @throws \Exception
      */
     public function sign_in() {
 
@@ -68,11 +69,18 @@ class login {
         }
         $username = base64_decode(i('username'));
         $password = base64_decode(i('password'));
+        $v_code = i('vCode');
         if(empty(json_encode($username))) {
             ajax(0, trans('admin.signIn.enterAcc'));
         }
         if(empty(json_encode($password))) {
             ajax(0, trans('admin.signIn.enterPwd'));
+        }
+        if(empty($v_code)) {
+            ajax(0, trans('admin.signIn.enterVCode'));
+        }
+        if($v_code != session('verify_code')) {
+            ajax(0, trans('admin.signIn.vCodeErr'));
         }
 
         //获取账号信息

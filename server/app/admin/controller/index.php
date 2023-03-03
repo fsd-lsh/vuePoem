@@ -47,6 +47,14 @@ class index extends middleware\login {
                     ajax(0, "Language '{$lang}' is not supported");
                 }
             },
+
+            //验证码
+            'v_code' => function() {
+                ob_clean();
+                vendor('v_code');
+                $verify = new \v_code();
+                $verify->doimg();
+            },
         ]);
     }
 
