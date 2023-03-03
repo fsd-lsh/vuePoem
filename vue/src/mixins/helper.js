@@ -151,6 +151,46 @@ export default {
                 b: parseInt("0x" + hex.slice(5, 7)),
                 rgba: RGBA
             }
-        }
+        },
+
+        liteNotice(code, info, mode) {
+            if(mode === 'notify') {
+                switch (code) {
+                    case 0: {
+                        this.$notify.error({ title:'Error', message:info, position:'bottom-right' });
+                        break;
+                    }
+                    case 1: {
+                        this.$notify({ title:'Success', message:info, type:'success', position:'bottom-right' });
+                        break;
+                    }
+                    case 2: {
+                        this.$notify({ title:'Warning', message:info, type:'warning', position:'bottom-right' });
+                        break;
+                    }
+                    default: {
+                        return false;
+                    }
+                }
+            }else {
+                switch (code) {
+                    case 0: {
+                        this.$message.error(info);
+                        break;
+                    }
+                    case 1: {
+                        this.$message({ message:info, type:'success'} );
+                        break;
+                    }
+                    case 2: {
+                        this.$message({ message:info, type:'warning'} );
+                        break;
+                    }
+                    default: {
+                        return false;
+                    }
+                }
+            }
+        },
     },
 }

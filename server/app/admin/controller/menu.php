@@ -292,7 +292,7 @@ class menu extends middleware\login {
                 'href'  => '/menu',
             ],
             'logoInfo' => [
-                'title' => 'VuePoem',
+                'title' => trans('sysName'),
                 //'image' => '',
             ],
             'menuInfo' => $this->get_menu_list(),
